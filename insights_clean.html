@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights — Shamanic Travels</title>
+<meta name="description" content="Field notes on Peru, curated travel, and transformation journeys. Dispatches from Shamanic Travels.">
+<meta name="author" content="Shamanic Travels">
+<meta property="og:title" content="Insights — Shamanic Travels">
+<meta property="og:description" content="Field notes on Peru, curated travel, and transformation journeys.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="/insights">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #f5f2ec; --fg: #1a1612; --muted: #8a8278;
+  --border: rgba(26,22,18,0.12); --accent: #b89a5a;
+  --gold: #c9a96e; --dark: #1e1b16; --earth: #d4ccc0;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Cormorant Garamond',serif}
+.eyebrow{font-family:'Inter',sans-serif;font-size:10px;font-weight:400;letter-spacing:.2em;text-transform:uppercase}
+.accent{color:var(--accent)}
+.muted{color:var(--muted)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .7s,color .7s;mix-blend-mode:difference;color:white}
+.nav-inner{padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.nav-logo{width:36px;height:36px;object-fit:contain;display:block}
+.nav-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;letter-spacing:-.02em}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{color:inherit;text-decoration:none;font-size:10px;letter-spacing:.2em;text-transform:uppercase;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:currentColor;transition:width .35s}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active::after{width:100%}
+.nav-links a.apply{color:var(--gold)}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:flex-end;gap:6px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:8px}
+.nav-toggle span{display:block;height:1px;background:currentColor}
+.nav-toggle span:first-child{width:20px}
+.nav-toggle span:last-child{width:16px}
+
+/* HEADER */
+#header{padding:160px 40px 80px;max-width:1280px;margin:0 auto}
+@media(min-width:768px){#header{padding-top:192px}}
+.header-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:300;line-height:1.05;margin-bottom:40px;max-width:720px}
+.header-desc{color:var(--muted);max-width:520px;font-size:clamp(15px,1.3vw,18px);line-height:1.8}
+
+/* CONTENT */
+#content{padding:0 40px 128px;max-width:1280px;margin:0 auto}
+
+/* PHOTO SLOT: insights hero image */
+.insights-hero-img{width:100%;aspect-ratio:16/7;object-fit:cover;display:block;margin-bottom:80px}
+
+/* ARTICLE LIST */
+.articles{display:flex;flex-direction:column}
+
+.article-row{border-top:1px solid var(--border);padding:40px 0 56px;display:grid;grid-template-columns:1fr;gap:24px;transition:background .3s;cursor:pointer}
+.article-row:last-child{border-bottom:1px solid var(--border)}
+.article-row:hover{background:rgba(26,22,18,.03);padding-left:8px;padding-right:8px;margin-left:-8px;margin-right:-8px}
+
+@media(min-width:768px){
+  .article-row{grid-template-columns:3fr 9fr;gap:40px;padding:56px 0}
+}
+
+.article-meta{display:flex;flex-direction:column;gap:8px}
+@media(min-width:768px){.article-meta{gap:8px}}
+
+.article-num{color:var(--accent)}
+.article-date{color:var(--muted)}
+
+.article-body{max-width:720px}
+
+.article-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,48px);font-weight:300;font-style:italic;margin-bottom:16px;line-height:1.05}
+
+.article-excerpt{color:var(--muted);line-height:1.8;font-size:clamp(14px,1.2vw,16px)}
+
+.article-cta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,22,18,.7);margin-top:24px;display:block;font-family:'Inter',sans-serif}
+
+.article-row a{text-decoration:none;color:inherit;display:block}
+
+/* FOOTER */
+footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var(--bg)}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:64px}
+@media(min-width:768px){.footer-inner{grid-template-columns:7fr 4fr;align-items:start}}
+.footer-left h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);font-weight:300;line-height:1.1;margin-bottom:24px}
+.footer-desc{color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:40px;max-width:540px}
+.footer-form{display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid rgba(26,22,18,.3);padding-bottom:12px;max-width:440px}
+.footer-form input{flex:1;background:transparent;border:none;outline:none;font-size:14px;padding:8px 0;font-family:'Inter',sans-serif;color:var(--fg)}
+.footer-form input::placeholder{color:rgba(138,130,120,.6)}
+.footer-form button{background:none;border:none;cursor:pointer;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Inter',sans-serif;color:var(--fg);padding:8px 0;transition:color .3s}
+.footer-form button:hover{color:var(--accent)}
+.footer-right{display:flex;flex-direction:column;justify-content:space-between;gap:48px}
+.footer-based p:first-child{color:var(--muted);margin-bottom:8px}
+.footer-based p:last-child{color:rgba(26,22,18,.8);font-size:14px}
+.footer-brand{display:flex;flex-direction:column;gap:12px}
+.footer-logo{width:48px;height:48px;object-fit:contain;display:block}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px}
+.footer-copy{color:var(--muted)}
+
+@media(max-width:768px){
+  .nav-links{display:none}.nav-toggle{display:flex}
+  .nav-inner{padding:20px 24px}
+  #header{padding:140px 24px 60px}
+  #content{padding-left:24px;padding-right:24px}
+  footer{padding-left:24px;padding-right:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="shamanic_travels_clean.html" class="nav-brand" aria-label="Shamanic Travels">
+      <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo" width="36" height="36"><!-- PHOTO SLOT: logo -->
+      <span class="nav-name">Shamanic Travels</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="shamanic_travels_clean.html#experience" class="eyebrow">Ethos</a></li>
+      <li><a href="andean_arc_clean.html" class="eyebrow">Andean Arc</a></li>
+      <li><a href="amazon_clean.html" class="eyebrow">Amazon</a></li>
+      <li><a href="shamanic_travels_clean.html#guide" class="eyebrow">The Guide</a></li>
+      <li><a href="insights_clean.html" class="eyebrow active" aria-current="page">Insights</a></li>
+      <li><a href="shamanic_travels_clean.html#apply" class="eyebrow apply">Apply</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Open menu" id="menuBtn"><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section id="header">
+  <span class="eyebrow accent" style="display:block;margin-bottom:24px;">Insights</span>
+  <h1 class="header-title">Field notes from <span style="font-style:italic">Peru</span>.</h1>
+  <p class="header-desc">Occasional dispatches on curated travel, transformation and the slow craft of private journeys across the Andes and the Amazon.</p>
+</section>
+
+<!-- CONTENT -->
+<section id="content">
+
+  <!-- PHOTO SLOT: insights.jpg — full width editorial image -->
+  <img src="insights.jpg" alt="Editorial still life of Andean textiles and dried botanicals" class="insights-hero-img" loading="lazy" width="1024" height="448">
+
+  <div class="articles">
+
+    <!-- Field Note 01 — LINKED (article exists) -->
+    <div class="article-row">
+      <a href="article_sciamanesimo.html">
+        <div style="display:grid;grid-template-columns:1fr;gap:24px;">
+          <div class="article-meta" style="display:flex;flex-direction:row;gap:16px;align-items:baseline;">
+            <span class="eyebrow accent article-num">Field Note 01</span>
+            <span class="eyebrow muted article-date">May 2026</span>
+          </div>
+          <div class="article-body">
+            <h2 class="article-title">Un po' di Sciamanesimo</h2>
+            <p class="article-excerpt">Origini, miti e malintesi del termine sciamano. Una riflessione antropologica di Marcello Buglione.</p>
+            <span class="article-cta">Read →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Field Note 02 — Forthcoming -->
+    <div class="article-row">
+      <div style="display:grid;grid-template-columns:1fr;gap:24px;">
+        <div class="article-meta" style="display:flex;flex-direction:row;gap:16px;align-items:baseline;">
+          <span class="eyebrow accent article-num">Field Note 02</span>
+          <span class="eyebrow muted article-date">February 2026</span>
+        </div>
+        <div class="article-body">
+          <h2 class="article-title">Luxury as Restraint</h2>
+          <p class="article-excerpt">Why true private travel removes friction rather than adding embellishment. A note on what we choose not to include.</p>
+          <span class="article-cta muted">Read — Forthcoming</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Field Note 03 — Forthcoming -->
+    <div class="article-row">
+      <div style="display:grid;grid-template-columns:1fr;gap:24px;">
+        <div class="article-meta" style="display:flex;flex-direction:row;gap:16px;align-items:baseline;">
+          <span class="eyebrow accent article-num">Field Note 03</span>
+          <span class="eyebrow muted article-date">January 2026</span>
+        </div>
+        <div class="article-body">
+          <h2 class="article-title">The Amazon Protocol</h2>
+          <p class="article-excerpt">Preparation, posture and the ethics of guided immersion in the basin. The unspoken contract between guide and participant.</p>
+          <span class="article-cta muted">Read — Forthcoming</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Field Note 04 — Forthcoming -->
+    <div class="article-row">
+      <div style="display:grid;grid-template-columns:1fr;gap:24px;">
+        <div class="article-meta" style="display:flex;flex-direction:row;gap:16px;align-items:baseline;">
+          <span class="eyebrow accent article-num">Field Note 04</span>
+          <span class="eyebrow muted article-date">December 2025</span>
+        </div>
+        <div class="article-body">
+          <h2 class="article-title">The Shape of Six</h2>
+          <p class="article-excerpt">Why our maximum is six and never seven. On the geometry of small groups and the conditions for genuine encounter.</p>
+          <span class="article-cta muted">Read — Forthcoming</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="eyebrow accent" style="display:block;margin-bottom:24px;">Private Dispatches</span>
+      <h2>Receive <span style="font-style:italic">La Planta de los Dioses</span></h2>
+      <p class="footer-desc">A digital edition of Marcello's essay on the botanical heritage of the Amazon, with occasional dispatches on forthcoming private journeys.</p>
+      <form class="footer-form" onsubmit="return false;">
+        <input type="email" placeholder="Email address" aria-label="Email address" maxlength="255">
+        <button type="submit" class="eyebrow">Request</button>
+      </form>
+    </div>
+    <div class="footer-right">
+      <div class="footer-based eyebrow"><p>Based In</p><p>London · Lima · Milano</p></div>
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="Shamanic Travels" class="footer-logo" width="48" height="48"><!-- PHOTO SLOT: logo -->
+        <span class="footer-brand-name">Shamanic Travels</span>
+        <p class="eyebrow footer-copy muted">© 2025 · Private Curated Journeys</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('main-nav');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>80){nav.style.background='rgba(245,242,236,0.96)';nav.style.mixBlendMode='normal';nav.style.color='#1a1612';nav.style.backdropFilter='blur(12px)'}
+  else{nav.style.background='';nav.style.mixBlendMode='difference';nav.style.color='white';nav.style.backdropFilter=''}
+});
+const btn=document.getElementById('menuBtn');
+const links=document.querySelector('.nav-links');
+let open=false;
+btn.addEventListener('click',()=>{
+  open=!open;
+  links.style.cssText=open?'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#f5f2ec;padding:24px 40px;gap:20px;z-index:100':'display:none';
+  btn.setAttribute('aria-expanded',open);
+});
+
+// Desktop grid layout for article rows
+if(window.innerWidth>=768){
+  document.querySelectorAll('.article-row > a > div, .article-row > div').forEach(el=>{
+    el.style.gridTemplateColumns='3fr 9fr';
+    el.style.gap='40px';
+  });
+}
+</script>
+
+</body>
+</html>
