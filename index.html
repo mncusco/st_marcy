@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shamanic Travels — Private Curated Journeys in Peru</title>
+<meta name="description" content="Invitation-only immersive journeys in Peru for a maximum of six participants. Private interview required.">
+<meta name="author" content="Shamanic Travels">
+<meta property="og:title" content="Shamanic Travels — Private Curated Journeys in Peru">
+<meta property="og:description" content="Invitation-only immersive journeys in Peru for a maximum of six participants. Private interview required.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,600&family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TravelAgency","name":"Shamanic Travels","description":"Private, invitation-only curated journeys in Peru for a maximum of six participants. Guided by Marcello Buglione.","areaServed":"Peru","founder":{"@type":"Person","name":"Marcello Buglione"}}
+</script>
+
+<style>
+/* ── TOKENS ── */
+:root {
+  --background:    #f5f2ec;
+  --foreground:    #1a1612;
+  --muted:         #8a8278;
+  --border:        rgba(26,22,18,0.12);
+  --accent:        #b89a5a;
+  --gold-soft:     #c9a96e;
+  --stone-deep:    #1e1b16;
+  --earth:         #d4ccc0;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TYPOGRAPHY ── */
+.font-serif { font-family: 'Cormorant Garamond', serif; }
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── UTILITIES ── */
+.text-accent   { color: var(--accent); }
+.text-muted    { color: var(--muted); }
+.italic        { font-style: italic; }
+.text-balance  { text-wrap: balance; }
+.text-pretty   { text-wrap: pretty; }
+
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: currentColor;
+  transition: width 0.35s ease;
+}
+.link-underline:hover::after { width: 100%; }
+
+/* ── ANIMATIONS ── */
+@keyframes slowZoom {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1.00); }
+}
+
+@keyframes revealUp {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.animate-slow-zoom {
+  animation: slowZoom 20s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+.animate-reveal {
+  opacity: 0;
+  animation: revealUp 1s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+}
+.animate-reveal-delay-1 { animation-delay: 0.6s; }
+.animate-reveal-delay-2 { animation-delay: 0.9s; }
+.animate-reveal-delay-3 { animation-delay: 1.2s; }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  transition: background 0.7s;
+  mix-blend-mode: difference;
+  color: white;
+}
+
+.nav-inner {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-logo {
+  width: 36px; height: 36px;
+  object-fit: contain;
+  /* mix-blend-mode: multiply; */
+  display: block;
+}
+
+.nav-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.nav-links a.apply { color: var(--gold-soft); }
+
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 6px;
+  width: 36px; height: 36px;
+  background: none; border: none;
+  cursor: pointer; padding: 8px;
+}
+.nav-mobile-toggle span {
+  display: block;
+  height: 1px;
+  background: currentColor;
+  transition: all 0.3s;
+}
+.nav-mobile-toggle span:first-child { width: 20px; }
+.nav-mobile-toggle span:last-child  { width: 16px; }
+
+/* ── HERO ── */
+#hero {
+  position: relative;
+  height: 100svh;
+  min-height: 640px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  #hero { align-items: center; }
+}
+
+.hero-img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ── PHOTO SLOT ──────────────────────────────────────────
+   Replace src="" with your image filename.
+   Keep all other attributes and classes.
+   ──────────────────────────────────────────────────────── */
+.hero-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.7) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 900px;
+  padding: 0 24px 80px;
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .hero-content { padding-bottom: 0; }
+}
+
+.hero-eyebrow {
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 32px;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(44px, 8vw, 96px);
+  font-weight: 300;
+  line-height: 0.95;
+  margin-bottom: 40px;
+  color: white;
+}
+
+.hero-title .gold { color: var(--gold-soft); }
+
+.hero-subtitle {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  max-width: 480px;
+  margin: 0 auto 48px;
+  line-height: 1.8;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 20px 40px;
+  background: white;
+  color: var(--foreground);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  transition: background 0.5s, color 0.5s;
+}
+.hero-cta:hover { background: var(--accent); color: white; }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 24px; left: 0; right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero-scroll-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+.hero-scroll-line {
+  width: 40px; height: 1px;
+  background: rgba(255,255,255,0.4);
+}
+
+/* ── ETHOS ── */
+#experience {
+  padding: 96px 40px 160px;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  #experience {
+    grid-template-columns: 7fr 5fr;
+    gap: 80px;
+  }
+}
+
+.ethos-left { order: 2; }
+@media (min-width: 768px) { .ethos-left { order: 1; } }
+
+.ethos-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 300;
+  line-height: 1.05;
+  margin-bottom: 40px;
+}
+
+.ethos-body {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 17px;
+  max-width: 520px;
+}
+
+.ethos-body p + p { margin-top: 24px; }
+
+.ethos-stats {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 480px;
+}
+
+.stat {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 44px);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.ethos-right { order: 1; }
+@media (min-width: 768px) { .ethos-right { order: 2; } }
+
+/* ── PHOTO SLOT: stonework ── */
+.ethos-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── JOURNEYS ── */
+#journeys {
+  background: var(--foreground);
+  color: var(--background);
+  padding: 96px 0;
+}
+
+.journeys-header {
+  padding: 0 40px;
+  max-width: 1280px;
+  margin: 0 auto 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .journeys-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}
+
+.journeys-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.journeys-meta {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(212,204,192,0.5);
+  max-width: 260px;
+}
+
+@media (min-width: 768px) { .journeys-meta { text-align: right; } }
+
+.journeys-grid {
+  padding: 0 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,0.1);
+}
+
+@media (min-width: 768px) {
+  .journeys-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.journey-card {
+  background: var(--foreground);
+  padding: 32px 40px 48px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--background);
+  transition: background 0.4s;
+}
+.journey-card:hover { background: #252018; }
+
+.journey-img-wrap {
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+/* ── PHOTO SLOT: machu-picchu & jungle ── */
+.journey-img {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  display: block;
+  transition: transform 1s ease;
+}
+.journey-card:hover .journey-img { transform: scale(1.05); }
+
+.journey-eyebrow {
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.journey-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+
+.journey-desc {
+  color: rgba(212,204,192,0.65);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 40px;
+  max-width: 480px;
+}
+
+.journey-tags {
+  margin-top: auto;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.journey-tag {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(212,204,192,0.45);
+}
+
+.journey-link {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  align-self: flex-start;
+  position: relative;
+}
+.journey-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.35s;
+}
+.journey-card:hover .journey-link::after { width: 100%; }
+
+/* ── GUIDE ── */
+#guide {
+  padding: 96px 40px 160px;
+  background: var(--background);
+}
+
+.guide-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .guide-inner { grid-template-columns: 1fr 1fr; gap: 96px; }
+}
+
+/* ── PHOTO SLOT: marcello ── */
+.guide-img {
+  width: 100%;
+  aspect-ratio: 5/6;
+  object-fit: cover;
+  display: block;
+}
+
+.guide-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4.5vw, 56px);
+  font-weight: 300;
+  margin-bottom: 40px;
+  line-height: 1.05;
+}
+
+.guide-body {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.guide-body p + p { margin-top: 24px; }
+
+.guide-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(22px, 2.5vw, 30px);
+  color: var(--foreground);
+  border-left: 1px solid var(--accent);
+  padding-left: 24px;
+  margin-top: 40px;
+  line-height: 1.4;
+}
+
+/* ── APPLY / SELECTION ── */
+#apply {
+  padding: 96px 40px 160px;
+  background: var(--stone-deep);
+  color: var(--earth);
+}
+
+.apply-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.apply-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 300;
+  margin-bottom: 32px;
+  line-height: 1.05;
+}
+
+.apply-desc {
+  color: rgba(212,204,192,0.65);
+  margin-bottom: 64px;
+  line-height: 1.9;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 17px;
+}
+
+.apply-steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,0.1);
+  margin-bottom: 80px;
+}
+
+@media (min-width: 768px) {
+  .apply-steps { grid-template-columns: repeat(3,1fr); }
+}
+
+.apply-step {
+  background: var(--stone-deep);
+  padding: 32px 40px;
+  text-align: left;
+}
+
+.step-num {
+  color: var(--accent);
+  display: block;
+  margin-bottom: 24px;
+}
+
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+.step-desc {
+  color: rgba(212,204,192,0.6);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.apply-cta {
+  display: inline-block;
+  padding: 20px 48px;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: var(--earth);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.5s, color 0.5s;
+}
+.apply-cta:hover { background: white; color: var(--foreground); }
+
+.apply-note {
+  color: rgba(212,204,192,0.4);
+  margin-top: 32px;
+}
+
+/* ── TESTIMONIALS ── */
+#testimonials {
+  padding: 96px 40px 160px;
+  background: var(--background);
+  border-top: 1px solid var(--border);
+}
+
+.testi-inner { max-width: 1280px; margin: 0 auto; }
+
+.testi-header {
+  max-width: 560px;
+  margin-bottom: 64px;
+}
+
+.testi-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4.5vw, 56px);
+  font-weight: 300;
+  line-height: 1.05;
+}
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px 64px;
+}
+
+@media (min-width: 768px) {
+  .testi-grid { grid-template-columns: repeat(3,1fr); }
+}
+
+.testi-item {
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+}
+
+.testi-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 24px);
+  line-height: 1.45;
+  margin-bottom: 32px;
+}
+
+.testi-name { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; }
+.testi-role { color: var(--muted); margin-top: 4px; }
+
+/* ── INSIGHTS ── */
+#insights {
+  padding: 96px 40px 160px;
+  background: var(--stone-deep);
+  color: var(--earth);
+}
+
+.insights-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+
+@media (min-width: 768px) {
+  .insights-inner { grid-template-columns: 5fr 6fr; gap: 64px; align-items: start; }
+}
+
+.insights-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4.5vw, 56px);
+  font-weight: 300;
+  line-height: 1.05;
+  margin-bottom: 40px;
+}
+
+/* ── PHOTO SLOT: insights ── */
+.insights-img {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 40px;
+}
+
+.insights-read-all {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  position: relative;
+}
+.insights-read-all::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.35s;
+}
+.insights-read-all:hover::after { width: 100%; }
+
+.insights-list { display: flex; flex-direction: column; }
+
+.insight-item {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 32px 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  text-decoration: none;
+  color: var(--earth);
+  transition: background 0.3s;
+}
+.insight-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+.insight-item:hover { background: rgba(255,255,255,0.03); }
+
+.insight-num {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 8px;
+  width: 96px;
+}
+
+.insight-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.insight-desc {
+  font-size: 13px;
+  color: rgba(212,204,192,0.55);
+  line-height: 1.65;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 96px 40px 128px;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 64px;
+}
+
+@media (min-width: 768px) {
+  .footer-inner { grid-template-columns: 7fr 4fr; align-items: start; }
+}
+
+.footer-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.footer-desc {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+  max-width: 540px;
+}
+
+.footer-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  border-bottom: 1px solid rgba(26,22,18,0.3);
+  padding-bottom: 12px;
+  max-width: 440px;
+}
+
+.footer-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 8px 0;
+  font-family: 'Inter', sans-serif;
+  color: var(--foreground);
+}
+
+.footer-form input::placeholder { color: rgba(138,130,120,0.6); }
+
+.footer-form button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  color: var(--foreground);
+  transition: color 0.3s;
+  padding: 8px 0;
+}
+.footer-form button:hover { color: var(--accent); }
+
+.footer-right { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; }
+
+.footer-based p:first-child { color: var(--muted); margin-bottom: 8px; }
+.footer-based p:last-child { color: rgba(26,22,18,0.8); font-size: 14px; }
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── PHOTO SLOT: logo in footer ── */
+.footer-logo {
+  width: 48px; height: 48px;
+  object-fit: contain;
+  display: block;
+}
+
+.footer-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 24px;
+}
+
+.footer-copy { color: var(--muted); }
+
+/* ── RESPONSIVE NAV ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+  .nav-inner { padding: 20px 24px; }
+  #experience, #guide { padding-left: 24px; padding-right: 24px; }
+  #journeys .journeys-header,
+  #journeys .journeys-grid { padding-left: 24px; padding-right: 24px; }
+  #apply, #testimonials, #insights, footer { padding-left: 24px; padding-right: 24px; }
+  .journey-card { padding: 24px 24px 36px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand" aria-label="Shamanic Travels — Home">
+      <!-- PHOTO SLOT: replace src with your logo filename -->
+      <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo">
+      <span class="nav-brand-name">Shamanic Travels</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#experience" class="eyebrow link-underline">Ethos</a></li>
+      <li><a href="#journeys" class="eyebrow link-underline">Andean Arc</a></li>
+      <li><a href="#journeys" class="eyebrow link-underline">Amazon</a></li>
+      <li><a href="#guide" class="eyebrow link-underline">The Guide</a></li>
+      <li><a href="#insights" class="eyebrow link-underline">Insights</a></li>
+      <li><a href="#apply" class="eyebrow apply">Apply</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" id="menuBtn">
+      <span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section id="hero">
+  <div class="hero-img-wrap">
+    <!-- PHOTO SLOT: replace src with hero-machu-picchu.jpg -->
+    <img
+      src="hero.jpg"
+      alt="Mist rolling over Machu Picchu at dawn"
+      class="animate-slow-zoom"
+      width="1920" height="1280">
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <p class="eyebrow hero-eyebrow animate-reveal">Invitation · Curation · Peru</p>
+    <h1 class="hero-title animate-reveal animate-reveal-delay-1">
+      Private Curated<br>
+      <span class="italic gold">Journeys in Peru</span>
+    </h1>
+    <p class="hero-subtitle animate-reveal animate-reveal-delay-2">
+      Invitation-only immersive experiences for a maximum of six participants
+    </p>
+    <div class="animate-reveal animate-reveal-delay-3">
+      <a href="#apply" class="hero-cta">Request Private Interview</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-inner">
+      <span class="eyebrow">Scroll</span>
+      <span class="hero-scroll-line"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ ETHOS ══════════════════════ -->
+<section id="experience">
+  <div class="ethos-left">
+    <span class="eyebrow text-accent" style="display:block; margin-bottom:32px;">The Ethos</span>
+    <h2 class="ethos-title">
+      Not a tour.<br><span class="italic">An internal evolution.</span>
+    </h2>
+    <div class="ethos-body">
+      <p>Shamanic Travels is a private, selection-based journey across the high Andes and Amazonian basins. We do not provide group tours. We curate deep experiential thresholds for those ready to cross them.</p>
+      <p>Combining the logistical precision of luxury travel with the profound silence of Peru's sacred geography, every element is managed with calm authority and absolute privacy.</p>
+    </div>
+    <dl class="ethos-stats">
+      <div class="stat">
+        <span class="stat-num font-serif">6</span>
+        <dd class="stat-label eyebrow">Participants per journey</dd>
+      </div>
+      <div class="stat">
+        <span class="stat-num font-serif">21</span>
+        <dd class="stat-label eyebrow">Days of immersion</dd>
+      </div>
+      <div class="stat">
+        <span class="stat-num font-serif">1:1</span>
+        <dd class="stat-label eyebrow">Interview required</dd>
+      </div>
+    </dl>
+  </div>
+  <div class="ethos-right">
+    <!-- PHOTO SLOT: replace src with stonework.jpg -->
+    <img
+      src="stonework.jpg"
+      alt="Detail of ancient Incan stonework"
+      class="ethos-img"
+      loading="lazy"
+      width="896" height="1120">
+  </div>
+</section>
+
+
+<!-- ══════════════════════ JOURNEYS ══════════════════════ -->
+<section id="journeys">
+  <div class="journeys-header">
+    <div>
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;">Two Journeys</span>
+      <h2 class="journeys-title">
+        Two distinct paths.<br>One private system.
+      </h2>
+    </div>
+    <p class="eyebrow journeys-meta">Each journey · 21 days · Maximum six participants · Selection required</p>
+  </div>
+
+  <div class="journeys-grid">
+
+    <!-- Journey I -->
+    <a href="andean-arc.html" class="journey-card">
+      <div class="journey-img-wrap">
+        <!-- PHOTO SLOT: replace src with andean-arc.jpg or hero.jpg -->
+        <img
+          src="hero.jpg"
+          alt="Machu Picchu at dawn"
+          class="journey-img"
+          loading="lazy"
+          width="1200" height="800">
+      </div>
+      <span class="eyebrow journey-eyebrow">Journey One · 21 Days</span>
+      <h3 class="journey-title">The Andean Arc</h3>
+      <p class="journey-desc">A cultural and geographic expedition from the Pacific coast through the high Andes — Paracas, Nazca, Arequipa, Titicaca, Palcoyo, Machu Picchu and Cusco — with ritual integration embedded along the route.</p>
+      <div class="journey-tags">
+        <span class="journey-tag eyebrow">Coast · Desert · Andes</span>
+        <span class="journey-tag eyebrow">Cultural &amp; Ritual Integration</span>
+      </div>
+      <span class="journey-link eyebrow">Enter Journey I →</span>
+    </a>
+
+    <!-- Journey II -->
+    <a href="amazon.html" class="journey-card">
+      <div class="journey-img-wrap">
+        <!-- PHOTO SLOT: replace src with jungle.jpg -->
+        <img
+          src="jungle.jpg"
+          alt="Peruvian Amazon canopy"
+          class="journey-img"
+          loading="lazy"
+          width="1200" height="800">
+      </div>
+      <span class="eyebrow journey-eyebrow">Journey Two · 21 Days</span>
+      <h3 class="journey-title">The Amazon Field Immersion</h3>
+      <p class="journey-desc">A structured field-based immersion deep in the Peruvian Amazon forest. River transfer from Pucallpa into remote basin territory, alternating cycles of guided traditional practice and integration.</p>
+      <div class="journey-tags">
+        <span class="journey-tag eyebrow">Pucallpa · Deep Basin</span>
+        <span class="journey-tag eyebrow">3-Month Preparation Required</span>
+      </div>
+      <span class="journey-link eyebrow">Enter Journey II →</span>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════ GUIDE ══════════════════════ -->
+<section id="guide">
+  <div class="guide-inner">
+    <!-- PHOTO SLOT: replace src with marcello.jpg -->
+    <img
+      src="marcello.jpg"
+      alt="Portrait of Marcello Buglione"
+      class="guide-img"
+      loading="lazy"
+      width="1024" height="1024">
+
+    <div>
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:24px;">The Guide</span>
+      <h2 class="guide-title">Marcello Buglione</h2>
+      <div class="guide-body">
+        <p>With a foundation in strategic communication, NLP and hypnosis, and decades of international training, Marcello is more than a guide. He is the architect of the experience.</p>
+        <p>His evolution into immersive Peruvian journeys distils complex cultural wisdom into precise, transformative travel paths for executives, entrepreneurs and professionals operating at high altitudes of life.</p>
+        <blockquote class="guide-quote">
+          "We do not design entertainment. We design attention, presence, and experience."
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ APPLY ══════════════════════ -->
+<section id="apply">
+  <div class="apply-inner">
+    <span class="eyebrow text-accent" style="display:block; margin-bottom:32px;">The Protocol</span>
+    <h2 class="apply-title">The Selection Process</h2>
+    <p class="apply-desc">Due to the intimate nature of these journeys, availability is strictly limited to six participants per group. Acceptance is based on a private interview to ensure group compatibility and individual readiness.</p>
+
+    <div class="apply-steps">
+      <div class="apply-step">
+        <span class="eyebrow step-num">01</span>
+        <h3 class="step-title">Application</h3>
+        <p class="step-desc">A brief letter of intent. Background, motivation, and the moment that brought you here.</p>
+      </div>
+      <div class="apply-step">
+        <span class="eyebrow step-num">02</span>
+        <h3 class="step-title">Private Interview</h3>
+        <p class="step-desc">A confidential conversation with Marcello. Compatibility, expectations and preparation.</p>
+      </div>
+      <div class="apply-step">
+        <span class="eyebrow step-num">21</span>
+        <h3 class="step-title">Selection</h3>
+        <p class="step-desc">Upon acceptance, your place is held within the group of six. Preparatory dossier delivered.</p>
+      </div>
+    </div>
+
+    <a href="mailto:hello@shamanictravels.com" class="apply-cta">Request Private Interview</a>
+    <p class="eyebrow apply-note" style="margin-top:32px;">Reserve Your Place · Interview Required</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ TESTIMONIALS ══════════════════════ -->
+<section id="testimonials">
+  <div class="testi-inner">
+    <div class="testi-header">
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;">Voices</span>
+      <h2 class="testi-title">Words from past <span class="italic">participants</span>.</h2>
+    </div>
+
+    <div class="testi-grid">
+      <figure class="testi-item">
+        <blockquote class="testi-quote">
+          "The most considered twelve days of my life. Marcello's curation was beyond what I had imagined possible from a private journey."
+        </blockquote>
+        <figcaption>
+          <p class="eyebrow testi-name">E.S.</p>
+          <p class="eyebrow testi-role text-muted">Founder · London</p>
+        </figcaption>
+      </figure>
+
+      <figure class="testi-item">
+        <blockquote class="testi-quote">
+          "Logistically flawless, personally transformative. The screening process is not theatre — it is the reason the group worked."
+        </blockquote>
+        <figcaption>
+          <p class="eyebrow testi-name">A.M.</p>
+          <p class="eyebrow testi-role text-muted">Investor · Milano</p>
+        </figcaption>
+      </figure>
+
+      <figure class="testi-item">
+        <blockquote class="testi-quote">
+          "I returned with a clarity that has held for months. This is not a holiday. It is a recalibration."
+        </blockquote>
+        <figcaption>
+          <p class="eyebrow testi-name">J.R.</p>
+          <p class="eyebrow testi-role text-muted">Executive · New York</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ INSIGHTS ══════════════════════ -->
+<section id="insights">
+  <div class="insights-inner">
+    <div>
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:24px;">Insights</span>
+      <h2 class="insights-title">Notes from the field.</h2>
+      <!-- PHOTO SLOT: replace src with insights.jpg -->
+      <img
+        src="insights.jpg"
+        alt="Editorial still life of Andean textiles and botanicals"
+        class="insights-img"
+        loading="lazy"
+        width="1024" height="704">
+      <a href="#" class="eyebrow insights-read-all">Read all dispatches →</a>
+    </div>
+
+    <div class="insights-list">
+      <a href="#" class="insight-item">
+        <span class="eyebrow insight-num text-accent">Field Note 01</span>
+        <div>
+          <h3 class="insight-title">The Language of the Andes</h3>
+          <p class="insight-desc">On Quechua, terrain and the architecture of high-altitude attention.</p>
+        </div>
+      </a>
+      <a href="#" class="insight-item">
+        <span class="eyebrow insight-num text-accent">Field Note 02</span>
+        <div>
+          <h3 class="insight-title">Luxury as Restraint</h3>
+          <p class="insight-desc">Why true private travel removes friction rather than adding embellishment.</p>
+        </div>
+      </a>
+      <a href="#" class="insight-item">
+        <span class="eyebrow insight-num text-accent">Field Note 03</span>
+        <div>
+          <h3 class="insight-title">The Amazon Protocol</h3>
+          <p class="insight-desc">Preparation, posture and the ethics of guided immersion in the basin.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:24px;">Private Dispatches</span>
+      <h2>Receive <span class="italic">La Planta de los Dioses</span></h2>
+      <p class="footer-desc">A digital edition of Marcello's essay on the botanical heritage of the Amazon, with occasional dispatches on forthcoming private journeys.</p>
+      <form class="footer-form" onsubmit="return false;">
+        <input type="email" placeholder="Email address" aria-label="Email address" maxlength="255">
+        <button type="submit" class="eyebrow">Request</button>
+      </form>
+    </div>
+
+    <div class="footer-right">
+      <div class="footer-based eyebrow">
+        <p>Based In</p>
+        <p>London · Lima · Milano</p>
+      </div>
+      <div class="footer-brand">
+        <!-- PHOTO SLOT: replace src with logo.jpg -->
+        <img src="logo.jpg" alt="Shamanic Travels" class="footer-logo" width="48" height="48">
+        <span class="footer-brand-name font-serif italic">Shamanic Travels</span>
+        <p class="eyebrow footer-copy text-muted">© 2025 · Private Curated Journeys</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // Nav scroll effect
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      nav.style.background = 'rgba(245,242,236,0.96)';
+      nav.style.mixBlendMode = 'normal';
+      nav.style.color = '#1a1612';
+      nav.style.backdropFilter = 'blur(12px)';
+    } else {
+      nav.style.background = '';
+      nav.style.mixBlendMode = 'difference';
+      nav.style.color = 'white';
+      nav.style.backdropFilter = '';
+    }
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.querySelector('.nav-links');
+  menuBtn.addEventListener('click', () => {
+    const open = navLinks.style.display === 'flex';
+    navLinks.style.display = open ? '' : 'flex';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.position = 'absolute';
+    navLinks.style.top = '72px';
+    navLinks.style.left = '0';
+    navLinks.style.right = '0';
+    navLinks.style.background = '#f5f2ec';
+    navLinks.style.padding = '24px';
+    navLinks.style.gap = '20px';
+    if (open) navLinks.style.display = 'none';
+    menuBtn.setAttribute('aria-expanded', !open);
+  });
+</script>
+
+</body>
+</html>
