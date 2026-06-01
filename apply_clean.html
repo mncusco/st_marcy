@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply for Selection — Private Interview · Shamanic Travels</title>
+<title>Apply for Private Luxury Peru Tours — Invitation-Only Interview | Shamanic Travels</title>
 
-<meta name="description" content="Request a private interview for invitation-only journeys in Peru. Maximum six participants per group. Application required.">
+<meta name="description" content="Request a private interview for an invitation-only luxury travel experience in Peru. Curated journeys with a maximum of six guests. Application required.">
 <meta name="author" content="Shamanic Travels">
 <meta name="robots" content="noindex,follow">
 
 <!-- Open Graph -->
-<meta property="og:title" content="Apply for Selection — Private Interview">
-<meta property="og:description" content="Invitation-only journeys in Peru. Private selection process.">
+<meta property="og:title" content="Apply for Private Luxury Peru Tours — Invitation-Only Interview">
+<meta property="og:description" content="Invitation-only luxury travel experiences in Peru. Private selection process with interview required.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://shamanictravels.com/apply">
 <meta property="og:image" content="https://shamanictravels.com/og.jpg">
@@ -23,23 +23,22 @@
 
 <style>
 :root {
-  --bg:#f5f2ec;
-  --fg:#1a1612;
-  --muted:#8a8278;
-  --border:rgba(26,22,18,.12);
-  --accent:#b89a5a;
+  --bg: #f5f2ec;
+  --fg: #1a1612;
+  --muted: #8a8278;
+  --border: rgba(26,22,18,0.12);
+  --accent: #b89a5a;
 }
 
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
 body{
-  margin:0;
   background:var(--bg);
   color:var(--fg);
   font-family:Inter,sans-serif;
   font-weight:300;
   line-height:1.6;
 }
-
-.serif{font-family:"Cormorant Garamond",serif}
 
 .container{
   max-width:900px;
@@ -55,53 +54,6 @@ h1{
 }
 
 p{color:var(--muted)}
-
-form{margin-top:60px}
-
-.field{margin-bottom:24px;display:flex;flex-direction:column}
-
-label{
-  font-size:10px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  margin-bottom:8px;
-  color:var(--muted);
-}
-
-input,textarea{
-  border:none;
-  border-bottom:1px solid var(--border);
-  padding:10px 0;
-  background:transparent;
-  font-size:15px;
-  outline:none;
-}
-
-input:focus,textarea:focus{
-  border-bottom-color:var(--accent);
-}
-
-button{
-  margin-top:40px;
-  padding:16px 40px;
-  border:1px solid var(--fg);
-  background:none;
-  cursor:pointer;
-  text-transform:uppercase;
-  letter-spacing:.2em;
-  font-size:10px;
-}
-
-button:hover{
-  background:var(--fg);
-  color:var(--bg);
-}
-
-.note{
-  margin-top:16px;
-  font-size:12px;
-  color:var(--muted);
-}
 </style>
 
 <script>
@@ -115,12 +67,21 @@ function gtag(){dataLayer.push(arguments);}
 
 <div class="container">
 
-  <h1 class="serif">Private Interview Application</h1>
+  <!-- SEO OPTIMIZED H1 -->
+  <h1 class="serif">
+    Private Interview Application — Luxury Peru Travel (Invitation-Only)
+  </h1>
 
+  <!-- SEO OPTIMIZED INTRO -->
   <p>
-    This experience is invitation-only. Only a limited number of interviews are granted each cycle.
+    This is an invitation-only application for private luxury travel experiences in Peru. Each journey is carefully curated for a maximum of six guests and requires a personal interview before acceptance.
   </p>
 
+  <p>
+    Only a limited number of interviews are granted each cycle to ensure exclusivity and depth of experience.
+  </p>
+
+  <!-- REST OF YOUR FORM (UNCHANGED) -->
   <form id="applyForm" onsubmit="handleSubmit(event)">
 
     <div class="field">
@@ -155,12 +116,13 @@ function gtag(){dataLayer.push(arguments);}
 
     <div class="field">
       <label>Why do you want this journey?</label>
-      <textarea id="motivation" rows="6" required placeholder="Be direct. We are not evaluating writing style, but clarity of intention."></textarea>
+      <textarea id="motivation" rows="6" required
+        placeholder="We curate high-intent travelers for exclusive luxury journeys in Peru. Be clear and intentional."></textarea>
     </div>
 
     <button type="submit">Submit Application</button>
 
-    <p class="note">
+    <p style="margin-top:16px;font-size:12px;color:#8a8278;">
       Your application is reviewed privately. If selected, you will be contacted within ten days.
     </p>
 
@@ -190,7 +152,7 @@ ${motivation}`;
     gtag('event','apply_submit',{event_category:'engagement'});
   }
 
-  // send
+  // send email
   window.location.href =
   `mailto:shamanictravels@gmail.com?subject=Application — ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
 }
