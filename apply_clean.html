@@ -39,7 +39,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/>
 </noscript>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z40KLH5V17"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -49,7 +49,7 @@ gtag('config', 'G-Z40KLH5V17');
 </script>
 
 <style>
-body{
+body {
   margin:0;
   font-family:Inter,sans-serif;
   background:#f5f2ec;
@@ -57,35 +57,58 @@ body{
   font-weight:300;
 }
 
-.container{
+.container {
   max-width:900px;
   margin:0 auto;
-  padding:120px 24px;
+  padding:80px 24px;
 }
 
-h1{
+h1 {
   font-family:"Cormorant Garamond",serif;
   font-weight:300;
   font-size:44px;
   margin-bottom:16px;
 }
 
-p{
+h2 {
+  font-family:"Cormorant Garamond",serif;
+  font-weight:400;
+  font-size:28px;
+  font-style:italic;
+  margin-top:48px;
+  margin-bottom:24px;
+  border-bottom:1px solid rgba(0,0,0,0.1);
+  padding-bottom:8px;
+}
+
+p {
   color:#8a8278;
   line-height:1.6;
 }
 
-form{
-  margin-top:60px;
+form {
+  margin-top:40px;
 }
 
-.field{
+.grid-2 {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+@media(max-width:600px){
+  .grid-2 {
+    grid-template-columns:1fr;
+  }
+}
+
+.field {
   margin-bottom:24px;
   display:flex;
   flex-direction:column;
 }
 
-label{
+label {
   font-size:10px;
   letter-spacing:.2em;
   text-transform:uppercase;
@@ -93,20 +116,39 @@ label{
   color:#8a8278;
 }
 
-input,textarea{
+input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="date"], textarea {
   border:none;
   border-bottom:1px solid rgba(0,0,0,0.15);
   padding:10px 0;
   background:transparent;
   outline:none;
   font-size:15px;
+  width: 100%;
 }
 
-input:focus,textarea:focus{
+input:focus, textarea:focus {
   border-bottom-color:#b89a5a;
 }
 
-button{
+.radio-group, .checkbox-group {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radio-group label, .checkbox-group label {
+  font-size: 14px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #1a1612;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+button {
   margin-top:40px;
   padding:16px 40px;
   border:1px solid #1a1612;
@@ -115,14 +157,15 @@ button{
   text-transform:uppercase;
   letter-spacing:.2em;
   font-size:10px;
+  transition: all 0.3s ease;
 }
 
-button:hover{
+button:hover {
   background:#1a1612;
   color:#f5f2ec;
 }
 
-.note{
+.note {
   margin-top:16px;
   font-size:12px;
   color:#8a8278;
@@ -135,55 +178,172 @@ button:hover{
 
 <div class="container">
 
-  <h1>Private Interview Application — Luxury Peru Travel</h1>
+  <h1>Request a Private Interview</h1>
 
   <p>
-    This is an invitation-only application for private luxury travel experiences in Peru.
-    Each journey is curated for a maximum of six guests and requires a personal interview.
+    Six places per journey. Acceptance is decided through a confidential interview with Marcello. 
+    This form is the beginning of that conversation — answer in your own voice.
   </p>
 
   <form onsubmit="handleSubmit(event)">
 
+    <h2>Chapter I: Identity</h2>
+    <div class="grid-2">
+      <div class="field">
+        <label>Full name</label>
+        <input id="fullName" type="text" required>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input id="email" type="email" required>
+      </div>
+      <div class="field">
+        <label>Phone (with country code)</label>
+        <input id="phone" type="tel" required>
+      </div>
+      <div class="field">
+        <label>Age</label>
+        <input id="age" type="number" min="21" max="95" required>
+      </div>
+      <div class="field">
+        <label>Country of residence</label>
+        <input id="country" type="text" required>
+      </div>
+      <div class="field">
+        <label>City</label>
+        <input id="city" type="text" required>
+      </div>
+      <div class="field">
+        <label>Profession / occupation</label>
+        <input id="job" type="text" required>
+      </div>
+      <div class="field">
+        <label>Languages spoken</label>
+        <input id="languages" type="text" placeholder="English, Italian, Spanish…" required>
+      </div>
+    </div>
+
+    <h2>Chapter II: Journey</h2>
     <div class="field">
-      <label>Full name</label>
-      <input id="fullName" required>
+      <label>Which journey draws you?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="journey" value="The Andean Arc" required> The Andean Arc</label>
+        <label><input type="radio" name="journey" value="The Amazon Field Immersion"> The Amazon Field Immersion</label>
+        <label><input type="radio" name="journey" value="Undecided / Guide's recommendation"> Open to the guide's recommendation</label>
+      </div>
+    </div>
+
+    <h2>Chapter III: Eligibility & Readiness</h2>
+    <div class="field">
+      <label>Prior experience with traditional plant practices</label>
+      <div class="radio-group">
+        <label><input type="radio" name="priorExperience" value="None" required> None</label>
+        <label><input type="radio" name="priorExperience" value="Some"> One or two prior experiences</label>
+        <label><input type="radio" name="priorExperience" value="Extensive"> Extensive — multiple, sustained</label>
+      </div>
     </div>
 
     <div class="field">
-      <label>Email</label>
-      <input id="email" type="email" required>
+      <label>If applicable, briefly describe your prior experience (optional)</label>
+      <textarea id="priorExperienceDetail" rows="3"></textarea>
     </div>
 
     <div class="field">
-      <label>Phone</label>
-      <input id="phone" type="tel" required>
+      <label>Current medications (if any)</label>
+      <textarea id="medications" rows="2" placeholder="Including SSRIs, MAOIs, lithium, blood pressure medication, etc."></textarea>
     </div>
 
     <div class="field">
-      <label>Age</label>
-      <input id="age" type="number" min="21" required>
+      <label>Relevant mental health history</label>
+      <textarea id="mentalHealthHistory" rows="2" placeholder="Held in strict confidence."></textarea>
     </div>
 
     <div class="field">
-      <label>Country</label>
-      <input id="country" required>
+      <label>Any cardiac or serious neurological condition?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="cardiac" value="No" required> No</label>
+        <label><input type="radio" name="cardiac" value="Yes"> Yes (we will discuss in interview)</label>
+      </div>
+    </div>
+
+    <div class="field checkbox-group">
+      <label>
+        <input type="checkbox" id="consentPrep" required> 
+        I understand a three-month preparation protocol is mandatory and I am prepared to honour it.
+      </label>
+      <label>
+        <input type="checkbox" id="consentInterview" required> 
+        I understand acceptance is decided only after a private interview with the guide.
+      </label>
+    </div>
+
+    <h2>Chapter IV: Intention</h2>
+    <div class="field">
+      <label>What brings you to this journey now?</label>
+      <textarea id="motivation" rows="6" minlength="80" required></textarea>
     </div>
 
     <div class="field">
-      <label>Profession</label>
-      <input id="job" required>
+      <label>If you had to phrase your intention in a single paragraph, what would it be?</label>
+      <textarea id="intention" rows="4" minlength="40" required></textarea>
     </div>
 
     <div class="field">
-      <label>Why do you want this journey?</label>
-      <textarea id="motivation" rows="6" required
-        placeholder="We curate high-intent travelers for exclusive luxury journeys in Peru. Be clear and intentional."></textarea>
+      <label>How did you come to know of Shamanic Travels? (optional)</label>
+      <input id="referral" type="text">
+    </div>
+
+    <h2>Chapter V: Request an Interview Time</h2>
+    <p>Offer up to three preferred windows in your local time.</p>
+    
+    <div class="grid-2">
+      <div class="field">
+        <label>Option 1 - Date</label>
+        <input id="opt1Date" type="date" required>
+      </div>
+      <div class="field">
+        <label>Option 1 - Time window</label>
+        <input id="opt1Time" type="text" placeholder="e.g. 09:00–11:00" required>
+      </div>
+      
+      <div class="field">
+        <label>Option 2 - Date (optional)</label>
+        <input id="opt2Date" type="date">
+      </div>
+      <div class="field">
+        <label>Option 2 - Time window (optional)</label>
+        <input id="opt2Time" type="text" placeholder="e.g. 09:00–11:00">
+      </div>
+
+      <div class="field">
+        <label>Option 3 - Date (optional)</label>
+        <input id="opt3Date" type="date">
+      </div>
+      <div class="field">
+        <label>Option 3 - Time window (optional)</label>
+        <input id="opt3Time" type="text" placeholder="e.g. 09:00–11:00">
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label>Your timezone</label>
+        <input id="timezone" type="text" value="UTC" required>
+      </div>
+      <div class="field">
+        <label>Preferred mode</label>
+        <div class="radio-group">
+          <label><input type="radio" name="contactMethod" value="Video call" required> Video call</label>
+          <label><input type="radio" name="contactMethod" value="Phone"> Phone</label>
+          <label><input type="radio" name="contactMethod" value="Either"> Either</label>
+        </div>
+      </div>
     </div>
 
     <button type="submit">Submit Application</button>
 
     <p class="note">
-      Your application is reviewed privately. If selected, you will be contacted within ten days.
+      Your application is private. We respond personally within ten days.
     </p>
 
   </form>
@@ -191,29 +351,53 @@ button:hover{
 </div>
 
 <script>
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+function getRadioVal(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : 'Not selected';
+}
+
 function handleSubmit(e){
   e.preventDefault();
 
-  const name = document.getElementById('fullName').value || '';
-  const email = document.getElementById('email').value || '';
-  const phone = document.getElementById('phone').value || '';
-  const age = document.getElementById('age').value || '';
-  const country = document.getElementById('country').value || '';
-  const job = document.getElementById('job').value || '';
-  const motivation = document.getElementById('motivation').value || '';
-
   const body = 
-`New Application — Shamanic Travels
+`--- IDENTITY ---
+Name: ${getVal('fullName')}
+Email: ${getVal('email')}
+Phone: ${getVal('phone')}
+Age: ${getVal('age')}
+Country: ${getVal('country')}
+City: ${getVal('city')}
+Profession: ${getVal('job')}
+Languages: ${getVal('languages')}
 
-Name: ${name}
-Email: ${email}
-Phone: ${phone}
-Age: ${age}
-Country: ${country}
-Profession: ${job}
+--- JOURNEY ---
+Selected: ${getRadioVal('journey')}
 
-Motivation:
-${motivation}`;
+--- ELIGIBILITY & READINESS ---
+Prior Exp: ${getRadioVal('priorExperience')}
+Exp Detail: ${getVal('priorExperienceDetail')}
+Medications: ${getVal('medications')}
+Mental Health: ${getVal('mentalHealthHistory')}
+Cardiac/Neuro: ${getRadioVal('cardiac')}
+Agreed to Prep Protocol: Yes
+Agreed to Interview: Yes
+
+--- INTENTION ---
+Motivation: ${getVal('motivation')}
+Single Paragraph Intention: ${getVal('intention')}
+Referral: ${getVal('referral')}
+
+--- INTERVIEW PREFERENCE ---
+Timezone: ${getVal('timezone')}
+Method: ${getRadioVal('contactMethod')}
+Opt 1: ${getVal('opt1Date')} at ${getVal('opt1Time')}
+Opt 2: ${getVal('opt2Date')} at ${getVal('opt2Time')}
+Opt 3: ${getVal('opt3Date')} at ${getVal('opt3Time')}`;
 
   // =========================
   // 🔥 META PIXEL EVENT
@@ -240,9 +424,11 @@ ${motivation}`;
   // 📩 SEND EMAIL
   // =========================
   window.location.href = 
-    `mailto:marcello.buglione@gmail.com?subject=Application — ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
+    `mailto:marcello.buglione@gmail.com?subject=Application — ${encodeURIComponent(getVal('fullName'))}&body=${encodeURIComponent(body)}`;
 }
 </script>
 
 </body>
 </html>
+
+```
