@@ -1,4 +1,4 @@
-<!DOCTYPE html>
++<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -12,32 +12,57 @@
 
 <!-- Open Graph -->
 <meta property="og:title" content="Apply for Private Luxury Peru Tours — Invitation-Only Interview">
-<meta property="og:description" content="Invitation-only luxury travel experiences in Peru. Private selection process with interview required.">
+<meta property="og:description" content="Invitation-only luxury travel experiences in Peru. Private selection process.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://shamanictravels.com/apply">
 <meta property="og:image" content="https://shamanictravels.com/og.jpg">
 
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
+<!-- =========================
+     META PIXEL BASE
+========================= -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', 'PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/>
+</noscript>
+
+<!-- =========================
+     GA4 / GOOGLE ADS
+========================= -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+
 <style>
-:root {
-  --bg: #f5f2ec;
-  --fg: #1a1612;
-  --muted: #8a8278;
-  --border: rgba(26,22,18,0.12);
-  --accent: #b89a5a;
-}
-
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
 body{
-  background:var(--bg);
-  color:var(--fg);
+  margin:0;
   font-family:Inter,sans-serif;
+  background:#f5f2ec;
+  color:#1a1612;
   font-weight:300;
-  line-height:1.6;
 }
 
 .container{
@@ -49,17 +74,68 @@ body{
 h1{
   font-family:"Cormorant Garamond",serif;
   font-weight:300;
-  font-size:42px;
-  margin-bottom:20px;
+  font-size:44px;
+  margin-bottom:16px;
 }
 
-p{color:var(--muted)}
-</style>
+p{
+  color:#8a8278;
+  line-height:1.6;
+}
 
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-</script>
+form{
+  margin-top:60px;
+}
+
+.field{
+  margin-bottom:24px;
+  display:flex;
+  flex-direction:column;
+}
+
+label{
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  color:#8a8278;
+}
+
+input,textarea{
+  border:none;
+  border-bottom:1px solid rgba(0,0,0,0.15);
+  padding:10px 0;
+  background:transparent;
+  outline:none;
+  font-size:15px;
+}
+
+input:focus,textarea:focus{
+  border-bottom-color:#b89a5a;
+}
+
+button{
+  margin-top:40px;
+  padding:16px 40px;
+  border:1px solid #1a1612;
+  background:none;
+  cursor:pointer;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  font-size:10px;
+}
+
+button:hover{
+  background:#1a1612;
+  color:#f5f2ec;
+}
+
+.note{
+  margin-top:16px;
+  font-size:12px;
+  color:#8a8278;
+}
+</style>
 
 </head>
 
@@ -67,22 +143,14 @@ function gtag(){dataLayer.push(arguments);}
 
 <div class="container">
 
-  <!-- SEO OPTIMIZED H1 -->
-  <h1 class="serif">
-    Private Interview Application — Luxury Peru Travel (Invitation-Only)
-  </h1>
-
-  <!-- SEO OPTIMIZED INTRO -->
-  <p>
-    This is an invitation-only application for private luxury travel experiences in Peru. Each journey is carefully curated for a maximum of six guests and requires a personal interview before acceptance.
-  </p>
+  <h1>Private Interview Application — Luxury Peru Travel</h1>
 
   <p>
-    Only a limited number of interviews are granted each cycle to ensure exclusivity and depth of experience.
+    This is an invitation-only application for private luxury travel experiences in Peru.
+    Each journey is curated for a maximum of six guests and requires a personal interview.
   </p>
 
-  <!-- REST OF YOUR FORM (UNCHANGED) -->
-  <form id="applyForm" onsubmit="handleSubmit(event)">
+  <form onsubmit="handleSubmit(event)">
 
     <div class="field">
       <label>Full name</label>
@@ -122,7 +190,7 @@ function gtag(){dataLayer.push(arguments);}
 
     <button type="submit">Submit Application</button>
 
-    <p style="margin-top:16px;font-size:12px;color:#8a8278;">
+    <p class="note">
       Your application is reviewed privately. If selected, you will be contacted within ten days.
     </p>
 
@@ -134,27 +202,47 @@ function gtag(){dataLayer.push(arguments);}
 function handleSubmit(e){
   e.preventDefault();
 
-  const name=document.getElementById('fullName').value;
-  const email=document.getElementById('email').value;
-  const motivation=document.getElementById('motivation').value;
+  const name=document.getElementById('fullName').value||'';
+  const email=document.getElementById('email').value||'';
+  const phone=document.getElementById('phone').value||'';
+  const motivation=document.getElementById('motivation').value||'';
 
   const body=
-`New Shamanic Travels Application
+`New Application — Shamanic Travels
 
 Name: ${name}
 Email: ${email}
+Phone: ${phone}
 
 Motivation:
 ${motivation}`;
 
-  // tracking
-  if (typeof gtag === "function") {
-    gtag('event','apply_submit',{event_category:'engagement'});
+  // =========================
+  // 🔥 META PIXEL EVENT
+  // =========================
+  if(typeof fbq !== "undefined"){
+    fbq('track','Lead',{
+      content_name:'Apply Shamanic Travels',
+      value:1,
+      currency:'USD'
+    });
   }
 
-  // send email
+  // =========================
+  // 📊 GA4 / GOOGLE ADS EVENT
+  // =========================
+  if(typeof gtag !== "undefined"){
+    gtag('event','generate_lead',{
+      event_category:'apply',
+      event_label:'shamanic_travels_apply'
+    });
+  }
+
+  // =========================
+  // 📩 SEND EMAIL
+  // =========================
   window.location.href =
-  `mailto:shamanictravels@gmail.com?subject=Application — ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
+    `mailto:shamanictravels@gmail.com?subject=Application — ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
 }
 </script>
 
