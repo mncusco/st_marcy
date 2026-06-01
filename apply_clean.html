@@ -1,4 +1,4 @@
-+<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -10,21 +10,16 @@
 <meta name="author" content="Shamanic Travels">
 <meta name="robots" content="noindex,follow">
 
-<!-- Open Graph -->
 <meta property="og:title" content="Apply for Private Luxury Peru Tours — Invitation-Only Interview">
 <meta property="og:description" content="Invitation-only luxury travel experiences in Peru. Private selection process.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://shamanictravels.com/apply">
 <meta property="og:image" content="https://shamanictravels.com/og.jpg">
 
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-<!-- =========================
-     META PIXEL BASE
-========================= -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -35,7 +30,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 
-fbq('init', 'PIXEL_ID');
+fbq('init', ' 236536824187993 ');
 fbq('track', 'PageView');
 </script>
 
@@ -44,10 +39,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/>
 </noscript>
 
-<!-- =========================
-     GA4 / GOOGLE ADS
-========================= -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z40KLH5V17"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -202,17 +194,23 @@ button:hover{
 function handleSubmit(e){
   e.preventDefault();
 
-  const name=document.getElementById('fullName').value||'';
-  const email=document.getElementById('email').value||'';
-  const phone=document.getElementById('phone').value||'';
-  const motivation=document.getElementById('motivation').value||'';
+  const name = document.getElementById('fullName').value || '';
+  const email = document.getElementById('email').value || '';
+  const phone = document.getElementById('phone').value || '';
+  const age = document.getElementById('age').value || '';
+  const country = document.getElementById('country').value || '';
+  const job = document.getElementById('job').value || '';
+  const motivation = document.getElementById('motivation').value || '';
 
-  const body=
+  const body = 
 `New Application — Shamanic Travels
 
 Name: ${name}
 Email: ${email}
 Phone: ${phone}
+Age: ${age}
+Country: ${country}
+Profession: ${job}
 
 Motivation:
 ${motivation}`;
@@ -241,8 +239,8 @@ ${motivation}`;
   // =========================
   // 📩 SEND EMAIL
   // =========================
-  window.location.href =
-    `mailto:shamanictravels@gmail.com?subject=Application — ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
+  window.location.href = 
+    `mailto:marcello.buglione@gmail.com?subject=Application — ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
 }
 </script>
 
