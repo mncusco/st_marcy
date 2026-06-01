@@ -1249,6 +1249,51 @@ footer {
   </div>
 </footer>
 
+<!-- footer o ultimo script tuo -->
+</footer>
+
+<!-- QUI INCOLLI IL CODICE -->
+<script>
+  (function () {
+
+    function fireTracking() {
+
+      if (typeof fbq !== "undefined") {
+        fbq('track', 'Lead', {
+          content_name: 'Apply Shamanic Travels',
+          value: 1,
+          currency: 'USD'
+        });
+      }
+
+      if (typeof gtag !== "undefined") {
+        gtag('event', 'submit_application', {
+          event_category: 'apply',
+          event_label: 'Shamanic Travels',
+          value: 1
+        });
+      }
+
+      if (typeof gtag !== "undefined") {
+        gtag('event', 'conversion', {
+          send_to: 'AW-XXXXXXX/YYYYYYYYYY',
+          value: 1.0,
+          currency: 'USD'
+        });
+      }
+
+    }
+
+    document.addEventListener("click", function (e) {
+      const el = e.target.closest('a[href="#apply"], .apply-cta, .hero-cta');
+      if (el) fireTracking();
+    });
+
+  })();
+</script>
+
+</body>
+</html>
 
 <script>
   // Nav scroll effect
