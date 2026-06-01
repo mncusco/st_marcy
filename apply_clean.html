@@ -3,494 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Apply for Selection — Private Interview · Shamanic Travels</title>
-<meta name="description" content="Request a private interview with the guide. Application form for invitation-only journeys in Peru. Maximum six participants per group.">
+
+<meta name="description" content="Request a private interview for invitation-only journeys in Peru. Maximum six participants per group. Application required.">
 <meta name="author" content="Shamanic Travels">
 <meta name="robots" content="noindex,follow">
 
+<!-- Open Graph -->
+<meta property="og:title" content="Apply for Selection — Private Interview">
+<meta property="og:description" content="Invitation-only journeys in Peru. Private selection process.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shamanictravels.com/apply">
+<meta property="og:image" content="https://shamanictravels.com/og.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #f5f2ec; --fg: #1a1612; --muted: #8a8278;
-  --border: rgba(26,22,18,0.12); --accent: #b89a5a;
-  --gold: #c9a96e; --dark: #1e1b16; --earth: #d4ccc0;
+  --bg:#f5f2ec;
+  --fg:#1a1612;
+  --muted:#8a8278;
+  --border:rgba(26,22,18,.12);
+  --accent:#b89a5a;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.serif{font-family:'Cormorant Garamond',serif}
-.eyebrow{font-family:'Inter',sans-serif;font-size:10px;font-weight:400;letter-spacing:.2em;text-transform:uppercase}
-.accent{color:var(--accent)}
-.muted{color:var(--muted)}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .7s,color .7s;mix-blend-mode:difference;color:white}
-.nav-inner{padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
-.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-.nav-logo{width:36px;height:36px;object-fit:contain;display:block}
-.nav-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;letter-spacing:-.02em}
-.nav-links{display:flex;gap:40px;list-style:none}
-.nav-links a{color:inherit;text-decoration:none;font-size:10px;letter-spacing:.2em;text-transform:uppercase;position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:currentColor;transition:width .35s}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%}
-.nav-links a.apply{color:var(--gold)}
-.nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:flex-end;gap:6px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:8px}
-.nav-toggle span{display:block;height:1px;background:currentColor}
-.nav-toggle span:first-child{width:20px}
-.nav-toggle span:last-child{width:16px}
-
-/* HERO HEADER */
-#header{position:relative;padding:128px 40px 64px;overflow:hidden}
-@media(min-width:768px){#header{padding:176px 40px 96px}}
-.header-bg{position:absolute;inset:0;z-index:0;opacity:.08}
-.header-bg img{width:100%;height:100%;object-fit:cover;display:block}
-.header-ct{position:relative;z-index:1;max-width:900px;margin:0 auto}
-.header-back{display:inline-block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin-bottom:32px;position:relative}
-.header-back::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:currentColor;transition:width .35s}
-.header-back:hover::after{width:100%}
-.header-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:300;line-height:.98;margin-bottom:32px}
-.header-desc{color:var(--muted);max-width:640px;font-size:clamp(15px,1.3vw,18px);line-height:1.8}
-
-/* FORM */
-#application-form{padding:0 40px 96px;max-width:900px;margin:0 auto}
-
-.form-sections{display:flex;flex-direction:column;gap:112px}
-@media(min-width:768px){.form-sections{gap:112px}}
-
-/* Each chapter section */
-.form-chapter{display:grid;grid-template-columns:1fr;gap:40px}
-@media(min-width:768px){.form-chapter{grid-template-columns:3fr 9fr;gap:64px}}
-
-.chapter-hdr{}
-.chapter-num{color:var(--accent);display:block;margin-bottom:12px}
-.chapter-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,40px);font-weight:300;font-style:italic;line-height:1.1}
-
-.chapter-body{display:flex;flex-direction:column;gap:32px}
-
-/* Field groups */
-.fields-grid{display:grid;grid-template-columns:1fr;gap:32px}
-@media(min-width:640px){.fields-grid{grid-template-columns:1fr 1fr;gap-x:40px;gap-y:32px}}
-
-.field{display:flex;flex-direction:column;gap:8px}
-
-label.field-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,22,18,.7);font-family:'Inter',sans-serif;font-weight:400;display:flex;align-items:baseline;gap:12px}
-
-.field-optional{color:rgba(138,130,120,.6);font-size:9px;letter-spacing:.1em;text-transform:none;letter-spacing:normal}
-
-.field input,
-.field textarea,
-.field select {
-  width:100%;
-  background:transparent;
-  border:none;
-  border-bottom:1px solid rgba(26,22,18,.25);
-  outline:none;
-  padding:8px 0;
-  font-size:15px;
-  font-family:'Inter',sans-serif;
-  font-weight:300;
+body{
+  margin:0;
+  background:var(--bg);
   color:var(--fg);
-  transition:border-color .3s;
-  appearance:none;
+  font-family:Inter,sans-serif;
+  font-weight:300;
+  line-height:1.6;
 }
 
-.field input:focus,
-.field textarea:focus {
+.serif{font-family:"Cormorant Garamond",serif}
+
+.container{
+  max-width:900px;
+  margin:0 auto;
+  padding:120px 24px;
+}
+
+h1{
+  font-family:"Cormorant Garamond",serif;
+  font-weight:300;
+  font-size:42px;
+  margin-bottom:20px;
+}
+
+p{color:var(--muted)}
+
+form{margin-top:60px}
+
+.field{margin-bottom:24px;display:flex;flex-direction:column}
+
+label{
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  color:var(--muted);
+}
+
+input,textarea{
+  border:none;
+  border-bottom:1px solid var(--border);
+  padding:10px 0;
+  background:transparent;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus,textarea:focus{
   border-bottom-color:var(--accent);
 }
 
-.field input::placeholder,
-.field textarea::placeholder{color:rgba(138,130,120,.5)}
-
-.field textarea{resize:vertical;line-height:1.7}
-
-.char-count{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(138,130,120,.5);margin-top:4px;text-align:right}
-
-/* Radio groups */
-.radio-group{display:flex;flex-direction:column;gap:12px;padding-top:8px}
-
-.radio-label{display:flex;align-items:center;gap:12px;cursor:pointer;font-size:14px;color:var(--muted);transition:color .2s}
-.radio-label:hover{color:var(--fg)}
-
-.radio-label input[type="radio"],
-.radio-label input[type="checkbox"]{
-  width:16px;height:16px;
-  flex-shrink:0;
-  accent-color:var(--accent);
+button{
+  margin-top:40px;
+  padding:16px 40px;
+  border:1px solid var(--fg);
+  background:none;
   cursor:pointer;
-  margin-top:1px;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  font-size:10px;
 }
 
-/* Checkbox group */
-.check-group{display:flex;flex-direction:column;gap:20px;padding-top:16px}
-.check-label{display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;line-height:1.6;color:var(--muted);transition:color .2s}
-.check-label:hover{color:var(--fg)}
-.check-label input[type="checkbox"]{flex-shrink:0;margin-top:2px}
+button:hover{
+  background:var(--fg);
+  color:var(--bg);
+}
 
-/* Interview time windows */
-.time-windows{display:flex;flex-direction:column;gap:24px}
-.time-window{display:grid;grid-template-columns:80px 1fr 1fr;gap:16px;align-items:end}
-@media(max-width:640px){.time-window{grid-template-columns:1fr;gap:12px}}
-.window-num{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);padding-bottom:8px}
-
-/* SUBMIT */
-.form-submit{border-top:1px solid var(--border);padding-top:48px;display:flex;flex-direction:column;gap:16px}
-@media(min-width:768px){.form-submit{flex-direction:row;align-items:center;justify-content:space-between}}
-.submit-note{color:var(--muted);max-width:440px;font-size:13px;line-height:1.7}
-.submit-btn{display:inline-block;padding:20px 48px;border:1px solid rgba(26,22,18,.4);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:400;background:none;color:var(--fg);cursor:pointer;transition:background .5s,color .5s;white-space:nowrap}
-.submit-btn:hover{background:var(--fg);color:var(--bg)}
-
-/* FOOTER */
-footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var(--bg)}
-.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:64px}
-@media(min-width:768px){.footer-inner{grid-template-columns:7fr 4fr;align-items:start}}
-.footer-left h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);font-weight:300;line-height:1.1;margin-bottom:24px}
-.footer-desc{color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:40px;max-width:540px}
-.footer-form{display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid rgba(26,22,18,.3);padding-bottom:12px;max-width:440px}
-.footer-form input{flex:1;background:transparent;border:none;outline:none;font-size:14px;padding:8px 0;font-family:'Inter',sans-serif;color:var(--fg)}
-.footer-form input::placeholder{color:rgba(138,130,120,.6)}
-.footer-form button{background:none;border:none;cursor:pointer;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Inter',sans-serif;color:var(--fg);padding:8px 0;transition:color .3s}
-.footer-form button:hover{color:var(--accent)}
-.footer-right{display:flex;flex-direction:column;justify-content:space-between;gap:48px}
-.footer-based p:first-child{color:var(--muted);margin-bottom:8px}
-.footer-based p:last-child{color:rgba(26,22,18,.8);font-size:14px}
-.footer-brand{display:flex;flex-direction:column;gap:12px}
-.footer-logo{width:48px;height:48px;object-fit:contain;display:block}
-.footer-brand-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px}
-.footer-copy{color:var(--muted)}
-
-@media(max-width:768px){
-  .nav-links{display:none}.nav-toggle{display:flex}
-  .nav-inner{padding:20px 24px}
-  #header{padding:120px 24px 60px}
-  #application-form{padding-left:24px;padding-right:24px}
-  footer{padding-left:24px;padding-right:24px}
-  .time-window{grid-template-columns:1fr}
+.note{
+  margin-top:16px;
+  font-size:12px;
+  color:var(--muted);
 }
 </style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav id="main-nav">
-  <div class="nav-inner">
-    <a href="shamanic_travels_clean.html" class="nav-brand" aria-label="Shamanic Travels">
-      <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo" width="36" height="36"><!-- PHOTO SLOT: logo -->
-      <span class="nav-name">Shamanic Travels</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="shamanic_travels_clean.html#experience" class="eyebrow">Ethos</a></li>
-      <li><a href="andean_arc_clean.html" class="eyebrow">Andean Arc</a></li>
-      <li><a href="amazon_clean.html" class="eyebrow">Amazon</a></li>
-      <li><a href="shamanic_travels_clean.html#guide" class="eyebrow">The Guide</a></li>
-      <li><a href="insights_clean.html" class="eyebrow">Insights</a></li>
-      <li><a href="apply_clean.html" class="eyebrow apply active" aria-current="page">Apply</a></li>
-    </ul>
-    <button class="nav-toggle" aria-label="Open menu" id="menuBtn"><span></span><span></span></button>
-  </div>
-</nav>
-
-<!-- HEADER -->
-<section id="header">
-  <div class="header-bg">
-    <!-- PHOTO SLOT: stonework.jpg as subtle background texture -->
-    <img src="stonework.jpg" alt="" aria-hidden="true">
-  </div>
-  <div class="header-ct">
-    <a href="shamanic_travels_clean.html" class="eyebrow header-back">← Shamanic Travels</a>
-    <span class="eyebrow accent" style="display:block;margin-bottom:24px;">Apply for Selection</span>
-    <h1 class="header-title">Request a <span style="font-style:italic">Private Interview</span></h1>
-    <p class="header-desc">Six places per journey. Acceptance is decided through a confidential interview with Marcello. This form is the beginning of that conversation — answer in your own voice.</p>
-  </div>
-</section>
-
-<!-- FORM -->
-<form id="application-form" novalidate onsubmit="handleSubmit(event)">
-  <div class="form-sections">
-
-    <!-- CHAPTER I: Identity -->
-    <div class="form-chapter">
-      <header class="chapter-hdr">
-        <span class="eyebrow accent chapter-num">Chapter I</span>
-        <h2 class="chapter-title">Identity</h2>
-      </header>
-      <div class="chapter-body">
-        <div class="fields-grid">
-          <div class="field">
-            <label class="field-label" for="fullName">Full name</label>
-            <input id="fullName" name="fullName" type="text" maxlength="120" required>
-          </div>
-          <div class="field">
-            <label class="field-label" for="email">Email</label>
-            <input id="email" name="email" type="email" maxlength="255" required>
-          </div>
-          <div class="field">
-            <label class="field-label" for="phone">Phone (with country code)</label>
-            <input id="phone" name="phone" type="tel" maxlength="40" required>
-          </div>
-          <div class="field">
-            <label class="field-label" for="age">Age</label>
-            <input id="age" name="age" type="number" min="21" max="95" required>
-          </div>
-          <div class="field">
-            <label class="field-label" for="country">Country of residence</label>
-            <input id="country" name="country" type="text" maxlength="80" required>
-          </div>
-          <div class="field">
-            <label class="field-label" for="city">City</label>
-            <input id="city" name="city" type="text" maxlength="80" required>
-          </div>
-          <div class="field">
-            <label class="field-label" for="occupation">Profession / occupation</label>
-            <input id="occupation" name="occupation" type="text" maxlength="160" required>
-          </div>
-          <div class="field">
-            <label class="field-label" for="languages">Languages spoken</label>
-            <input id="languages" name="languages" type="text" placeholder="English, Italian, Spanish…" maxlength="160" required>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CHAPTER II: Journey -->
-    <div class="form-chapter">
-      <header class="chapter-hdr">
-        <span class="eyebrow accent chapter-num">Chapter II</span>
-        <h2 class="chapter-title">Journey</h2>
-      </header>
-      <div class="chapter-body">
-        <div class="field">
-          <label class="field-label">Which journey draws you?</label>
-          <div class="radio-group">
-            <label class="radio-label"><input type="radio" name="journey" value="andean-arc"> The Andean Arc</label>
-            <label class="radio-label"><input type="radio" name="journey" value="amazon"> The Amazon Field Immersion</label>
-            <label class="radio-label"><input type="radio" name="journey" value="undecided"> Open to the guide's recommendation</label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CHAPTER III: Eligibility & Readiness -->
-    <div class="form-chapter">
-      <header class="chapter-hdr">
-        <span class="eyebrow accent chapter-num">Chapter III</span>
-        <h2 class="chapter-title">Eligibility &amp; Readiness</h2>
-      </header>
-      <div class="chapter-body">
-
-        <div class="field">
-          <label class="field-label">Prior experience with traditional plant practices</label>
-          <div class="radio-group">
-            <label class="radio-label"><input type="radio" name="priorExperience" value="none"> None</label>
-            <label class="radio-label"><input type="radio" name="priorExperience" value="some"> One or two prior experiences</label>
-            <label class="radio-label"><input type="radio" name="priorExperience" value="extensive"> Extensive — multiple, sustained</label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="priorDetail">If applicable, briefly describe your prior experience <span class="field-optional">optional</span></label>
-          <textarea id="priorDetail" name="priorDetail" rows="3" maxlength="800"></textarea>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="medications">Current medications (if any) <span class="field-optional">optional</span></label>
-          <textarea id="medications" name="medications" rows="3" maxlength="800" placeholder="Including SSRIs, MAOIs, lithium, blood pressure medication, etc."></textarea>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="mentalHealth">Relevant mental health history <span class="field-optional">optional</span></label>
-          <textarea id="mentalHealth" name="mentalHealth" rows="3" maxlength="800" placeholder="Held in strict confidence. Disclosure is part of safety, not selection bias."></textarea>
-        </div>
-
-        <div class="field">
-          <label class="field-label">Any cardiac or serious neurological condition?</label>
-          <div class="radio-group">
-            <label class="radio-label"><input type="radio" name="cardiac" value="no"> No</label>
-            <label class="radio-label"><input type="radio" name="cardiac" value="yes"> Yes (we will discuss in interview)</label>
-          </div>
-        </div>
-
-        <div class="check-group">
-          <label class="check-label">
-            <input type="checkbox" name="protocolAck" required>
-            <span>I understand a three-month preparation protocol (diet, abstinence, coaching) is mandatory and I am prepared to honour it.</span>
-          </label>
-          <label class="check-label">
-            <input type="checkbox" name="interviewAck" required>
-            <span>I understand acceptance is decided only after a private interview with the guide.</span>
-          </label>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- CHAPTER IV: Intention -->
-    <div class="form-chapter">
-      <header class="chapter-hdr">
-        <span class="eyebrow accent chapter-num">Chapter IV</span>
-        <h2 class="chapter-title">Intention</h2>
-      </header>
-      <div class="chapter-body">
-
-        <div class="field">
-          <label class="field-label" for="motivation">What brings you to this journey now? <span class="field-optional">minimum 80 characters</span></label>
-          <textarea id="motivation" name="motivation" rows="6" minlength="80" maxlength="2000" required oninput="updateCount('motivation','motCount')"></textarea>
-          <span class="char-count"><span id="motCount">0</span> / 2000</span>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="intention">If you had to phrase your intention in a single paragraph, what would it be?</label>
-          <textarea id="intention" name="intention" rows="4" minlength="40" maxlength="1200" required oninput="updateCount('intention','intCount')"></textarea>
-          <span class="char-count"><span id="intCount">0</span> / 1200</span>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="referral">How did you come to know of Shamanic Travels? <span class="field-optional">optional</span></label>
-          <input id="referral" name="referral" type="text" maxlength="200">
-        </div>
-
-      </div>
-    </div>
-
-    <!-- CHAPTER V: Interview Time -->
-    <div class="form-chapter">
-      <header class="chapter-hdr">
-        <span class="eyebrow accent chapter-num">Chapter V</span>
-        <h2 class="chapter-title">Request an Interview Time</h2>
-      </header>
-      <div class="chapter-body">
-
-        <p style="color:var(--muted);font-size:14px;line-height:1.75;max-width:560px;">The interview is a 45–60 minute confidential conversation. Offer up to three preferred windows in your local time. Marcello will confirm one, or propose alternatives.</p>
-
-        <div class="time-windows">
-
-          <div class="time-window">
-            <span class="eyebrow accent window-num">Option 1</span>
-            <div class="field">
-              <label class="field-label" for="date1">Date</label>
-              <input id="date1" name="date1" type="date">
-            </div>
-            <div class="field">
-              <label class="field-label" for="time1">Time window</label>
-              <input id="time1" name="time1" type="text" placeholder="e.g. 09:00–11:00" maxlength="40">
-            </div>
-          </div>
-
-          <div class="time-window">
-            <span class="eyebrow accent window-num">Option 2 <span class="field-optional" style="text-transform:none;font-size:9px;">optional</span></span>
-            <div class="field">
-              <label class="field-label" for="date2">Date</label>
-              <input id="date2" name="date2" type="date">
-            </div>
-            <div class="field">
-              <label class="field-label" for="time2">Time window</label>
-              <input id="time2" name="time2" type="text" placeholder="e.g. 09:00–11:00" maxlength="40">
-            </div>
-          </div>
-
-          <div class="time-window">
-            <span class="eyebrow accent window-num">Option 3 <span class="field-optional" style="text-transform:none;font-size:9px;">optional</span></span>
-            <div class="field">
-              <label class="field-label" for="date3">Date</label>
-              <input id="date3" name="date3" type="date">
-            </div>
-            <div class="field">
-              <label class="field-label" for="time3">Time window</label>
-              <input id="time3" name="time3" type="text" placeholder="e.g. 09:00–11:00" maxlength="40">
-            </div>
-          </div>
-
-        </div>
-
-        <div class="fields-grid" style="margin-top:40px;">
-          <div class="field">
-            <label class="field-label" for="timezone">Your timezone</label>
-            <input id="timezone" name="timezone" type="text" placeholder="UTC" maxlength="80" value="UTC" required>
-          </div>
-          <div class="field">
-            <label class="field-label">Preferred mode</label>
-            <div class="radio-group">
-              <label class="radio-label"><input type="radio" name="contactMethod" value="video"> Video call</label>
-              <label class="radio-label"><input type="radio" name="contactMethod" value="phone"> Phone</label>
-              <label class="radio-label"><input type="radio" name="contactMethod" value="either"> Either</label>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- SUBMIT -->
-    <div class="form-submit">
-      <p class="eyebrow muted submit-note">Your application is private. We respond personally within ten days.</p>
-      <button type="submit" class="eyebrow submit-btn">Submit Application</button>
-    </div>
-
-  </div>
-</form>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <span class="eyebrow accent" style="display:block;margin-bottom:24px;">Private Dispatches</span>
-      <h2>Receive <span style="font-style:italic">La Planta de los Dioses</span></h2>
-      <p class="footer-desc">A digital edition of Marcello's essay on the botanical heritage of the Amazon, with occasional dispatches on forthcoming private journeys.</p>
-      <form class="footer-form" onsubmit="return false;">
-        <input type="email" placeholder="Email address" aria-label="Email address" maxlength="255">
-        <button type="submit" class="eyebrow">Request</button>
-      </form>
-    </div>
-    <div class="footer-right">
-      <div class="footer-based eyebrow"><p>Based In</p><p>London · Lima · Milano</p></div>
-      <div class="footer-brand">
-        <img src="logo.jpg" alt="Shamanic Travels" class="footer-logo" width="48" height="48"><!-- PHOTO SLOT: logo -->
-        <span class="footer-brand-name">Shamanic Travels</span>
-        <p class="eyebrow footer-copy muted">© 2025 · Private Curated Journeys</p>
-      </div>
-    </div>
-  </div>
-</footer>
 
 <script>
-// Nav scroll
-const nav=document.getElementById('main-nav');
-window.addEventListener('scroll',()=>{
-  if(window.scrollY>80){nav.style.background='rgba(245,242,236,0.96)';nav.style.mixBlendMode='normal';nav.style.color='#1a1612';nav.style.backdropFilter='blur(12px)'}
-  else{nav.style.background='';nav.style.mixBlendMode='difference';nav.style.color='white';nav.style.backdropFilter=''}
-});
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+</script>
 
-// Mobile menu
-const btn=document.getElementById('menuBtn');
-const links=document.querySelector('.nav-links');
-let open=false;
-btn.addEventListener('click',()=>{
-  open=!open;
-  links.style.cssText=open?'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#f5f2ec;padding:24px 40px;gap:20px;z-index:100':'display:none';
-  btn.setAttribute('aria-expanded',open);
-});
+</head>
 
-// Char counter
-function updateCount(fieldId, countId){
-  const v=document.getElementById(fieldId).value.length;
-  document.getElementById(countId).textContent=v;
-}
+<body>
 
-// Submit handler — sends to WhatsApp or mailto
+<div class="container">
+
+  <h1 class="serif">Private Interview Application</h1>
+
+  <p>
+    This experience is invitation-only. Only a limited number of interviews are granted each cycle.
+  </p>
+
+  <form id="applyForm" onsubmit="handleSubmit(event)">
+
+    <div class="field">
+      <label>Full name</label>
+      <input id="fullName" required>
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <input id="email" type="email" required>
+    </div>
+
+    <div class="field">
+      <label>Phone</label>
+      <input id="phone" type="tel" required>
+    </div>
+
+    <div class="field">
+      <label>Age</label>
+      <input id="age" type="number" min="21" required>
+    </div>
+
+    <div class="field">
+      <label>Country</label>
+      <input id="country" required>
+    </div>
+
+    <div class="field">
+      <label>Profession</label>
+      <input id="job" required>
+    </div>
+
+    <div class="field">
+      <label>Why do you want this journey?</label>
+      <textarea id="motivation" rows="6" required placeholder="Be direct. We are not evaluating writing style, but clarity of intention."></textarea>
+    </div>
+
+    <button type="submit">Submit Application</button>
+
+    <p class="note">
+      Your application is reviewed privately. If selected, you will be contacted within ten days.
+    </p>
+
+  </form>
+
+</div>
+
+<script>
 function handleSubmit(e){
   e.preventDefault();
-  const name=document.getElementById('fullName').value||'';
-  const email=document.getElementById('email').value||'';
-  const journey=document.querySelector('input[name="journey"]:checked');
-  const motivation=document.getElementById('motivation').value||'';
 
-  const body=`New application from Shamanic Travels website\n\nName: ${name}\nEmail: ${email}\nJourney: ${journey?journey.value:'not specified'}\n\nMotivation:\n${motivation}`;
+  const name=document.getElementById('fullName').value;
+  const email=document.getElementById('email').value;
+  const motivation=document.getElementById('motivation').value;
 
-  // Send via mailto
-  window.location.href=`mailto:hello@shamanictravels.com?subject=Application — ${name}&body=${encodeURIComponent(body)}`;
+  const body=
+`New Shamanic Travels Application
+
+Name: ${name}
+Email: ${email}
+
+Motivation:
+${motivation}`;
+
+  // tracking
+  if (typeof gtag === "function") {
+    gtag('event','apply_submit',{event_category:'engagement'});
+  }
+
+  // send
+  window.location.href =
+  `mailto:shamanictravels@gmail.com?subject=Application — ${encodeURIComponent(name)}&body=${encodeURIComponent(body)}`;
 }
 </script>
 
