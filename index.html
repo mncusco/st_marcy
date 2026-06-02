@@ -127,9 +127,18 @@ nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 9999;
-  transition: background 0.4s, color 0.4s, backdrop-filter 0.4s;
-  mix-blend-mode: difference;
+  transition: background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   color: white;
+}
+
+nav.scrolled {
+  background: rgba(245,242,236,0.98);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(26,22,18,0.12);
+  color: var(--foreground);
 }
 
 .nav-inner {
@@ -137,6 +146,8 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .nav-brand {
@@ -162,7 +173,7 @@ nav {
 
 .nav-links {
   display: flex;
-  gap: 40px;
+  gap: 36px;
   list-style: none;
 }
 
@@ -172,10 +183,17 @@ nav {
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  transition: opacity 0.2s;
+  opacity: 0.85;
+  transition: opacity 0.2s, color 0.2s;
 }
+.nav-links a:hover { opacity: 1; }
 
-.nav-links a.apply { color: var(--gold-soft); }
+nav.scrolled .nav-links a.apply { color: var(--gold-soft); }
+nav:not(.scrolled) .nav-links a.apply {
+  color: var(--gold-soft);
+  border: 1px solid rgba(201,169,110,0.5);
+  padding: 6px 14px;
+}
 
 .nav-mobile-toggle {
   display: none;
@@ -744,7 +762,8 @@ footer {
       <li><a href="andean_arc_clean.html" class="eyebrow link-underline">Andean Arc</a></li>
       <li><a href="amazon_clean.html" class="eyebrow link-underline">Amazon</a></li>
       <li><a href="#guide" class="eyebrow link-underline">The Guide</a></li>
-      <li><a href="#insights" class="eyebrow link-underline">Insights</a></li>
+      <li><a href="#insights" class="eyebrow">Insights</a></li>
+      <li><a href="gallery.html" class="eyebrow">Gallery</a></li>
       <li><a href="apply_clean.html" class="eyebrow apply">Apply</a></li>
     </ul>
     <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" id="menuBtn">
@@ -794,7 +813,7 @@ footer {
       Not a tour.<br><span class="italic">An internal evolution.</span>
     </h2>
     <div class="ethos-body">
-      <p>Shamanic Travels is a private, selection-based journey across the high Andes and Amazonian basins. I do not provide group tours. I curate deep experiential thresholds for those ready to encounter Peru's living wisdom traditions.</p>
+      <p>Shamanic Travels is a private, selection-based journey across the high Andes and Amazonian basins. We do not provide group tours. We curate deep experiential thresholds for those ready to encounter Peru's living wisdom traditions.</p>
       <p>Combining the logistical precision of luxury travel with the profound silence of Peru's sacred geography, every element is managed with calm authority and absolute privacy.</p>
     </div>
     <dl class="ethos-stats">
@@ -883,7 +902,7 @@ footer {
         <p>With a foundation in strategic communication, NLP and hypnosis, and decades of international training, Marcello is more than a guide. He is the architect of the experience.</p>
         <p>His evolution into immersive Peruvian journeys distils complex cultural wisdom into precise, transformative travel paths for executives, entrepreneurs and professionals operating at high altitudes of life.</p>
         <blockquote class="guide-quote">
-          "I do not design entertainment. I design attention, presence, and experience."
+          "We do not design entertainment. We design attention, presence, and experience."
         </blockquote>
       </div>
     </div>
@@ -901,12 +920,12 @@ footer {
       <div class="apply-step">
         <span class="eyebrow step-num">01</span>
         <h3 class="step-title">Request</h3>
-        <p class="step-desc">Submit your interest. Tell me what calls you and what you hope to find.</p>
+        <p class="step-desc">Submit your interest. Tell us what calls you and what you hope to find.</p>
       </div>
       <div class="apply-step">
         <span class="eyebrow step-num">02</span>
         <h3 class="step-title">Interview</h3>
-        <p class="step-desc">I'll speak with you privately to understand your intentions and assess readiness. This is not transactional.</p>
+        <p class="step-desc">We speak with you privately to understand your intentions and assess readiness. This is not transactional.</p>
       </div>
       <div class="apply-step">
         <span class="eyebrow step-num">03</span>
@@ -1012,8 +1031,8 @@ footer {
       </div>
       <div class="footer-brand">
         <img src="logo.jpg" alt="Shamanic Travels" class="footer-logo">
-        <span class="footer-brand-name">ShamanicTravels</span>
-        <p class="eyebrow footer-copy text-muted">© 2018 · Private Curated Journeys</p>
+        <span class="footer-brand-name">Shamanic Travels</span>
+        <p class="eyebrow footer-copy text-muted">© 2026 · Private Curated Journeys</p>
       </div>
     </div>
   </div>
@@ -1030,23 +1049,15 @@ window.addEventListener('scroll', () => {
   }
 });
 
-/* ── NAV BACKGROUND ON SCROLL ── */
+/* ── NAV SCROLL ── */
 const mainNav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 80) {
-    mainNav.style.background = 'rgba(245,242,236,0.98)';
-    mainNav.style.mixBlendMode = 'normal';
-    mainNav.style.color = '#1a1612';
-    mainNav.style.backdropFilter = 'blur(12px)';
-    mainNav.style.borderBottom = '1px solid rgba(26,22,18,0.12)';
+  if (window.scrollY > 60) {
+    mainNav.classList.add('scrolled');
   } else {
-    mainNav.style.background = '';
-    mainNav.style.mixBlendMode = 'difference';
-    mainNav.style.color = 'white';
-    mainNav.style.backdropFilter = '';
-    mainNav.style.borderBottom = '';
+    mainNav.classList.remove('scrolled');
   }
-});
+}, { passive: true });
 
 /* ── MOBILE MENU ── */
 const menuBtn = document.getElementById('menuBtn');
