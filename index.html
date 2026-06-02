@@ -53,14 +53,14 @@
 <style>
 /* ── TOKENS ── */
 :root {
-  --background:    #f5f2ec;
-  --foreground:    #1a1612;
-  --muted:         #8a8278;
-  --border:        rgba(26,22,18,0.12);
-  --accent:        #b89a5a;
-  --gold-soft:     #c9a96e;
-  --stone-deep:    #1e1b16;
-  --earth:         #d4ccc0;
+  --background:  #f5f2ec;
+  --foreground:  #1a1612;
+  --muted:       #8a8278;
+  --border:      rgba(26,22,18,0.12);
+  --accent:      #b89a5a;
+  --gold-soft:   #c9a96e;
+  --stone-deep:  #1e1b16;
+  --earth:       #d4ccc0;
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -88,11 +88,9 @@ body {
 }
 
 /* ── UTILITIES ── */
-.text-accent   { color: var(--accent); }
-.text-muted    { color: var(--muted); }
-.italic        { font-style: italic; }
-.text-balance  { text-wrap: balance; }
-.text-pretty   { text-wrap: pretty; }
+.text-accent { color: var(--accent); }
+.text-muted  { color: var(--muted); }
+.italic      { font-style: italic; }
 
 .link-underline {
   position: relative;
@@ -113,85 +111,73 @@ body {
   from { transform: scale(1.06); }
   to   { transform: scale(1.00); }
 }
-
 @keyframes revealUp {
   from { opacity:0; transform: translateY(24px); }
   to   { opacity:1; transform: translateY(0); }
 }
 
-.animate-slow-zoom {
-  animation: slowZoom 20s cubic-bezier(0.22,1,0.36,1) forwards;
-}
-
-.animate-reveal {
-  opacity: 0;
-  animation: revealUp 1s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
-}
+.animate-slow-zoom { animation: slowZoom 20s cubic-bezier(0.22,1,0.36,1) forwards; }
+.animate-reveal { opacity:0; animation: revealUp 1s cubic-bezier(0.22,1,0.36,1) 0.3s forwards; }
 .animate-reveal-delay-1 { animation-delay: 0.6s; }
 .animate-reveal-delay-2 { animation-delay: 0.9s; }
 .animate-reveal-delay-3 { animation-delay: 1.2s; }
 
 /* ── NAV ── */
-/* ── NAV OTTIMIZZATA PER MASSIMA VISIBILITÀ ── */
-.nav {
-  position: fixed; 
-  top: 0; 
-  width: 100%;
-  padding: 20px 40px;
-  background: #f5f2ec !important; /* Forza lo sfondo */
-  border-bottom: 1px solid rgba(26, 22, 18, 0.25); /* Bordo più scuro */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Ombra per staccarla dallo sfondo */
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center;
-  z-index: 9999; /* Assicura che sia sempre sopra tutto */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  transition: background 0.4s, color 0.4s, backdrop-filter 0.4s;
+  mix-blend-mode: difference;
+  color: white;
 }
 
-.nav-brand { 
-  font-family: 'Cormorant Garamond', serif; 
-  font-size: 25px; /* Leggermente più grande */
-  font-weight: 500;
-  color: #1a1612 !important; 
-  text-decoration: none; 
-  display: flex; 
-  align-items: right; 
+.nav-inner {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .nav-logo {
-  width: 45px; 
-  height: 45px;
+  width: 40px; height: 40px;
   object-fit: contain;
-  margin-right: 15px;
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); /* Rende il logo più definito */
+  display: block;
 }
 
-.nav-links { 
-  display: flex; 
-  gap: 45px; 
-  list-style: none; 
-  margin: 0; 
+.nav-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: -0.02em;
 }
 
-.nav-links a {  
-  text-decoration: none; 
-  color: #1a1612 !important; /* Colore testo più scuro */
-  font-size: 14px;  
-  font-weight: 600; /* Font più spesso per leggibilità */
-  letter-spacing: 0.1em;  
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  transition: color 0.3s ease;
+  transition: opacity 0.2s;
 }
 
-.nav-links a:hover { 
-  color: #b89a5a !important; /* Accento dorato visibile al passaggio */
-}
+.nav-links a.apply { color: var(--gold-soft); }
 
-.nav-links a.apply { 
-  color: #c9a96e !important; 
-  border: 1px solid #c9a96e; 
-  padding: 8px 16px; 
-  border-radius: 2px;
-}.nav-mobile-toggle {
+.nav-mobile-toggle {
   display: none;
   flex-direction: column;
   justify-content: center;
@@ -221,26 +207,13 @@ body {
   justify-content: center;
   overflow: hidden;
 }
+@media (min-width: 768px) { #hero { align-items: center; } }
 
-@media (min-width: 768px) {
-  #hero { align-items: center; }
-}
-
-.hero-img-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.hero-img-wrap img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.hero-img-wrap { position: absolute; inset: 0; z-index: 0; }
+.hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .hero-overlay {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.7) 100%);
 }
 
@@ -252,15 +225,9 @@ body {
   padding: 0 24px 80px;
   color: white;
 }
+@media (min-width: 768px) { .hero-content { padding-bottom: 0; } }
 
-@media (min-width: 768px) {
-  .hero-content { padding-bottom: 0; }
-}
-
-.hero-eyebrow {
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 32px;
-}
+.hero-eyebrow { color: rgba(255,255,255,0.7); margin-bottom: 32px; }
 
 .hero-title {
   font-family: 'Cormorant Garamond', serif;
@@ -270,7 +237,6 @@ body {
   margin-bottom: 40px;
   color: white;
 }
-
 .hero-title .gold { color: var(--gold-soft); }
 
 .hero-subtitle {
@@ -315,10 +281,7 @@ body {
   text-transform: uppercase;
   color: rgba(255,255,255,0.5);
 }
-.hero-scroll-line {
-  width: 40px; height: 1px;
-  background: rgba(255,255,255,0.4);
-}
+.hero-scroll-line { width: 40px; height: 1px; background: rgba(255,255,255,0.4); }
 
 /* ── ETHOS ── */
 #experience {
@@ -330,12 +293,8 @@ body {
   gap: 48px;
   align-items: center;
 }
-
 @media (min-width: 768px) {
-  #experience {
-    grid-template-columns: 7fr 5fr;
-    gap: 80px;
-  }
+  #experience { grid-template-columns: 7fr 5fr; gap: 80px; }
 }
 
 .ethos-left { order: 2; }
@@ -349,13 +308,7 @@ body {
   margin-bottom: 40px;
 }
 
-.ethos-body {
-  color: var(--muted);
-  line-height: 1.8;
-  font-size: 17px;
-  max-width: 520px;
-}
-
+.ethos-body { color: var(--muted); line-height: 1.8; font-size: 17px; max-width: 520px; }
 .ethos-body p + p { margin-top: 24px; }
 
 .ethos-stats {
@@ -365,36 +318,19 @@ body {
   gap: 24px;
   max-width: 480px;
 }
-
-.stat {
-  border-top: 1px solid var(--border);
-  padding-top: 16px;
-}
-
+.stat { border-top: 1px solid var(--border); padding-top: 16px; }
 .stat-num {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(32px, 4vw, 44px);
   margin-bottom: 8px;
   display: block;
 }
-
-.stat-label {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  line-height: 1.5;
-}
+.stat-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); line-height: 1.5; }
 
 .ethos-right { order: 1; }
 @media (min-width: 768px) { .ethos-right { order: 2; } }
 
-.ethos-img {
-  width: 100%;
-  aspect-ratio: 4/5;
-  object-fit: cover;
-  display: block;
-}
+.ethos-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
 
 /* ── JOURNEYS ── */
 #journeys {
@@ -411,13 +347,8 @@ body {
   flex-direction: column;
   gap: 24px;
 }
-
 @media (min-width: 768px) {
-  .journeys-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
+  .journeys-header { flex-direction: row; justify-content: space-between; align-items: flex-end; }
 }
 
 .journeys-title {
@@ -435,7 +366,6 @@ body {
   color: rgba(212,204,192,0.5);
   max-width: 260px;
 }
-
 @media (min-width: 768px) { .journeys-meta { text-align: right; } }
 
 .journeys-grid {
@@ -447,10 +377,7 @@ body {
   gap: 1px;
   background: rgba(255,255,255,0.1);
 }
-
-@media (min-width: 768px) {
-  .journeys-grid { grid-template-columns: 1fr 1fr; }
-}
+@media (min-width: 768px) { .journeys-grid { grid-template-columns: 1fr 1fr; } }
 
 .journey-card {
   background: var(--foreground);
@@ -464,11 +391,7 @@ body {
 }
 .journey-card:hover { background: #252018; }
 
-.journey-img-wrap {
-  overflow: hidden;
-  margin-bottom: 40px;
-}
-
+.journey-img-wrap { overflow: hidden; margin-bottom: 40px; }
 .journey-img {
   width: 100%;
   aspect-ratio: 3/2;
@@ -478,10 +401,7 @@ body {
 }
 .journey-card:hover .journey-img { transform: scale(1.05); }
 
-.journey-eyebrow {
-  color: var(--accent);
-  margin-bottom: 16px;
-}
+.journey-eyebrow { color: var(--accent); margin-bottom: 16px; }
 
 .journey-title {
   font-family: 'Cormorant Garamond', serif;
@@ -500,20 +420,8 @@ body {
   max-width: 480px;
 }
 
-.journey-tags {
-  margin-top: auto;
-  margin-bottom: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.journey-tag {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(212,204,192,0.45);
-}
+.journey-tags { margin-top: auto; margin-bottom: 32px; display: flex; flex-direction: column; gap: 8px; }
+.journey-tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,204,192,0.45); }
 
 .journey-link {
   font-size: 10px;
@@ -538,7 +446,6 @@ body {
   padding: 96px 40px 160px;
   background: var(--background);
 }
-
 .guide-inner {
   max-width: 1100px;
   margin: 0 auto;
@@ -547,17 +454,9 @@ body {
   gap: 48px;
   align-items: center;
 }
+@media (min-width: 768px) { .guide-inner { grid-template-columns: 1fr 1fr; gap: 96px; } }
 
-@media (min-width: 768px) {
-  .guide-inner { grid-template-columns: 1fr 1fr; gap: 96px; }
-}
-
-.guide-img {
-  width: 100%;
-  aspect-ratio: 5/6;
-  object-fit: cover;
-  display: block;
-}
+.guide-img { width: 100%; aspect-ratio: 5/6; object-fit: cover; display: block; }
 
 .guide-title {
   font-family: 'Cormorant Garamond', serif;
@@ -567,12 +466,7 @@ body {
   line-height: 1.05;
 }
 
-.guide-body {
-  color: var(--muted);
-  line-height: 1.8;
-  font-size: 16px;
-}
-
+.guide-body { color: var(--muted); line-height: 1.8; font-size: 16px; }
 .guide-body p + p { margin-top: 24px; }
 
 .guide-quote {
@@ -586,18 +480,13 @@ body {
   line-height: 1.4;
 }
 
-/* ── APPLY / SELECTION ── */
+/* ── APPLY ── */
 #apply {
   padding: 96px 40px 160px;
   background: var(--stone-deep);
   color: var(--earth);
 }
-
-.apply-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
+.apply-inner { max-width: 900px; margin: 0 auto; text-align: center; }
 
 .apply-title {
   font-family: 'Cormorant Garamond', serif;
@@ -624,35 +513,12 @@ body {
   background: rgba(255,255,255,0.1);
   margin-bottom: 80px;
 }
+@media (min-width: 768px) { .apply-steps { grid-template-columns: repeat(3,1fr); } }
 
-@media (min-width: 768px) {
-  .apply-steps { grid-template-columns: repeat(3,1fr); }
-}
-
-.apply-step {
-  background: var(--stone-deep);
-  padding: 32px 40px;
-  text-align: left;
-}
-
-.step-num {
-  color: var(--accent);
-  display: block;
-  margin-bottom: 24px;
-}
-
-.step-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  font-weight: 300;
-  margin-bottom: 16px;
-}
-
-.step-desc {
-  color: rgba(212,204,192,0.6);
-  font-size: 14px;
-  line-height: 1.7;
-}
+.apply-step { background: var(--stone-deep); padding: 32px 40px; text-align: left; }
+.step-num { color: var(--accent); display: block; margin-bottom: 24px; }
+.step-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; margin-bottom: 16px; }
+.step-desc { color: rgba(212,204,192,0.6); font-size: 14px; line-height: 1.7; }
 
 .apply-cta {
   display: inline-block;
@@ -667,11 +533,7 @@ body {
   transition: background 0.5s, color 0.5s;
 }
 .apply-cta:hover { background: white; color: var(--foreground); }
-
-.apply-note {
-  color: rgba(212,204,192,0.4);
-  margin-top: 32px;
-}
+.apply-note { color: rgba(212,204,192,0.4); margin-top: 32px; }
 
 /* ── TESTIMONIALS ── */
 #testimonials {
@@ -679,36 +541,18 @@ body {
   background: var(--background);
   border-top: 1px solid var(--border);
 }
-
 .testi-inner { max-width: 1280px; margin: 0 auto; }
-
-.testi-header {
-  max-width: 560px;
-  margin-bottom: 64px;
-}
-
+.testi-header { max-width: 560px; margin-bottom: 64px; }
 .testi-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(36px, 4.5vw, 56px);
   font-weight: 300;
   line-height: 1.05;
 }
+.testi-grid { display: grid; grid-template-columns: 1fr; gap: 48px 64px; }
+@media (min-width: 768px) { .testi-grid { grid-template-columns: repeat(3,1fr); } }
 
-.testi-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 48px 64px;
-}
-
-@media (min-width: 768px) {
-  .testi-grid { grid-template-columns: repeat(3,1fr); }
-}
-
-.testi-item {
-  border-top: 1px solid var(--border);
-  padding-top: 32px;
-}
-
+.testi-item { border-top: 1px solid var(--border); padding-top: 32px; }
 .testi-quote {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
@@ -716,7 +560,6 @@ body {
   line-height: 1.45;
   margin-bottom: 32px;
 }
-
 .testi-name { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; }
 .testi-role { color: var(--muted); margin-top: 4px; }
 
@@ -726,7 +569,6 @@ body {
   background: var(--stone-deep);
   color: var(--earth);
 }
-
 .insights-inner {
   max-width: 1280px;
   margin: 0 auto;
@@ -734,7 +576,6 @@ body {
   grid-template-columns: 1fr;
   gap: 48px;
 }
-
 @media (min-width: 768px) {
   .insights-inner { grid-template-columns: 5fr 6fr; gap: 64px; align-items: start; }
 }
@@ -747,13 +588,7 @@ body {
   margin-bottom: 40px;
 }
 
-.insights-img {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-  display: block;
-  margin-bottom: 40px;
-}
+.insights-img { width: 100%; aspect-ratio: 3/2; object-fit: cover; display: block; margin-bottom: 40px; }
 
 .insights-read-all {
   font-size: 10px;
@@ -788,13 +623,7 @@ body {
 .insight-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
 .insight-item:hover { background: rgba(255,255,255,0.03); }
 
-.insight-num {
-  color: var(--accent);
-  flex-shrink: 0;
-  margin-top: 8px;
-  width: 96px;
-}
-
+.insight-num { color: var(--accent); flex-shrink: 0; margin-top: 8px; width: 96px; }
 .insight-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 26px;
@@ -803,12 +632,7 @@ body {
   margin-bottom: 8px;
   line-height: 1.2;
 }
-
-.insight-desc {
-  font-size: 13px;
-  color: rgba(212,204,192,0.55);
-  line-height: 1.65;
-}
+.insight-desc { font-size: 13px; color: rgba(212,204,192,0.55); line-height: 1.65; }
 
 /* ── FOOTER ── */
 footer {
@@ -816,7 +640,6 @@ footer {
   border-top: 1px solid var(--border);
   background: var(--background);
 }
-
 .footer-inner {
   max-width: 1280px;
   margin: 0 auto;
@@ -824,10 +647,7 @@ footer {
   grid-template-columns: 1fr;
   gap: 64px;
 }
-
-@media (min-width: 768px) {
-  .footer-inner { grid-template-columns: 7fr 4fr; align-items: start; }
-}
+@media (min-width: 768px) { .footer-inner { grid-template-columns: 7fr 4fr; align-items: start; } }
 
 .footer-left h2 {
   font-family: 'Cormorant Garamond', serif;
@@ -837,13 +657,7 @@ footer {
   margin-bottom: 24px;
 }
 
-.footer-desc {
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.8;
-  margin-bottom: 40px;
-  max-width: 540px;
-}
+.footer-desc { color: var(--muted); font-size: 16px; line-height: 1.8; margin-bottom: 40px; max-width: 540px; }
 
 .footer-form {
   display: flex;
@@ -853,7 +667,6 @@ footer {
   padding-bottom: 12px;
   max-width: 440px;
 }
-
 .footer-form input {
   flex: 1;
   background: transparent;
@@ -864,9 +677,7 @@ footer {
   font-family: 'Inter', sans-serif;
   color: var(--foreground);
 }
-
 .footer-form input::placeholder { color: rgba(138,130,120,0.6); }
-
 .footer-form button {
   background: none;
   border: none;
@@ -882,31 +693,31 @@ footer {
 .footer-form button:hover { color: var(--accent); }
 
 .footer-right { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; }
-
 .footer-based p:first-child { color: var(--muted); margin-bottom: 8px; }
 .footer-based p:last-child { color: rgba(26,22,18,0.8); font-size: 14px; }
 
-.footer-brand {
+.footer-social {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 8px;
 }
-
-.footer-logo {
-  width: 48px; height: 48px;
-  object-fit: contain;
-  display: block;
+.footer-social a {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
 }
+.footer-social a:hover { color: var(--accent); }
 
-.footer-brand-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 24px;
-}
-
+.footer-brand { display: flex; flex-direction: column; gap: 12px; }
+.footer-logo { width: 48px; height: 48px; object-fit: contain; display: block; }
+.footer-brand-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 24px; }
 .footer-copy { color: var(--muted); }
 
-/* ── RESPONSIVE NAV ── */
+/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-mobile-toggle { display: flex; }
@@ -921,7 +732,8 @@ footer {
 </head>
 <body>
 
-<nav>
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<nav id="mainNav">
   <div class="nav-inner">
     <a href="#" class="nav-brand" aria-label="Shamanic Travels — Home">
       <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo">
@@ -941,6 +753,8 @@ footer {
   </div>
 </nav>
 
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
 <section id="hero">
   <div class="hero-img-wrap">
     <img
@@ -950,7 +764,6 @@ footer {
       width="1920" height="1280">
   </div>
   <div class="hero-overlay"></div>
-
   <div class="hero-content">
     <p class="eyebrow hero-eyebrow animate-reveal">Invitation · Curation · Peru</p>
     <h1 class="hero-title animate-reveal animate-reveal-delay-1">
@@ -964,7 +777,6 @@ footer {
       <a href="apply_clean.html" class="hero-cta">Request Private Interview</a>
     </div>
   </div>
-
   <div class="hero-scroll">
     <div class="hero-scroll-inner">
       <span class="eyebrow">Scroll</span>
@@ -973,6 +785,8 @@ footer {
   </div>
 </section>
 
+
+<!-- ══════════════════════ ETHOS ══════════════════════ -->
 <section id="experience">
   <div class="ethos-left">
     <span class="eyebrow text-accent" style="display:block; margin-bottom:32px;">The Ethos</span>
@@ -980,7 +794,7 @@ footer {
       Not a tour.<br><span class="italic">An internal evolution.</span>
     </h2>
     <div class="ethos-body">
-      <p>Shamanic Travels is a private, selection-based journey across the high Andes and Amazonian basins. We do not provide group tours. We curate deep experiential thresholds for those ready to encounter Peru's living wisdom traditions.</p>
+      <p>Shamanic Travels is a private, selection-based journey across the high Andes and Amazonian basins. I do not provide group tours. I curate deep experiential thresholds for those ready to encounter Peru's living wisdom traditions.</p>
       <p>Combining the logistical precision of luxury travel with the profound silence of Peru's sacred geography, every element is managed with calm authority and absolute privacy.</p>
     </div>
     <dl class="ethos-stats">
@@ -1008,6 +822,8 @@ footer {
   </div>
 </section>
 
+
+<!-- ══════════════════════ JOURNEYS ══════════════════════ -->
 <section id="journeys">
   <div class="journeys-header">
     <div>
@@ -1019,43 +835,10 @@ footer {
     <p class="eyebrow journeys-meta">Each journey · 21 days · Maximum six participants · Selection required</p>
   </div>
 
-
-<section id="guide">
-  <div class="guide-inner">
-    <div>
-      <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;">The Guide</span>
-      <h2 class="guide-title">Marcello Buglione</h2>
-      <div class="guide-body">
-       <p>With a foundation in strategic communication, NLP and hypnosis, and decades of international training, Marcello is more than a guide. He is the architect of the experience.</p>
-        <p>His evolution into immersive Peruvian journeys distils complex cultural wisdom into precise, transformative travel paths for executives, entrepreneurs and professionals operating at high altitudes of life.</p>>
-        <blockquote class="guide-quote">
-          "We do not design entertainment. We design attention, presence, and experience."
-        </blockquote>
-      </div>
-      
-   <section id="journeys">
-  <div class="journeys-header">
-    <div>
-      <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;">Two Journeys</span>
-      <h2 class="journeys-title">
-        Two distinct paths.<br>One private system.
-      </h2>
-    </div>
-    <p class="eyebrow journeys-meta">Each journey · 21 days · Maximum six participants · Selection required</p>
-  </div>
-
   <div class="journeys-grid">
-
-    <!-- Journey I -->
-    <a href="andean-arc.html" class="journey-card">
+    <a href="andean_arc_clean.html" class="journey-card">
       <div class="journey-img-wrap">
-        <!-- PHOTO SLOT: replace src with andean-arc.jpg or hero.jpg -->
-        <img
-          src="hero.jpg"
-          alt="Machu Picchu at dawn"
-          class="journey-img"
-          loading="lazy"
-          width="1200" height="800">
+        <img src="hero.jpg" alt="Machu Picchu at dawn" class="journey-img" loading="lazy" width="1200" height="800">
       </div>
       <span class="eyebrow journey-eyebrow">Journey One · 21 Days</span>
       <h3 class="journey-title">The Andean Arc</h3>
@@ -1067,16 +850,9 @@ footer {
       <span class="journey-link eyebrow">Enter Journey I →</span>
     </a>
 
-    <!-- Journey II -->
-    <a href="amazon.html" class="journey-card">
+    <a href="amazon_clean.html" class="journey-card">
       <div class="journey-img-wrap">
-        <!-- PHOTO SLOT: replace src with jungle.jpg -->
-        <img
-          src="jungle.jpg"
-          alt="Peruvian Amazon canopy"
-          class="journey-img"
-          loading="lazy"
-          width="1200" height="800">
+        <img src="jungle.jpg" alt="Peruvian Amazon canopy" class="journey-img" loading="lazy" width="1200" height="800">
       </div>
       <span class="eyebrow journey-eyebrow">Journey Two · 21 Days</span>
       <h3 class="journey-title">The Amazon Field Immersion</h3>
@@ -1087,36 +863,50 @@ footer {
       </div>
       <span class="journey-link eyebrow">Enter Journey II →</span>
     </a>
-
   </div>
 </section>
 
-    </div>
-    <img>
+
+<!-- ══════════════════════ GUIDE ══════════════════════ -->
+<section id="guide">
+  <div class="guide-inner">
+    <img
       src="marcello.jpg"
       alt="Marcello Buglione, guide and founder of Shamanic Travels"
       class="guide-img"
       loading="lazy"
       width="560" height="672">
+    <div>
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;">The Guide</span>
+      <h2 class="guide-title">Marcello Buglione</h2>
+      <div class="guide-body">
+        <p>With a foundation in strategic communication, NLP and hypnosis, and decades of international training, Marcello is more than a guide. He is the architect of the experience.</p>
+        <p>His evolution into immersive Peruvian journeys distils complex cultural wisdom into precise, transformative travel paths for executives, entrepreneurs and professionals operating at high altitudes of life.</p>
+        <blockquote class="guide-quote">
+          "I do not design entertainment. I design attention, presence, and experience."
+        </blockquote>
+      </div>
+    </div>
   </div>
 </section>
 
+
+<!-- ══════════════════════ APPLY ══════════════════════ -->
 <section id="apply">
   <div class="apply-inner">
     <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;">Selection Process</span>
     <h2 class="apply-title">How to Join</h2>
     <p class="apply-desc">These are private journeys. Each participant is carefully selected through a personal interview to ensure alignment with our values and mutual readiness. We turn away more people than we accept.</p>
-
     <div class="apply-steps">
       <div class="apply-step">
         <span class="eyebrow step-num">01</span>
         <h3 class="step-title">Request</h3>
-        <p class="step-desc">Submit your interest. Tell us what calls you and what you hope to find.</p>
+        <p class="step-desc">Submit your interest. Tell me what calls you and what you hope to find.</p>
       </div>
       <div class="apply-step">
         <span class="eyebrow step-num">02</span>
         <h3 class="step-title">Interview</h3>
-        <p class="step-desc">We speak with you privately to understand your intentions and assess readiness. This is not transactional.</p>
+        <p class="step-desc">I'll speak with you privately to understand your intentions and assess readiness. This is not transactional.</p>
       </div>
       <div class="apply-step">
         <span class="eyebrow step-num">03</span>
@@ -1124,12 +914,13 @@ footer {
         <p class="step-desc">If selected, you receive detailed guidance on physical, practical, and contemplative preparation for your journey.</p>
       </div>
     </div>
-
     <a href="apply_clean.html" class="apply-cta">Request Private Interview</a>
     <p class="apply-note">Journeys depart quarterly. Next departure: Q3 2026.</p>
   </div>
 </section>
 
+
+<!-- ══════════════════════ TESTIMONIALS ══════════════════════ -->
 <section id="testimonials">
   <div class="testi-inner">
     <div class="testi-header">
@@ -1155,6 +946,8 @@ footer {
   </div>
 </section>
 
+
+<!-- ══════════════════════ INSIGHTS ══════════════════════ -->
 <section id="insights">
   <div class="insights-inner">
     <div>
@@ -1166,7 +959,7 @@ footer {
         class="insights-img"
         loading="lazy"
         width="640" height="427">
-      <a href="insights_clean.html" class="insights-read-all">Read all insights →</a>
+      <a href="blog.html" class="insights-read-all">Read all insights →</a>
     </div>
     <div class="insights-list">
       <a href="article_sciamanesimo.html" class="insight-item">
@@ -1194,6 +987,8 @@ footer {
   </div>
 </section>
 
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-left">
@@ -1206,46 +1001,54 @@ footer {
       </form>
     </div>
     <div class="footer-right">
-      <div class="footer-based eyebrow"><p>Based In</p><p>London · Lima · Milano</p></div>
+      <div class="footer-based eyebrow">
+        <p>Based In</p>
+        <p>London · Lima · Milano</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/shamanictravels">Facebook</a>
+          <a href="https://www.instagram.com/shamanictravels">Instagram</a>
+          <a href="blog.html">Blog</a>
+        </div>
+      </div>
       <div class="footer-brand">
         <img src="logo.jpg" alt="Shamanic Travels" class="footer-logo">
-        <span class="footer-brand-name">Shamanic Travels</span>
-        <p class="eyebrow footer-copy text-muted">© 2025 · Private Curated Journeys</p>
+        <span class="footer-brand-name">ShamanicTravels</span>
+        <p class="eyebrow footer-copy text-muted">© 2018 · Private Curated Journeys</p>
       </div>
     </div>
   </div>
 </footer>
 
+
 <script>
 /* ── HERO SCROLL INDICATOR ── */
 window.addEventListener('scroll', () => {
   const heroScroll = document.querySelector('.hero-scroll-inner');
-  const scrolled = window.scrollY;
-  if (scrolled > 100) {
-    heroScroll.style.opacity = '0';
+  if (heroScroll) {
+    heroScroll.style.opacity = window.scrollY > 100 ? '0' : '1';
     heroScroll.style.transition = 'opacity 0.5s';
-  } else {
-    heroScroll.style.opacity = '1';
   }
 });
 
 /* ── NAV BACKGROUND ON SCROLL ── */
-const nav = document.querySelector('nav');
+const mainNav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 80) {
-    nav.style.background = 'rgba(245, 242, 236, 0.98)';
-    nav.style.mixBlendMode = 'normal';
-    nav.style.color = '#1a1612';
-    nav.style.backdropFilter = 'blur(12px)';
+    mainNav.style.background = 'rgba(245,242,236,0.98)';
+    mainNav.style.mixBlendMode = 'normal';
+    mainNav.style.color = '#1a1612';
+    mainNav.style.backdropFilter = 'blur(12px)';
+    mainNav.style.borderBottom = '1px solid rgba(26,22,18,0.12)';
   } else {
-    nav.style.background = '';
-    nav.style.mixBlendMode = 'difference';
-    nav.style.color = 'white';
-    nav.style.backdropFilter = '';
+    mainNav.style.background = '';
+    mainNav.style.mixBlendMode = 'difference';
+    mainNav.style.color = 'white';
+    mainNav.style.backdropFilter = '';
+    mainNav.style.borderBottom = '';
   }
 });
 
-/* ── MOBILE MENU TOGGLE ── */
+/* ── MOBILE MENU ── */
 const menuBtn = document.getElementById('menuBtn');
 const navLinks = document.querySelector('.nav-links');
 let menuOpen = false;
@@ -1261,7 +1064,6 @@ menuBtn.addEventListener('click', () => {
   }
 });
 
-/* ── CLOSE MENU ON LINK CLICK ── */
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
     menuOpen = false;
@@ -1273,46 +1075,15 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 /* ── TRACKING ── */
 (function () {
   function fireTracking() {
-    if (typeof fbq !== "undefined") {
-      fbq('track', 'Lead', {
-        content_name: 'Apply Shamanic Travels',
-        value: 1,
-        currency: 'USD'
-      });
-    }
-
-    if (typeof gtag !== "undefined") {
-      gtag('event', 'submit_application', {
-        event_category: 'apply',
-        event_label: 'Shamanic Travels',
-        value: 1
-      });
-    }
-
-    if (typeof gtag !== "undefined") {
-      gtag('event', 'conversion', {
-        send_to: 'AW-XXXXXXX/YYYYYYYYYY',
-        value: 1.0,
-        currency: 'USD'
-      });
-    }
+    if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Apply Shamanic Travels', value: 1, currency: 'USD' });
+    if (typeof gtag !== 'undefined') gtag('event', 'submit_application', { event_category: 'apply', event_label: 'Shamanic Travels', value: 1 });
   }
-
-  document.addEventListener("click", function (e) {
+  document.addEventListener('click', function (e) {
     const el = e.target.closest('a[href="apply_clean.html"], .apply-cta, .hero-cta');
     if (el) fireTracking();
   });
 })();
 </script>
-  
-<footer style="padding: 80px 40px; background: #1a1612; color: #d4ccc0; text-align: center; border-top: 1px solid #b89a5a;">
-    <div class="social-links" style="display: flex; justify-content: center; gap: 40px; margin-bottom: 30px;">
-        <a href="#" style="color: #d4ccc0; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em;">Facebook</a>
-        <a href="#" style="color: #d4ccc0; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em;">LinkedIn</a>
-        <a href="#" style="color: #d4ccc0; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em;">Instagram</a>
-        <a href="#" style="color: #d4ccc0; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em;">Blog</a>
-    </div>
-    <p style="font-size: 12px; margin: 0;">&copy; 2026 Shamanic Travels. All Rights Reserved.</p>
-</footer>
+
 </body>
 </html>
