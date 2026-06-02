@@ -1,0 +1,37 @@
+[
+  {
+    "src": "hero.jpg",
+    "title": "Machu Picchu at Dawn",
+    "location": "Cusco Region, Peru",
+    "category": "Andes",
+    "ratio": "3/2"
+  },
+  {
+    "src": "stonework.jpg",
+    "title": "Incan Stonework",
+    "location": "Sacred Valley",
+    "category": "Andes",
+    "ratio": "4/5"
+  },
+  {
+    "src": "jungle.jpg",
+    "title": "Amazon Canopy",
+    "location": "Pucallpa Basin",
+    "category": "Amazon",
+    "ratio": "3/2"
+  },
+  {
+    "src": "insights.jpg",
+    "title": "Andean Textiles",
+    "location": "Cusco, Peru",
+    "category": "Culture",
+    "ratio": "3/2"
+  },
+  {
+    "src": "marcello.jpg",
+    "title": "The Guide",
+    "location": "Peru",
+    "category": "People",
+    "ratio": "5/6"
+  }
+]

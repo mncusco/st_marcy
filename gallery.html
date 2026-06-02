@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Shamanic Travels</title>
+<meta name="description" content="A visual record of Peru's sacred geography — the Andes, the Amazon, and the living landscapes between.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --background:  #f5f2ec;
+  --foreground:  #1a1612;
+  --muted:       #8a8278;
+  --border:      rgba(26,22,18,0.12);
+  --accent:      #b89a5a;
+  --gold-soft:   #c9a96e;
+  --stone-deep:  #1e1b16;
+  --earth:       #d4ccc0;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: rgba(245,242,236,0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+}
+.nav-inner {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.nav-logo { width: 40px; height: 40px; object-fit: contain; display: block; }
+.nav-brand-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; letter-spacing: -0.02em; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a { color: inherit; text-decoration: none; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; }
+.nav-links a.apply { color: var(--gold-soft); }
+.nav-links a.active { color: var(--accent); }
+.nav-mobile-toggle {
+  display: none; flex-direction: column; justify-content: center;
+  align-items: flex-end; gap: 6px; width: 36px; height: 36px;
+  background: none; border: none; cursor: pointer; padding: 8px;
+}
+.nav-mobile-toggle span { display: block; height: 1px; background: currentColor; }
+.nav-mobile-toggle span:first-child { width: 20px; }
+.nav-mobile-toggle span:last-child  { width: 16px; }
+
+/* ── HEADER ── */
+.gallery-header {
+  padding: 160px 40px 64px;
+  max-width: 1280px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .gallery-header { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+}
+
+.gallery-header-left {}
+.gallery-eyebrow { color: var(--accent); display: block; margin-bottom: 16px; }
+.gallery-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 300;
+  line-height: 0.95;
+}
+.gallery-header-right {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+  max-width: 320px;
+}
+
+/* ── FILTERS ── */
+.gallery-filters {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 40px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
+.filter-btn {
+  background: none;
+  border: 1px solid var(--border);
+  padding: 8px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+.filter-btn.active { background: var(--foreground); border-color: var(--foreground); color: var(--background); }
+
+/* ── MASONRY GRID ── */
+.gallery-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 40px 160px;
+  columns: 1;
+  column-gap: 12px;
+}
+@media (min-width: 600px)  { .gallery-grid { columns: 2; } }
+@media (min-width: 1000px) { .gallery-grid { columns: 3; } }
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.gallery-item:hover img { transform: scale(1.04); }
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+.gallery-item-caption {
+  color: white;
+}
+.gallery-item-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.gallery-item-location {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+
+.gallery-item.hidden { display: none; }
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0,0,0,0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.lightbox.open { opacity: 1; pointer-events: all; }
+
+.lightbox-img-wrap {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 82vh;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.3s;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 24px; right: 32px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 8px;
+}
+.lightbox-close:hover { color: white; }
+
+.lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 24px 16px;
+}
+.lightbox-nav:hover { color: white; }
+.lightbox-prev { left: 24px; }
+.lightbox-next { right: 24px; }
+
+.lightbox-info {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.lightbox-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: white;
+  margin-bottom: 4px;
+}
+.lightbox-location { color: rgba(255,255,255,0.45); }
+.lightbox-counter { color: rgba(255,255,255,0.35); }
+
+/* ── EMPTY ── */
+.gallery-empty {
+  text-align: center;
+  padding: 80px 40px;
+  color: var(--muted);
+  grid-column: 1 / -1;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 64px 40px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer-back { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+.footer-back:hover { color: var(--accent); }
+.footer-copy { color: var(--muted); font-size: 12px; margin-top: 20px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+  .nav-inner { padding: 20px 24px; }
+  .gallery-header { padding: 140px 24px 48px; }
+  .gallery-filters { padding: 24px 24px; }
+  .gallery-grid { padding: 24px 24px 100px; column-gap: 8px; }
+  .gallery-item { margin-bottom: 8px; }
+  .lightbox-nav { display: none; }
+  .lightbox-info { padding: 16px 24px; flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand" aria-label="Shamanic Travels — Home">
+      <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo">
+      <span class="nav-brand-name">Shamanic Travels</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#experience" class="eyebrow">Ethos</a></li>
+      <li><a href="andean_arc_clean.html" class="eyebrow">Andean Arc</a></li>
+      <li><a href="amazon_clean.html" class="eyebrow">Amazon</a></li>
+      <li><a href="index.html#guide" class="eyebrow">The Guide</a></li>
+      <li><a href="blog.html" class="eyebrow">Insights</a></li>
+      <li><a href="gallery.html" class="eyebrow active">Gallery</a></li>
+      <li><a href="apply_clean.html" class="eyebrow apply">Apply</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" id="menuBtn">
+      <span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HEADER ── -->
+<div class="gallery-header">
+  <div class="gallery-header-left">
+    <span class="eyebrow gallery-eyebrow">Visual Record</span>
+    <h1 class="gallery-title">Gallery</h1>
+  </div>
+  <p class="gallery-header-right">Peru's sacred geography — the high Andes, the Amazonian basin, and the living landscapes that hold these traditions.</p>
+</div>
+
+<!-- ── FILTERS ── -->
+<div class="gallery-filters" id="filtersWrap">
+  <button class="filter-btn active eyebrow" data-filter="all">All</button>
+</div>
+
+<!-- ── GRID ── -->
+<div class="gallery-grid" id="galleryGrid">
+  <p class="gallery-empty eyebrow">Loading…</p>
+</div>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lightbox-close eyebrow" id="lbClose">Close ×</button>
+  <button class="lightbox-nav lightbox-prev eyebrow" id="lbPrev">← Prev</button>
+  <div class="lightbox-img-wrap">
+    <img src="" alt="" class="lightbox-img" id="lbImg">
+  </div>
+  <button class="lightbox-nav lightbox-next eyebrow" id="lbNext">Next →</button>
+  <div class="lightbox-info">
+    <div>
+      <p class="lightbox-title" id="lbTitle"></p>
+      <p class="eyebrow lightbox-location" id="lbLocation"></p>
+    </div>
+    <p class="eyebrow lightbox-counter" id="lbCounter"></p>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="index.html" class="eyebrow footer-back">← Return to Shamanic Travels</a>
+  <p class="eyebrow footer-copy">© 2026 Shamanic Travels · Private Curated Journeys</p>
+</footer>
+
+<script>
+/* ── MOBILE NAV ── */
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.querySelector('.nav-links');
+let menuOpen = false;
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  navLinks.style.cssText = menuOpen
+    ? 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#f5f2ec;padding:24px 40px;gap:20px;z-index:100;'
+    : 'display:none;';
+  menuBtn.setAttribute('aria-expanded', menuOpen);
+});
+
+/* ── DATA ── */
+let allPhotos = [];
+let filtered  = [];
+let current   = 0;
+
+async function loadGallery() {
+  const grid    = document.getElementById('galleryGrid');
+  const filters = document.getElementById('filtersWrap');
+
+  try {
+    const res    = await fetch('photos.json');
+    if (!res.ok) throw new Error();
+    allPhotos = await res.json();
+
+    if (!allPhotos.length) {
+      grid.innerHTML = '<p class="gallery-empty eyebrow">No photos yet.</p>';
+      return;
+    }
+
+    /* build filter buttons */
+    const cats = ['all', ...new Set(allPhotos.map(p => p.category).filter(Boolean))];
+    filters.innerHTML = cats.map(c =>
+      `<button class="filter-btn eyebrow${c === 'all' ? ' active' : ''}" data-filter="${c}">${c}</button>`
+    ).join('');
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.filter);
+      });
+    });
+
+    applyFilter('all');
+
+  } catch(e) {
+    grid.innerHTML = '<p class="gallery-empty eyebrow">Gallery coming soon.</p>';
+  }
+}
+
+function applyFilter(cat) {
+  filtered = cat === 'all' ? allPhotos : allPhotos.filter(p => p.category === cat);
+  renderGrid();
+}
+
+function renderGrid() {
+  const grid = document.getElementById('galleryGrid');
+  if (!filtered.length) {
+    grid.innerHTML = '<p class="gallery-empty eyebrow">No photos in this category.</p>';
+    return;
+  }
+  grid.innerHTML = filtered.map((p, i) => `
+    <div class="gallery-item" data-index="${i}" tabindex="0" role="button" aria-label="Open ${p.title}">
+      <img
+        src="${p.src}"
+        alt="${p.title || ''}"
+        loading="${i < 6 ? 'eager' : 'lazy'}"
+        style="aspect-ratio:${p.ratio || '4/3'}">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-caption">
+          ${p.title    ? `<p class="gallery-item-title">${p.title}</p>` : ''}
+          ${p.location ? `<p class="eyebrow gallery-item-location">${p.location}</p>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.gallery-item').forEach(el => {
+    el.addEventListener('click', () => openLightbox(+el.dataset.index));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openLightbox(+el.dataset.index); });
+  });
+}
+
+/* ── LIGHTBOX ── */
+const lb       = document.getElementById('lightbox');
+const lbImg    = document.getElementById('lbImg');
+const lbTitle  = document.getElementById('lbTitle');
+const lbLoc    = document.getElementById('lbLocation');
+const lbCount  = document.getElementById('lbCounter');
+
+function openLightbox(i) {
+  current = i;
+  updateLightbox();
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  lb.focus();
+}
+
+function closeLightbox() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateLightbox() {
+  const p = filtered[current];
+  lbImg.style.opacity = '0';
+  lbImg.src = p.src;
+  lbImg.alt = p.title || '';
+  lbImg.onload = () => { lbImg.style.opacity = '1'; };
+  lbTitle.textContent  = p.title    || '';
+  lbLoc.textContent    = p.location || '';
+  lbCount.textContent  = `${current + 1} / ${filtered.length}`;
+}
+
+function prev() { current = (current - 1 + filtered.length) % filtered.length; updateLightbox(); }
+function next() { current = (current + 1) % filtered.length; updateLightbox(); }
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', prev);
+document.getElementById('lbNext').addEventListener('click', next);
+
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape')      closeLightbox();
+  if (e.key === 'ArrowLeft')   prev();
+  if (e.key === 'ArrowRight')  next();
+});
+
+/* touch swipe */
+let touchStartX = 0;
+lb.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
+});
+
+loadGallery();
+</script>
+</body>
+</html>
