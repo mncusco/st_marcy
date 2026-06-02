@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights — Shamanic Travels</title>
+<meta name="description" content="Field notes, reflections and essays by Marcello Buglione on shamanic traditions, Peru, and the philosophy of private travel.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --background:  #f5f2ec;
+  --foreground:  #1a1612;
+  --muted:       #8a8278;
+  --border:      rgba(26,22,18,0.12);
+  --accent:      #b89a5a;
+  --gold-soft:   #c9a96e;
+  --stone-deep:  #1e1b16;
+  --earth:       #d4ccc0;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  background: rgba(245,242,236,0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+}
+.nav-inner {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+.nav-logo { width: 40px; height: 40px; object-fit: contain; display: block; }
+.nav-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.nav-links a.apply { color: var(--gold-soft); }
+.nav-links a.active { color: var(--accent); }
+
+.nav-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 6px;
+  width: 36px; height: 36px;
+  background: none; border: none;
+  cursor: pointer; padding: 8px;
+}
+.nav-mobile-toggle span { display: block; height: 1px; background: currentColor; transition: all 0.3s; }
+.nav-mobile-toggle span:first-child { width: 20px; }
+.nav-mobile-toggle span:last-child  { width: 16px; }
+
+/* ── HERO ── */
+.blog-hero {
+  padding: 160px 40px 80px;
+  max-width: 1280px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.blog-hero-eyebrow {
+  color: var(--accent);
+  display: block;
+  margin-bottom: 24px;
+}
+.blog-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 300;
+  line-height: 0.95;
+  margin-bottom: 32px;
+}
+.blog-hero-desc {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.8;
+  max-width: 540px;
+}
+
+/* ── GRID ── */
+.blog-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 40px 160px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+@media (min-width: 768px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1100px) { .blog-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+/* ── CARD ── */
+.blog-card {
+  background: var(--background);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--foreground);
+  transition: background 0.3s;
+  cursor: pointer;
+}
+.blog-card:hover { background: #ede9e2; }
+
+.blog-card-img {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 32px;
+}
+
+.blog-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.blog-card-category { color: var(--accent); }
+.blog-card-date { color: var(--muted); }
+
+.blog-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.blog-card-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+.blog-card-link {
+  margin-top: auto;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  position: relative;
+  align-self: flex-start;
+}
+.blog-card-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.35s;
+}
+.blog-card:hover .blog-card-link::after { width: 100%; }
+
+/* ── EMPTY ── */
+.blog-empty {
+  grid-column: 1 / -1;
+  padding: 80px 40px;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 64px 40px;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+  text-align: center;
+}
+.footer-back {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-back:hover { color: var(--accent); }
+.footer-copy {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 24px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+  .nav-inner { padding: 20px 24px; }
+  .blog-hero { padding: 140px 24px 64px; }
+  .blog-grid { padding: 40px 24px 100px; }
+  .blog-card { padding: 28px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand" aria-label="Shamanic Travels — Home">
+      <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo">
+      <span class="nav-brand-name">Shamanic Travels</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#experience" class="eyebrow">Ethos</a></li>
+      <li><a href="andean_arc_clean.html" class="eyebrow">Andean Arc</a></li>
+      <li><a href="amazon_clean.html" class="eyebrow">Amazon</a></li>
+      <li><a href="index.html#guide" class="eyebrow">The Guide</a></li>
+      <li><a href="blog.html" class="eyebrow active">Insights</a></li>
+      <li><a href="apply_clean.html" class="eyebrow apply">Apply</a></li>
+    </ul>
+    <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" id="menuBtn">
+      <span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="blog-hero">
+  <span class="eyebrow blog-hero-eyebrow">Field Notes</span>
+  <h1 class="blog-hero-title">Insights</h1>
+  <p class="blog-hero-desc">Reflections on shamanic traditions, the philosophy of private travel, and the living geography of Peru — written by Marcello Buglione.</p>
+</div>
+
+<div class="blog-grid" id="blogGrid">
+  <div class="blog-empty eyebrow">Loading articles…</div>
+</div>
+
+<footer>
+  <a href="index.html" class="eyebrow footer-back">← Return to Shamanic Travels</a>
+  <p class="eyebrow footer-copy">© 2026 Shamanic Travels · Private Curated Journeys</p>
+</footer>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.querySelector('.nav-links');
+let menuOpen = false;
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  if (menuOpen) {
+    navLinks.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#f5f2ec;padding:24px 40px;gap:20px;z-index:100;';
+    menuBtn.setAttribute('aria-expanded', 'true');
+  } else {
+    navLinks.style.cssText = 'display:none;';
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+function formatDate(str) {
+  const d = new Date(str);
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+async function loadArticles() {
+  const grid = document.getElementById('blogGrid');
+  try {
+    const res = await fetch('articles.json');
+    if (!res.ok) throw new Error('not found');
+    const articles = await res.json();
+
+    if (!articles.length) {
+      grid.innerHTML = '<div class="blog-empty eyebrow">No articles published yet.</div>';
+      return;
+    }
+
+    grid.innerHTML = articles.map((a, i) => `
+      <a href="article.html?id=${a.slug}" class="blog-card">
+        <img
+          src="${a.image || 'insights.jpg'}"
+          alt="${a.title}"
+          class="blog-card-img"
+          loading="${i === 0 ? 'eager' : 'lazy'}">
+        <div class="blog-card-meta">
+          <span class="eyebrow blog-card-category">${a.category}</span>
+          <span class="eyebrow blog-card-date">${formatDate(a.date)}</span>
+        </div>
+        <h2 class="blog-card-title">${a.title}</h2>
+        <p class="blog-card-subtitle">${a.excerpt}</p>
+        <span class="blog-card-link eyebrow">Read →</span>
+      </a>
+    `).join('');
+  } catch (e) {
+    grid.innerHTML = '<div class="blog-empty eyebrow">Articles coming soon.</div>';
+  }
+}
+
+loadArticles();
+</script>
+</body>
+</html>
