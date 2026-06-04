@@ -320,8 +320,8 @@ async function loadArticle() {
   }
 
   try {
-    const res = await fetch('articles.json');
-    if (!res.ok) throw new Error();
+const res = await fetch('/articles.json');   ù
+  if (!res.ok) throw new Error();
     const articles = await res.json();
     const article = articles.find(a => a.slug === slug || a.id === slug);
 
