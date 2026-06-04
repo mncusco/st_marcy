@@ -303,7 +303,7 @@ function formatDate(str) {
 async function loadArticles() {
   const grid = document.getElementById('blogGrid');
   try {
-    const res = await fetch('articles.json');
+const res = await fetch('/articles.json');
     if (!res.ok) throw new Error('not found');
     const articles = await res.json();
 
