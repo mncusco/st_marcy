@@ -29,26 +29,20 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-
 fbq('init', '236536824187993');
 fbq('track', 'PageView');
 </script>
 
-<noscript>
-<img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/>
-</noscript>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z40KLH5V17"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'G-Z40KLH5V17');
 </script>
 
 <style>
+* { box-sizing: border-box; }
 body {
   margin:0;
   font-family:Inter,sans-serif;
@@ -57,10 +51,59 @@ body {
   font-weight:300;
 }
 
+/* ── BACK HOME NAV ── */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(245,242,236,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.nav-logo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: #1a1612;
+  text-decoration: none;
+}
+
+.nav-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a8278;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-back:hover { color: #1a1612; }
+
+.nav-back svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .container {
   max-width:900px;
   margin:0 auto;
-  padding:80px 24px;
+  padding: 120px 24px 80px;
 }
 
 h1 {
@@ -81,14 +124,9 @@ h2 {
   padding-bottom:8px;
 }
 
-p {
-  color:#8a8278;
-  line-height:1.6;
-}
+p { color:#8a8278; line-height:1.6; }
 
-form {
-  margin-top:40px;
-}
+form { margin-top:40px; }
 
 .grid-2 {
   display:grid;
@@ -97,9 +135,9 @@ form {
 }
 
 @media(max-width:600px){
-  .grid-2 {
-    grid-template-columns:1fr;
-  }
+  .grid-2 { grid-template-columns:1fr; }
+  .top-nav { padding: 14px 20px; }
+  h1 { font-size: 32px; }
 }
 
 .field {
@@ -116,39 +154,39 @@ label {
   color:#8a8278;
 }
 
-input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="date"], textarea {
+input[type="text"], input[type="email"], input[type="tel"],
+input[type="number"], input[type="date"], textarea {
   border:none;
   border-bottom:1px solid rgba(0,0,0,0.15);
   padding:10px 0;
   background:transparent;
   outline:none;
   font-size:15px;
-  width: 100%;
+  width:100%;
+  font-family: Inter, sans-serif;
 }
 
-input:focus, textarea:focus {
-  border-bottom-color:#b89a5a;
-}
+input:focus, textarea:focus { border-bottom-color:#b89a5a; }
 
 .radio-group, .checkbox-group {
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  margin-top:8px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
 .radio-group label, .checkbox-group label {
-  font-size: 14px;
-  letter-spacing: normal;
-  text-transform: none;
-  color: #1a1612;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
+  font-size:14px;
+  letter-spacing:normal;
+  text-transform:none;
+  color:#1a1612;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
 }
 
-button {
+button[type="submit"] {
   margin-top:40px;
   padding:16px 40px;
   border:1px solid #1a1612;
@@ -157,10 +195,11 @@ button {
   text-transform:uppercase;
   letter-spacing:.2em;
   font-size:10px;
+  font-family: Inter, sans-serif;
   transition: all 0.3s ease;
 }
 
-button:hover {
+button[type="submit"]:hover {
   background:#1a1612;
   color:#f5f2ec;
 }
@@ -171,11 +210,20 @@ button:hover {
   color:#8a8278;
 }
 </style>
-<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/21a4205a942556a4539ae8340/1cf765c5d3a9267679134ea4b.js");
-</script>
+
+<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/21a4205a942556a4539ae8340/1cf765c5d3a9267679134ea4b.js");</script>
 </head>
 
 <body>
+
+<!-- TOP NAV WITH BACK HOME -->
+<nav class="top-nav">
+  <a href="/" class="nav-logo">Shamanic Travels</a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Torna alla home
+  </a>
+</nav>
 
 <div class="container">
 
@@ -190,38 +238,14 @@ button:hover {
 
     <h2>Chapter I: Identity</h2>
     <div class="grid-2">
-      <div class="field">
-        <label>Full name</label>
-        <input id="fullName" type="text" required>
-      </div>
-      <div class="field">
-        <label>Email</label>
-        <input id="email" type="email" required>
-      </div>
-      <div class="field">
-        <label>Phone (with country code)</label>
-        <input id="phone" type="tel" required>
-      </div>
-      <div class="field">
-        <label>Age</label>
-        <input id="age" type="number" min="21" max="95" required>
-      </div>
-      <div class="field">
-        <label>Country of residence</label>
-        <input id="country" type="text" required>
-      </div>
-      <div class="field">
-        <label>City</label>
-        <input id="city" type="text" required>
-      </div>
-      <div class="field">
-        <label>Profession / occupation</label>
-        <input id="job" type="text" required>
-      </div>
-      <div class="field">
-        <label>Languages spoken</label>
-        <input id="languages" type="text" placeholder="English, Italian, Spanish…" required>
-      </div>
+      <div class="field"><label>Full name</label><input id="fullName" type="text" required></div>
+      <div class="field"><label>Email</label><input id="email" type="email" required></div>
+      <div class="field"><label>Phone (with country code)</label><input id="phone" type="tel" required></div>
+      <div class="field"><label>Age</label><input id="age" type="number" min="21" max="95" required></div>
+      <div class="field"><label>Country of residence</label><input id="country" type="text" required></div>
+      <div class="field"><label>City</label><input id="city" type="text" required></div>
+      <div class="field"><label>Profession / occupation</label><input id="job" type="text" required></div>
+      <div class="field"><label>Languages spoken</label><input id="languages" type="text" placeholder="English, Italian, Spanish…" required></div>
     </div>
 
     <h2>Chapter II: Journey</h2>
@@ -234,7 +258,7 @@ button:hover {
       </div>
     </div>
 
-    <h2>Chapter III: Eligibility & Readiness</h2>
+    <h2>Chapter III: Eligibility &amp; Readiness</h2>
     <div class="field">
       <label>Prior experience with traditional plant practices</label>
       <div class="radio-group">
@@ -269,11 +293,11 @@ button:hover {
 
     <div class="field checkbox-group">
       <label>
-        <input type="checkbox" id="consentPrep" required> 
+        <input type="checkbox" id="consentPrep" required>
         I understand a three-month preparation protocol is mandatory and I am prepared to honour it.
       </label>
       <label>
-        <input type="checkbox" id="consentInterview" required> 
+        <input type="checkbox" id="consentInterview" required>
         I understand acceptance is decided only after a private interview with the guide.
       </label>
     </div>
@@ -296,34 +320,14 @@ button:hover {
 
     <h2>Chapter V: Request an Interview Time</h2>
     <p>Offer up to three preferred windows in your local time.</p>
-    
-    <div class="grid-2">
-      <div class="field">
-        <label>Option 1 - Date</label>
-        <input id="opt1Date" type="date" required>
-      </div>
-      <div class="field">
-        <label>Option 1 - Time window</label>
-        <input id="opt1Time" type="text" placeholder="e.g. 09:00–11:00" required>
-      </div>
-      
-      <div class="field">
-        <label>Option 2 - Date (optional)</label>
-        <input id="opt2Date" type="date">
-      </div>
-      <div class="field">
-        <label>Option 2 - Time window (optional)</label>
-        <input id="opt2Time" type="text" placeholder="e.g. 09:00–11:00">
-      </div>
 
-      <div class="field">
-        <label>Option 3 - Date (optional)</label>
-        <input id="opt3Date" type="date">
-      </div>
-      <div class="field">
-        <label>Option 3 - Time window (optional)</label>
-        <input id="opt3Time" type="text" placeholder="e.g. 09:00–11:00">
-      </div>
+    <div class="grid-2">
+      <div class="field"><label>Option 1 - Date</label><input id="opt1Date" type="date" required></div>
+      <div class="field"><label>Option 1 - Time window</label><input id="opt1Time" type="text" placeholder="e.g. 09:00–11:00" required></div>
+      <div class="field"><label>Option 2 - Date (optional)</label><input id="opt2Date" type="date"></div>
+      <div class="field"><label>Option 2 - Time window (optional)</label><input id="opt2Time" type="text" placeholder="e.g. 09:00–11:00"></div>
+      <div class="field"><label>Option 3 - Date (optional)</label><input id="opt3Date" type="date"></div>
+      <div class="field"><label>Option 3 - Time window (optional)</label><input id="opt3Time" type="text" placeholder="e.g. 09:00–11:00"></div>
     </div>
 
     <div class="grid-2">
@@ -343,12 +347,9 @@ button:hover {
 
     <button type="submit">Submit Application</button>
 
-    <p class="note">
-      Your application is private. We respond personally within ten days.
-    </p>
+    <p class="note">Your application is private. We respond personally within ten days.</p>
 
   </form>
-
 </div>
 
 <script>
@@ -356,16 +357,13 @@ function getVal(id) {
   const el = document.getElementById(id);
   return el ? el.value : '';
 }
-
 function getRadioVal(name) {
   const el = document.querySelector(`input[name="${name}"]:checked`);
   return el ? el.value : 'Not selected';
 }
-
 function handleSubmit(e){
   e.preventDefault();
-
-  const body = 
+  const body =
 `--- IDENTITY ---
 Name: ${getVal('fullName')}
 Email: ${getVal('email')}
@@ -400,36 +398,16 @@ Opt 1: ${getVal('opt1Date')} at ${getVal('opt1Time')}
 Opt 2: ${getVal('opt2Date')} at ${getVal('opt2Time')}
 Opt 3: ${getVal('opt3Date')} at ${getVal('opt3Time')}`;
 
-  // =========================
-  // 🔥 META PIXEL EVENT
-  // =========================
   if(typeof fbq !== "undefined"){
-    fbq('track','Lead',{
-      content_name:'Apply Shamanic Travels',
-      value:1,
-      currency:'USD'
-    });
+    fbq('track','Lead',{ content_name:'Apply Shamanic Travels', value:1, currency:'USD' });
   }
-
-  // =========================
-  // 📊 GA4 / GOOGLE ADS EVENT
-  // =========================
   if(typeof gtag !== "undefined"){
-    gtag('event','generate_lead',{
-      event_category:'apply',
-      event_label:'shamanic_travels_apply'
-    });
+    gtag('event','generate_lead',{ event_category:'apply', event_label:'shamanic_travels_apply' });
   }
-
-  // =========================
-  // 📩 SEND EMAIL
-  // =========================
-  window.location.href = 
+  window.location.href =
     `mailto:marcello.buglione@gmail.com?subject=Application — ${encodeURIComponent(getVal('fullName'))}&body=${encodeURIComponent(body)}`;
 }
 </script>
 
 </body>
 </html>
-
-```
