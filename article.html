@@ -320,7 +320,7 @@ async function loadArticle() {
   }
 
   try {
-    const res = await fetch('articles.json');
+    const res = await fetch('/articles.json');
     if (!res.ok) throw new Error();
     const articles = await res.json();
     const article = articles.find(a => a.slug === slug || a.id === slug);
@@ -334,13 +334,30 @@ async function loadArticle() {
     document.title = `${article.title} — Shamanic Travels`;
     document.querySelector('meta[name="description"]').setAttribute('content', article.excerpt);
 
-    const bodyParagraphs = (article.body || []).map(p => `<p>${p}</p>`).join('');
+    // Lingua corrente
+    const lang = localStorage.getItem('st_lang') || navigator.language.slice(0,2) || 'it';
+
+    // Selezione campo localizzato con fallback all'italiano
+    const t = (field) => article[`${field}_${lang}`] || article[field] || '';
+    const bodyField = article[`body_${lang}`] || article.body || [];
+    const bodyParagraphs = bodyField.map(p => `<p>${p}</p>`).join('');
+
+    // Banner lingua se articolo non disponibile nella lingua corrente
+    const hasTranslation = lang === 'it' || !!article[`body_${lang}`];
+    const langBanner = !hasTranslation ? `
+      <div style="background:rgba(185,154,90,0.1);border-left:3px solid var(--accent);padding:12px 20px;margin-bottom:32px;font-size:13px;color:var(--muted);">
+        <span style="font-style:italic;">Questo articolo è disponibile solo in italiano.</span>
+      </div>` : '';
+
+    const backLabel = { it:'← Tutti gli articoli', en:'← All Insights', es:'← Todos los artículos', ru:'← Все статьи', sr:'← Svi članci' }[lang] || '← All Insights';
+    const ctaLabel = { it:'Prenota un colloquio privato', en:'Request Private Interview', es:'Solicitar entrevista privada', ru:'Запросить интервью', sr:'Zatraži privatni razgovor' }[lang] || 'Request Private Interview';
+    const roleLabel = { it:'Guida e Fondatore · Shamanic Travels', en:'Guide & Founder · Shamanic Travels', es:'Guía y Fundador · Shamanic Travels', ru:'Гид и основатель · Shamanic Travels', sr:'Vodič i osnivač · Shamanic Travels' }[lang] || 'Guide & Founder · Shamanic Travels';
 
     container.innerHTML = `
       <div class="article-hero">
         <img
           src="${article.image || 'insights.jpg'}"
-          alt="${article.title}"
+          alt="${t('title')}"
           class="article-hero-img">
         <div class="article-hero-overlay"></div>
         <div class="article-hero-content">
@@ -348,8 +365,8 @@ async function loadArticle() {
             <span class="eyebrow article-hero-category">${article.category}</span>
             <span class="eyebrow article-hero-date">${formatDate(article.date)}</span>
           </div>
-          <h1 class="article-hero-title">${article.title}</h1>
-          <p class="article-hero-subtitle">${article.subtitle}</p>
+          <h1 class="article-hero-title">${t('title')}</h1>
+          <p class="article-hero-subtitle">${t('subtitle')}</p>
         </div>
       </div>
 
@@ -360,15 +377,16 @@ async function loadArticle() {
           </div>
           <div>
             <p class="article-byline-name">${article.author}</p>
-            <p class="eyebrow article-byline-role">Guide &amp; Founder · Shamanic Travels</p>
+            <p class="eyebrow article-byline-role">${roleLabel}</p>
           </div>
         </div>
+        ${langBanner}
         <div class="article-body">${bodyParagraphs}</div>
       </div>
 
       <div class="article-bottom">
-        <a href="blog.html" class="eyebrow article-back">← All Insights</a>
-        <a href="apply_clean.html" class="article-cta eyebrow">Request Private Interview</a>
+        <a href="blog.html" class="eyebrow article-back">${backLabel}</a>
+        <a href="apply_clean.html" class="article-cta eyebrow">${ctaLabel}</a>
       </div>
 
       <footer>
