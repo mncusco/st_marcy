@@ -34,7 +34,7 @@ const i18n = (() => {
   /* ── carica JSON lingua ── */
   async function loadLang(lang) {
     try {
-      const res = await fetch(`lang/${lang}.json?v=1`);
+      const res = await fetch(`/lang/${lang}.json?v=1`);
       if (!res.ok) throw new Error();
       return await res.json();
     } catch {
