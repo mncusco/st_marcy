@@ -46,6 +46,33 @@
 }
 </script>
 
+<!-- ── GOOGLE ANALYTICS GA4 ── -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z40KLH5V17"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z40KLH5V17');
+</script>
+
+<!-- ── FACEBOOK PIXEL ── -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '236536824187993');
+fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=236536824187993&ev=PageView&noscript=1">
+</noscript>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -677,6 +704,12 @@ footer {
 
 .footer-desc { color: var(--muted); font-size: 16px; line-height: 1.8; margin-bottom: 40px; max-width: 540px; }
 
+.footer-ebook-wrap { display: flex; gap: 40px; align-items: flex-start; }
+.footer-ebook-cover { flex-shrink: 0; width: 130px; box-shadow: 8px 12px 32px rgba(0,0,0,0.35); border-radius: 2px; }
+.footer-ebook-cover svg { display: block; width: 100%; height: auto; border-radius: 2px; }
+.footer-ebook-text { flex: 1; }
+@media (max-width: 600px) { .footer-ebook-wrap { flex-direction: column; } .footer-ebook-cover { width: 100px; } }
+
 .footer-form {
   display: flex;
   align-items: flex-end;
@@ -747,8 +780,6 @@ footer {
   .journey-card { padding: 24px 24px 36px; }
 }
 </style>
-<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/21a4205a942556a4539ae8340/1cf765c5d3a9267679134ea4b.js");
-</script>
 </head>
 <body>
 
@@ -900,11 +931,11 @@ footer {
   <video
     autoplay muted loop playsinline
     poster="marcello.jpg"
-    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.25;z-index:0;">
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;z-index:0;">
     <source src="cinematic_3.mp4" type="video/mp4">
   </video>
   <!-- overlay scuro -->
-  <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(30,27,22,0.92) 0%, rgba(30,27,22,0.6) 100%);z-index:1;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(30,27,22,0.80) 0%, rgba(30,27,22,0.45) 100%);z-index:1;"></div>
 
   <div class="guide-inner" style="position:relative;z-index:2;">
     <img
@@ -1030,12 +1061,73 @@ footer {
   <div class="footer-inner">
     <div class="footer-left">
       <span class="eyebrow text-accent" style="display:block; margin-bottom:24px;" data-i18n="footer.eyebrow">Private Dispatches</span>
-      <h2><span data-i18n="footer.title1">Receive</span> <span style="font-style:italic;" data-i18n="footer.title2">La Planta de los Dioses</span></h2>
-      <p class="footer-desc" data-i18n="footer.desc">A digital edition of Marcello's essay on the botanical heritage of the Amazon, with occasional dispatches on forthcoming private journeys.</p>
-      <form class="footer-form" onsubmit="return false;">
-        <input type="email" data-i18n-attr="placeholder:footer.placeholder" placeholder="Email address" aria-label="Email address" maxlength="255">
-        <button type="submit" class="eyebrow" data-i18n="footer.btn">Request</button>
-      </form>
+      <div class="footer-ebook-wrap">
+        <div class="footer-ebook-cover" aria-hidden="true">
+          <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Copertina ebook I Luoghi Sacri degli Inca">
+            <defs>
+              <linearGradient id="fc-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a0d1a"/><stop offset="60%" stop-color="#1a2340"/><stop offset="100%" stop-color="#2d1f0e"/></linearGradient>
+              <linearGradient id="fc-gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8B6914" stop-opacity="0"/><stop offset="50%" stop-color="#E8C060"/><stop offset="100%" stop-color="#8B6914" stop-opacity="0"/></linearGradient>
+              <linearGradient id="fc-mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3a5c"/><stop offset="100%" stop-color="#1a2340"/></linearGradient>
+            </defs>
+            <rect width="200" height="280" fill="url(#fc-sky)"/>
+            <!-- stars -->
+            <circle cx="30" cy="18" r="0.8" fill="#fff" opacity="0.7"/>
+            <circle cx="75" cy="10" r="1" fill="#fff" opacity="0.8"/>
+            <circle cx="130" cy="22" r="0.7" fill="#fff" opacity="0.6"/>
+            <circle cx="168" cy="12" r="0.9" fill="#fff" opacity="0.75"/>
+            <circle cx="55" cy="35" r="0.6" fill="#fff" opacity="0.5"/>
+            <circle cx="150" cy="40" r="0.7" fill="#E8C060" opacity="0.4"/>
+            <!-- moon -->
+            <circle cx="155" cy="28" r="12" fill="#fff8e7" opacity="0.85"/>
+            <circle cx="150" cy="25" r="10" fill="#1a2340"/>
+            <!-- mountains far -->
+            <path d="M0 130 L25 85 L50 110 L75 70 L100 100 L125 65 L150 95 L175 60 L200 85 L200 155 L0 155Z" fill="url(#fc-mtn)"/>
+            <!-- snow -->
+            <path d="M75 70 L83 88 L67 88Z" fill="#d0ddf0" opacity="0.6"/>
+            <path d="M125 65 L133 83 L117 83Z" fill="#d0ddf0" opacity="0.6"/>
+            <path d="M175 60 L183 78 L167 78Z" fill="#d0ddf0" opacity="0.6"/>
+            <!-- mountains mid -->
+            <path d="M0 160 L30 115 L60 140 L90 105 L120 135 L150 100 L180 130 L200 115 L200 175 L0 175Z" fill="#1e2e1a"/>
+            <!-- ruins -->
+            <rect x="55" y="168" width="90" height="5" rx="1" fill="#3d2e12"/>
+            <rect x="62" y="163" width="76" height="6" rx="1" fill="#2d2008"/>
+            <rect x="70" y="159" width="60" height="5" rx="1" fill="#231a07"/>
+            <rect x="80" y="152" width="40" height="10" rx="1" fill="#2d2008"/>
+            <rect x="88" y="145" width="12" height="9" rx="0.5" fill="#3a2a0a"/>
+            <rect x="100" y="145" width="12" height="9" rx="0.5" fill="#3a2a0a"/>
+            <rect x="91" y="149" width="3" height="4" rx="0.5" fill="#0a0804"/>
+            <rect x="106" y="149" width="3" height="4" rx="0.5" fill="#0a0804"/>
+            <!-- foreground -->
+            <path d="M0 185 Q50 170 100 178 Q150 170 200 182 L200 280 L0 280Z" fill="#0d1408"/>
+            <!-- border -->
+            <rect x="6" y="6" width="188" height="268" fill="none" stroke="#C9973A" stroke-width="0.8" opacity="0.7"/>
+            <rect x="9" y="9" width="182" height="262" fill="none" stroke="#C9973A" stroke-width="0.3" opacity="0.4"/>
+            <!-- brand -->
+            <text x="100" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="2" fill="#C9973A" opacity="0.8">SHAMANIC TRAVELS</text>
+            <rect x="30" y="29" width="140" height="0.5" fill="url(#fc-gold)" opacity="0.5"/>
+            <!-- title -->
+            <text x="100" y="55" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="#E8C060">I LUOGHI</text>
+            <text x="100" y="73" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="#E8C060">SACRI</text>
+            <text x="100" y="87" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#C9973A" opacity="0.8">✦</text>
+            <text x="100" y="100" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#E8C060" letter-spacing="1">DEGLI INCA</text>
+            <rect x="40" y="104" width="120" height="0.5" fill="url(#fc-gold)" opacity="0.4"/>
+            <text x="100" y="114" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.5" fill="#C9973A" opacity="0.7">GUIDA AI LUOGHI MISTICI DELLE ANDE</text>
+            <!-- chapters -->
+            <text x="100" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="4" letter-spacing="1" fill="#b8895a" opacity="0.7">CUSCO · VALLE SACRA · PISAC</text>
+            <text x="100" y="133" text-anchor="middle" font-family="Georgia,serif" font-size="4" letter-spacing="1" fill="#b8895a" opacity="0.7">MORAY · MACHU PICCHU · TITICACA</text>
+            <!-- author -->
+            <text x="100" y="265" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="2" fill="#C9973A" opacity="0.7">MARCELLO BUGLIONE</text>
+          </svg>
+        </div>
+        <div class="footer-ebook-text">
+          <h2><span data-i18n="footer.title1">Receive</span> <span style="font-style:italic;" data-i18n="footer.title2">I Luoghi Sacri degli Inca</span></h2>
+          <p class="footer-desc" data-i18n="footer.desc">Sette capitoli sui luoghi più sacri del mondo andino: Cusco, Valle Sacra, Pisac, Moray, Machu Picchu, Titicaca, Tiwanaku. Una guida scritta da chi li vive.</p>
+          <form class="footer-form" onsubmit="return false;">
+            <input type="email" data-i18n-attr="placeholder:footer.placeholder" placeholder="Email address" aria-label="Email address" maxlength="255">
+            <button type="submit" class="eyebrow" data-i18n="footer.btn">Request</button>
+          </form>
+        </div>
+      </div>
     </div>
     <div class="footer-right">
       <div class="footer-based eyebrow">
@@ -1105,8 +1197,20 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 /* ── TRACKING ── */
 (function () {
   function fireTracking() {
-    if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Apply Shamanic Travels', value: 1, currency: 'USD' });
-    if (typeof gtag !== 'undefined') gtag('event', 'submit_application', { event_category: 'apply', event_label: 'Shamanic Travels', value: 1 });
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead', {
+        content_name: 'Apply Shamanic Travels',
+        value: 1,
+        currency: 'USD'
+      });
+    }
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'submit_application', {
+        event_category: 'apply',
+        event_label: 'Shamanic Travels',
+        value: 1
+      });
+    }
   }
   document.addEventListener('click', function (e) {
     const el = e.target.closest('a[href="apply_clean.html"], .apply-cta, .hero-cta');
