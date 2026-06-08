@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grazie — Shamanic Travels</title>
+<meta name="robots" content="noindex,nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z40KLH5V17"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-Z40KLH5V17');
+</script>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '236536824187993');
+fbq('track', 'PageView');
+fbq('track', 'CompleteRegistration', { content_name: 'Ebook I Luoghi Sacri' });
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f2ec;
+    --dark: #0d1408;
+    --gold: #b89a5a;
+    --gold-light: #E8C060;
+    --muted: #8a8278;
+    --text: #1a1612;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NAV ── */
+  nav {
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .nav-logo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-back {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+  }
+
+  .card {
+    max-width: 680px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .ornament {
+    font-size: 28px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-size: clamp(36px, 6vw, 60px);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 28px auto;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  /* ── DOWNLOAD BOX ── */
+  .download-box {
+    background: var(--dark);
+    padding: 40px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    margin: 40px 0;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+    text-align: left;
+  }
+
+  .book-cover {
+    flex-shrink: 0;
+    width: 100px;
+    box-shadow: 6px 10px 24px rgba(0,0,0,0.5);
+  }
+
+  .book-info { flex: 1; }
+
+  .book-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .book-sub {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 20px;
+  }
+
+  .btn-download {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--dark);
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 13px 28px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn-download:hover { background: var(--gold-light); }
+
+  /* ── WHAT NEXT ── */
+  .what-next {
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .what-next p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .link-item {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .link-item:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 24px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 540px) {
+    nav { padding: 16px 20px; }
+    .download-box { flex-direction: column; align-items: flex-start; padding: 28px 20px; }
+    .hero { padding: 48px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Shamanic Travels</a>
+  <a href="/" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Torna alla home
+  </a>
+</nav>
+
+<!-- HERO -->
+<main class="hero">
+  <div class="card">
+
+    <span class="ornament">✦</span>
+    <span class="eyebrow">Shamanic Travels · Biblioteca privata</span>
+
+    <h1>Il libro è tuo.<br><em>Benvenuto nel viaggio.</em></h1>
+
+    <div class="divider"></div>
+
+    <p class="desc">
+      Questo compendio scritto dal fondatore è frutto dei viaggi e delle informazioni raccolte nel corso degli anni — una valida guida pre-tour ricca di informazioni utili sui luoghi sacri delle Ande.
+    </p>
+
+    <!-- DOWNLOAD BOX -->
+    <div class="download-box">
+      <!-- Book cover SVG (mini version) -->
+      <div class="book-cover">
+        <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;border-radius:2px;">
+          <defs>
+            <linearGradient id="tsky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0a0d1a"/>
+              <stop offset="60%" stop-color="#1a2340"/>
+              <stop offset="100%" stop-color="#1a0e06"/>
+            </linearGradient>
+            <linearGradient id="tgold" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#8B6914" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#E8C060"/>
+              <stop offset="100%" stop-color="#8B6914" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <rect width="200" height="280" fill="url(#tsky)"/>
+          <circle cx="150" cy="38" r="18" fill="#fff8e7"/>
+          <circle cx="145" cy="34" r="14" fill="#1a2340"/>
+          <path d="M0 160 L30 120 L60 140 L90 100 L120 130 L150 95 L180 115 L200 105 L200 200 L0 200Z" fill="#1e2e1a" opacity="0.9"/>
+          <path d="M0 185 L25 160 L55 175 L85 155 L115 170 L145 150 L175 165 L200 155 L200 280 L0 280Z" fill="#0d1408"/>
+          <rect x="8" y="8" width="184" height="264" fill="none" stroke="#C9973A" stroke-width="0.7" opacity="0.6"/>
+          <text x="100" y="55" text-anchor="middle" font-family="Georgia,serif" font-size="7" letter-spacing="2" fill="#C9973A" opacity="0.8">SHAMANIC TRAVELS</text>
+          <text x="100" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="bold" fill="#E8C060">I LUOGHI</text>
+          <text x="100" y="100" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="bold" fill="#E8C060">SACRI</text>
+          <text x="100" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#C9973A">✦</text>
+          <text x="100" y="128" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#E8C060">DEGLI INCA</text>
+          <text x="100" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="6" letter-spacing="1.5" fill="#C9973A" opacity="0.7">MARCELLO BUGLIONE</text>
+        </svg>
+      </div>
+
+      <div class="book-info">
+        <div class="book-title">I Luoghi Sacri degli Inca</div>
+        <div class="book-sub">7 capitoli · Guida pre-tour</div>
+        <!-- SOSTITUISCI href con il link reale al PDF -->
+        <a href="/ebooks/luoghi-sacri-degli-inca.pdf" class="btn-download" download>
+          ↓ &nbsp; Scarica il libro
+        </a>
+      </div>
+    </div>
+
+    <!-- WHAT NEXT -->
+    <div class="what-next">
+      <p>
+        Mentre esplori le pagine, se senti che questo viaggio ti chiama davvero — puoi candidarti per un colloquio privato con Marcello.
+      </p>
+      <div class="links">
+        <a href="/blog.html" class="link-item">Leggi gli articoli</a>
+        <a href="/gallery.html" class="link-item">Galleria fotografica</a>
+        <a href="/apply_clean.html" class="link-item">Richiedi un colloquio</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  Shamanic Travels &nbsp;·&nbsp; Londra · Lima · Milano &nbsp;·&nbsp; © 2026
+</footer>
+
+</body>
+</html>
