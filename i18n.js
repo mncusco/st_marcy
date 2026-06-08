@@ -71,18 +71,37 @@ const i18n = (() => {
   }
 
   /* ── USA IL SELECT ESISTENTE ── */
-  function bindSelector() {
-    const select = document.getElementById('lang-switcher');
-    if (!select) {
-      console.warn('i18n: #lang-switcher non trovato');
-      return;
-    }
-    select.value = currentLang;
-    if (!select.dataset.i18nBound) {
-      select.addEventListener('change', (e) => switchLang(e.target.value));
-      select.dataset.i18nBound = 'true';
+function bindSelector() {
+  let select = document.getElementById('lang-switcher');
+  
+  if (!select) {
+    const nav = document.querySelector('.nav-links');
+    if (nav) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <select id="lang-switcher" style="background:transparent;border:1px solid currentColor;color:inherit;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 8px;cursor:pointer;">
+          <option value="en">EN</option>
+          <option value="it">IT</option>
+          <option value="es">ES</option>
+          <option value="sr">SR</option>
+          <option value="ru">RU</option>
+        </select>`;
+      nav.appendChild(li);
+      select = document.getElementById('lang-switcher');
     }
   }
+  
+  if (!select) {
+    console.warn('i18n: #lang-switcher non trovato e nav non trovata');
+    return;
+  }
+  
+  select.value = currentLang;
+  if (!select.dataset.i18nBound) {
+    select.addEventListener('change', (e) => switchLang(e.target.value));
+    select.dataset.i18nBound = 'true';
+  }
+}
 
   async function switchLang(lang) {
     if (!SUPPORTED.includes(lang)) return;
