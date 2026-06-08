@@ -1120,11 +1120,15 @@ footer {
           </svg>
         </div>
         <div class="footer-ebook-text">
-          <h2><span data-i18n="footer.title1">Receive</span> <span style="font-style:italic;" data-i18n="footer.title2">I Luoghi Sacri degli Inca</span></h2>
-          <p class="footer-desc" data-i18n="footer.desc">Sette capitoli sui luoghi più sacri del mondo andino: Cusco, Valle Sacra, Pisac, Moray, Machu Picchu, Titicaca, Tiwanaku. Una guida scritta da chi li vive.</p>
-          <form class="footer-form" onsubmit="return false;">
-            <input type="email" data-i18n-attr="placeholder:footer.placeholder" placeholder="Email address" aria-label="Email address" maxlength="255">
-            <button type="submit" class="eyebrow" data-i18n="footer.btn">Request</button>
+          <h2 style="font-size:clamp(20px,2.5vw,30px); line-height:1.25; margin-bottom:14px;">
+            Ricevi gratuitamente il libro<br>
+            <em style="color:var(--gold, #b89a5a);">"I Luoghi Sacri degli Inca"</em><br>
+            <span style="font-size:0.65em; font-style:normal; letter-spacing:0.05em;">scritto da Marcello</span>
+          </h2>
+          <p class="footer-desc" style="margin-bottom:18px;">Questo compendio scritto dal fondatore è frutto dei viaggi e delle informazioni raccolte nel corso degli anni, una valida guida pre-tour ricca di informazioni utili.</p>
+          <form class="footer-form" onsubmit="handleEbookSubmit(event);">
+            <input type="email" id="ebookEmail" placeholder="Il tuo indirizzo email" aria-label="Email address" maxlength="255" required>
+            <button type="submit" class="eyebrow">Ricevi il libro</button>
           </form>
         </div>
       </div>
@@ -1196,6 +1200,17 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 
 /* ── TRACKING ── */
 (function () {
+  function handleEbookSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById('ebookEmail').value;
+    if (!email) return;
+    // Track events
+    if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Ebook I Luoghi Sacri' });
+    if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'luoghi_sacri_inca' });
+    // Redirect to thank you page
+    window.location.href = '/thankyou.html?email=' + encodeURIComponent(email);
+  }
+
   function fireTracking() {
     if (typeof fbq !== 'undefined') {
       fbq('track', 'Lead', {
