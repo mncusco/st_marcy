@@ -1,3 +1,5 @@
+Allora partiamo dalla Index HTML Non toccare nient'altro
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +27,7 @@
   "logo": "https://shamanictravels.com/logo.jpg",
   "sameAs": [
     "https://www.facebook.com/shamanictravels",
-    "https://www.instagram.com/shamanictravels"
+    "https://www.instagram.com/shamanictravels" 
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -70,7 +72,7 @@ fbq('track', 'PageView');
 </script>
 <noscript>
   <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=236536824187993&ev=PageView&noscript=1">
+    src="https://www.facebook.com/tr?id=236536824187993&ev=PageView&noscript=1"> 
 </noscript>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,14 +82,14 @@ fbq('track', 'PageView');
 <style>
 /* ── TOKENS ── */
 :root {
-  --background: #f5f2ec;
-  --foreground: #1a1612;
-  --muted: #8a8278;
-  --border: rgba(26,22,18,0.12);
-  --accent: #b89a5a;
-  --gold-soft: #c9a96e;
-  --stone-deep: #1e1b16;
-  --earth: #d4ccc0;
+  --background:  #f5f2ec;
+  --foreground:  #1a1612;
+  --muted:       #8a8278;
+  --border:      rgba(26,22,18,0.12);
+  --accent:      #b89a5a;
+  --gold-soft:   #c9a96e;
+  --stone-deep:  #1e1b16;
+  --earth:       #d4ccc0;
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -116,8 +118,8 @@ body {
 
 /* ── UTILITIES ── */
 .text-accent { color: var(--accent); }
-.text-muted { color: var(--muted); }
-.italic { font-style: italic; }
+.text-muted  { color: var(--muted); }
+.italic      { font-style: italic; }
 
 .link-underline {
   position: relative;
@@ -136,11 +138,11 @@ body {
 /* ── ANIMATIONS ── */
 @keyframes slowZoom {
   from { transform: scale(1.06); }
-  to { transform: scale(1.00); }
+  to   { transform: scale(1.00); }
 }
 @keyframes revealUp {
   from { opacity:0; transform: translateY(24px); }
-  to { opacity:1; transform: translateY(0); }
+  to   { opacity:1; transform: translateY(0); }
 }
 
 .animate-slow-zoom { animation: slowZoom 20s cubic-bezier(0.22,1,0.36,1) forwards; }
@@ -202,7 +204,6 @@ nav.scrolled {
   display: flex;
   gap: 36px;
   list-style: none;
-  align-items: center;
 }
 
 .nav-links a {
@@ -216,36 +217,11 @@ nav.scrolled {
 }
 .nav-links a:hover { opacity: 1; }
 
-nav.scrolled.nav-links a.apply { color: var(--gold-soft); }
-nav:not(.scrolled).nav-links a.apply {
+nav.scrolled .nav-links a.apply { color: var(--gold-soft); }
+nav:not(.scrolled) .nav-links a.apply {
   color: var(--gold-soft);
   border: 1px solid rgba(201,169,110,0.5);
   padding: 6px 14px;
-}
-
-/* ── LANG SWITCHER ── */
-#lang-switcher {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.3);
-  color: inherit;
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 6px 10px;
-  cursor: pointer;
-  outline: none;
-  transition: border-color 0.3s;
-}
-nav.scrolled #lang-switcher {
-  border-color: rgba(26,22,18,0.2);
-}
-#lang-switcher:hover {
-  border-color: var(--accent);
-}
-#lang-switcher option {
-  background: var(--background);
-  color: var(--foreground);
 }
 
 .nav-mobile-toggle {
@@ -265,7 +241,7 @@ nav.scrolled #lang-switcher {
   transition: all 0.3s;
 }
 .nav-mobile-toggle span:first-child { width: 20px; }
-.nav-mobile-toggle span:last-child { width: 16px; }
+.nav-mobile-toggle span:last-child  { width: 16px; }
 
 /* ── HERO ── */
 #hero {
@@ -296,7 +272,7 @@ nav.scrolled #lang-switcher {
   padding: 0 24px 80px;
   color: white;
 }
-@media (min-width: 768px) {.hero-content { padding-bottom: 0; } }
+@media (min-width: 768px) { .hero-content { padding-bottom: 0; } }
 
 .hero-eyebrow { color: rgba(255,255,255,0.7); margin-bottom: 32px; }
 
@@ -308,7 +284,7 @@ nav.scrolled #lang-switcher {
   margin-bottom: 40px;
   color: white;
 }
-.hero-title.gold { color: var(--gold-soft); }
+.hero-title .gold { color: var(--gold-soft); }
 
 .hero-subtitle {
   font-size: 11px;
@@ -369,7 +345,7 @@ nav.scrolled #lang-switcher {
 }
 
 .ethos-left { order: 2; }
-@media (min-width: 768px) {.ethos-left { order: 1; } }
+@media (min-width: 768px) { .ethos-left { order: 1; } }
 
 .ethos-title {
   font-family: 'Cormorant Garamond', serif;
@@ -399,7 +375,7 @@ nav.scrolled #lang-switcher {
 .stat-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); line-height: 1.5; }
 
 .ethos-right { order: 1; }
-@media (min-width: 768px) {.ethos-right { order: 2; } }
+@media (min-width: 768px) { .ethos-right { order: 2; } }
 
 .ethos-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
 
@@ -419,7 +395,7 @@ nav.scrolled #lang-switcher {
   gap: 24px;
 }
 @media (min-width: 768px) {
- .journeys-header { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+  .journeys-header { flex-direction: row; justify-content: space-between; align-items: flex-end; }
 }
 
 .journeys-title {
@@ -437,7 +413,7 @@ nav.scrolled #lang-switcher {
   color: rgba(212,204,192,0.5);
   max-width: 260px;
 }
-@media (min-width: 768px) {.journeys-meta { text-align: right; } }
+@media (min-width: 768px) { .journeys-meta { text-align: right; } }
 
 .journeys-grid {
   padding: 0 40px;
@@ -448,7 +424,7 @@ nav.scrolled #lang-switcher {
   gap: 1px;
   background: rgba(255,255,255,0.1);
 }
-@media (min-width: 768px) {.journeys-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 768px) { .journeys-grid { grid-template-columns: 1fr 1fr; } }
 
 .journey-card {
   background: var(--foreground);
@@ -470,7 +446,7 @@ nav.scrolled #lang-switcher {
   display: block;
   transition: transform 1s ease;
 }
-.journey-card:hover.journey-img { transform: scale(1.05); }
+.journey-card:hover .journey-img { transform: scale(1.05); }
 
 .journey-eyebrow { color: var(--accent); margin-bottom: 16px; }
 
@@ -510,7 +486,7 @@ nav.scrolled #lang-switcher {
   background: var(--accent);
   transition: width 0.35s;
 }
-.journey-card:hover.journey-link::after { width: 100%; }
+.journey-card:hover .journey-link::after { width: 100%; }
 
 /* ── GUIDE ── */
 #guide {
@@ -525,7 +501,7 @@ nav.scrolled #lang-switcher {
   gap: 48px;
   align-items: center;
 }
-@media (min-width: 768px) {.guide-inner { grid-template-columns: 1fr 1fr; gap: 96px; } }
+@media (min-width: 768px) { .guide-inner { grid-template-columns: 1fr 1fr; gap: 96px; } }
 
 .guide-img { width: 100%; aspect-ratio: 5/6; object-fit: cover; display: block; }
 
@@ -584,7 +560,7 @@ nav.scrolled #lang-switcher {
   background: rgba(255,255,255,0.1);
   margin-bottom: 80px;
 }
-@media (min-width: 768px) {.apply-steps { grid-template-columns: repeat(3,1fr); } }
+@media (min-width: 768px) { .apply-steps { grid-template-columns: repeat(3,1fr); } }
 
 .apply-step { background: var(--stone-deep); padding: 32px 40px; text-align: left; }
 .step-num { color: var(--accent); display: block; margin-bottom: 24px; }
@@ -621,7 +597,7 @@ nav.scrolled #lang-switcher {
   line-height: 1.05;
 }
 .testi-grid { display: grid; grid-template-columns: 1fr; gap: 48px 64px; }
-@media (min-width: 768px) {.testi-grid { grid-template-columns: repeat(3,1fr); } }
+@media (min-width: 768px) { .testi-grid { grid-template-columns: repeat(3,1fr); } }
 
 .testi-item { border-top: 1px solid var(--border); padding-top: 32px; }
 .testi-quote {
@@ -648,7 +624,7 @@ nav.scrolled #lang-switcher {
   gap: 48px;
 }
 @media (min-width: 768px) {
- .insights-inner { grid-template-columns: 5fr 6fr; gap: 64px; align-items: start; }
+  .insights-inner { grid-template-columns: 5fr 6fr; gap: 64px; align-items: start; }
 }
 
 .insights-title {
@@ -718,7 +694,7 @@ footer {
   grid-template-columns: 1fr;
   gap: 64px;
 }
-@media (min-width: 768px) {.footer-inner { grid-template-columns: 7fr 4fr; align-items: start; } }
+@media (min-width: 768px) { .footer-inner { grid-template-columns: 7fr 4fr; align-items: start; } }
 
 .footer-left h2 {
   font-family: 'Cormorant Garamond', serif;
@@ -734,7 +710,7 @@ footer {
 .footer-ebook-cover { flex-shrink: 0; width: 130px; box-shadow: 8px 12px 32px rgba(0,0,0,0.35); border-radius: 2px; }
 .footer-ebook-cover svg { display: block; width: 100%; height: auto; border-radius: 2px; }
 .footer-ebook-text { flex: 1; }
-@media (max-width: 600px) {.footer-ebook-wrap { flex-direction: column; }.footer-ebook-cover { width: 100px; } }
+@media (max-width: 600px) { .footer-ebook-wrap { flex-direction: column; } .footer-ebook-cover { width: 100px; } }
 
 .footer-form {
   display: flex;
@@ -796,14 +772,14 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
- .nav-links { display: none; }
- .nav-mobile-toggle { display: flex; }
- .nav-inner { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+  .nav-inner { padding: 20px 24px; }
   #experience, #guide { padding-left: 24px; padding-right: 24px; }
-  #journeys.journeys-header,
-  #journeys.journeys-grid { padding-left: 24px; padding-right: 24px; }
+  #journeys .journeys-header,
+  #journeys .journeys-grid { padding-left: 24px; padding-right: 24px; }
   #apply, #testimonials, #insights, footer { padding-left: 24px; padding-right: 24px; }
- .journey-card { padding: 24px 24px 36px; }
+  .journey-card { padding: 24px 24px 36px; }
 }
 </style>
 </head>
@@ -824,15 +800,6 @@ footer {
       <li><a href="#insights" class="eyebrow" data-i18n="nav.insights">Insights</a></li>
       <li><a href="gallery.html" class="eyebrow" data-i18n="nav.gallery">Gallery</a></li>
       <li><a href="apply_clean.html" class="eyebrow apply" data-i18n="nav.apply">Apply</a></li>
-      <li>
-        <select id="lang-switcher" aria-label="Select language">
-          <option value="en">EN</option>
-          <option value="it">IT</option>
-          <option value="es">ES</option>
-          <option value="ru">RU</option>
-          <option value="sr">SR</option>
-        </select>
-      </li>
     </ul>
     <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" id="menuBtn">
       <span></span><span></span>
@@ -885,4 +852,392 @@ footer {
       <span class="italic" data-i18n="ethos.title2">An internal evolution.</span>
     </h2>
     <div class="ethos-body">
-      <p data-i18n="ethos.body1">Shamanic Travels is a private, selection-based journey across the high Andes and Amazonian basins. We do not provide
+      <p data-i18n="ethos.body1">Shamanic Travels is a private, selection-based journey across the high Andes and Amazonian basins. We do not provide group tours. We curate deep experiential thresholds for those ready to encounter Peru's living wisdom traditions.</p>
+      <p data-i18n="ethos.body2">Combining the logistical precision of luxury travel with the profound silence of Peru's sacred geography, every element is managed with calm authority and absolute privacy.</p>
+    </div>
+    <dl class="ethos-stats">
+      <div class="stat">
+        <span class="stat-num font-serif" data-i18n="ethos.stat1_num">6</span>
+        <dd class="stat-label eyebrow" data-i18n="ethos.stat1_label">Participants per journey</dd>
+      </div>
+      <div class="stat">
+        <span class="stat-num font-serif" data-i18n="ethos.stat2_num">21</span>
+        <dd class="stat-label eyebrow" data-i18n="ethos.stat2_label">Days of immersion</dd>
+      </div>
+      <div class="stat">
+        <span class="stat-num font-serif" data-i18n="ethos.stat3_num">1:1</span>
+        <dd class="stat-label eyebrow" data-i18n="ethos.stat3_label">Interview required</dd>
+      </div>
+    </dl>
+  </div>
+  <div class="ethos-right">
+    <img
+      src="stonework.jpg"
+      alt="Detail of ancient Incan stonework"
+      class="ethos-img"
+      loading="lazy"
+      width="896" height="1120">
+  </div>
+</section>
+
+
+<!-- ══════════════════════ JOURNEYS ══════════════════════ -->
+<section id="journeys">
+  <div class="journeys-header">
+    <div>
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;" data-i18n="journeys.eyebrow">Two Journeys</span>
+      <h2 class="journeys-title">
+        <span data-i18n="journeys.title1">Two distinct paths.</span><br>
+        <span data-i18n="journeys.title2">One private system.</span>
+      </h2>
+    </div>
+    <p class="eyebrow journeys-meta" data-i18n="journeys.meta">Each journey · 21 days · Maximum six participants · Selection required</p>
+  </div>
+
+  <div class="journeys-grid">
+    <a href="andean_arc_clean.html" class="journey-card">
+      <div class="journey-img-wrap">
+        <img src="hero.jpg" alt="Machu Picchu at dawn" class="journey-img" loading="lazy" width="1200" height="800">
+      </div>
+      <span class="eyebrow journey-eyebrow" data-i18n="journeys.j1_eyebrow">Journey One · 21 Days</span>
+      <h3 class="journey-title" data-i18n="journeys.j1_title">The Andean Arc</h3>
+      <p class="journey-desc" data-i18n="journeys.j1_desc">A cultural and geographic expedition from the Pacific coast through the high Andes.</p>
+      <div class="journey-tags">
+        <span class="journey-tag eyebrow" data-i18n="journeys.j1_tag1">Coast · Desert · Andes</span>
+        <span class="journey-tag eyebrow" data-i18n="journeys.j1_tag2">Cultural &amp; Ritual Integration</span>
+      </div>
+      <span class="journey-link eyebrow" data-i18n="journeys.j1_link">Enter Journey I →</span>
+    </a>
+
+    <a href="amazon_clean.html" class="journey-card">
+      <div class="journey-img-wrap">
+        <img src="jungle.jpg" alt="Peruvian Amazon canopy" class="journey-img" loading="lazy" width="1200" height="800">
+      </div>
+      <span class="eyebrow journey-eyebrow" data-i18n="journeys.j2_eyebrow">Journey Two · 21 Days</span>
+      <h3 class="journey-title" data-i18n="journeys.j2_title">The Amazon Field Immersion</h3>
+      <p class="journey-desc" data-i18n="journeys.j2_desc">A structured field-based immersion deep in the Peruvian Amazon forest.</p>
+      <div class="journey-tags">
+        <span class="journey-tag eyebrow" data-i18n="journeys.j2_tag1">Pucallpa · Deep Basin</span>
+        <span class="journey-tag eyebrow" data-i18n="journeys.j2_tag2">3-Month Preparation Required</span>
+      </div>
+      <span class="journey-link eyebrow" data-i18n="journeys.j2_link">Enter Journey II →</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ GUIDE ══════════════════════ -->
+<section id="guide" style="position:relative; overflow:hidden; background:var(--stone-deep);">
+
+  <!-- video background -->
+  <video
+    autoplay muted loop playsinline
+    poster="marcello.jpg"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;z-index:0;">
+    <source src="cinematic_3.mp4" type="video/mp4">
+  </video>
+  <!-- overlay scuro -->
+  <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(30,27,22,0.80) 0%, rgba(30,27,22,0.45) 100%);z-index:1;"></div>
+
+  <div class="guide-inner" style="position:relative;z-index:2;">
+    <img
+      src="marcello.jpg"
+      alt="Marcello Buglione, guide and founder of Shamanic Travels"
+      class="guide-img"
+      loading="lazy"
+      width="560" height="672">
+    <div>
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;" data-i18n="guide.eyebrow">The Guide</span>
+      <h2 class="guide-title" style="color:var(--earth);" data-i18n="guide.title">Marcello Buglione</h2>
+      <div class="guide-body" style="color:rgba(212,204,192,0.75);">
+        <p data-i18n="guide.body1">With a foundation in strategic communication, NLP and hypnosis, and decades of international training, Marcello is more than a guide. He is the architect of the experience.</p>
+        <p data-i18n="guide.body2">His evolution into immersive Peruvian journeys distils complex cultural wisdom into precise, transformative travel paths for executives, entrepreneurs and professionals operating at high altitudes of life.</p>
+        <blockquote class="guide-quote" style="color:var(--earth); border-left-color:var(--accent);" data-i18n="guide.quote">
+          "We do not design entertainment. We design attention, presence, and experience."
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ APPLY ══════════════════════ -->
+<section id="apply">
+  <div class="apply-inner">
+    <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;" data-i18n="apply.eyebrow">Selection Process</span>
+    <h2 class="apply-title" data-i18n="apply.title">How to Join</h2>
+    <p class="apply-desc" data-i18n="apply.desc">These are private journeys. Each participant is carefully selected through a personal interview to ensure alignment with our values and mutual readiness.</p>
+    <div class="apply-steps">
+      <div class="apply-step">
+        <span class="eyebrow step-num" data-i18n="apply.s1_num">01</span>
+        <h3 class="step-title" data-i18n="apply.s1_title">Request</h3>
+        <p class="step-desc" data-i18n="apply.s1_desc">Submit your interest. Tell us what calls you and what you hope to find.</p>
+      </div>
+      <div class="apply-step">
+        <span class="eyebrow step-num" data-i18n="apply.s2_num">02</span>
+        <h3 class="step-title" data-i18n="apply.s2_title">Interview</h3>
+        <p class="step-desc" data-i18n="apply.s2_desc">We speak with you privately to understand your intentions and assess readiness.</p>
+      </div>
+      <div class="apply-step">
+        <span class="eyebrow step-num" data-i18n="apply.s3_num">03</span>
+        <h3 class="step-title" data-i18n="apply.s3_title">Preparation</h3>
+        <p class="step-desc" data-i18n="apply.s3_desc">If selected, you receive detailed guidance on physical, practical, and contemplative preparation.</p>
+      </div>
+    </div>
+    <a href="apply_clean.html" class="apply-cta" data-i18n="apply.cta">Request Private Interview</a>
+    <p class="apply-note" data-i18n="apply.note">Journeys depart quarterly. Next departure: Q3 2026.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ TESTIMONIALS ══════════════════════ -->
+<section id="testimonials">
+  <div class="testi-inner">
+    <div class="testi-header">
+      <h2 class="testi-title" data-i18n="testimonials.title">What They Carry Forward</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-item">
+        <blockquote class="testi-quote" data-i18n="testimonials.q1">"In the silence of the mountains, I found myself."</blockquote>
+        <p class="testi-name" data-i18n="testimonials.q1_name">Sarah M.</p>
+        <p class="testi-role" data-i18n="testimonials.q1_role">Andean Arc · 2025</p>
+      </div>
+      <div class="testi-item">
+        <blockquote class="testi-quote" data-i18n="testimonials.q2">"Not what I expected. Far deeper. A threshold I didn't know I needed to cross."</blockquote>
+        <p class="testi-name" data-i18n="testimonials.q2_name">James K.</p>
+        <p class="testi-role" data-i18n="testimonials.q2_role">Deep Amazon · 2025</p>
+      </div>
+      <div class="testi-item">
+        <blockquote class="testi-quote" data-i18n="testimonials.q3">"Marcello doesn't teach. He witnesses. And somehow, that witnessing changes everything."</blockquote>
+        <p class="testi-name" data-i18n="testimonials.q3_name">Elena R.</p>
+        <p class="testi-role" data-i18n="testimonials.q3_role">Andean Arc · 2024</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ INSIGHTS ══════════════════════ -->
+<section id="insights">
+  <div class="insights-inner">
+    <div>
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;" data-i18n="insights.eyebrow">Field Notes</span>
+      <h2 class="insights-title" data-i18n="insights.title">Insights</h2>
+      <img
+        src="insights.jpg"
+        alt="Detail shot of Andean textiles and dried botanicals"
+        class="insights-img"
+        loading="lazy"
+        width="640" height="427">
+      <a href="blog.html" class="insights-read-all" data-i18n="insights.read_all">Read all insights →</a>
+    </div>
+    <div class="insights-list">
+      <a href="article.html?id=un-po-di-sciamanesimo" class="insight-item">
+        <span class="eyebrow insight-num">01</span>
+        <div>
+          <h3 class="insight-title">Un po' di Sciamanesimo</h3>
+          <p class="insight-desc">Origini, miti e malintesi del termine sciamano. Una riflessione antropologica di Marcello Buglione.</p>
+        </div>
+      </a>
+      <div class="insight-item">
+        <span class="eyebrow insight-num">02</span>
+        <div>
+          <h3 class="insight-title">Luxury as Restraint</h3>
+          <p class="insight-desc" data-i18n="insights.coming_soon">Coming soon.</p>
+        </div>
+      </div>
+      <div class="insight-item">
+        <span class="eyebrow insight-num">03</span>
+        <div>
+          <h3 class="insight-title">The Amazon Protocol</h3>
+          <p class="insight-desc">Preparation, posture, and ethics. A note on guided immersion in the basin. Coming soon.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="eyebrow text-accent" style="display:block; margin-bottom:24px;" data-i18n="footer.eyebrow">Private Dispatches</span>
+      <div class="footer-ebook-wrap">
+        <div class="footer-ebook-cover" aria-hidden="true">
+          <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Copertina ebook I Luoghi Sacri degli Inca">
+            <defs>
+              <linearGradient id="fc-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a0d1a"/><stop offset="60%" stop-color="#1a2340"/><stop offset="100%" stop-color="#2d1f0e"/></linearGradient>
+              <linearGradient id="fc-gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8B6914" stop-opacity="0"/><stop offset="50%" stop-color="#E8C060"/><stop offset="100%" stop-color="#8B6914" stop-opacity="0"/></linearGradient>
+              <linearGradient id="fc-mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3a5c"/><stop offset="100%" stop-color="#1a2340"/></linearGradient>
+            </defs>
+            <rect width="200" height="280" fill="url(#fc-sky)"/>
+            <!-- stars -->
+            <circle cx="30" cy="18" r="0.8" fill="#fff" opacity="0.7"/>
+            <circle cx="75" cy="10" r="1" fill="#fff" opacity="0.8"/>
+            <circle cx="130" cy="22" r="0.7" fill="#fff" opacity="0.6"/>
+            <circle cx="168" cy="12" r="0.9" fill="#fff" opacity="0.75"/>
+            <circle cx="55" cy="35" r="0.6" fill="#fff" opacity="0.5"/>
+            <circle cx="150" cy="40" r="0.7" fill="#E8C060" opacity="0.4"/>
+            <!-- moon -->
+            <circle cx="155" cy="28" r="12" fill="#fff8e7" opacity="0.85"/>
+            <circle cx="150" cy="25" r="10" fill="#1a2340"/>
+            <!-- mountains far -->
+            <path d="M0 130 L25 85 L50 110 L75 70 L100 100 L125 65 L150 95 L175 60 L200 85 L200 155 L0 155Z" fill="url(#fc-mtn)"/>
+            <!-- snow -->
+            <path d="M75 70 L83 88 L67 88Z" fill="#d0ddf0" opacity="0.6"/>
+            <path d="M125 65 L133 83 L117 83Z" fill="#d0ddf0" opacity="0.6"/>
+            <path d="M175 60 L183 78 L167 78Z" fill="#d0ddf0" opacity="0.6"/>
+            <!-- mountains mid -->
+            <path d="M0 160 L30 115 L60 140 L90 105 L120 135 L150 100 L180 130 L200 115 L200 175 L0 175Z" fill="#1e2e1a"/>
+            <!-- ruins -->
+            <rect x="55" y="168" width="90" height="5" rx="1" fill="#3d2e12"/>
+            <rect x="62" y="163" width="76" height="6" rx="1" fill="#2d2008"/>
+            <rect x="70" y="159" width="60" height="5" rx="1" fill="#231a07"/>
+            <rect x="80" y="152" width="40" height="10" rx="1" fill="#2d2008"/>
+            <rect x="88" y="145" width="12" height="9" rx="0.5" fill="#3a2a0a"/>
+            <rect x="100" y="145" width="12" height="9" rx="0.5" fill="#3a2a0a"/>
+            <rect x="91" y="149" width="3" height="4" rx="0.5" fill="#0a0804"/>
+            <rect x="106" y="149" width="3" height="4" rx="0.5" fill="#0a0804"/>
+            <!-- foreground -->
+            <path d="M0 185 Q50 170 100 178 Q150 170 200 182 L200 280 L0 280Z" fill="#0d1408"/>
+            <!-- border -->
+            <rect x="6" y="6" width="188" height="268" fill="none" stroke="#C9973A" stroke-width="0.8" opacity="0.7"/>
+            <rect x="9" y="9" width="182" height="262" fill="none" stroke="#C9973A" stroke-width="0.3" opacity="0.4"/>
+            <!-- brand -->
+            <text x="100" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="2" fill="#C9973A" opacity="0.8">SHAMANIC TRAVELS</text>
+            <rect x="30" y="29" width="140" height="0.5" fill="url(#fc-gold)" opacity="0.5"/>
+            <!-- title -->
+            <text x="100" y="55" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="#E8C060">I LUOGHI</text>
+            <text x="100" y="73" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="#E8C060">SACRI</text>
+            <text x="100" y="87" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#C9973A" opacity="0.8">✦</text>
+            <text x="100" y="100" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#E8C060" letter-spacing="1">DEGLI INCA</text>
+            <rect x="40" y="104" width="120" height="0.5" fill="url(#fc-gold)" opacity="0.4"/>
+            <text x="100" y="114" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.5" fill="#C9973A" opacity="0.7">GUIDA AI LUOGHI MISTICI DELLE ANDE</text>
+            <!-- chapters -->
+            <text x="100" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="4" letter-spacing="1" fill="#b8895a" opacity="0.7">CUSCO · VALLE SACRA · PISAC</text>
+            <text x="100" y="133" text-anchor="middle" font-family="Georgia,serif" font-size="4" letter-spacing="1" fill="#b8895a" opacity="0.7">MORAY · MACHU PICCHU · TITICACA</text>
+            <!-- author -->
+            <text x="100" y="265" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="2" fill="#C9973A" opacity="0.7">MARCELLO BUGLIONE</text>
+          </svg>
+        </div>
+        <div class="footer-ebook-text">
+          <h2 style="font-size:clamp(20px,2.5vw,30px); line-height:1.25; margin-bottom:14px;">
+            Ricevi gratuitamente il libro<br>
+            <em style="color:var(--gold, #b89a5a);">"I Luoghi Sacri degli Inca"</em><br>
+            <span style="font-size:0.65em; font-style:normal; letter-spacing:0.05em;">scritto da Marcello</span>
+          </h2>
+          <p class="footer-desc" style="margin-bottom:18px;">Questo compendio scritto dal fondatore è frutto dei viaggi e delle informazioni raccolte nel corso degli anni, una valida guida pre-tour ricca di informazioni utili.</p>
+          <form class="footer-form" onsubmit="handleEbookSubmit(event);">
+            <input type="email" id="ebookEmail" placeholder="Il tuo indirizzo email" aria-label="Email address" maxlength="255" required>
+            <button type="submit" class="eyebrow">Ricevi il libro</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-based eyebrow">
+        <p data-i18n="footer.based_label">Based In</p>
+        <p data-i18n="footer.based_value">London · Lima · Milano</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/shamanictravels">Facebook</a> 
+          <a href="https://www.instagram.com/shamanictravels">Instagram</a> 
+          <a href="blog.html" data-i18n="nav.insights">Insights</a>
+        </div>
+      </div>
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="Shamanic Travels" class="footer-logo">
+        <span class="footer-brand-name">Shamanic Travels</span>
+        <p class="eyebrow footer-copy text-muted" data-i18n="footer.copy">© 2026 · Private Curated Journeys</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="i18n.js"></script>
+<script>
+/* ── HERO SCROLL INDICATOR ── */
+window.addEventListener('scroll', () => {
+  const heroScroll = document.querySelector('.hero-scroll-inner');
+  if (heroScroll) {
+    heroScroll.style.opacity = window.scrollY > 100 ? '0' : '1';
+    heroScroll.style.transition = 'opacity 0.5s';
+  }
+});
+
+/* ── NAV SCROLL ── */
+const mainNav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    mainNav.classList.add('scrolled');
+  } else {
+    mainNav.classList.remove('scrolled');
+  }
+}, { passive: true });
+
+/* ── MOBILE MENU ── */
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.querySelector('.nav-links');
+let menuOpen = false;
+
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  if (menuOpen) {
+    navLinks.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#f5f2ec;padding:24px 40px;gap:20px;z-index:100;';
+    menuBtn.setAttribute('aria-expanded', 'true');
+  } else {
+    navLinks.style.cssText = 'display:none;';
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    menuOpen = false;
+    navLinks.style.cssText = 'display:none;';
+    menuBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+
+/* ── TRACKING ── */
+(function () {
+  function handleEbookSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById('ebookEmail').value;
+    if (!email) return;
+    // Track events
+    if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Ebook I Luoghi Sacri' });
+    if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'luoghi_sacri_inca' });
+    // Redirect to thank you page
+    window.location.href = '/thankyou.html?email=' + encodeURIComponent(email);
+  }
+
+  function fireTracking() {
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead', {
+        content_name: 'Apply Shamanic Travels',
+        value: 1,
+        currency: 'USD'
+      });
+    }
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'submit_application', {
+        event_category: 'apply',
+        event_label: 'Shamanic Travels',
+        value: 1
+      });
+    }
+  }
+  document.addEventListener('click', function (e) {
+    const el = e.target.closest('a[href="apply_clean.html"], .apply-cta, .hero-cta');
+    if (el) fireTracking();
+  });
+})();
+
+/* ── MULTILINGUA ── */
+i18n.init();
+</script>
+
+</body>
+</html>
