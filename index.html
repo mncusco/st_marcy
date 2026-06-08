@@ -25,7 +25,7 @@
   "logo": "https://shamanictravels.com/logo.jpg",
   "sameAs": [
     "https://www.facebook.com/shamanictravels",
-    "https://www.instagram.com/shamanictravels" 
+    "https://www.instagram.com/shamanictravels"
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -70,7 +70,7 @@ fbq('track', 'PageView');
 </script>
 <noscript>
   <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=236536824187993&ev=PageView&noscript=1"> 
+    src="https://www.facebook.com/tr?id=236536824187993&ev=PageView&noscript=1">
 </noscript>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -798,15 +798,6 @@ footer {
       <li><a href="#insights" class="eyebrow" data-i18n="nav.insights">Insights</a></li>
       <li><a href="gallery.html" class="eyebrow" data-i18n="nav.gallery">Gallery</a></li>
       <li><a href="apply_clean.html" class="eyebrow apply" data-i18n="nav.apply">Apply</a></li>
-   <li>
-  <select id="lang-switcher" style="background:transparent;border:1px solid currentColor;color:inherit;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 8px;cursor:pointer;">
-    <option value="en">EN</option>
-    <option value="it">IT</option>
-    <option value="es">ES</option>
-    <option value="sr">SR</option>
-    <option value="ru">RU</option>
-  </select>
-</li>
     </ul>
     <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" id="menuBtn">
       <span></span><span></span>
@@ -1147,8 +1138,8 @@ footer {
         <p data-i18n="footer.based_label">Based In</p>
         <p data-i18n="footer.based_value">London · Lima · Milano</p>
         <div class="footer-social">
-          <a href="https://www.facebook.com/shamanictravels">Facebook</a> 
-          <a href="https://www.instagram.com/shamanictravels">Instagram</a> 
+          <a href="https://www.facebook.com/shamanictravels">Facebook</a>
+          <a href="https://www.instagram.com/shamanictravels">Instagram</a>
           <a href="blog.html" data-i18n="nav.insights">Insights</a>
         </div>
       </div>
@@ -1164,6 +1155,12 @@ footer {
 
 <script src="i18n.js"></script>
 <script>
+/* ── NAV SCROLL ── */
+const mainNav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  mainNav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
 /* ── HERO SCROLL INDICATOR ── */
 window.addEventListener('scroll', () => {
   const heroScroll = document.querySelector('.hero-scroll-inner');
@@ -1173,32 +1170,17 @@ window.addEventListener('scroll', () => {
   }
 });
 
-/* ── NAV SCROLL ── */
-const mainNav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    mainNav.classList.add('scrolled');
-  } else {
-    mainNav.classList.remove('scrolled');
-  }
-}, { passive: true });
-
 /* ── MOBILE MENU ── */
 const menuBtn = document.getElementById('menuBtn');
 const navLinks = document.querySelector('.nav-links');
 let menuOpen = false;
-
 menuBtn.addEventListener('click', () => {
   menuOpen = !menuOpen;
-  if (menuOpen) {
-    navLinks.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#f5f2ec;padding:24px 40px;gap:20px;z-index:100;';
-    menuBtn.setAttribute('aria-expanded', 'true');
-  } else {
-    navLinks.style.cssText = 'display:none;';
-    menuBtn.setAttribute('aria-expanded', 'false');
-  }
+  navLinks.style.cssText = menuOpen
+    ? 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#f5f2ec;padding:24px 40px;gap:20px;z-index:100;'
+    : 'display:none;';
+  menuBtn.setAttribute('aria-expanded', menuOpen);
 });
-
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
     menuOpen = false;
@@ -1207,46 +1189,30 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   });
 });
 
-/* ── TRACKING ── */
-(function () {
- function handleEbookSubmit(e) {
+/* ── EBOOK SUBMIT ── */
+function handleEbookSubmit(e) {
   e.preventDefault();
   const email = document.getElementById('ebookEmail').value;
   if (!email) return;
-  
   if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Ebook I Luoghi Sacri' });
   if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'luoghi_sacri_inca' });
-  
   window.open('/ebooks/I_Luoghi_Sacri_Degli_Inca.pdf', '_blank');
   window.location.href = '/thankyou.html?email=' + encodeURIComponent(email);
 }
-  }
 
-  function fireTracking() {
-    if (typeof fbq !== 'undefined') {
-      fbq('track', 'Lead', {
-        content_name: 'Apply Shamanic Travels',
-        value: 1,
-        currency: 'USD'
-      });
-    }
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'submit_application', {
-        event_category: 'apply',
-        event_label: 'Shamanic Travels',
-        value: 1
-      });
-    }
+/* ── APPLY TRACKING ── */
+document.addEventListener('click', function(e) {
+  const el = e.target.closest('a[href="apply_clean.html"], .apply-cta, .hero-cta');
+  if (el) {
+    if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Apply Shamanic Travels', value: 1, currency: 'USD' });
+    if (typeof gtag !== 'undefined') gtag('event', 'submit_application', { event_category: 'apply', event_label: 'Shamanic Travels', value: 1 });
   }
-  document.addEventListener('click', function (e) {
-    const el = e.target.closest('a[href="apply_clean.html"], .apply-cta, .hero-cta');
-    if (el) fireTracking();
-  });
-})();
+});
 
-/* ── MULTILINGUA ── */
+/* ── I18N ── */
 i18n.init();
 </script>
+
 
 </body>
 </html>
