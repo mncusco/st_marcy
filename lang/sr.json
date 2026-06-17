@@ -90,8 +90,8 @@
   "footer": {
     "eyebrow": "Privatni Dispači",
     "title1": "Primi",
-    "title2": "La Planta de los Dioses",
-    "desc": "Digitalno izdanje Marcelloвог eseja o botaničkom nasljeđu Amazonije, s povremenim dispačima o nadolazećim privatnim putovanjima.",
+    "title2": "I Luoghi Sacri degli Inca",
+    "desc": "Sedam poglavlja o najsvetijim mestima andskog sveta: Kusko, Sveta dolina, Pisak, Moraj, Maču Pikču, Titikaka i Tivonaku. Vodič napisan od nekoga ko ih živi.",
     "placeholder": "Email adresa",
     "btn": "Zatraži",
     "based_label": "Sjedište",
@@ -118,5 +118,22 @@
     "next": "Sljed →",
     "close": "Zatvori ×",
     "back": "← Povratak na Shamanic Travels"
+  },
+  "andean": {
+    "hero_eyebrow": "Putovanje Jedno · 21 Dan",
+    "hero_title": "Andski <em>Luk</em>",
+    "hero_desc": "Privatna kulturna ekspedicija od Svete Doline kroz visoke Ande, Amazoniju i obalu Pacifika — dvadeset i jedan dan, šest učesnika, jedan kuriran put.",
+    "premise_lead": "Pet poglavlja. Dvadeset i jedan dan. Šest učesnika. Jedan kuriran put.",
+    "route_title": "Pet poglavlja.",
+    "c1_title": "Dolazak u Svetu Dolinu",
+    "c2_title": "Unutrašnje Putovanje",
+    "c3_title": "Visoki Andi",
+    "c4_title": "Jezero i Vulkani",
+    "c5_title": "Pustinja i Pacifik",
+    "ritual_title": "Utkano, ne <em>reklamirano</em>.",
+    "ritual_desc": "Tri ritualna trenutka su utkana u samo putovanje. Vodi ih Marcello sa pouzdanim lokalnim praktičarima, u sigurnim i pripremljenim okruženjima.",
+    "closing_title": "Andski Luk prima <em>šest učesnika</em> po polasku.",
+    "closing_btn": "Zatraži Privatni Razgovor",
+    "quote": "\"Nije svako putovanje koje te menja.<br>Neka te samo podsete ko si.\""
   }
 }
