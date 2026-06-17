@@ -90,8 +90,8 @@
   "footer": {
     "eyebrow": "Private Dispatches",
     "title1": "Receive",
-    "title2": "La Planta de los Dioses",
-    "desc": "A digital edition of Marcello's essay on the botanical heritage of the Amazon, with occasional dispatches on forthcoming private journeys.",
+    "title2": "I Luoghi Sacri degli Inca",
+    "desc": "Seven chapters on the most sacred sites of the Andean world: Cusco, the Sacred Valley, Pisac, Moray, Machu Picchu, Titicaca and Tiwanaku. A guide written by someone who lives them.",
     "placeholder": "Email address",
     "btn": "Request",
     "based_label": "Based In",
@@ -118,5 +118,22 @@
     "next": "Next →",
     "close": "Close ×",
     "back": "← Return to Shamanic Travels"
+  },
+  "andean": {
+    "hero_eyebrow": "Journey One · 21 Days",
+    "hero_title": "The Andean <em>Arc</em>",
+    "hero_desc": "A private cultural expedition from the Sacred Valley through the high Andes, the Amazon and the Pacific coast — twenty-one days, six participants, one curated path.",
+    "premise_lead": "Five chapters. Twenty-one days. Six participants. One curated path.",
+    "route_title": "Five chapters.",
+    "c1_title": "Arrival into the Sacred Valley",
+    "c2_title": "Inner Journey",
+    "c3_title": "The High Andes",
+    "c4_title": "Lake & Volcanoes",
+    "c5_title": "Desert & Pacific",
+    "ritual_title": "Embedded, not <em>advertised</em>.",
+    "ritual_desc": "Three ritual moments are woven into the journey itself. They are guided by Marcello with trusted local practitioners, held in safe and prepared environments.",
+    "closing_title": "The Andean Arc opens to <em>six participants</em> per departure.",
+    "closing_btn": "Request Private Interview",
+    "quote": "\"Not every journey changes you.<br>Some simply remind you who you are.\""
   }
 }
