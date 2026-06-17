@@ -90,8 +90,8 @@
   "footer": {
     "eyebrow": "Despachos Privados",
     "title1": "Recibe",
-    "title2": "La Planta de los Dioses",
-    "desc": "Una edición digital del ensayo de Marcello sobre el patrimonio botánico de la Amazonía, con despachos ocasionales sobre próximos viajes privados.",
+    "title2": "I Luoghi Sacri degli Inca",
+    "desc": "Siete capítulos sobre los lugares más sagrados del mundo andino: Cusco, el Valle Sagrado, Pisac, Moray, Machu Picchu, Titicaca y Tiwanaku. Una guía escrita por quien los vive.",
     "placeholder": "Correo electrónico",
     "btn": "Solicitar",
     "based_label": "Sede",
@@ -118,5 +118,22 @@
     "next": "Sig →",
     "close": "Cerrar ×",
     "back": "← Volver a Shamanic Travels"
+  },
+  "andean": {
+    "hero_eyebrow": "Viaje Uno · 21 Días",
+    "hero_title": "El Arco <em>Andino</em>",
+    "hero_desc": "Una expedición cultural privada desde el Valle Sagrado a través de los altos Andes, la Amazonía y la costa del Pacífico — veintiún días, seis participantes, un camino curado.",
+    "premise_lead": "Cinco capítulos. Veintiún días. Seis participantes. Un camino curado.",
+    "route_title": "Cinco capítulos.",
+    "c1_title": "Llegada al Valle Sagrado",
+    "c2_title": "Viaje Interior",
+    "c3_title": "Los Altos Andes",
+    "c4_title": "Lago y Volcanes",
+    "c5_title": "Desierto y Pacífico",
+    "ritual_title": "Integrado, no <em>publicitado</em>.",
+    "ritual_desc": "Tres momentos rituales están entretejidos en el viaje. Son guiados por Marcello con practicantes locales de confianza, en entornos seguros y preparados.",
+    "closing_title": "El Arco Andino abre a <em>seis participantes</em> por salida.",
+    "closing_btn": "Solicitar Entrevista Privada",
+    "quote": "\"No todo viaje te cambia.<br>Algunos simplemente te recuerdan quién eres.\""
   }
 }
