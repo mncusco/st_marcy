@@ -49,6 +49,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 0.7s,co
 @media(min-width:768px){#premise{grid-template-columns:4fr 8fr;gap:48px;}}
 .premise-lead{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,2.5vw,32px);color:var(--foreground);line-height:1.3;margin-bottom:24px;}
 .premise-body{color:var(--muted);font-size:clamp(15px,1.3vw,18px);line-height:1.8;}.premise-body p+p{margin-top:24px;}
+#why-san-alejandro{padding:80px 40px 128px;max-width:1280px;margin:0 auto;}
+#preparation-essence{padding:80px 40px 128px;max-width:1280px;margin:0 auto;}
+#maloca{padding:80px 40px 128px;max-width:1280px;margin:0 auto;text-align:center;}
+.maloca-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.5vw,52px);font-weight:300;font-style:italic;line-height:1.1;margin-bottom:40px;}
+.maloca-img{width:100%;max-width:960px;margin:0 auto;display:block;aspect-ratio:1215/609;object-fit:cover;}
+.maloca-desc{max-width:680px;margin:32px auto 0;color:var(--muted);font-size:clamp(15px,1.3vw,18px);line-height:1.85;}
+.why-header{max-width:760px;margin-bottom:56px;}
+.why-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,60px);font-weight:300;line-height:1.05;margin-bottom:24px;}
+.why-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,2.2vw,28px);color:var(--muted);line-height:1.4;}
+.why-body{max-width:780px;color:var(--muted);font-size:clamp(15px,1.3vw,18px);line-height:1.85;}
+.why-body p+p{margin-top:24px;}
+.why-closing{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,2vw,24px);color:var(--foreground);line-height:1.5;margin-top:40px;padding-top:40px;border-top:1px solid var(--border);}
 #arc{background:var(--foreground);color:var(--background);padding:80px 40px 128px;}
 .arc-header{max-width:1280px;margin:0 auto 64px;}
 .arc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,60px);font-weight:300;font-style:italic;line-height:1.1;}
@@ -91,6 +103,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 0.7s,co
 .location-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.5vw,52px);font-weight:300;font-style:italic;line-height:1.1;margin-bottom:24px;}
 .location-desc{color:rgba(212,204,192,0.75);line-height:1.85;font-size:clamp(15px,1.3vw,18px);max-width:560px;}
 .location-desc p+p{margin-top:20px;}
+.location-quote{margin-top:48px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.15);max-width:560px;}
+.location-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--earth);line-height:1.6;font-size:clamp(17px,1.7vw,21px);}
+.location-quote p+p{margin-top:16px;}
 #maestro{padding:96px 40px 128px;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
 @media(min-width:768px){#maestro{grid-template-columns:5fr 7fr;gap:48px;}}
 .maestro-img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
@@ -125,7 +140,7 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 .footer-logo{width:48px;height:48px;object-fit:contain;display:block;}
 .footer-brand-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;}
 .footer-copy{color:var(--muted);}
-@media(max-width:768px){.nav-links{display:none;}.nav-mobile-toggle{display:flex;}.nav-inner{padding:20px 24px;}#hero .hero-content{padding:0 24px 64px;}#premise,footer{padding-left:24px;padding-right:24px;}#arc{padding-left:24px;padding-right:24px;}#preparation{padding-left:24px;padding-right:24px;}#plants,#location,#maestro,#included{padding-left:24px;padding-right:24px;}}
+@media(max-width:768px){.nav-links{display:none;}.nav-mobile-toggle{display:flex;}.nav-inner{padding:20px 24px;}#hero .hero-content{padding:0 24px 64px;}#premise,footer{padding-left:24px;padding-right:24px;}#why-san-alejandro,#preparation-essence,#maloca{padding-left:24px;padding-right:24px;}#arc{padding-left:24px;padding-right:24px;}#preparation{padding-left:24px;padding-right:24px;}#plants,#location,#maestro,#included{padding-left:24px;padding-right:24px;}}
 </style>
 </head>
 <body>
@@ -173,6 +188,30 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 </div>
 </section>
 
+<section id="why-san-alejandro">
+<div class="why-header">
+<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;">Perché Torno Qui</span>
+<h2 class="why-title">Perché torno a <span class="italic">San Alejandro</span>.</h2>
+<p class="why-subtitle">Ci sono luoghi che si visitano.<br>E luoghi che diventano parte della tua vita.</p>
+</div>
+<div class="why-body">
+<p>Ho conosciuto Maestro Carlos &ldquo;Chichi&rdquo; Escudero quasi dieci anni fa. Da allora ho accompagnato qui persone provenienti da tutto il mondo, tornando più volte all'anno per lavorare con lui e con le tradizioni vive della foresta amazzonica.</p>
+<p>Nel corso degli anni, San Alejandro è diventato molto più di una destinazione. È diventato un luogo che conosco intimamente: il fiume, la foresta, i sentieri, le comunità locali, le piante, i silenzi e i ritmi che scandiscono la vita quotidiana.</p>
+<p>Ho vissuto qui alcuni dei momenti più significativi della mia vita.</p>
+<p>Ricordo i lunghi viaggi in lancia lungo il fiume. Le giornate trascorse nella foresta alla ricerca delle piante. Le conversazioni attorno al fuoco. Le risate condivise durante i pasti. Le pescate al tramonto. Le amicizie nate tra persone arrivate da continenti diversi e unite dalla stessa ricerca interiore.</p>
+<p>Per molti anni ho definito San Alejandro il mio centro di trasformazione.</p>
+<p>Non perché fosse perfetto.</p>
+<p>Ma perché qui ho visto accadere qualcosa che oggi è sempre più difficile trovare: autenticità, umanità e una relazione genuina con la medicina della foresta.</p>
+<p>Dopo un lungo periodo lontano dall'Amazzonia, ho scelto di tornare proprio qui.</p>
+<p>Non perché sia il luogo più famoso.</p>
+<p>Non perché sia il più lussuoso.</p>
+<p>E nemmeno perché sia il più facile da raggiungere.</p>
+<p>Torno perché conosco le persone. Conosco il luogo. Conosco il lavoro che viene svolto.</p>
+<p>E soprattutto perché, quando accompagno qualcuno in un percorso così importante, voglio poter dire con sincerità:</p>
+</div>
+<p class="why-closing">&ldquo;Questo è un posto di cui mi fido.&rdquo;</p>
+</section>
+
 <section id="arc">
 <div class="arc-header">
 <span class="eyebrow text-accent" style="display:block;margin-bottom:16px;">Il Percorso</span>
@@ -185,6 +224,28 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 <li class="arc-step"><span class="eyebrow arc-num">04</span><h3 class="arc-step-title">Dieta con Piante Maestre</h3><p class="arc-step-desc">3-24 novembre 2026. Cicli strutturati di pratica tradizionale guidata con Maestro Chichi, alternati a giornate complete di integrazione.</p></li>
 <li class="arc-step"><span class="eyebrow arc-num">05</span><h3 class="arc-step-title">Ritorno</h3><p class="arc-step-desc">Viaggio di ritorno sul fiume, giornata di integrazione a Pucallpa, partenza il 25 novembre 2026.</p></li>
 </ol>
+</section>
+
+<section id="maloca">
+<h2 class="maloca-title">La Maloca: <span class="italic">il cuore del viaggio</span></h2>
+<img src="maloca.jpg" alt="Interno della maloca cerimoniale a San Alejandro, cerchio di partecipanti durante una cerimonia" class="maloca-img" loading="lazy" width="1215" height="609">
+<p class="maloca-desc">Qui le cerimonie prendono vita. La maloca è il tempio della nostra trasformazione, dove il cerchio si chiude e la guarigione inizia.</p>
+</section>
+
+<section id="preparation-essence">
+<div class="why-header">
+<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;">La Preparazione</span>
+<h2 class="why-title">Ciò che rende possibile <span class="italic">la Dieta</span>.</h2>
+<p class="why-subtitle">La differenza non la fanno i ventidue giorni...</p>
+</div>
+<div class="why-body">
+<p>...la fa tutto ciò che li precede.</p>
+<p>La Dieta con Piante Maestre non inizia il giorno dell'arrivo a Pucallpa. Inizia tre mesi prima, nel momento in cui un partecipante accetta di astenersi da alcol e sostanze, di disciplinare la propria alimentazione, di rallentare i ritmi mentali ed emotivi che la vita quotidiana impone.</p>
+<p>Questo non è un dettaglio organizzativo. È la condizione stessa che rende il lavoro con le piante sicuro, profondo e realmente trasformativo.</p>
+<p>Un corpo e una mente non preparati incontrano la medicina della foresta in superficie. Un corpo e una mente preparati, invece, possono accoglierla fino in fondo: nella chiarezza necessaria per attraversare le cerimonie, nella stabilità necessaria per reggere ciò che emerge, nella capacità di integrare davvero ciò che si vive.</p>
+<p>Per questo la selezione è rigorosa e la preparazione obbligatoria. Non per rendere il percorso più difficile, ma per proteggerne il valore. Le piante maestre lavorano con chi arriva pronto a riceverle.</p>
+</div>
+<p class="why-closing">La qualità della tua preparazione determinerà la profondità della tua esperienza.</p>
 </section>
 
 <section id="plants">
@@ -221,6 +282,12 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 <p>Ospitato a San Alejandro, nel cuore dell'Amazzonia peruviana, questo ritiro immersivo offre ai partecipanti l'opportunita di lavorare con le piante maestre tradizionali in un contesto profondamente connesso alle tradizioni vive della medicina amazzonica.</p>
 <p>Raggiunto con trasferimento fluviale privato da Pucallpa, San Alejandro offre l'ambiente remoto e indisturbato richiesto da una Dieta tradizionale con Piante Maestre: un luogo plasmato dalla foresta, dal fiume e da decenni di pratica con le piante amazzoniche.</p>
 </div>
+<div class="location-quote">
+<p>Per molti anni ho definito San Alejandro il mio centro di trasformazione.</p>
+<p>Qui ho visto persone cambiare.</p>
+<p>Qui ho costruito amicizie che durano ancora oggi.</p>
+<p>Qui ho imparato che la medicina della foresta non riguarda soltanto le piante, ma anche le relazioni umane che nascono attorno ad esse.</p>
+</div>
 </div>
 </div>
 </section>
@@ -234,6 +301,7 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 <p>Questo ritiro amazzonico si svolge in collaborazione con Maestro Carlos &ldquo;Chichi&rdquo; Escudero, guaritore tradizionale amazzonico e praticante delle piante maestre con decenni di esperienza all'interno delle tradizioni vive dell'Amazzonia peruviana.</p>
 <p>Cresciuto nella foresta amazzonica, il rapporto di Maestro Chichi con le piante maestre attraversa una vita intera di conoscenza diretta e ancestrale, tramandata da generazioni di praticanti della regione. Il suo lavoro e radicato in una connessione profonda e continua con la foresta stessa: con le sue piante, i suoi ritmi e le pratiche tradizionali che le circondano.</p>
 <p>Durante tutto il ritiro, Maestro Chichi guida ogni ciclo della Dieta con Piante Maestre, attingendo a questa lunga esperienza per mantenere le pratiche tradizionali al centro del programma.</p>
+<p>Conosco Chichi da quasi dieci anni. Nel corso di questo periodo ho accompagnato qui persone provenienti da tutto il mondo e ho avuto il privilegio di lavorare direttamente con lui in centinaia di cerimonie. È una delle poche persone alle quali affiderei senza esitazione qualcuno che amo.</p>
 </div>
 </div>
 </section>
