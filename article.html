@@ -268,15 +268,15 @@ footer {
   <div class="nav-inner">
     <a href="index.html" class="nav-brand" aria-label="Shamanic Travels — Home">
       <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo">
-      <span class="nav-brand-name">Shamanic Travels</span>
+      <span class="nav-brand-name" data-i18n="nav.brand">Shamanic Travels</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html#experience" class="eyebrow">Ethos</a></li>
-      <li><a href="andean_arc_clean.html" class="eyebrow">Andean Arc</a></li>
-      <li><a href="amazon_clean.html" class="eyebrow">Amazon</a></li>
-      <li><a href="index.html#guide" class="eyebrow">The Guide</a></li>
-      <li><a href="blog.html" class="eyebrow active">Insights</a></li>
-      <li><a href="apply_clean.html" class="eyebrow apply">Apply</a></li>
+      <li><a href="index.html#experience" class="eyebrow" data-i18n="nav.ethos">Ethos</a></li>
+      <li><a href="andean_arc_clean.html" class="eyebrow" data-i18n="nav.andean">Andean Arc</a></li>
+      <li><a href="amazon_clean.html" class="eyebrow" data-i18n="nav.amazon">Amazon</a></li>
+      <li><a href="index.html#guide" class="eyebrow" data-i18n="nav.guide">The Guide</a></li>
+      <li><a href="blog.html" class="eyebrow active" data-i18n="nav.insights">Insights</a></li>
+      <li><a href="apply_clean.html" class="eyebrow apply" data-i18n="nav.apply">Apply</a></li>
     </ul>
     <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" id="menuBtn">
       <span></span><span></span>
@@ -334,8 +334,9 @@ async function loadArticle() {
     document.title = `${article.title} — Shamanic Travels`;
     document.querySelector('meta[name="description"]').setAttribute('content', article.excerpt);
 
-    // Lingua corrente
-    const lang = localStorage.getItem('st_lang') || navigator.language.slice(0,2) || 'it';
+    // Lingua corrente (allineata al sistema i18n centrale)
+    const lang = (typeof i18n !== 'undefined' && i18n.getCurrent) ? i18n.getCurrent() : (localStorage.getItem('st_lang') || 'en');
+    const tr = (key, fallback) => (typeof i18n !== 'undefined' && i18n.get(key) !== null) ? i18n.get(key) : fallback;
 
     // Selezione campo localizzato con fallback all'italiano
     const t = (field) => article[`${field}_${lang}`] || article[field] || '';
@@ -346,12 +347,12 @@ async function loadArticle() {
     const hasTranslation = lang === 'it' || !!article[`body_${lang}`];
     const langBanner = !hasTranslation ? `
       <div style="background:rgba(185,154,90,0.1);border-left:3px solid var(--accent);padding:12px 20px;margin-bottom:32px;font-size:13px;color:var(--muted);">
-        <span style="font-style:italic;">Questo articolo è disponibile solo in italiano.</span>
+        <span style="font-style:italic;">${tr('article.lang_notice', 'This article is only available in Italian.')}</span>
       </div>` : '';
 
-    const backLabel = { it:'← Tutti gli articoli', en:'← All Insights', es:'← Todos los artículos', ru:'← Все статьи', sr:'← Svi članci' }[lang] || '← All Insights';
-    const ctaLabel = { it:'Prenota un colloquio privato', en:'Request Private Interview', es:'Solicitar entrevista privada', ru:'Запросить интервью', sr:'Zatraži privatni razgovor' }[lang] || 'Request Private Interview';
-    const roleLabel = { it:'Guida e Fondatore · Shamanic Travels', en:'Guide & Founder · Shamanic Travels', es:'Guía y Fundador · Shamanic Travels', ru:'Гид и основатель · Shamanic Travels', sr:'Vodič i osnivač · Shamanic Travels' }[lang] || 'Guide & Founder · Shamanic Travels';
+    const backLabel = tr('article.back', '← All Insights');
+    const ctaLabel = tr('article.cta', 'Request Private Interview');
+    const roleLabel = tr('article.role', 'Guide & Founder · Shamanic Travels');
 
     container.innerHTML = `
       <div class="article-hero">
@@ -390,7 +391,7 @@ async function loadArticle() {
       </div>
 
       <footer>
-        <p class="eyebrow footer-copy">© 2026 Shamanic Travels · Private Curated Journeys</p>
+        <p class="eyebrow footer-copy" data-i18n-html="footer.copy">© 2026 Shamanic Travels · Private Curated Journeys</p>
       </footer>
     `;
   } catch (e) {
@@ -399,23 +400,23 @@ async function loadArticle() {
 }
 
 function showNotFound(container) {
+  const tr = (key, fallback) => (typeof i18n !== 'undefined' && i18n.get(key) !== null) ? i18n.get(key) : fallback;
   container.innerHTML = `
     <div class="article-not-found">
-      <h1>Article not found</h1>
-      <p>This article may have moved or does not exist.</p>
-      <a href="blog.html" class="eyebrow">← Return to Insights</a>
+      <h1>${tr('article.not_found_title', 'Article not found')}</h1>
+      <p>${tr('article.not_found_desc', 'This article may have moved or does not exist.')}</p>
+      <a href="blog.html" class="eyebrow">${tr('article.not_found_link', '← Return to Insights')}</a>
     </div>
     <footer>
-      <p class="eyebrow footer-copy">© 2026 Shamanic Travels · Private Curated Journeys</p>
+      <p class="eyebrow footer-copy" data-i18n-html="footer.copy">© 2026 Shamanic Travels · Private Curated Journeys</p>
     </footer>
   `;
 }
 
-loadArticle();
 </script>
-<script src="i18n.js"></script>
+<script src="/i18n.js"></script>
 <script>
-i18n.init();
+if(typeof i18n!=='undefined'&&i18n&&typeof i18n.init==='function'){i18n.init().then(loadArticle);}else{loadArticle();}
 </script>
 </body>
 </html>
