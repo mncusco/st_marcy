@@ -221,133 +221,133 @@ button[type="submit"]:hover {
   <a href="/" class="nav-logo">Shamanic Travels</a>
   <a href="/" class="nav-back">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    <span data-i18n="apply_form.back">Torna alla home</span>
+    Torna alla home
   </a>
 </nav>
 
 <div class="container">
 
-  <h1 data-i18n="apply_form.title">Request a Private Interview</h1>
+  <h1>Request a Private Interview</h1>
 
-  <p data-i18n="apply_form.intro">
+  <p>
     Six places per journey. Acceptance is decided through a confidential interview with Marcello. 
     This form is the beginning of that conversation — answer in your own voice.
   </p>
 
   <form onsubmit="handleSubmit(event)">
 
-    <h2 data-i18n="apply_form.ch1_title">Chapter I: Identity</h2>
+    <h2>Chapter I: Identity</h2>
     <div class="grid-2">
-      <div class="field"><label data-i18n="apply_form.full_name">Full name</label><input id="fullName" type="text" required></div>
-      <div class="field"><label data-i18n="apply_form.email">Email</label><input id="email" type="email" required></div>
-      <div class="field"><label data-i18n="apply_form.phone">Phone (with country code)</label><input id="phone" type="tel" required></div>
-      <div class="field"><label data-i18n="apply_form.age">Age</label><input id="age" type="number" min="21" max="95" required></div>
-      <div class="field"><label data-i18n="apply_form.country">Country of residence</label><input id="country" type="text" required></div>
-      <div class="field"><label data-i18n="apply_form.city">City</label><input id="city" type="text" required></div>
-      <div class="field"><label data-i18n="apply_form.job">Profession / occupation</label><input id="job" type="text" required></div>
-      <div class="field"><label data-i18n="apply_form.languages">Languages spoken</label><input id="languages" type="text" placeholder="English, Italian, Spanish…" data-i18n-attr="placeholder:apply_form.languages_placeholder" required></div>
+      <div class="field"><label>Full name</label><input id="fullName" type="text" required></div>
+      <div class="field"><label>Email</label><input id="email" type="email" required></div>
+      <div class="field"><label>Phone (with country code)</label><input id="phone" type="tel" required></div>
+      <div class="field"><label>Age</label><input id="age" type="number" min="21" max="95" required></div>
+      <div class="field"><label>Country of residence</label><input id="country" type="text" required></div>
+      <div class="field"><label>City</label><input id="city" type="text" required></div>
+      <div class="field"><label>Profession / occupation</label><input id="job" type="text" required></div>
+      <div class="field"><label>Languages spoken</label><input id="languages" type="text" placeholder="English, Italian, Spanish…" required></div>
     </div>
 
-    <h2 data-i18n="apply_form.ch2_title">Chapter II: Journey</h2>
+    <h2>Chapter II: Journey</h2>
     <div class="field">
-      <label data-i18n="apply_form.journey_q">Which journey draws you?</label>
+      <label>Which journey draws you?</label>
       <div class="radio-group">
-        <label><input type="radio" name="journey" value="The Andean Arc" required> <span data-i18n="apply_form.journey_andean">The Andean Arc</span></label>
-        <label><input type="radio" name="journey" value="The Amazon Field Immersion"> <span data-i18n="apply_form.journey_amazon">The Amazon Field Immersion</span></label>
-        <label><input type="radio" name="journey" value="Undecided / Guide's recommendation"> <span data-i18n="apply_form.journey_open">Open to the guide's recommendation</span></label>
+        <label><input type="radio" name="journey" value="The Andean Arc" required> The Andean Arc</label>
+        <label><input type="radio" name="journey" value="The Amazon Field Immersion"> The Amazon Field Immersion</label>
+        <label><input type="radio" name="journey" value="Undecided / Guide's recommendation"> Open to the guide's recommendation</label>
       </div>
     </div>
 
-    <h2 data-i18n="apply_form.ch3_title">Chapter III: Eligibility &amp; Readiness</h2>
+    <h2>Chapter III: Eligibility &amp; Readiness</h2>
     <div class="field">
-      <label data-i18n="apply_form.prior_exp_q">Prior experience with traditional plant practices</label>
+      <label>Prior experience with traditional plant practices</label>
       <div class="radio-group">
-        <label><input type="radio" name="priorExperience" value="None" required> <span data-i18n="apply_form.exp_none">None</span></label>
-        <label><input type="radio" name="priorExperience" value="Some"> <span data-i18n="apply_form.exp_some">One or two prior experiences</span></label>
-        <label><input type="radio" name="priorExperience" value="Extensive"> <span data-i18n="apply_form.exp_extensive">Extensive — multiple, sustained</span></label>
+        <label><input type="radio" name="priorExperience" value="None" required> None</label>
+        <label><input type="radio" name="priorExperience" value="Some"> One or two prior experiences</label>
+        <label><input type="radio" name="priorExperience" value="Extensive"> Extensive — multiple, sustained</label>
       </div>
     </div>
 
     <div class="field">
-      <label data-i18n="apply_form.prior_exp_detail_q">If applicable, briefly describe your prior experience (optional)</label>
+      <label>If applicable, briefly describe your prior experience (optional)</label>
       <textarea id="priorExperienceDetail" rows="3"></textarea>
     </div>
 
     <div class="field">
-      <label data-i18n="apply_form.medications_q">Current medications (if any)</label>
-      <textarea id="medications" rows="2" placeholder="Including SSRIs, MAOIs, lithium, blood pressure medication, etc." data-i18n-attr="placeholder:apply_form.medications_placeholder"></textarea>
+      <label>Current medications (if any)</label>
+      <textarea id="medications" rows="2" placeholder="Including SSRIs, MAOIs, lithium, blood pressure medication, etc."></textarea>
     </div>
 
     <div class="field">
-      <label data-i18n="apply_form.mental_health_q">Relevant mental health history</label>
-      <textarea id="mentalHealthHistory" rows="2" placeholder="Held in strict confidence." data-i18n-attr="placeholder:apply_form.confidential_placeholder"></textarea>
+      <label>Relevant mental health history</label>
+      <textarea id="mentalHealthHistory" rows="2" placeholder="Held in strict confidence."></textarea>
     </div>
 
     <div class="field">
-      <label data-i18n="apply_form.cardiac_q">Any cardiac or serious neurological condition?</label>
+      <label>Any cardiac or serious neurological condition?</label>
       <div class="radio-group">
-        <label><input type="radio" name="cardiac" value="No" required> <span data-i18n="apply_form.cardiac_no">No</span></label>
-        <label><input type="radio" name="cardiac" value="Yes"> <span data-i18n="apply_form.cardiac_yes">Yes (we will discuss in interview)</span></label>
+        <label><input type="radio" name="cardiac" value="No" required> No</label>
+        <label><input type="radio" name="cardiac" value="Yes"> Yes (we will discuss in interview)</label>
       </div>
     </div>
 
     <div class="field checkbox-group">
       <label>
         <input type="checkbox" id="consentPrep" required>
-        <span data-i18n="apply_form.consent_prep">I understand a three-month preparation protocol is mandatory and I am prepared to honour it.</span>
+        I understand a three-month preparation protocol is mandatory and I am prepared to honour it.
       </label>
       <label>
         <input type="checkbox" id="consentInterview" required>
-        <span data-i18n="apply_form.consent_interview">I understand acceptance is decided only after a private interview with the guide.</span>
+        I understand acceptance is decided only after a private interview with the guide.
       </label>
     </div>
 
-    <h2 data-i18n="apply_form.ch4_title">Chapter IV: Intention</h2>
+    <h2>Chapter IV: Intention</h2>
     <div class="field">
-      <label data-i18n="apply_form.motivation_q">What brings you to this journey now?</label>
+      <label>What brings you to this journey now?</label>
       <textarea id="motivation" rows="6" minlength="80" required></textarea>
     </div>
 
     <div class="field">
-      <label data-i18n="apply_form.intention_q">If you had to phrase your intention in a single paragraph, what would it be?</label>
+      <label>If you had to phrase your intention in a single paragraph, what would it be?</label>
       <textarea id="intention" rows="4" minlength="40" required></textarea>
     </div>
 
     <div class="field">
-      <label data-i18n="apply_form.referral_q">How did you come to know of Shamanic Travels? (optional)</label>
+      <label>How did you come to know of Shamanic Travels? (optional)</label>
       <input id="referral" type="text">
     </div>
 
-    <h2 data-i18n="apply_form.ch5_title">Chapter V: Request an Interview Time</h2>
-    <p data-i18n="apply_form.ch5_desc">Offer up to three preferred windows in your local time.</p>
+    <h2>Chapter V: Request an Interview Time</h2>
+    <p>Offer up to three preferred windows in your local time.</p>
 
     <div class="grid-2">
-      <div class="field"><label data-i18n="apply_form.opt1_date">Option 1 - Date</label><input id="opt1Date" type="date" required></div>
-      <div class="field"><label data-i18n="apply_form.opt1_time">Option 1 - Time window</label><input id="opt1Time" type="text" placeholder="e.g. 09:00–11:00" data-i18n-attr="placeholder:apply_form.time_placeholder" required></div>
-      <div class="field"><label data-i18n="apply_form.opt2_date">Option 2 - Date (optional)</label><input id="opt2Date" type="date"></div>
-      <div class="field"><label data-i18n="apply_form.opt2_time">Option 2 - Time window (optional)</label><input id="opt2Time" type="text" placeholder="e.g. 09:00–11:00" data-i18n-attr="placeholder:apply_form.time_placeholder"></div>
-      <div class="field"><label data-i18n="apply_form.opt3_date">Option 3 - Date (optional)</label><input id="opt3Date" type="date"></div>
-      <div class="field"><label data-i18n="apply_form.opt3_time">Option 3 - Time window (optional)</label><input id="opt3Time" type="text" placeholder="e.g. 09:00–11:00" data-i18n-attr="placeholder:apply_form.time_placeholder"></div>
+      <div class="field"><label>Option 1 - Date</label><input id="opt1Date" type="date" required></div>
+      <div class="field"><label>Option 1 - Time window</label><input id="opt1Time" type="text" placeholder="e.g. 09:00–11:00" required></div>
+      <div class="field"><label>Option 2 - Date (optional)</label><input id="opt2Date" type="date"></div>
+      <div class="field"><label>Option 2 - Time window (optional)</label><input id="opt2Time" type="text" placeholder="e.g. 09:00–11:00"></div>
+      <div class="field"><label>Option 3 - Date (optional)</label><input id="opt3Date" type="date"></div>
+      <div class="field"><label>Option 3 - Time window (optional)</label><input id="opt3Time" type="text" placeholder="e.g. 09:00–11:00"></div>
     </div>
 
     <div class="grid-2">
       <div class="field">
-        <label data-i18n="apply_form.timezone_q">Your timezone</label>
+        <label>Your timezone</label>
         <input id="timezone" type="text" value="UTC" required>
       </div>
       <div class="field">
-        <label data-i18n="apply_form.contact_method_q">Preferred mode</label>
+        <label>Preferred mode</label>
         <div class="radio-group">
-          <label><input type="radio" name="contactMethod" value="Video call" required> <span data-i18n="apply_form.contact_video">Video call</span></label>
-          <label><input type="radio" name="contactMethod" value="Phone"> <span data-i18n="apply_form.contact_phone">Phone</span></label>
-          <label><input type="radio" name="contactMethod" value="Either"> <span data-i18n="apply_form.contact_either">Either</span></label>
+          <label><input type="radio" name="contactMethod" value="Video call" required> Video call</label>
+          <label><input type="radio" name="contactMethod" value="Phone"> Phone</label>
+          <label><input type="radio" name="contactMethod" value="Either"> Either</label>
         </div>
       </div>
     </div>
 
-    <button type="submit" data-i18n="apply_form.submit_btn">Submit Application</button>
+    <button type="submit">Submit Application</button>
 
-    <p class="note" data-i18n="apply_form.note">Your application is private. We respond personally within ten days.</p>
+    <p class="note">Your application is private. We respond personally within ten days.</p>
 
   </form>
 </div>
@@ -409,7 +409,7 @@ Opt 3: ${getVal('opt3Date')} at ${getVal('opt3Time')}`;
 }
 </script>
 
-<script src="/i18n.js"></script>
+<script src="i18n.js"></script>
 <script>
 i18n.init();
 </script>
