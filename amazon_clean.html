@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="amazon.meta_title">Ritiro Amazzonico a San Alejandro &mdash; Dieta con Piante Maestre con Maestro Chichi &middot; Shamanic Travels</title>
-<meta name="description" data-i18n-attr="content:amazon.meta_desc" content="Un ritiro amazzonico di 22 giorni a San Alejandro, nell'Amazzonia peruviana, guidato da Maestro Carlos &quot;Chichi&quot; Escudero. Una Dieta tradizionale con Piante Maestre con Ayahuasca, Bobinsana, Chiric Sanango e altro. 1-25 novembre 2026.">
+<title>Ritiro Amazzonico a San Alejandro &mdash; Una Chiamata, Non una Vacanza &middot; Shamanic Travels</title>
+<meta name="description" content="Un ritiro amazzonico di 22 giorni a San Alejandro con Maestro Carlos &quot;Chichi&quot; Escudero. Per chi attraversa una trasformazione profonda della vita ed e pronto a un impegno serio. Candidature aperte per novembre 2026.">
 <meta name="author" content="Shamanic Travels">
-<meta property="og:title" data-i18n-attr="content:amazon.og_title" content="Ritiro Amazzonico a San Alejandro &mdash; Dieta con Piante Maestre con Maestro Chichi">
-<meta property="og:description" data-i18n-attr="content:amazon.og_desc" content="Da Pucallpa a San Alejandro, nel cuore dell'Amazzonia peruviana. Una Dieta strutturata con Piante Maestre guidata dal guaritore tradizionale Maestro Carlos &quot;Chichi&quot; Escudero. 1-25 novembre 2026.">
+<meta property="og:title" content="Ritiro Amazzonico a San Alejandro &mdash; Una Chiamata, Non una Vacanza">
+<meta property="og:description" content="22 giorni nel cuore dell'Amazzonia peruviana con Maestro Carlos &quot;Chichi&quot; Escudero. Questo percorso non e per tutti. Candidature aperte per novembre 2026.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,14 +24,13 @@ body{background:var(--background);color:var(--foreground);font-family:'Inter',sa
 .text-accent{color:var(--accent);}.text-muted{color:var(--muted);}.italic{font-style:italic;}
 @keyframes slowZoom{from{transform:scale(1.06);}to{transform:scale(1.00);}}
 .animate-slow-zoom{animation:slowZoom 20s cubic-bezier(0.22,1,0.36,1) forwards;}
-nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 0.7s,color 0.7s;color:white;background:rgba(0,0,0,0.15);}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 0.7s,color 0.7s;mix-blend-mode:difference;color:white;}
 .nav-inner{padding:20px 40px;display:flex;justify-content:space-between;align-items:center;}
 .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;}
 .nav-logo{width:36px;height:36px;object-fit:contain;display:block;}
 .nav-brand-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;letter-spacing:-0.02em;}
-.nav-links{display:flex;gap:40px;list-style:none;}
+.nav-links{display:flex;align-items:center;gap:16px;list-style:none;}
 .nav-links a{color:inherit;text-decoration:none;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;}
-.nav-links a.apply{color:var(--gold-soft);}.nav-links a.active{border-bottom:1px solid currentColor;}
 .nav-mobile-toggle{display:none;flex-direction:column;justify-content:center;align-items:flex-end;gap:6px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:8px;}
 .nav-mobile-toggle span{display:block;height:1px;background:currentColor;}
 .nav-mobile-toggle span:first-child{width:20px;}.nav-mobile-toggle span:last-child{width:16px;}
@@ -45,12 +44,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 0.7s,co
 .hero-eyebrow{color:var(--gold-soft);margin-bottom:24px;display:block;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:300;line-height:0.95;margin-bottom:24px;color:white;}
 .hero-desc{max-width:720px;color:rgba(255,255,255,0.8);font-size:clamp(15px,1.5vw,18px);line-height:1.75;}
+.hero-cta{display:inline-block;margin-top:40px;padding:18px 40px;background:var(--accent);color:var(--stone-deep);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:background 0.3s,transform 0.3s;}
+.hero-cta:hover{background:var(--gold-soft);transform:translateY(-2px);}
 #premise{padding:80px 40px 128px;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:48px;}
 @media(min-width:768px){#premise{grid-template-columns:4fr 8fr;gap:48px;}}
 .premise-lead{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,2.5vw,32px);color:var(--foreground);line-height:1.3;margin-bottom:24px;}
 .premise-body{color:var(--muted);font-size:clamp(15px,1.3vw,18px);line-height:1.8;}.premise-body p+p{margin-top:24px;}
 #why-san-alejandro{padding:80px 40px 128px;max-width:1280px;margin:0 auto;}
+#qualify{padding:96px 40px 128px;background:var(--foreground);color:var(--background);}
+.qualify-inner{max-width:900px;margin:0 auto;}
+.qualify-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,60px);font-weight:300;font-style:italic;line-height:1.1;margin-bottom:32px;}
+.qualify-intro{color:rgba(245,242,236,0.75);font-size:clamp(16px,1.4vw,19px);line-height:1.8;max-width:680px;margin-bottom:64px;}
+.qualify-block{margin-bottom:56px;}
+.qualify-block-label{display:block;margin-bottom:24px;}
+.qualify-list{list-style:none;display:flex;flex-direction:column;gap:18px;}
+.qualify-list li{padding-left:28px;position:relative;color:rgba(245,242,236,0.85);font-size:clamp(15px,1.2vw,17px);line-height:1.65;}
+.qualify-list.not-fit li::before{content:'\2014';position:absolute;left:0;color:rgba(245,242,236,0.4);}
+.qualify-list.fit li::before{content:'\2014';position:absolute;left:0;color:var(--accent);}
+.qualify-clarity{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,1.7vw,22px);color:var(--accent);line-height:1.5;margin:64px 0;padding:32px 0;border-top:1px solid rgba(245,242,236,0.15);border-bottom:1px solid rgba(245,242,236,0.15);}
+.qualify-cta-wrap{margin-top:56px;}
+.qualify-cta{display:inline-block;padding:20px 48px;background:var(--accent);color:var(--stone-deep);font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;font-family:'Inter',sans-serif;border-radius:2px;transition:background 0.3s;}
+.qualify-cta:hover{background:var(--gold-soft);}
 #preparation-essence{padding:80px 40px 128px;max-width:1280px;margin:0 auto;}
+#who-comes{padding:80px 40px 128px;max-width:1280px;margin:0 auto;}
+.who-grid{display:grid;grid-template-columns:1fr;gap:32px;margin-top:48px;}
+@media(min-width:768px){.who-grid{grid-template-columns:repeat(2,1fr);gap:48px;}}
+.who-card{border-top:1px solid var(--border);padding-top:24px;}
+.who-card-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,1.8vw,23px);margin-bottom:14px;color:var(--foreground);}
+.who-card-desc{color:var(--muted);font-size:14px;line-height:1.7;}
+.who-cta-wrap{margin-top:64px;}
 #maloca{padding:80px 40px 128px;max-width:1280px;margin:0 auto;text-align:center;}
 .maloca-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.5vw,52px);font-weight:300;font-style:italic;line-height:1.1;margin-bottom:40px;}
 .maloca-img{width:100%;max-width:960px;margin:0 auto;display:block;aspect-ratio:1215/609;object-fit:cover;}
@@ -106,6 +128,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 0.7s,co
 .location-quote{margin-top:48px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.15);max-width:560px;}
 .location-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--earth);line-height:1.6;font-size:clamp(17px,1.7vw,21px);}
 .location-quote p+p{margin-top:16px;}
+#testimonials{padding:80px 40px 128px;max-width:1280px;margin:0 auto;}
+#apply-final{position:relative;padding:128px 40px;background:var(--foreground);color:var(--background);text-align:center;overflow:hidden;}
+.apply-final-inner{position:relative;z-index:2;max-width:780px;margin:0 auto;}
+.apply-final-eyebrow{display:block;margin-bottom:32px;}
+.apply-final-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5vw,58px);font-weight:300;font-style:italic;line-height:1.1;margin-bottom:32px;}
+.apply-final-desc{color:rgba(245,242,236,0.7);font-size:clamp(15px,1.4vw,18px);line-height:1.85;margin-bottom:16px;}
+.apply-final-clarify{color:rgba(245,242,236,0.45);font-size:13px;line-height:1.7;margin-bottom:48px;}
+.apply-final-cta{display:inline-block;padding:22px 56px;background:var(--accent);color:var(--stone-deep);font-size:12px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;font-family:'Inter',sans-serif;border-radius:2px;transition:background 0.3s,transform 0.3s;}
+.apply-final-cta:hover{background:var(--gold-soft);transform:translateY(-2px);}
+#guide{background:var(--stone-deep);color:var(--earth);padding:96px 40px 128px;}
+.guide-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:48px;align-items:center;}
+@media(min-width:768px){.guide-inner{grid-template-columns:7fr 5fr;gap:64px;}}
+.guide-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,46px);font-weight:300;line-height:1.1;margin-bottom:24px;}
+.guide-desc{color:rgba(212,204,192,0.75);line-height:1.85;font-size:clamp(15px,1.3vw,18px);max-width:540px;margin-bottom:40px;}
+.guide-form{display:flex;flex-direction:column;gap:16px;max-width:420px;}
+.guide-form input{background:rgba(245,242,236,0.06);border:1px solid rgba(245,242,236,0.2);outline:none;font-size:14px;padding:16px;font-family:'Inter',sans-serif;color:var(--earth);border-radius:2px;}
+.guide-form input::placeholder{color:rgba(212,204,192,0.45);}
+.guide-form button{background:var(--accent);border:none;cursor:pointer;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;font-family:'Inter',sans-serif;color:var(--stone-deep);padding:16px;border-radius:2px;transition:background 0.3s;}
+.guide-form button:hover{background:var(--gold-soft);}
+.guide-note{color:rgba(212,204,192,0.4);font-size:12px;margin-top:16px;}
+.guide-visual{display:flex;justify-content:center;}
+.testi-header{max-width:560px;margin-bottom:56px;}
+.testi-grid{display:grid;grid-template-columns:1fr;gap:40px;}
+@media(min-width:768px){.testi-grid{grid-template-columns:repeat(3,1fr);gap:48px;}}
+.testi-card{border-top:1px solid var(--border);padding-top:28px;}
+.testi-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,1.8vw,22px);line-height:1.5;color:var(--foreground);margin-bottom:24px;}
+.testi-name{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;}
+.testi-role{color:var(--muted);}
 #maestro{padding:96px 40px 128px;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
 @media(min-width:768px){#maestro{grid-template-columns:5fr 7fr;gap:48px;}}
 .maestro-img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
@@ -140,7 +190,7 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 .footer-logo{width:48px;height:48px;object-fit:contain;display:block;}
 .footer-brand-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;}
 .footer-copy{color:var(--muted);}
-@media(max-width:768px){.nav-links{display:none;}.nav-mobile-toggle{display:flex;}.nav-inner{padding:20px 24px;}#hero .hero-content{padding:0 24px 64px;}#premise,footer{padding-left:24px;padding-right:24px;}#why-san-alejandro,#preparation-essence,#maloca{padding-left:24px;padding-right:24px;}#arc{padding-left:24px;padding-right:24px;}#preparation{padding-left:24px;padding-right:24px;}#plants,#location,#maestro,#included{padding-left:24px;padding-right:24px;}}
+@media(max-width:768px){.nav-inner{padding:20px 24px;}#hero .hero-content{padding:0 24px 64px;}#premise,footer{padding-left:24px;padding-right:24px;}#why-san-alejandro,#preparation-essence,#maloca{padding-left:24px;padding-right:24px;}#arc{padding-left:24px;padding-right:24px;}#preparation{padding-left:24px;padding-right:24px;}#plants,#location,#maestro,#included,#testimonials{padding-left:24px;padding-right:24px;}#qualify,#who-comes,#guide{padding-left:24px;padding-right:24px;}#apply-final{padding-left:24px;padding-right:24px;padding-top:96px;padding-bottom:96px;}}
 </style>
 </head>
 <body>
@@ -151,29 +201,20 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo" width="36" height="36">
 <span class="nav-brand-name">Shamanic Travels</span>
 </a>
-<ul class="nav-links">
-<li><a href="/#experience" class="eyebrow" data-i18n="nav.ethos">Etica</a></li>
-<li><a href="/andean_arc_clean.html" class="eyebrow" data-i18n="nav.andean">Arco Andino</a></li>
-<li><a href="/amazon_clean.html" class="eyebrow active" aria-current="page" data-i18n="nav.amazon">Amazzonia</a></li>
-<li><a href="#plants" class="eyebrow" data-i18n="amazon.nav_plants">Piante Maestre</a></li>
-<li><a href="#maestro" class="eyebrow" data-i18n="amazon.nav_maestro">La Guida</a></li>
-<li><a href="/gallery.html" class="eyebrow" data-i18n="nav.gallery">Galleria</a></li>
-<li><a href="/apply_clean.html" class="eyebrow apply" data-i18n="nav.apply">Candidati</a></li>
-</ul>
-<button class="nav-mobile-toggle" aria-label="Apri menu" aria-expanded="false" id="menuBtn"><span></span><span></span></button>
+<ul class="nav-links"></ul>
 </div>
 </nav>
 
 <section id="hero">
 <div class="hero-img-wrap">
-<img src="jungle.jpg" alt="Volta della foresta amazzonica a San Alejandro, Amazzonia peruviana" class="animate-slow-zoom" width="1920" height="1280">
+<img src="jungle.jpg" alt="Volta della foresta amazzonica a San Alejandro, Amazzonia peruviana" class="animate-slow-zoom" width="1920" height="1280" data-i18n-attr="alt:amazon.hero_img_alt">
 </div>
 <div class="hero-overlay"></div>
 <div class="hero-content">
-<a href="/" class="eyebrow hero-back" data-i18n="amazon.hero_back">&larr; Shamanic Travels</a>
 <p class="eyebrow hero-eyebrow" data-i18n="amazon.hero_eyebrow">San Alejandro, Amazzonia peruviana &middot; 1-25 novembre 2026</p>
-<h1 class="hero-title" data-i18n-html="amazon.hero_title">Il ritiro amazzonico con <span class="italic">Piante Maestre</span></h1>
-<p class="hero-desc" data-i18n="amazon.hero_desc">Un ritiro amazzonico di 22 giorni a San Alejandro, nel cuore dell'Amazzonia peruviana, guidato da Maestro Carlos &ldquo;Chichi&rdquo; Escudero. Una Dieta strutturata con Piante Maestre per chi è disposto a intraprendere la preparazione che richiede.</p>
+<h1 class="hero-title" data-i18n-html="amazon.hero_title">C'e un punto della vita in cui <span class="italic">non basta piu capire</span>. Bisogna attraversare.</h1>
+<p class="hero-desc" data-i18n="amazon.hero_desc">Un ritiro amazzonico di 22 giorni a San Alejandro, guidato da Maestro Carlos &ldquo;Chichi&rdquo; Escudero. Non e una vacanza. Non e una cura. E un impegno serio, con una preparazione altrettanto seria, per chi sente che qualcosa nella propria vita ha bisogno di cambiare in profondita.</p>
+<a href="/apply_clean.html" class="hero-cta" data-i18n="amazon.hero_cta">Richiedi un Colloquio Privato &rarr;</a>
 </div>
 </section>
 
@@ -182,8 +223,44 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 <div>
 <p class="premise-lead" data-i18n="amazon.premise_lead">Ventidue giorni. Un'unica profonda immersione amazzonica continuativa a San Alejandro.</p>
 <div class="premise-body">
-<p data-i18n="amazon.premise_body_p1">Ospitato a San Alejandro, nel cuore dell'Amazzonia peruviana, questo ritiro offre ai partecipanti l'opportunità di lavorare con le piante maestre tradizionali in un contesto profondamente connesso alle tradizioni vive della medicina amazzonica. Da Pucallpa, ci trasferiamo via fiume nella regione di San Alejandro, dove un lodge selezionato e l'ambiente del villaggio diventano la base per una Dieta continuativa con Piante Maestre guidata da Maestro Carlos &ldquo;Chichi&rdquo; Escudero.</p>
-<p data-i18n-html="amazon.premise_body_p2">L'arrivo a Pucallpa è previsto il <strong>1 novembre 2026</strong>. Il programma del ritiro si svolge dal <strong>3 al 24 novembre 2026</strong>, con partenza il <strong>25 novembre 2026</strong>. La selezione è rigorosa. La preparazione è obbligatoria. Il ritiro non è disponibile senza entrambe.</p>
+<p data-i18n="amazon.premise_body1">Ospitato a San Alejandro, nel cuore dell'Amazzonia peruviana, questo ritiro offre ai partecipanti l'opportunita di lavorare con le piante maestre tradizionali in un contesto profondamente connesso alle tradizioni vive della medicina amazzonica. Da Pucallpa, ci trasferiamo via fiume nella regione di San Alejandro, dove un lodge selezionato e l'ambiente del villaggio diventano la base per una Dieta continuativa con Piante Maestre guidata da Maestro Carlos &ldquo;Chichi&rdquo; Escudero.</p>
+<p data-i18n-html="amazon.premise_body2">L'arrivo a Pucallpa e previsto il <strong>1 novembre 2026</strong>. Il programma del ritiro si svolge dal <strong>3 al 24 novembre 2026</strong>, con partenza il <strong>25 novembre 2026</strong>. La selezione e rigorosa. La preparazione e obbligatoria. Il ritiro non e disponibile senza entrambe.</p>
+</div>
+</div>
+</section>
+
+<section id="qualify">
+<div class="qualify-inner">
+<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.qualify_eyebrow">Prima di Continuare</span>
+<h2 class="qualify-title" data-i18n="amazon.qualify_title">Questo non è per tutti.</h2>
+<p class="qualify-intro" data-i18n="amazon.qualify_intro">Le persone che arrivano a San Alejandro attraversano spesso una fase di trasformazione profonda: una crisi, una perdita, un burnout, una domanda che non riescono più a rimandare. Sono persone disposte a impegnarsi seriamente, aperte all'apprendimento e alla disciplina, che sentono una chiamata autentica verso questo percorso &mdash; non semplice curiosità.</p>
+
+<div class="qualify-block">
+<span class="eyebrow qualify-block-label" data-i18n="amazon.qualify_no_label">Questo percorso potrebbe non essere adatto a te se</span>
+<ul class="qualify-list not-fit">
+<li data-i18n="amazon.qualify_no1">Cerchi una soluzione rapida ai tuoi problemi.</li>
+<li data-i18n="amazon.qualify_no2">Ti aspetti guarigioni miracolose.</li>
+<li data-i18n="amazon.qualify_no3">Non sei disposto a seguire un protocollo di preparazione di tre mesi.</li>
+<li data-i18n="amazon.qualify_no4">Cerchi una vacanza spirituale.</li>
+<li data-i18n="amazon.qualify_no5">Non sei disposto a mettere in discussione convinzioni profonde su te stesso.</li>
+<li data-i18n="amazon.qualify_no6">Non hai disponibilità reale per il lavoro preparatorio prima del ritiro.</li>
+</ul>
+</div>
+
+<div class="qualify-block">
+<span class="eyebrow qualify-block-label" data-i18n="amazon.qualify_yes_label">Questo percorso potrebbe essere per te se</span>
+<ul class="qualify-list fit">
+<li data-i18n="amazon.qualify_yes1">Stai attraversando una fase di trasformazione importante della tua vita.</li>
+<li data-i18n="amazon.qualify_yes2">Sei disposto a impegnarti seriamente nel processo, dall'inizio alla fine.</li>
+<li data-i18n="amazon.qualify_yes3">Sei aperto all'apprendimento e alla disciplina che la Dieta richiede.</li>
+<li data-i18n="amazon.qualify_yes4">Senti una chiamata autentica verso questo percorso, non solo curiosità.</li>
+</ul>
+</div>
+
+<p class="qualify-clarity" data-i18n="amazon.qualify_clarity">Non scriviamo questo per scoraggiarti, ma per chiarezza. Una candidatura sincera, anche se porta a un &ldquo;non ora&rdquo;, vale più di un'iscrizione fatta per le ragioni sbagliate.</p>
+
+<div class="qualify-cta-wrap">
+<a href="/apply_clean.html" class="qualify-cta" data-i18n="amazon.qualify_cta">Richiedi un Colloquio Privato &rarr;</a>
 </div>
 </div>
 </section>
@@ -195,64 +272,93 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 <p class="why-subtitle" data-i18n-html="amazon.why_subtitle">Ci sono luoghi che si visitano.<br>E luoghi che diventano parte della tua vita.</p>
 </div>
 <div class="why-body">
-<p data-i18n="amazon.why_body_p1">Ho conosciuto Maestro Carlos &ldquo;Chichi&rdquo; Escudero quasi dieci anni fa. Da allora ho accompagnato qui persone provenienti da tutto il mondo, tornando più volte all'anno per lavorare con lui e con le tradizioni vive della foresta amazzonica.</p>
-<p data-i18n="amazon.why_body_p2">Nel corso degli anni, San Alejandro è diventato molto più di una destinazione. È diventato un luogo che conosco intimamente: il fiume, la foresta, i sentieri, le comunità locali, le piante, i silenzi e i ritmi che scandiscono la vita quotidiana.</p>
-<p data-i18n="amazon.why_body_p3">Ho vissuto qui alcuni dei momenti più significativi della mia vita.</p>
-<p data-i18n="amazon.why_body_p4">Ricordo i lunghi viaggi in lancia lungo il fiume. Le giornate trascorse nella foresta alla ricerca delle piante. Le conversazioni attorno al fuoco. Le risate condivise durante i pasti. Le pescate al tramonto. Le amicizie nate tra persone arrivate da continenti diversi e unite dalla stessa ricerca interiore.</p>
-<p data-i18n="amazon.why_body_p5">Per molti anni ho definito San Alejandro il mio centro di trasformazione.</p>
-<p data-i18n="amazon.why_body_p6">Non perché fosse perfetto.</p>
-<p data-i18n="amazon.why_body_p7">Ma perché qui ho visto accadere qualcosa che oggi è sempre più difficile trovare: autenticità, umanità e una relazione genuina con la medicina della foresta.</p>
-<p data-i18n="amazon.why_body_p8">Dopo un lungo periodo lontano dall'Amazzonia, ho scelto di tornare proprio qui.</p>
-<p data-i18n="amazon.why_body_p9">Non perché sia il luogo più famoso.</p>
-<p data-i18n="amazon.why_body_p10">Non perché sia il più lussuoso.</p>
-<p data-i18n="amazon.why_body_p11">E nemmeno perché sia il più facile da raggiungere.</p>
-<p data-i18n="amazon.why_body_p12">Torno perché conosco le persone. Conosco il luogo. Conosco il lavoro che viene svolto.</p>
-<p data-i18n="amazon.why_body_p13">E soprattutto perché, quando accompagno qualcuno in un percorso così importante, voglio poter dire con sincerità:</p>
+<p data-i18n="amazon.why_p1">Ho conosciuto Maestro Carlos &ldquo;Chichi&rdquo; Escudero quasi dieci anni fa. Da allora ho accompagnato qui persone provenienti da tutto il mondo, tornando più volte all'anno per lavorare con lui e con le tradizioni vive della foresta amazzonica.</p>
+<p data-i18n="amazon.why_p2">Nel corso degli anni, San Alejandro è diventato molto più di una destinazione. È diventato un luogo che conosco intimamente: il fiume, la foresta, i sentieri, le comunità locali, le piante, i silenzi e i ritmi che scandiscono la vita quotidiana.</p>
+<p data-i18n="amazon.why_p3">Ho vissuto qui alcuni dei momenti più significativi della mia vita.</p>
+<p data-i18n="amazon.why_p4">Ricordo i lunghi viaggi in lancia lungo il fiume. Le giornate trascorse nella foresta alla ricerca delle piante. Le conversazioni attorno al fuoco. Le risate condivise durante i pasti. Le pescate al tramonto. Le amicizie nate tra persone arrivate da continenti diversi e unite dalla stessa ricerca interiore.</p>
+<p data-i18n="amazon.why_p5">Per molti anni ho definito San Alejandro il mio centro di trasformazione.</p>
+<p data-i18n="amazon.why_p6">Non perché fosse perfetto.</p>
+<p data-i18n="amazon.why_p7">Ma perché qui ho visto accadere qualcosa che oggi è sempre più difficile trovare: autenticità, umanità e una relazione genuina con la medicina della foresta.</p>
+<p data-i18n="amazon.why_p8">Dopo un lungo periodo lontano dall'Amazzonia, ho scelto di tornare proprio qui.</p>
+<p data-i18n="amazon.why_p9">Non perché sia il luogo più famoso.</p>
+<p data-i18n="amazon.why_p10">Non perché sia il più lussuoso.</p>
+<p data-i18n="amazon.why_p11">E nemmeno perché sia il più facile da raggiungere.</p>
+<p data-i18n="amazon.why_p12">Torno perché conosco le persone. Conosco il luogo. Conosco il lavoro che viene svolto.</p>
+<p data-i18n="amazon.why_p13">E soprattutto perché, quando accompagno qualcuno in un percorso così importante, voglio poter dire con sincerità:</p>
 </div>
-<p class="why-closing" data-i18n="amazon.why_closing" style="font-size: 2rem; text-align: center; font-weight: 500;">&ldquo;Questo è un posto di cui mi fido.&rdquo;</p>
+<p class="why-closing" data-i18n="amazon.why_closing">&ldquo;Questo è un posto di cui mi fido.&rdquo;</p>
+</section>
+
+<section id="who-comes">
+<div class="why-header">
+<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.who_eyebrow">Chi Arriva Qui</span>
+<h2 class="why-title" data-i18n="amazon.who_title">Non c'è un solo motivo per venire.</h2>
+<p class="why-subtitle" data-i18n="amazon.who_subtitle">Ma c'è quasi sempre un punto di svolta.</p>
+</div>
+<div class="who-grid">
+<div class="who-card">
+<h3 class="who-card-title" data-i18n="amazon.who1_title">Una crisi che non si può più rimandare</h3>
+<p class="who-card-desc" data-i18n="amazon.who1_desc">Un matrimonio finito, una diagnosi, un lutto, una domanda su chi si è diventati. Qualcosa che ha rotto il pilota automatico e chiede una risposta vera.</p>
+</div>
+<div class="who-card">
+<h3 class="who-card-title" data-i18n="amazon.who2_title">Un burnout arrivato dopo anni di rendimento</h3>
+<p class="who-card-desc" data-i18n="amazon.who2_desc">Dirigenti, imprenditori, professionisti che hanno costruito molto verso l'esterno e sentono di aver perso il contatto con qualcosa di essenziale dentro di sé.</p>
+</div>
+<div class="who-card">
+<h3 class="who-card-title" data-i18n="amazon.who3_title">Una transizione di vita</h3>
+<p class="who-card-desc" data-i18n="amazon.who3_desc">Un cambio di fase &mdash; i cinquant'anni, un divorzio, dei figli che se ne vanno, una carriera che si chiude &mdash; che chiede di essere attraversata, non solo gestita.</p>
+</div>
+<div class="who-card">
+<h3 class="who-card-title" data-i18n="amazon.who4_title">Una ricerca spirituale autentica</h3>
+<p class="who-card-desc" data-i18n="amazon.who4_desc">Non curiosità superficiale, ma una domanda che si porta dentro da anni e che, a un certo punto, chiede un passo concreto.</p>
+</div>
+</div>
+<div class="who-cta-wrap">
+<a href="/apply_clean.html" class="hero-cta" style="background:var(--foreground);color:var(--background);" data-i18n="amazon.who_cta">Richiedi un Colloquio Privato &rarr;</a>
+</div>
 </section>
 
 <section id="arc">
 <div class="arc-header">
 <span class="eyebrow text-accent" style="display:block;margin-bottom:16px;" data-i18n="amazon.arc_eyebrow">Il Percorso</span>
-<h2 class="arc-title" data-i18n="amazon.arc_title">Cinque Tappe.</h2>
+<h2 class="arc-title" data-i18n="amazon.arc_title">Cinque movimenti.</h2>
 </div>
 <ol class="arc-grid">
-<li class="arc-step"><span class="eyebrow arc-num">01</span><h3 class="arc-step-title" data-i18n="amazon.c1_title">Arrivo &middot; Pucallpa</h3><p class="arc-step-desc" data-i18n="amazon.c1_desc">1 novembre 2026. Decompressione in un hotel selezionato a Pucallpa. Briefing, controlli medici, revisione dell'attrezzatura.</p></li>
-<li class="arc-step"><span class="eyebrow arc-num">02</span><h3 class="arc-step-title" data-i18n="amazon.c2_title">Trasferimento sul fiume</h3><p class="arc-step-desc" data-i18n="amazon.c2_desc">Trasferimento in barca privata da Pucallpa a San Alejandro, nell'Amazzonia peruviana. Il viaggio stesso fa parte dell'immersione.</p></li>
-<li class="arc-step"><span class="eyebrow arc-num">03</span><h3 class="arc-step-title" data-i18n="amazon.c3_title">Base operativa a San Alejandro</h3><p class="arc-step-desc" data-i18n="amazon.c3_desc">Lodge remoto e contesto di villaggio a San Alejandro. Il ritmo della vita rallenta. Luce del giorno, fiume, fuoco.</p></li>
-<li class="arc-step"><span class="eyebrow arc-num">04</span><h3 class="arc-step-title" data-i18n="amazon.c4_title">Dieta con Piante Maestre</h3><p class="arc-step-desc" data-i18n="amazon.c4_desc">3-24 novembre 2026. Cicli strutturati di pratica tradizionale guidata con Maestro Chichi, alternati a giornate complete di integrazione.</p></li>
-<li class="arc-step"><span class="eyebrow arc-num">05</span><h3 class="arc-step-title" data-i18n="amazon.c5_title">Ritorno</h3><p class="arc-step-desc" data-i18n="amazon.c5_desc">Viaggio di ritorno sul fiume, giornata di integrazione a Pucallpa, partenza il 25 novembre 2026.</p></li>
+<li class="arc-step"><span class="eyebrow arc-num">01</span><h3 class="arc-step-title" data-i18n="amazon.arc1_title">Arrivo &middot; Pucallpa</h3><p class="arc-step-desc" data-i18n="amazon.arc1_desc">1 novembre 2026. Decompressione in un hotel selezionato a Pucallpa. Briefing, controlli medici, revisione dell'attrezzatura.</p></li>
+<li class="arc-step"><span class="eyebrow arc-num">02</span><h3 class="arc-step-title" data-i18n="amazon.arc2_title">Trasferimento sul fiume</h3><p class="arc-step-desc" data-i18n="amazon.arc2_desc">Trasferimento in barca privata da Pucallpa a San Alejandro, nell'Amazzonia peruviana. Il viaggio stesso fa parte dell'immersione.</p></li>
+<li class="arc-step"><span class="eyebrow arc-num">03</span><h3 class="arc-step-title" data-i18n="amazon.arc3_title">Base operativa a San Alejandro</h3><p class="arc-step-desc" data-i18n="amazon.arc3_desc">Lodge remoto e contesto di villaggio a San Alejandro. Il ritmo della vita rallenta. Luce del giorno, fiume, fuoco.</p></li>
+<li class="arc-step"><span class="eyebrow arc-num">04</span><h3 class="arc-step-title" data-i18n="amazon.arc4_title">Dieta con Piante Maestre</h3><p class="arc-step-desc" data-i18n="amazon.arc4_desc">3-24 novembre 2026. Cicli strutturati di pratica tradizionale guidata con Maestro Chichi, alternati a giornate complete di integrazione.</p></li>
+<li class="arc-step"><span class="eyebrow arc-num">05</span><h3 class="arc-step-title" data-i18n="amazon.arc5_title">Ritorno</h3><p class="arc-step-desc" data-i18n="amazon.arc5_desc">Viaggio di ritorno sul fiume, giornata di integrazione a Pucallpa, partenza il 25 novembre 2026.</p></li>
 </ol>
 </section>
 
 <section id="maloca">
-<h2 class="maloca-title" data-i18n-html="amazon.maloca_title">La Maloca: <span class="italic">il Cuore del Viaggio</span></h2>
-<img src="maloca.jpg" alt="Interno della maloca cerimoniale a San Alejandro, cerchio di partecipanti durante una cerimonia" class="maloca-img" loading="lazy" width="1215" height="609">
-<p class="maloca-desc" data-i18n="amazon.maloca_desc">Qui le cerimonie prendono vita. La Maloca è il tempio della nostra trasformazione, dove il cerchio si chiude e la guarigione inizia.</p>
+<h2 class="maloca-title" data-i18n-html="amazon.maloca_title">La Maloca: <span class="italic">il cuore del viaggio</span></h2>
+<img src="maloca.jpg" alt="Interno della maloca cerimoniale a San Alejandro, cerchio di partecipanti durante una cerimonia" class="maloca-img" loading="lazy" width="1215" height="609" data-i18n-attr="alt:amazon.maloca_img_alt">
+<p class="maloca-desc" data-i18n="amazon.maloca_desc">Qui le cerimonie prendono vita. La maloca è il tempio della nostra trasformazione, dove il cerchio si chiude e la guarigione inizia.</p>
 </section>
 
 <section id="preparation-essence">
 <div class="why-header">
-<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.prep_ess_eyebrow">La Preparazione</span>
-<h2 class="why-title" data-i18n-html="amazon.prep_ess_title">Ciò che rende possibile <span class="italic">la Dieta</span>.</h2>
-<p class="why-subtitle" data-i18n="amazon.prep_ess_subtitle">La differenza non la fanno i ventidue giorni...</p>
+<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.prepe_eyebrow">La Preparazione</span>
+<h2 class="why-title" data-i18n-html="amazon.prepe_title">Ciò che rende possibile <span class="italic">la Dieta</span>.</h2>
+<p class="why-subtitle" data-i18n="amazon.prepe_subtitle">La differenza non la fanno i ventidue giorni...</p>
 </div>
 <div class="why-body">
-<p data-i18n="amazon.prep_ess_body_p1">...la fa tutto ciò che li precede.</p>
-<p data-i18n="amazon.prep_ess_body_p2">La Dieta con Piante Maestre non inizia il giorno dell'arrivo a Pucallpa. Inizia tre mesi prima, nel momento in cui un partecipante accetta di astenersi da alcol e sostanze, di disciplinare la propria alimentazione, di rallentare i ritmi mentali ed emotivi che la vita quotidiana impone.</p>
-<p data-i18n="amazon.prep_ess_body_p3">Questo non è un dettaglio organizzativo. È la condizione stessa che rende il lavoro con le piante sicuro, profondo e realmente trasformativo.</p>
-<p data-i18n="amazon.prep_ess_body_p4">Un corpo e una mente non preparati incontrano la medicina della foresta in superficie. Un corpo e una mente preparati, invece, possono accoglierla fino in fondo: nella chiarezza necessaria per attraversare le cerimonie, nella stabilità necessaria per reggere ciò che emerge, nella capacità di integrare davvero ciò che si vive.</p>
-<p data-i18n="amazon.prep_ess_body_p5">Per questo la selezione è rigorosa e la preparazione obbligatoria. Non per rendere il percorso più difficile, ma per proteggerne il valore. Le piante maestre lavorano con chi arriva pronto a riceverle.</p>
+<p data-i18n="amazon.prepe_p1">...la fa tutto ciò che li precede.</p>
+<p data-i18n="amazon.prepe_p2">La Dieta con Piante Maestre non inizia il giorno dell'arrivo a Pucallpa. Inizia tre mesi prima, nel momento in cui un partecipante accetta di astenersi da alcol e sostanze, di disciplinare la propria alimentazione, di rallentare i ritmi mentali ed emotivi che la vita quotidiana impone.</p>
+<p data-i18n="amazon.prepe_p3">Questo non è un dettaglio organizzativo. È la condizione stessa che rende il lavoro con le piante sicuro, profondo e realmente trasformativo.</p>
+<p data-i18n="amazon.prepe_p4">Un corpo e una mente non preparati incontrano la medicina della foresta in superficie. Un corpo e una mente preparati, invece, possono accoglierla fino in fondo: nella chiarezza necessaria per attraversare le cerimonie, nella stabilità necessaria per reggere ciò che emerge, nella capacità di integrare davvero ciò che si vive.</p>
+<p data-i18n="amazon.prepe_p5">Per questo la selezione è rigorosa e la preparazione obbligatoria. Non per rendere il percorso più difficile, ma per proteggerne il valore. Le piante maestre lavorano con chi arriva pronto a riceverle.</p>
 </div>
-<p class="why-closing" data-i18n="amazon.prep_ess_closing" style="font-size: 1.8rem; text-align: center; font-weight: 500;">La qualità della tua preparazione determinerà la profondità della tua esperienza.</p>
+<p class="why-closing" data-i18n="amazon.prepe_closing">La qualità della tua preparazione determinerà la profondità della tua esperienza.</p>
 </section>
 
 <section id="plants">
 <div class="plants-header">
 <span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.plants_eyebrow">Le Piante Maestre</span>
 <h2 class="plants-title" data-i18n-html="amazon.plants_title">Una <span class="italic">Dieta con Piante Maestre</span> tradizionale.</h2>
-<p class="plants-desc" data-i18n="amazon.plants_desc">Al cuore di questo ritiro amazzonico c'è la Dieta con Piante Maestre, una pratica amazzonica tradizionale in cui i partecipanti lavorano individualmente con piante specifiche sotto la guida di Maestro Chichi. Ogni pianta porta con sé un proprio focus tradizionale nella medicina vegetale amazzonica.</p>
+<p class="plants-desc" data-i18n="amazon.plants_desc">Al cuore di questo ritiro amazzonico c'e la Dieta con Piante Maestre, una pratica amazzonica tradizionale in cui i partecipanti lavorano individualmente con piante specifiche sotto la guida di Maestro Chichi. Ogni pianta porta con se un proprio focus tradizionale nella medicina vegetale amazzonica.</p>
 </div>
 <div class="plants-table-wrap">
 <table class="plants-table">
@@ -260,76 +366,81 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 <tr><th scope="col" data-i18n="amazon.plants_th1">Pianta Maestra</th><th scope="col" data-i18n="amazon.plants_th2">Focus Tradizionale</th></tr>
 </thead>
 <tbody>
-<tr><td class="plants-name" data-i18n="amazon.plant_1_name">Huancahui Sacha</td><td class="plants-focus" data-i18n="amazon.plant_1_focus">Protezione, radicamento e connessione con la foresta.</td></tr>
-<tr><td class="plants-name" data-i18n="amazon.plant_2_name">Bobinsana</td><td class="plants-focus" data-i18n="amazon.plant_2_focus">Apertura emotiva, compassione e lavoro centrato sul cuore.</td></tr>
-<tr><td class="plants-name" data-i18n="amazon.plant_3_name">Chiric Sanango</td><td class="plants-focus" data-i18n="amazon.plant_3_focus">Coraggio, resilienza e superamento della paura.</td></tr>
-<tr><td class="plants-name" data-i18n="amazon.plant_4_name">Clavo Huasca</td><td class="plants-focus" data-i18n="amazon.plant_4_focus">Vitalità, motivazione e forza vitale.</td></tr>
-<tr><td class="plants-name" data-i18n="amazon.plant_5_name">Ayahuasca</td><td class="plants-focus" data-i18n="amazon.plant_5_focus">Autoindagine, consapevolezza e comprensione spirituale.</td></tr>
-<tr><td class="plants-name" data-i18n="amazon.plant_6_name">Renaquilla</td><td class="plants-focus" data-i18n="amazon.plant_6_focus">Radici, appartenenza e connessione ancestrale.</td></tr>
+<tr><td class="plants-name">Huancahui Sacha</td><td class="plants-focus" data-i18n="amazon.plant1_focus">Protezione, radicamento e connessione con la foresta.</td></tr>
+<tr><td class="plants-name">Bobinsana</td><td class="plants-focus" data-i18n="amazon.plant2_focus">Apertura emotiva, compassione e lavoro centrato sul cuore.</td></tr>
+<tr><td class="plants-name">Chiric Sanango</td><td class="plants-focus" data-i18n="amazon.plant3_focus">Coraggio, resilienza e superamento della paura.</td></tr>
+<tr><td class="plants-name">Clavo Huasca</td><td class="plants-focus" data-i18n="amazon.plant4_focus">Vitalita, motivazione e forza vitale.</td></tr>
+<tr><td class="plants-name">Ayahuasca</td><td class="plants-focus" data-i18n="amazon.plant5_focus">Autoindagine, consapevolezza e comprensione spirituale.</td></tr>
+<tr><td class="plants-name">Renaquilla</td><td class="plants-focus" data-i18n="amazon.plant6_focus">Radici, appartenenza e connessione ancestrale.</td></tr>
 </tbody>
 </table>
 </div>
 <p class="plants-note" data-i18n="amazon.plants_note">Le piante specifiche utilizzate durante il ritiro possono variare in base alla guida di Maestro Chichi e alle esigenze individuali dei partecipanti.</p>
+<p class="why-closing" style="margin-top:48px;" data-i18n="amazon.plants_honesty">Va detto con chiarezza: il lavoro con le piante maestre, e in particolare con l'Ayahuasca, può portare a momenti di reale disagio emotivo durante le cerimonie &mdash; paura, dolore, confronto diretto con ciò che si è evitato per anni. Non è un effetto collaterale da nascondere. È parte del processo, ed è uno dei motivi per cui la preparazione e l'accompagnamento di Maestro Chichi sono condizioni non negoziabili.</p>
+<div class="who-cta-wrap">
+<a href="#guide" class="hero-cta" style="background:var(--foreground);color:var(--background);" data-i18n="amazon.plants_cta">Scarica la Guida Gratuita alle Piante Maestre &rarr;</a>
+</div>
 </section>
 
 <section id="location">
 <div class="location-inner">
-<div><img src="san-alejandro.jpg" alt="San Alejandro, Amazzonia peruviana" class="location-img" loading="lazy" width="700" height="875"></div>
+<div><img src="san-alejandro.jpg" alt="San Alejandro, Amazzonia peruviana" class="location-img" loading="lazy" width="700" height="875" data-i18n-attr="alt:amazon.location_img_alt"></div>
 <div>
 <span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.location_eyebrow">Il Contesto</span>
 <h2 class="location-title" data-i18n-html="amazon.location_title">San Alejandro, <span class="italic">Amazzonia peruviana</span>.</h2>
 <div class="location-desc">
-<p data-i18n="amazon.location_desc_p1">Ospitato a San Alejandro, nel cuore dell'Amazzonia peruviana, questo ritiro immersivo offre ai partecipanti l'opportunità di lavorare con le piante maestre tradizionali in un contesto profondamente connesso alle tradizioni vive della medicina amazzonica.</p>
-<p data-i18n="amazon.location_desc_p2">Raggiunto con trasferimento fluviale privato da Pucallpa, San Alejandro offre l'ambiente remoto e indisturbato richiesto da una Dieta tradizionale con Piante Maestre: un luogo plasmato dalla foresta, dal fiume e da decenni di pratica con le piante amazzoniche.</p>
+<p data-i18n="amazon.location_p1">Ospitato a San Alejandro, nel cuore dell'Amazzonia peruviana, questo ritiro immersivo offre ai partecipanti l'opportunita di lavorare con le piante maestre tradizionali in un contesto profondamente connesso alle tradizioni vive della medicina amazzonica.</p>
+<p data-i18n="amazon.location_p2">Raggiunto con trasferimento fluviale privato da Pucallpa, San Alejandro offre l'ambiente remoto e indisturbato richiesto da una Dieta tradizionale con Piante Maestre: un luogo plasmato dalla foresta, dal fiume e da decenni di pratica con le piante amazzoniche.</p>
 </div>
 <div class="location-quote">
-<p data-i18n="amazon.location_quote_p1">Per molti anni ho definito San Alejandro il mio centro di trasformazione.</p>
-<p data-i18n="amazon.location_quote_p2">Qui ho visto persone cambiare.</p>
-<p data-i18n="amazon.location_quote_p3">Qui ho costruito amicizie che durano ancora oggi.</p>
-<p data-i18n="amazon.location_quote_p4">Qui ho imparato che la medicina della foresta non riguarda soltanto le piante, ma anche le relazioni umane che nascono attorno ad esse.</p>
+<p data-i18n="amazon.location_q1">Per molti anni ho definito San Alejandro il mio centro di trasformazione.</p>
+<p data-i18n="amazon.location_q2">Qui ho visto persone cambiare.</p>
+<p data-i18n="amazon.location_q3">Qui ho costruito amicizie che durano ancora oggi.</p>
+<p data-i18n="amazon.location_q4">Qui ho imparato che la medicina della foresta non riguarda soltanto le piante, ma anche le relazioni umane che nascono attorno ad esse.</p>
 </div>
 </div>
 </div>
 </section>
 
 <section id="maestro">
-<div><img src="maestro-chichi.jpg" alt="Maestro Carlos Chichi Escudero, guaritore tradizionale amazzonico" class="maestro-img" loading="lazy" width="700" height="875"></div>
+<div><img src="maestro-chichi.jpg" alt="Maestro Carlos Chichi Escudero, guaritore tradizionale amazzonico" class="maestro-img" loading="lazy" width="700" height="875" data-i18n-attr="alt:amazon.maestro_img_alt"></div>
 <div>
 <span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.maestro_eyebrow">La Guida</span>
 <h2 class="maestro-title" data-i18n-html="amazon.maestro_title">Maestro Carlos <span class="italic">&ldquo;Chichi&rdquo; Escudero</span>.</h2>
 <div class="maestro-desc">
-<p data-i18n="amazon.maestro_desc_p1">Questo ritiro amazzonico si svolge in collaborazione con Maestro Carlos &ldquo;Chichi&rdquo; Escudero, guaritore tradizionale amazzonico e praticante delle piante maestre con decenni di esperienza all'interno delle tradizioni vive dell'Amazzonia peruviana.</p>
-<p data-i18n="amazon.maestro_desc_p2">Cresciuto nella foresta amazzonica, il rapporto di Maestro Chichi con le piante maestre attraversa una vita intera di conoscenza diretta e ancestrale, tramandata da generazioni di praticanti della regione. Il suo lavoro è radicato in una connessione profonda e continua con la foresta stessa: con le sue piante, i suoi ritmi e le pratiche tradizionali che le circondano.</p>
-<p data-i18n="amazon.maestro_desc_p3">Durante tutto il ritiro, Maestro Chichi guida ogni ciclo della Dieta con Piante Maestre, attingendo a questa lunga esperienza per mantenere le pratiche tradizionali al centro del programma.</p>
-<p data-i18n="amazon.maestro_desc_p4">Conosco Chichi da quasi dieci anni. Nel corso di questo periodo ho accompagnato qui persone provenienti da tutto il mondo e ho avuto il privilegio di lavorare direttamente con lui in centinaia di cerimonie. È una delle poche persone alle quali affiderei senza esitazione qualcuno che amo.</p>
+<p data-i18n="amazon.maestro_p1">Questo ritiro amazzonico si svolge in collaborazione con Maestro Carlos &ldquo;Chichi&rdquo; Escudero, guaritore tradizionale amazzonico e praticante delle piante maestre con decenni di esperienza all'interno delle tradizioni vive dell'Amazzonia peruviana.</p>
+<p data-i18n="amazon.maestro_p2">Cresciuto nella foresta amazzonica, il rapporto di Maestro Chichi con le piante maestre attraversa una vita intera di conoscenza diretta e ancestrale, tramandata da generazioni di praticanti della regione. Il suo lavoro e radicato in una connessione profonda e continua con la foresta stessa: con le sue piante, i suoi ritmi e le pratiche tradizionali che le circondano.</p>
+<p data-i18n="amazon.maestro_p3">Durante tutto il ritiro, Maestro Chichi guida ogni ciclo della Dieta con Piante Maestre, attingendo a questa lunga esperienza per mantenere le pratiche tradizionali al centro del programma.</p>
+<p data-i18n="amazon.maestro_p4">Conosco Chichi da quasi dieci anni. Nel corso di questo periodo ho accompagnato qui persone provenienti da tutto il mondo e ho avuto il privilegio di lavorare direttamente con lui in centinaia di cerimonie. È una delle poche persone alle quali affiderei senza esitazione qualcuno che amo.</p>
 </div>
+<a href="/apply_clean.html" class="prep-cta" style="display:inline-block;margin-top:40px;border-color:var(--border);color:var(--foreground);" data-i18n="amazon.maestro_cta">Richiedi un Colloquio Privato &rarr;</a>
 </div>
 </section>
 
 <section id="included">
 <div class="included-inner">
-<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.inc_eyebrow">Cosa e Incluso</span>
-<h2 class="included-title" data-i18n-html="amazon.inc_title">Da Pucallpa <span class="italic">al Tuo Ritorno</span>.</h2>
-<p class="included-desc" data-i18n="amazon.inc_desc">Tutto ciò che segue è incluso dal tuo arrivo a Pucallpa il 1 novembre 2026 fino alla partenza il 25 novembre 2026. I voli internazionali non sono inclusi.</p>
+<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.included_eyebrow">Cosa e Incluso</span>
+<h2 class="included-title" data-i18n-html="amazon.included_title">Da Pucallpa <span class="italic">alla partenza</span>.</h2>
+<p class="included-desc" data-i18n="amazon.included_desc">Tutto cio che segue e incluso dal tuo arrivo a Pucallpa il 1 novembre 2026 fino alla partenza il 25 novembre 2026. I voli internazionali non sono inclusi.</p>
 <div class="included-grid">
 <div>
-<span class="included-col-label" data-i18n="amazon.inc_label_yes">Incluso</span>
+<span class="included-col-label" data-i18n="amazon.included_label_yes">Incluso</span>
 <ul class="included-list">
-<li data-i18n="amazon.inc_yes_1">Alloggio nell'hotel selezionato a Pucallpa e presso la base operativa a San Alejandro</li>
-<li data-i18n="amazon.inc_yes_2">Pasti secondo le linee guida del ritiro e della dieta</li>
-<li data-i18n="amazon.inc_yes_3">Tutte le cerimonie e le pratiche con le piante guidate da Maestro Chichi</li>
-<li data-i18n="amazon.inc_yes_4">Il programma completo di Dieta con Piante Maestre</li>
-<li data-i18n="amazon.inc_yes_5">Trasporto locale legato al ritiro, inclusi i trasferimenti fluviali tra Pucallpa e San Alejandro</li>
-<li data-i18n="amazon.inc_yes_6">Guida e supporto durante tutto il ritiro, dall'arrivo alla partenza</li>
+<li data-i18n="amazon.inc_y1">Alloggio nell'hotel selezionato a Pucallpa e presso la base operativa a San Alejandro</li>
+<li data-i18n="amazon.inc_y2">Pasti secondo le linee guida del ritiro e della dieta</li>
+<li data-i18n="amazon.inc_y3">Tutte le cerimonie e le pratiche con le piante guidate da Maestro Chichi</li>
+<li data-i18n="amazon.inc_y4">Il programma completo di Dieta con Piante Maestre</li>
+<li data-i18n="amazon.inc_y5">Trasporto locale legato al ritiro, inclusi i trasferimenti fluviali tra Pucallpa e San Alejandro</li>
+<li data-i18n="amazon.inc_y6">Guida e supporto durante tutto il ritiro, dall'arrivo alla partenza</li>
 </ul>
 </div>
 <div>
-<span class="included-col-label not-included" data-i18n="amazon.inc_label_no">Non Incluso</span>
+<span class="included-col-label not-included" data-i18n="amazon.included_label_no">Non Incluso</span>
 <ul class="included-list not-included">
-<li data-i18n="amazon.inc_no_1">Voli internazionali da e per il Peru</li>
-<li data-i18n="amazon.inc_no_2">Voli nazionali tra Lima e Pucallpa</li>
-<li data-i18n="amazon.inc_no_3">Assicurazione di viaggio</li>
-<li data-i18n="amazon.inc_no_4">Spese personali</li>
+<li data-i18n="amazon.inc_n1">Voli internazionali da e per il Peru</li>
+<li data-i18n="amazon.inc_n2">Voli nazionali tra Lima e Pucallpa</li>
+<li data-i18n="amazon.inc_n3">Assicurazione di viaggio</li>
+<li data-i18n="amazon.inc_n4">Spese personali</li>
 </ul>
 </div>
 </div>
@@ -339,15 +450,15 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 <section id="preparation">
 <div class="prep-inner">
 <span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.prep_eyebrow">Il Protocollo di Tre Mesi</span>
-<h2 class="prep-title" data-i18n-html="amazon.prep_title">La preparazione è <span class="italic">la base del successo del Tuo percorso</span>.</h2>
+<h2 class="prep-title" data-i18n-html="amazon.prep_title">La preparazione e' <span class="italic">la base del successo del Tuo percorso</span>.</h2>
 <p class="prep-desc" data-i18n="amazon.prep_desc">Un protocollo di preparazione di tre mesi precede il ritiro. Esiste per la sicurezza, per la concentrazione e per rendere possibile l'integrazione. Senza questo protocollo, il ritiro non viene offerto.</p>
 <ul class="prep-list">
-<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep_l1">Alcol</p><p class="prep-value" data-i18n="amazon.prep_v1">Nessuno per tutti i tre mesi precedenti.</p></li>
-<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep_l2">Sostanze ricreative</p><p class="prep-value" data-i18n="amazon.prep_v2">Nessuna per tutti i tre mesi precedenti.</p></li>
-<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep_l3">Dieta</p><p class="prep-value" data-i18n="amazon.prep_v3">Alimentazione disciplinata: linee guida complete fornite dopo la selezione.</p></li>
-<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep_l4">Mentale &amp; emotivo</p><p class="prep-value" data-i18n="amazon.prep_v4">Pratica quotidiana di preparazione, journaling, riduzione degli stimoli.</p></li>
-<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep_l5">Astinenza sessuale</p><p class="prep-value" data-i18n="amazon.prep_v5">Raccomandata almeno tre settimane prima della partenza.</p></li>
-<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep_l6">Coaching privato</p><p class="prep-value" data-i18n="amazon.prep_v6">Sessione individuale obbligatoria con Marcello prima della partenza.</p></li>
+<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep1_label">Alcol</p><p class="prep-value" data-i18n="amazon.prep1_value">Nessuno per tutti i tre mesi precedenti.</p></li>
+<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep2_label">Sostanze ricreative</p><p class="prep-value" data-i18n="amazon.prep2_value">Nessuna per tutti i tre mesi precedenti.</p></li>
+<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep3_label">Dieta</p><p class="prep-value" data-i18n="amazon.prep3_value">Alimentazione disciplinata: linee guida complete fornite dopo la selezione.</p></li>
+<li class="prep-item"><p class="eyebrow prep-label" data-i18n-html="amazon.prep4_label">Mentale &amp; emotivo</p><p class="prep-value" data-i18n="amazon.prep4_value">Pratica quotidiana di preparazione, journaling, riduzione degli stimoli.</p></li>
+<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep5_label">Astinenza sessuale</p><p class="prep-value" data-i18n="amazon.prep5_value">Raccomandata almeno tre settimane prima della partenza.</p></li>
+<li class="prep-item"><p class="eyebrow prep-label" data-i18n="amazon.prep6_label">Coaching privato</p><p class="prep-value" data-i18n="amazon.prep6_value">Sessione individuale obbligatoria con Marcello prima della partenza.</p></li>
 </ul>
 <div class="prep-cta-wrap">
 <a href="/apply_clean.html" class="prep-cta" data-i18n="amazon.prep_cta">Candidati per la Selezione</a>
@@ -356,38 +467,78 @@ footer{padding:96px 40px 128px;border-top:1px solid var(--border);background:var
 </div>
 </section>
 
-<footer>
-<div class="footer-inner">
-<div class="footer-left">
-<span class="eyebrow text-accent" style="display:block;margin-bottom:20px;" data-i18n="amazon.footer_eyebrow">Il Tuo Regalo</span>
-<h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.8vw,34px);font-weight:300;line-height:1.2;margin-bottom:12px;" data-i18n-html="amazon.footer_title">
-Ricevi gratuitamente <em style="color:var(--accent);">&ldquo;I Luoghi Sacri degli Inca&rdquo;</em>
-</h2>
-<p class="footer-desc" data-i18n="amazon.footer_desc">Compendio scritto dal fondatore &mdash; frutto dei viaggi. Una guida pre-tour ricca di informazioni utili.</p>
-<div style="display:flex;align-items:center;gap:16px;margin-top:4px;">
-<svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;width:60px;box-shadow:3px 5px 14px rgba(0,0,0,0.2);border-radius:2px;"><defs><linearGradient id="ebgb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a0d1a"/><stop offset="60%" stop-color="#1a2340"/><stop offset="100%" stop-color="#1a0e06"/></linearGradient></defs><rect width="200" height="280" fill="url(#ebgb)"/><circle cx="150" cy="38" r="18" fill="#fff8e7"/><circle cx="145" cy="34" r="14" fill="#1a2340"/><path d="M0 160 L30 120 L60 140 L90 100 L120 130 L150 95 L180 115 L200 105 L200 200 L0 200Z" fill="#1e2e1a" opacity="0.9"/><path d="M0 185 L25 160 L55 175 L85 155 L115 170 L145 150 L175 165 L200 155 L200 280 L0 280Z" fill="#0d1408"/><rect x="8" y="8" width="184" height="264" fill="none" stroke="#C9973A" stroke-width="0.7" opacity="0.6"/><text x="100" y="55" text-anchor="middle" font-family="Georgia,serif" font-size="7" letter-spacing="2" fill="#C9973A" opacity="0.8">SHAMANIC TRAVELS</text><text x="100" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="bold" fill="#E8C060">I LUOGHI</text><text x="100" y="100" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-weight="bold" fill="#E8C060">SACRI</text><text x="100" y="128" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#E8C060">DEGLI INCA</text><text x="100" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="6" letter-spacing="1.5" fill="#C9973A" opacity="0.7">MARCELLO BUGLIONE</text></svg>
-<form class="footer-form" onsubmit="handleEbookSubmit(event);" style="flex:1;">
-<input type="email" id="ebookEmail" data-i18n-attr="placeholder:amazon.footer_placeholder" placeholder="Il tuo indirizzo email" aria-label="Email" maxlength="255" required>
-<button type="submit" class="eyebrow" data-i18n="amazon.footer_btn">Ricevi</button>
+<section id="apply-final">
+<div class="apply-final-inner">
+<span class="eyebrow text-accent apply-final-eyebrow" data-i18n="amazon.applyf_eyebrow">Il Passo Successivo</span>
+<h2 class="apply-final-title" data-i18n="amazon.applyf_title">Non stai prenotando un viaggio.</h2>
+<p class="apply-final-desc" data-i18n="amazon.applyf_desc">Stai facendo una richiesta. La candidatura apre un colloquio privato con Marcello, non un acquisto. Serve a capire insieme, con sincerità, se questo è il momento e il percorso giusto per te.</p>
+<p class="apply-final-clarify" data-i18n="amazon.applyf_clarify">Nessun pagamento richiesto in questa fase. Rifiutiamo più candidature di quante ne accettiamo.</p>
+<a href="/apply_clean.html" class="apply-final-cta" data-i18n="amazon.applyf_cta">Invia la Tua Candidatura &rarr;</a>
+</div>
+</section>
+
+<section id="testimonials">
+<div class="testi-header">
+<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.testi_eyebrow">Ciò Che Portano Con Sé</span>
+<h2 class="why-title" data-i18n="amazon.testi_title">Voci da chi ha attraversato la soglia.</h2>
+</div>
+<div class="testi-grid">
+<div class="testi-card">
+<p class="testi-quote" data-i18n="amazon.testi_q1">&ldquo;Non quello che mi aspettavo. Molto più profondo. Una soglia che non sapevo di dover attraversare.&rdquo;</p>
+<p class="eyebrow testi-name" data-i18n="amazon.testi_q1_name">James K.</p>
+<p class="eyebrow testi-role" data-i18n="amazon.testi_q1_role">Amazzonia Profonda &middot; 2025</p>
+</div>
+<div class="testi-card">
+<p class="testi-quote" data-i18n="amazon.testi_q2">&ldquo;Marcello non insegna. Testimonia. E in qualche modo, quella testimonianza cambia tutto.&rdquo;</p>
+<p class="eyebrow testi-name" data-i18n="amazon.testi_q2_name">Elena R.</p>
+<p class="eyebrow testi-role" data-i18n="amazon.testi_q2_role">Arco Andino &middot; 2024</p>
+</div>
+<div class="testi-card">
+<p class="testi-quote" data-i18n="amazon.testi_q3">&ldquo;Nel silenzio delle montagne, ho trovato me stesso.&rdquo;</p>
+<p class="eyebrow testi-name" data-i18n="amazon.testi_q3_name">Sarah M.</p>
+<p class="eyebrow testi-role" data-i18n="amazon.testi_q3_role">Arco Andino &middot; 2025</p>
+</div>
+</div>
+<div class="who-cta-wrap">
+<a href="/apply_clean.html" class="hero-cta" style="background:var(--foreground);color:var(--background);" data-i18n="amazon.testi_cta">Richiedi un Colloquio Privato &rarr;</a>
+</div>
+</section>
+
+<section id="guide">
+<div class="guide-inner">
+<div>
+<span class="eyebrow text-accent" style="display:block;margin-bottom:24px;" data-i18n="amazon.guide_eyebrow">Prima di Decidere</span>
+<h2 class="guide-title" data-i18n-html="amazon.guide_title">Una guida gratuita alle <span class="italic">Piante Maestre</span>.</h2>
+<p class="guide-desc" data-i18n="amazon.guide_desc">Un breve scritto del fondatore su cosa sono realmente le piante maestre, come funziona una Dieta tradizionale e cosa significa davvero prepararsi ad attraversarla. Utile per capire se questo percorso fa per te, prima ancora di candidarti.</p>
+<form class="guide-form" onsubmit="handleGuideSubmit(event);">
+<input type="text" id="guideName" placeholder="Il tuo nome" aria-label="Nome" maxlength="100" required data-i18n-attr="placeholder:amazon.guide_name_placeholder">
+<input type="email" id="guideEmail" placeholder="Il tuo indirizzo email" aria-label="Email" maxlength="255" required data-i18n-attr="placeholder:amazon.guide_email_placeholder">
+<button type="submit" data-i18n="amazon.guide_btn">Ricevi la Guida Gratuita</button>
 </form>
+<p class="guide-note" data-i18n="amazon.guide_note">Niente spam. Solo contenuti pertinenti sul percorso e sulle piante maestre.</p>
+</div>
+<div class="guide-visual">
+<svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" style="width:160px;box-shadow:6px 10px 28px rgba(0,0,0,0.35);border-radius:2px;"><defs><linearGradient id="gguide" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a0d1a"/><stop offset="60%" stop-color="#1a2340"/><stop offset="100%" stop-color="#1a0e06"/></linearGradient></defs><rect width="200" height="280" fill="url(#gguide)"/><circle cx="150" cy="38" r="18" fill="#fff8e7"/><circle cx="145" cy="34" r="14" fill="#1a2340"/><path d="M0 160 L30 120 L60 140 L90 100 L120 130 L150 95 L180 115 L200 105 L200 200 L0 200Z" fill="#1e2e1a" opacity="0.9"/><path d="M0 185 L25 160 L55 175 L85 155 L115 170 L145 150 L175 165 L200 155 L200 280 L0 280Z" fill="#0d1408"/><rect x="8" y="8" width="184" height="264" fill="none" stroke="#C9973A" stroke-width="0.7" opacity="0.6"/><text x="100" y="55" text-anchor="middle" font-family="Georgia,serif" font-size="7" letter-spacing="2" fill="#C9973A" opacity="0.8">SHAMANIC TRAVELS</text><text x="100" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="bold" fill="#E8C060">GUIDA ALLE</text><text x="100" y="112" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="bold" fill="#E8C060">PIANTE</text><text x="100" y="134" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="bold" fill="#E8C060">MAESTRE</text><text x="100" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="6" letter-spacing="1.5" fill="#C9973A" opacity="0.7">MARCELLO BUGLIONE</text></svg>
 </div>
 </div>
-<div class="footer-right">
-<div class="footer-based eyebrow"><p data-i18n="footer.based_label">Sedi</p><p data-i18n="footer.based_value">Londra &middot; Lima &middot; Milano</p></div>
-<div class="footer-brand">
-<img src="logo.jpg" alt="Shamanic Travels" class="footer-logo" width="48" height="48">
+</section>
+
+<footer style="padding:64px 40px;border-top:1px solid var(--border);background:var(--background);">
+<div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:32px;align-items:center;text-align:center;">
+<div class="footer-brand" style="align-items:center;">
+<img src="logo.jpg" alt="Shamanic Travels" class="footer-logo" width="40" height="40">
 <span class="footer-brand-name">Shamanic Travels</span>
-<p class="eyebrow footer-copy text-muted" data-i18n="footer.copy">&copy; 2026 &middot; Viaggi Privati Curati</p>
 </div>
-</div>
+<div class="footer-based eyebrow"><p data-i18n="amazon.footer_based_value">Londra &middot; Lima &middot; Milano</p></div>
+<p class="eyebrow footer-copy text-muted" data-i18n-html="amazon.footer_copy">&copy; 2026 &middot; Viaggi Privati Curati</p>
 </div>
 </footer>
 
 <script src="/i18n.js"></script>
 <script>
 if(typeof i18n!=='undefined'&&i18n&&typeof i18n.init==='function'){i18n.init();}
-function handleEbookSubmit(e){e.preventDefault();var email=document.getElementById('ebookEmail').value;if(!email)return;if(typeof fbq!=='undefined')fbq('track','Lead',{content_name:'Ebook I Luoghi Sacri'});if(typeof gtag!=='undefined')gtag('event','generate_lead',{event_category:'ebook',event_label:'luoghi_sacri_inca'});window.open('/ebooks/I_Luoghi_Sacri_Degli_Inca.pdf','_blank');window.location.href='/thankyou.html?email='+encodeURIComponent(email);}
-(function(){var nav=document.getElementById('main-nav');if(nav){window.addEventListener('scroll',function(){if(window.scrollY>80){nav.style.background='rgba(245,242,236,0.96)';nav.style.mixBlendMode='normal';nav.style.color='#1a1612';nav.style.backdropFilter='blur(12px)';}else{nav.style.background='';nav.style.mixBlendMode='difference';nav.style.color='white';nav.style.backdropFilter='';}},{passive:true});}var btn=document.getElementById('menuBtn');var links=document.querySelector('.nav-links');var open=false;if(btn){btn.addEventListener('click',function(){open=!open;links.style.cssText=open?'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:#f5f2ec;padding:24px 40px;gap:20px;z-index:100;':'display:none;';btn.setAttribute('aria-expanded',open);});}})();
+function handleGuideSubmit(e){e.preventDefault();var name=document.getElementById('guideName').value;var email=document.getElementById('guideEmail').value;if(!email)return;if(typeof fbq!=='undefined')fbq('track','Lead',{content_name:'Guida Piante Maestre'});if(typeof gtag!=='undefined')gtag('event','generate_lead',{event_category:'guide',event_label:'piante_maestre'});window.open('/ebooks/Guida_Piante_Maestre.pdf','_blank');window.location.href='/thankyou.html?email='+encodeURIComponent(email)+'&name='+encodeURIComponent(name);}
+(function(){var nav=document.getElementById('main-nav');if(nav){window.addEventListener('scroll',function(){if(window.scrollY>80){nav.style.background='rgba(245,242,236,0.96)';nav.style.mixBlendMode='normal';nav.style.color='#1a1612';nav.style.backdropFilter='blur(12px)';}else{nav.style.background='';nav.style.mixBlendMode='difference';nav.style.color='white';nav.style.backdropFilter='';}},{passive:true});}})();
 </script>
 </body>
 </html>
