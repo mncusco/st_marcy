@@ -7,7 +7,7 @@
     "insights": "Artículos",
     "gallery": "Galería",
     "apply": "Postular",
-    "brand": "Shamanic Travels"
+    "brand": "ShamanicTravels"
   },
   "hero": {
     "eyebrow": "Invitación · Curaduría · Perú",
@@ -20,7 +20,7 @@
     "eyebrow": "La Filosofía",
     "title1": "No es un tour.",
     "title2": "Es una evolución interior.",
-    "body1": "Shamanic Travels es un viaje privado y selectivo a través de los altos Andes y las cuencas amazónicas. No ofrecemos tours grupales. Curamos umbrales experienciales profundos para quienes están listos para encontrarse con las tradiciones vivas de sabiduría peruana.",
+    "body1": "ShamanicTravels es un viaje privado y selectivo a través de los altos Andes y las cuencas amazónicas. No ofrecemos tours grupales. Curamos umbrales experienciales profundos para quienes están listos para encontrarse con las tradiciones vivas de sabiduría peruana.",
     "body2": "Combinando la precisión logística del viaje de lujo con el profundo silencio de la geografía sagrada del Perú, cada elemento es gestionado con autoridad serena y absoluta privacidad.",
     "stat1_num": "6",
     "stat1_label": "Participantes por viaje",
@@ -129,7 +129,7 @@
     "read": "Leer →",
     "loading": "Cargando artículos…",
     "empty": "No hay artículos publicados todavía.",
-    "back": "← Volver a Shamanic Travels"
+    "back": "← Volver a ShamanicTravels"
   },
   "gallery": {
     "eyebrow": "Archivo Visual",
@@ -141,7 +141,7 @@
     "prev": "← Ant",
     "next": "Sig →",
     "close": "Cerrar ×",
-    "back": "← Volver a Shamanic Travels"
+    "back": "← Volver a ShamanicTravels"
   },
   "andean": {
     "hero_eyebrow": "Viaje Uno · 21 Días",
@@ -161,13 +161,13 @@
     "quote": "\"No todo viaje te cambia.<br>Algunos simplemente te recuerdan quién eres.\""
   },
   "amazon": {
-    "meta_title": "Retiro Amazónico en San Alejandro — Dieta con Plantas Maestras con Maestro Chichi · Shamanic Travels",
+    "meta_title": "Retiro Amazónico en San Alejandro — Dieta con Plantas Maestras con Maestro Chichi · ShamanicTravels",
     "meta_desc": "Un retiro amazónico de 22 días en San Alejandro, Amazonas peruano, guiado por Maestro Carlos \"Chichi\" Escudero. Una Dieta tradicional con Plantas Maestras con Ayahuasca, Bobinsana, Chiric Sanango y más. 1-25 de noviembre de 2026.",
     "og_title": "Retiro Amazónico en San Alejandro — Dieta con Plantas Maestras con Maestro Chichi",
     "og_desc": "Desde Pucallpa hasta San Alejandro, en el corazón del Amazonas peruano. Una Dieta estructurada guiada por el curandero tradicional Maestro Carlos \"Chichi\" Escudero. 1-25 de noviembre de 2026.",
     "nav_plants": "Plantas Maestras",
     "nav_maestro": "El Guía",
-    "hero_back": "← Shamanic Travels",
+    "hero_back": "← ShamanicTravels",
     "hero_eyebrow": "San Alejandro, Amazonas peruano · 1-25 de noviembre de 2026",
     "hero_title": "El retiro amazónico con <span class=\"italic\">Plantas Maestras</span>",
     "hero_desc": "Un retiro amazónico de 22 días en San Alejandro, en el corazón del Amazonas peruano, guiado por Maestro Carlos “Chichi” Escudero. Una Dieta estructurada con Plantas Maestras para aquellos dispuestos a realizar la preparación requerida.",
