@@ -7,7 +7,7 @@
     "insights": "Insights",
     "gallery": "Gallery",
     "apply": "Apply",
-    "brand": "Shamanic Travels"
+    "brand": "ShamanicTravels"
   },
   "hero": {
     "eyebrow": "Invitation · Curation · Peru",
@@ -20,7 +20,7 @@
     "eyebrow": "The Ethos",
     "title1": "Not a tour.",
     "title2": "An internal evolution.",
-    "body1": "Shamanic Travels is a private, selection-based journey across the high Andes and Amazonian basins. We do not provide group tours. We curate deep experiential thresholds for those ready to encounter Peru's living wisdom traditions.",
+    "body1": "ShamanicTravels is a private, selection-based journey across the high Andes and Amazonian basins. We do not provide group tours. We curate deep experiential thresholds for those ready to encounter Peru's living wisdom traditions.",
     "body2": "Combining the logistical precision of luxury travel with the profound silence of Peru's sacred geography, every element is managed with calm authority and absolute privacy.",
     "stat1_num": "6",
     "stat1_label": "Participants per journey",
@@ -129,7 +129,7 @@
     "read": "Read →",
     "loading": "Loading articles…",
     "empty": "No articles published yet.",
-    "back": "← Return to Shamanic Travels"
+    "back": "← Return to ShamanicTravels"
   },
   "gallery": {
     "eyebrow": "Visual Record",
@@ -141,7 +141,7 @@
     "prev": "← Prev",
     "next": "Next →",
     "close": "Close ×",
-    "back": "← Return to Shamanic Travels"
+    "back": "← Return to ShamanicTravels"
   },
   "andean": {
     "hero_eyebrow": "Journey One · 21 Days",
@@ -161,13 +161,13 @@
     "quote": "\"Not every journey changes you.<br>Some simply remind you who you are.\""
   },
   "amazon": {
-    "meta_title": "Amazon Retreat in San Alejandro — Master Plant Dieta with Maestro Chichi · Shamanic Travels",
+    "meta_title": "Amazon Retreat in San Alejandro — Master Plant Dieta with Maestro Chichi · ShamanicTravels",
     "meta_desc": "A 22-day Amazonian retreat in San Alejandro, Peruvian Amazon, guided by Maestro Carlos \"Chichi\" Escudero. A traditional Master Plant Dieta with Ayahuasca, Bobinsana, Chiric Sanango, and more. Nov 1-25, 2026.",
     "og_title": "Amazon Retreat in San Alejandro — Master Plant Dieta with Maestro Chichi",
     "og_desc": "From Pucallpa to San Alejandro, deep in the Peruvian Amazon. A structured Master Plant Dieta guided by traditional healer Maestro Carlos \"Chichi\" Escudero. Nov 1-25, 2026.",
     "nav_plants": "Master Plants",
     "nav_maestro": "The Guide",
-    "hero_back": "← Shamanic Travels",
+    "hero_back": "← ShamanicTravels",
     "hero_eyebrow": "San Alejandro, Peruvian Amazon · Nov 1-25, 2026",
     "hero_title": "The Amazonian retreat with <span class=\"italic\">Master Plants</span>",
     "hero_desc": "A 22-day Amazonian retreat in San Alejandro, in the heart of the Peruvian Amazon, guided by Maestro Carlos “Chichi” Escudero. A structured Master Plant Dieta for those willing to undertake the required preparation.",
