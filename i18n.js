@@ -19,34 +19,34 @@ const i18n = (() => {
     const nav = (navigator.language || navigator.userLanguage || 'en').slice(0, 2).toLowerCase();
     const map = { hr: 'sr', bs: 'sr', me: 'sr' };
     const lang = map[nav] || nav;
-    return SUPPORTED.includes(lang) ? lang : FALLBACK;
+    return SUPPORTED.includes(lang)? lang : FALLBACK;
   }
 
   async function loadLang(lang) {
     try {
-      const res = await fetch(`lang/${lang}.json?v=${Date.now()}`);
+      const res = await fetch(`/lang/${lang}.json?v=${Date.now()}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return await res.json();
     } catch (e) {
       console.error(`i18n: fallito caricamento ${lang}.json`, e);
-      if (lang !== FALLBACK) return loadLang(FALLBACK);
+      if (lang!== FALLBACK) return loadLang(FALLBACK);
       return {};
     }
   }
 
   function get(key) {
-    return key.split('.').reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), strings);
+    return key.split('.').reduce((obj, k) => (obj && obj[k]!== undefined? obj[k] : null), strings);
   }
 
   function applyStrings() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const val = get(key);
-      if (val !== null) {
+      if (val!== null) {
         if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
           el.placeholder = val;
         } else {
-          el.innerHTML = val; // <-- MODIFICA APPLICATA QUI
+          el.textContent = val;
         }
       }
     });
@@ -55,14 +55,14 @@ const i18n = (() => {
       const parts = el.getAttribute('data-i18n-attr').split(':');
       if (parts.length === 2) {
         const val = get(parts[1]);
-        if (val !== null) el.setAttribute(parts[0], val);
+        if (val!== null) el.setAttribute(parts[0], val);
       }
     });
 
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
       const key = el.getAttribute('data-i18n-html');
       const val = get(key);
-      if (val !== null) el.innerHTML = val;
+      if (val!== null) el.innerHTML = val;
     });
   }
 
@@ -71,37 +71,37 @@ const i18n = (() => {
   }
 
   /* ── USA IL SELECT ESISTENTE ── */
-  function bindSelector() {
-    let select = document.getElementById('lang-switcher');
-    
-    if (!select) {
-      const nav = document.querySelector('.nav-links');
-      if (nav) {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <select id="lang-switcher" style="background:transparent;border:1px solid currentColor;color:inherit;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 8px;cursor:pointer;">
-            <option value="en">EN</option>
-            <option value="it">IT</option>
-            <option value="es">ES</option>
-            <option value="sr">SR</option>
-            <option value="ru">RU</option>
-          </select>`;
-        nav.appendChild(li);
-        select = document.getElementById('lang-switcher');
-      }
-    }
-    
-    if (!select) {
-      console.warn('i18n: #lang-switcher non trovato e nav non trovata');
-      return;
-    }
-    
-    select.value = currentLang;
-    if (!select.dataset.i18nBound) {
-      select.addEventListener('change', (e) => switchLang(e.target.value));
-      select.dataset.i18nBound = 'true';
+function bindSelector() {
+  let select = document.getElementById('lang-switcher');
+  
+  if (!select) {
+    const nav = document.querySelector('.nav-links');
+    if (nav) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <select id="lang-switcher" style="background:transparent;border:1px solid currentColor;color:inherit;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 8px;cursor:pointer;">
+          <option value="en">EN</option>
+          <option value="it">IT</option>
+          <option value="es">ES</option>
+          <option value="sr">SR</option>
+          <option value="ru">RU</option>
+        </select>`;
+      nav.appendChild(li);
+      select = document.getElementById('lang-switcher');
     }
   }
+  
+  if (!select) {
+    console.warn('i18n: #lang-switcher non trovato e nav non trovata');
+    return;
+  }
+  
+  select.value = currentLang;
+  if (!select.dataset.i18nBound) {
+    select.addEventListener('change', (e) => switchLang(e.target.value));
+    select.dataset.i18nBound = 'true';
+  }
+}
 
   async function switchLang(lang) {
     if (!SUPPORTED.includes(lang)) return;
