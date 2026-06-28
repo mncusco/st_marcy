@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Article — Shamanic Travels</title>
+<title>Article — ShamanicTravels</title>
 <meta name="description" content="">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -266,9 +266,9 @@ footer {
 
 <nav id="mainNav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-brand" aria-label="Shamanic Travels — Home">
-      <img src="logo.jpg" alt="Shamanic Travels" class="nav-logo">
-      <span class="nav-brand-name">Shamanic Travels</span>
+    <a href="index.html" class="nav-brand" aria-label="ShamanicTravels — Home">
+      <img src="logo.jpg" alt="ShamanicTravels" class="nav-logo">
+      <span class="nav-brand-name">ShamanicTravels</span>
     </a>
     <ul class="nav-links">
       <li><a href="index.html#experience" class="eyebrow">Ethos</a></li>
@@ -331,7 +331,7 @@ async function loadArticle() {
     }
 
     // Update page title & meta
-    document.title = `${article.title} — Shamanic Travels`;
+    document.title = `${article.title} — ShamanicTravels`;
     document.querySelector('meta[name="description"]').setAttribute('content', article.excerpt);
 
     // Lingua corrente
@@ -351,7 +351,7 @@ async function loadArticle() {
 
     const backLabel = { it:'← Tutti gli articoli', en:'← All Insights', es:'← Todos los artículos', ru:'← Все статьи', sr:'← Svi članci' }[lang] || '← All Insights';
     const ctaLabel = { it:'Prenota un colloquio privato', en:'Request Private Interview', es:'Solicitar entrevista privada', ru:'Запросить интервью', sr:'Zatraži privatni razgovor' }[lang] || 'Request Private Interview';
-    const roleLabel = { it:'Guida e Fondatore · Shamanic Travels', en:'Guide & Founder · Shamanic Travels', es:'Guía y Fundador · Shamanic Travels', ru:'Гид и основатель · Shamanic Travels', sr:'Vodič i osnivač · Shamanic Travels' }[lang] || 'Guide & Founder · Shamanic Travels';
+    const roleLabel = { it:'Guida e Fondatore · ShamanicTravels', en:'Guide & Founder · ShamanicTravels', es:'Guía y Fundador · ShamanicTravels', ru:'Гид и основатель · ShamanicTravels', sr:'Vodič i osnivač · ShamanicTravels' }[lang] || 'Guide & Founder · ShamanicTravels';
 
     container.innerHTML = `
       <div class="article-hero">
@@ -390,7 +390,7 @@ async function loadArticle() {
       </div>
 
       <footer>
-        <p class="eyebrow footer-copy">© 2026 Shamanic Travels · Private Curated Journeys</p>
+        <p class="eyebrow footer-copy">© 2026 ShamanicTravels · Private Curated Journeys</p>
       </footer>
     `;
   } catch (e) {
@@ -406,7 +406,7 @@ function showNotFound(container) {
       <a href="blog.html" class="eyebrow">← Return to Insights</a>
     </div>
     <footer>
-      <p class="eyebrow footer-copy">© 2026 Shamanic Travels · Private Curated Journeys</p>
+      <p class="eyebrow footer-copy">© 2026 ShamanicTravels · Private Curated Journeys</p>
     </footer>
   `;
 }
