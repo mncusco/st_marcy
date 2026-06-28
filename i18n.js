@@ -24,7 +24,7 @@ const i18n = (() => {
 
   async function loadLang(lang) {
     try {
-      const res = await fetch(`/lang/${lang}.json?v=${Date.now()}`);
+      const res = await fetch(`lang/${lang}.json?v=${Date.now()}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return await res.json();
     } catch (e) {
