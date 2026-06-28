@@ -7,7 +7,7 @@
     "insights": "Članci",
     "gallery": "Galerija",
     "apply": "Prijava",
-    "brand": "Shamanic Travels"
+    "brand": "ShamanicTravels"
   },
   "hero": {
     "eyebrow": "Pozivnica · Kustostvo · Peru",
@@ -20,7 +20,7 @@
     "eyebrow": "Filozofija",
     "title1": "Nije tura.",
     "title2": "Unutrašnja evolucija.",
-    "body1": "Shamanic Travels je privatno, selektivno putovanje kroz visoke Ande i amazonske basene. Ne nudimo grupne ture. Kuriramo duboke iskustvene pragove za one koji su spremni da se susretnu sa živim tradicijama mudrosti Perua.",
+    "body1": "ShamanicTravels je privatno, selektivno putovanje kroz visoke Ande i amazonske basene. Ne nudimo grupne ture. Kuriramo duboke iskustvene pragove za one koji su spremni da se susretnu sa živim tradicijama mudrosti Perua.",
     "body2": "Kombinujući logističku preciznost luksuznog putovanja s dubokom tišinom svete geografije Perua, svaki element je vođen mirnom autoritetom i apsolutnom privatnošću.",
     "stat1_num": "6",
     "stat1_label": "Učesnika po putovanju",
@@ -129,7 +129,7 @@
     "read": "Pročitaj →",
     "loading": "Učitavanje članaka…",
     "empty": "Nema objavljenih članaka još uvek.",
-    "back": "← Povratak na Shamanic Travels"
+    "back": "← Povratak na ShamanicTravels"
   },
   "gallery": {
     "eyebrow": "Vizuelni Arhiv",
@@ -141,7 +141,7 @@
     "prev": "← Preth",
     "next": "Sljed →",
     "close": "Zatvori ×",
-    "back": "← Povratak na Shamanic Travels"
+    "back": "← Povratak na ShamanicTravels"
   },
   "andean": {
     "hero_eyebrow": "Putovanje Jedno · 21 Dan",
@@ -161,13 +161,13 @@
     "quote": "\"Ne menja te svako putovanje.<br>Neka te samo podsete ko si.\""
   },
   "amazon": {
-    "meta_title": "Amazonski Reterit u San Alejandru — Dieta sa Majstorskim Biljkama sa Maestro Chichijem · Shamanic Travels",
+    "meta_title": "Amazonski Reterit u San Alejandru — Dieta sa Majstorskim Biljkama sa Maestro Chichijem · ShamanicTravels",
     "meta_desc": "22-dnevni amazonski retret u San Alejandru, peruanska Amazonija, vođen od strane Maestro Carlosa \"Chichi\" Escudera. Tradicionalna Dieta sa Majstorskim Biljkama sa Ayahuascom, Bobinsanom, Chiric Sanangom i drugim. 1-25. novembar 2026.",
     "og_title": "Amazonski Retret u San Alejandru — Dieta sa Majstorskim Biljkama sa Maestro Chichijem",
     "og_desc": "Od Pucallpe do San Alejandra, duboko u peruanskoj Amazoniji. Strukturirana Dieta sa Majstorskim Biljkama vođena od strane tradicionalnog iscelitelja Maestro Carlosa \"Chichi\" Escudera. 1-25. novembar 2026.",
     "nav_plants": "Majstorske Biljke",
     "nav_maestro": "Vodič",
-    "hero_back": "← Shamanic Travels",
+    "hero_back": "← ShamanicTravels",
     "hero_eyebrow": "San Alejandro, Peruanska Amazonija · 1-25. nov 2026",
     "hero_title": "Amazonski retret sa <span class=\"italic\">Majstorskim Biljkama</span>",
     "hero_desc": "22-dnevni amazonski retret u San Alejandru, u srcu peruanske Amazonije, vođen od strane Maestro Carlosa “Chichi” Escudera. Strukturirana Dieta sa Majstorskim Biljkama za one koji su spremni da preduzmu potrebnu pripremu.",
