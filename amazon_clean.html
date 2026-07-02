@@ -38,7 +38,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 0.7s,co
 .nav-mobile-toggle{display:none;flex-direction:column;justify-content:center;align-items:flex-end;gap:6px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:8px;}
 .nav-mobile-toggle span{display:block;height:1px;background:currentColor;}
 .nav-mobile-toggle span:first-child{width:20px;}.nav-mobile-toggle span:last-child{width:16px;}
-#hero{position:relative;height:80svh;min-height:560px;width:100%;display:flex;align-items:flex-end;overflow:hidden;}
+#hero{position:relative;min-height:max(80svh,560px);width:100%;display:flex;align-items:flex-end;overflow:hidden;padding-top:100px;box-sizing:border-box;}
 .hero-img-wrap{position:absolute;inset:0;z-index:0;}
 .hero-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.2) 40%,rgba(0,0,0,0.85) 100%);}
@@ -46,7 +46,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background 0.7s,co
 @media(min-width:768px){.hero-content{padding-bottom:96px;}}
 .hero-back{display:inline-block;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.6);text-decoration:none;margin-bottom:32px;}
 .hero-eyebrow{color:var(--gold-soft);margin-bottom:24px;display:block;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:300;line-height:0.95;margin-bottom:24px;color:white;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;margin-bottom:24px;color:white;}
 .hero-desc{max-width:720px;color:rgba(255,255,255,0.8);font-size:clamp(15px,1.5vw,18px);line-height:1.75;}
 .hero-cta{display:inline-block;margin-top:40px;padding:18px 40px;background:var(--accent);color:var(--stone-deep);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:background 0.3s,transform 0.3s;}
 .hero-cta:hover{background:var(--gold-soft);transform:translateY(-2px);}
