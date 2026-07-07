@@ -364,9 +364,66 @@ function getRadioVal(name) {
 }
 function handleSubmit(e){
   e.preventDefault();
-  const body =
-`--- IDENTITY ---
-Name: ${getVal('fullName')}
+
+  if(typeof fbq !== "undefined"){
+    fbq('track','Lead',{ content_name:'Apply ShamanicTravels', value:1, currency:'USD' });
+  }
+  if(typeof gtag !== "undefined"){
+    gtag('event','generate_lead',{ event_category:'apply', event_label:'shamanic_travels_apply' });
+  }
+
+  const payload = {
+    _subject: 'Application — ' + getVal('fullName'),
+    _replyto: getVal('email'),
+    name: getVal('fullName'),
+    email: getVal('email'),
+    phone: getVal('phone'),
+    age: getVal('age'),
+    country: getVal('country'),
+    city: getVal('city'),
+    profession: getVal('job'),
+    languages: getVal('languages'),
+    journey: getRadioVal('journey'),
+    prior_experience: getRadioVal('priorExperience'),
+    prior_experience_detail: getVal('priorExperienceDetail'),
+    medications: getVal('medications'),
+    mental_health: getVal('mentalHealthHistory'),
+    cardiac_neuro: getRadioVal('cardiac'),
+    motivation: getVal('motivation'),
+    intention: getVal('intention'),
+    referral: getVal('referral'),
+    timezone: getVal('timezone'),
+    contact_method: getRadioVal('contactMethod'),
+    interview_opt1: getVal('opt1Date') + ' at ' + getVal('opt1Time'),
+    interview_opt2: getVal('opt2Date') + ' at ' + getVal('opt2Time'),
+    interview_opt3: getVal('opt3Date') + ' at ' + getVal('opt3Time'),
+  };
+
+  const btn = document.querySelector('button[type=submit]');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  fetch('https://formspree.io/f/xldjelej', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(r => r.json())
+  .then(data => {
+    if(data.ok || data.next){
+      window.location.href = 'https://www.shamanictravels.com/thankyou.html';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Submit Application';
+      alert('Something went wrong. Please try again or email info@shamanictravels.com');
+    }
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'Submit Application';
+    alert('Connection error. Please try again or email info@shamanictravels.com');
+  });
+}
 Email: ${getVal('email')}
 Phone: ${getVal('phone')}
 Age: ${getVal('age')}
