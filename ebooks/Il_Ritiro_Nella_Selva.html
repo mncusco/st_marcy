@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAMANIC TRAVELS — Senior Art Director's Edition</title>
+    
+    <!-- Tailwind CSS CDN for modern editorial layout architecture -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cormorant Garamond (Classical High-End Serif) & Montserrat (Modern Architectural Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Montserrat:wght@100;200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Luxury Interface and Contact Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        jungle: '#05140F',
+                        emeraldDark: '#092219',
+                        emeraldLight: '#133F31',
+                        ivory: '#F9F6F0',
+                        sand: '#EAE2D5',
+                        sandDark: '#D0C4B2',
+                        charcoal: '#1C1C1C',
+                        bronze: '#C5A880',
+                        bronzeDark: '#8C724D',
+                        stoneGrey: '#8E8C84',
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    letterSpacing: {
+                        editorial: '0.22em',
+                        superWide: '0.38em',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F9F6F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C5A880;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8C724D;
+        }
+
+        .editorial-justify {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* SVG-based watercolor/organic physical paper texture to emulate premium offset books */
+        .luxury-paper-texture {
+            background-color: #F9F6F0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.022 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='0.75'/%3E%3C/svg%3E");
+        }
+
+        .dark-paper-texture {
+            background-color: #05140F;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.012 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='0.45'/%3E%3C/svg%3E");
+        }
+
+        /* Shadow simulation for bound double page gutter depth */
+        .spread-center-fold {
+            background: linear-gradient(to right, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 8%, rgba(0,0,0,0) 92%, rgba(0,0,0,0.08) 100%);
+        }
+
+        /* Editorial column drops caps styles */
+        .luxury-dropcap::first-letter {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 5.5rem;
+            line-height: 4.2rem;
+            float: left;
+            margin-right: 0.85rem;
+            margin-top: 0.2rem;
+            color: #C5A880;
+            font-weight: 300;
+        }
+
+        .smooth-zoom {
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* High fashion printer bleed crop marks */
+        .crop-marks-corner {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-color: #C5A880;
+            opacity: 0.28;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-[#EDE9DF] font-sans text-charcoal antialiased selection:bg-bronze selection:text-jungle overflow-x-hidden min-h-screen">
+
+    <header class="fixed top-0 left-0 w-full bg-jungle text-ivory border-b border-bronze/10 z-50 px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl">
+        <div class="flex items-center space-x-4">
+            <span class="font-serif tracking-superWide text-sm uppercase text-bronze font-bold">Shamanic Travels</span>
+            <span class="text-stoneGrey text-xs">|</span>
+            <span class="font-sans text-[9px] tracking-widest uppercase text-ivory/60 bg-emeraldDark px-3 py-1 rounded border border-emeraldLight/25 font-semibold">DIRECTOR'S EDITORIAL COMPOSITION</span>
+        </div>
+        
+        <div class="flex flex-wrap items-center gap-5">
+            <div class="flex bg-emeraldDark p-1 rounded border border-emeraldLight/20 text-[9px] tracking-wider uppercase font-semibold">
+                <button id="btn-spread-view" onclick="switchView('spread')" class="px-4 py-2 rounded transition-all bg-bronze text-jungle font-bold">
+                    <i class="fa-solid fa-book-open mr-2"></i> Doppia Pagina
+                </button>
+                <button id="btn-scroll-view" onclick="switchView('scroll')" class="px-4 py-2 rounded transition-all text-ivory/60 hover:text-ivory">
+                    <i class="fa-solid fa-scroll mr-2"></i> Scorrimento continuo
+                </button>
+            </div>
+
+            <div class="flex items-center space-x-3 text-xs">
+                <button onclick="toggleCanvaEditor()" class="px-4 py-2 bg-emeraldDark border border-emeraldLight/20 rounded text-bronze hover:bg-emeraldLight/25 transition-all text-[10px] uppercase font-bold tracking-widest" title="Attiva modalità modifica testo">
+                    <i class="fa-solid fa-pen-nib mr-1.5"></i> <span id="btn-editor-text">Modo Editor</span>
+                </button>
+                <button onclick="toggleGuidelines()" class="p-2 bg-emeraldDark border border-emeraldLight/20 rounded text-ivory/60 hover:text-ivory transition-all" title="Linee guida allineamento">
+                    <i class="fa-solid fa-border-none"></i>
+                </button>
+                <button onclick="toggleBleed()" class="p-2 bg-emeraldDark border border-emeraldLight/20 rounded text-ivory/60 hover:text-ivory transition-all" title="Rifilo di sicurezza stampa">
+                    <i class="fa-solid fa-scissors"></i>
+                </button>
+                <div class="h-6 w-[1px] bg-emeraldLight/20"></div>
+                <button onclick="changeZoom(-0.1)" class="p-2 bg-emeraldDark border border-emeraldLight/20 rounded text-ivory/60 hover:text-ivory"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                <span id="zoom-value" class="text-[10px] font-mono tracking-wider text-bronze w-10 text-center">100%</span>
+                <button onclick="changeZoom(0.1)" class="p-2 bg-emeraldDark border border-emeraldLight/20 rounded text-ivory/60 hover:text-ivory"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+            </div>
+
+            <button onclick="toggleTOC()" class="bg-bronze hover:bg-bronzeDark text-jungle px-5 py-2 rounded text-[10px] uppercase font-bold tracking-widest transition-all">
+                <i class="fa-solid fa-list-ol mr-2"></i> Indice Esteso
+            </button>
+        </div>
+    </header>
+
+    <div id="toc-drawer" class="fixed top-0 right-0 h-full w-[420px] bg-ivory border-l border-sandDark z-50 transform translate-x-full transition-transform duration-500 ease-out shadow-2xl p-10 overflow-y-auto pt-32">
+        <div class="flex justify-between items-center mb-8 border-b border-sandDark/40 pb-5">
+            <div>
+                <h3 class="font-serif text-3xl italic text-jungle font-light">Sommario Editoriale</h3>
+                <p class="text-[9px] uppercase tracking-wider text-bronze mt-1 font-semibold">Stampa e Rilegatura di Lusso — Assouline Standard</p>
+            </div>
+            <button onclick="toggleTOC()" class="text-charcoal hover:text-bronze transition-colors">
+                <i class="fa-solid fa-xmark text-2xl font-light"></i>
+            </button>
+        </div>
+
+        <div class="mb-8 bg-sand/30 p-5 rounded border border-sandDark/20">
+            <p class="text-xs text-charcoal/70 leading-relaxed italic">
+                Questo pannello consente l'accesso rapido a tutte le sezioni di questa esclusiva prima edizione, rilegata virtualmente secondo le specifiche di stampa a 300 DPI.
+            </p>
+        </div>
+
+        <nav class="space-y-4 font-serif text-sm text-jungle" id="sidebar-toc-list">
+            <!-- Programmatically populated -->
+        </nav>
+    </div>
+
+    <div class="fixed top-[84px] left-0 w-full bg-bronze/10 border-b border-bronze/20 text-jungle py-2.5 px-8 z-40 text-xs hidden md:flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <span class="font-bold uppercase tracking-wider text-[9px] bg-bronze/30 px-2 py-0.5 rounded text-bronzeDark">Art Direction Tip</span>
+            <span class="font-light italic text-[11px] text-jungle/90">Usa il "Modo Editor" per modificare interattivamente la tipografia o clicca su "Indice Esteso" per saltare alle sezioni.</span>
+        </div>
+        <div class="flex gap-5 text-[10px] uppercase tracking-widest font-semibold text-emeraldDark/80">
+            <span>Ucayali Documentaries: Pucallpa Region</span>
+            <span class="text-bronze font-bold">Standard A4 Bleed Included</span>
+        </div>
+    </div>
+
+    <main class="pt-36 pb-24 px-4 min-h-screen flex flex-col items-center justify-center">
+
+        <div id="workspace-spread" class="w-full max-w-[1600px] flex flex-col items-center">
+            
+            <div class="relative w-full flex justify-center items-center gap-1">
+                
+                <!-- Navigation Prev Page (A4 spread style) -->
+                <button onclick="prevPage()" class="absolute left-4 lg:left-10 z-40 bg-ivory hover:bg-jungle hover:text-ivory text-jungle w-16 h-16 rounded-full border border-sandDark shadow-2xl transition-all flex items-center justify-center hover:scale-105 active:scale-95 group">
+                    <i class="fa-solid fa-chevron-left text-lg transition-transform group-hover:-translate-x-1"></i>
+                </button>
+
+                <!-- THE DOUBLE PAGE SPREAD -->
+                <div class="flex flex-col lg:flex-row w-full max-w-[1440px] aspect-[1.414/1] bg-[#EDE9E1] rounded-sm shadow-2xl overflow-hidden transition-transform duration-500 relative min-h-[82vh] lg:min-h-0 smooth-zoom" id="canvas-spread">
+                    
+                    <!-- LEFT PAGE -->
+                    <div id="page-left" class="w-full lg:w-1/2 p-16 sm:p-20 lg:p-24 flex flex-col justify-between border-r border-sandDark/40 relative min-h-[50vh] lg:min-h-auto overflow-hidden transition-all duration-300">
+                        <!-- Technical layout elements -->
+                        <div class="guideline-grid absolute inset-0 border-r border-l border-dashed border-bronze/10 pointer-events-none hidden"></div>
+                        <div class="bleed-guide absolute inset-6 border border-dashed border-red-500/20 pointer-events-none hidden"></div>
+                        <div class="spread-center-fold absolute right-0 top-0 bottom-0 w-20 pointer-events-none"></div>
+                        
+                        <!-- Corner Crop Marks for high-fashion press look -->
+                        <div class="crop-marks-corner top-4 left-4 border-t border-l"></div>
+                        <div class="crop-marks-corner top-4 right-4 border-t border-r"></div>
+                        <div class="crop-marks-corner bottom-4 left-4 border-b border-l"></div>
+                        <div class="crop-marks-corner bottom-4 right-4 border-b border-r"></div>
+
+                        <!-- Running Header -->
+                        <div class="flex justify-between items-center text-[9px] uppercase tracking-[0.3em] text-stoneGrey mb-8 border-b border-sandDark/20 pb-4">
+                            <span class="font-bold tracking-widest text-jungle font-sans">SHAMANIC TRAVELS</span>
+                            <span class="italic text-bronze">Luxury Editorial Vol. I</span>
+                        </div>
+
+                        <!-- Content wrapper -->
+                        <div id="page-left-content" class="flex-grow flex flex-col justify-center relative z-10">
+                            <!-- Dynamic Content Loads Here -->
+                        </div>
+
+                        <!-- Running Footer -->
+                        <div class="pt-6 border-t border-sandDark/20 flex justify-between text-[10px] tracking-widest uppercase text-stoneGrey mt-8">
+                            <span class="font-light font-sans">Documentary Edition — Peru</span>
+                            <span id="page-left-number" class="font-bold text-jungle font-sans">01</span>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT PAGE -->
+                    <div id="page-right" class="w-full lg:w-1/2 p-16 sm:p-20 lg:p-24 flex flex-col justify-between relative min-h-[50vh] lg:min-h-auto overflow-hidden transition-all duration-300">
+                        <!-- Technical layout elements -->
+                        <div class="guideline-grid absolute inset-0 border-r border-l border-dashed border-bronze/10 pointer-events-none hidden"></div>
+                        <div class="bleed-guide absolute inset-6 border border-dashed border-red-500/20 pointer-events-none hidden"></div>
+                        <div class="spread-center-fold absolute left-0 top-0 bottom-0 w-20 pointer-events-none"></div>
+
+                        <!-- Corner Crop Marks for high-fashion press look -->
+                        <div class="crop-marks-corner top-4 left-4 border-t border-l"></div>
+                        <div class="crop-marks-corner top-4 right-4 border-t border-r"></div>
+                        <div class="crop-marks-corner bottom-4 left-4 border-b border-l"></div>
+                        <div class="crop-marks-corner bottom-4 right-4 border-b border-r"></div>
+
+                        <!-- Running Header -->
+                        <div class="flex justify-between items-center text-[9px] uppercase tracking-[0.3em] text-stoneGrey mb-8 border-b border-sandDark/20 pb-4 font-sans">
+                            <span id="page-right-running-header" class="font-bold tracking-widest text-jungle">PREFAZIONE D'AUTORE</span>
+                            <span class="italic text-bronze">Director's Cut</span>
+                        </div>
+
+                        <!-- Content wrapper -->
+                        <div id="page-right-content" class="flex-grow flex flex-col justify-center relative z-10">
+                            <!-- Dynamic Content Loads Here -->
+                        </div>
+
+                        <!-- Running Footer -->
+                        <div class="pt-6 border-t border-sandDark/20 flex justify-between text-[10px] tracking-widest uppercase text-stoneGrey mt-8 font-sans">
+                            <span class="font-light">Ucayali Basin Research — Pucallpa</span>
+                            <span id="page-right-number" class="font-bold text-jungle">02</span>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!-- Navigation Next Page (A4 spread style) -->
+                <button onclick="nextPage()" class="absolute right-4 lg:right-10 z-40 bg-ivory hover:bg-jungle hover:text-ivory text-jungle w-16 h-16 rounded-full border border-sandDark shadow-2xl transition-all flex items-center justify-center hover:scale-105 active:scale-95 group">
+                    <i class="fa-solid fa-chevron-right text-lg transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+
+            <!-- BOOK PROGRESS MONITOR -->
+            <div class="w-full max-w-2xl mt-12 flex flex-col items-center">
+                <div class="w-full bg-sandDark/40 h-[2px] rounded-full overflow-hidden relative">
+                    <div id="spread-progress-bar" class="bg-bronze absolute left-0 top-0 h-full w-[0%] transition-all duration-300"></div>
+                </div>
+                <div class="flex justify-between w-full mt-4 text-[10px] uppercase tracking-[0.25em] text-stoneGrey font-light font-sans">
+                    <span id="spread-indicator">Spread 1 di 48 (Pagina 1-2)</span>
+                    <span class="hidden sm:inline">Navigabile con tastiera (← / →) o Swipe</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTINUOUS JOURNAL SCROLL VIEWER (Hidden by default) -->
+        <div id="workspace-scroll" class="w-full max-w-4xl space-y-24 hidden">
+            <!-- Programmatically populated dynamic section with breathtaking luxury structures -->
+        </div>
+
+    </main>
+
+    <footer class="bg-jungle py-16 text-ivory/80 border-t border-bronze/10 text-center px-8 relative z-10">
+        <p class="font-serif text-3xl tracking-[0.4em] uppercase text-bronze font-light mb-4">Shamanic Travels</p>
+        <p class="text-[11px] tracking-widest uppercase text-sandDark/60 max-w-lg mx-auto leading-relaxed mb-8 font-light font-sans">
+            Luxury Transformational Retreats. Primary Forest Ecosystems of Pucallpa, Ucayali River, and the Sacred Valley of the Incas, Peru.
+        </p>
+        <div class="w-20 h-[1px] bg-bronze/20 mx-auto mb-8"></div>
+        <p class="text-[9px] tracking-widest uppercase text-ivory/30 font-sans">&copy; 2026 Shamanic Travels S.A. All International Rights Reserved. Printed in Germany.</p>
+    </footer>
+
+    <script>
+        // Botanical Plant and Ucayali River vector structures (SVGs) for exquisite luxury visuals
+        const SVGS = {
+            botanicalLeaf: `
+                <svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto stroke-bronze fill-none stroke-[0.6] opacity-70 mb-6">
+                    <path d="M50,10 C38,35 22,55 50,90 C78,55 62,35 50,10 Z" />
+                    <path d="M50,10 L50,90" stroke-dasharray="2,2" />
+                    <path d="M50,30 C56,38 64,44 71,46" />
+                    <path d="M50,40 C56,48 64,54 67,58" />
+                    <path d="M50,30 C44,38 36,44 29,46" />
+                    <path d="M50,40 C44,48 36,54 33,58" />
+                </svg>
+            `,
+            geometricMedallion: `
+                <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto stroke-bronze fill-none stroke-[0.4] opacity-80 my-8">
+                    <circle cx="50" cy="50" r="46" />
+                    <circle cx="50" cy="50" r="43" stroke-dasharray="1,2" />
+                    <polygon points="50,8 87,72 13,72" />
+                    <polygon points="50,92 87,28 13,28" />
+                    <circle cx="50" cy="50" r="9" class="fill-bronze/5" />
+                </svg>
+            `,
+            compassRose: `
+                <svg viewBox="0 0 120 120" class="w-28 h-28 mx-auto stroke-bronze fill-none stroke-[0.5] opacity-75">
+                    <circle cx="60" cy="60" r="52" />
+                    <circle cx="60" cy="60" r="55" stroke-width="0.2" />
+                    <path d="M60,8 L60,112 M8,60 L112,60" />
+                    <polygon points="60,18 66,54 60,60" class="fill-bronze/15" />
+                    <polygon points="60,18 54,54 60,60" />
+                    <polygon points="60,102 66,66 60,60" />
+                    <polygon points="60,102 54,66 60,60" class="fill-bronze/15" />
+                    <polygon points="102,60 66,54 60,60" />
+                    <polygon points="102,60 66,66 60,60" class="fill-bronze/15" />
+                    <polygon points="18,60 54,54 60,60" class="fill-bronze/15" />
+                    <polygon points="18,60 54,66 60,60" />
+                    <text x="56" y="14" font-family="Montserrat" font-size="7" class="fill-bronze text-[5px] tracking-widest font-bold">N</text>
+                    <text x="57" y="115" font-family="Montserrat" font-size="7" class="fill-bronze text-[5px] tracking-widest font-bold">S</text>
+                </svg>
+            `,
+            amazonRiverTrack: `
+                <svg viewBox="0 0 200 80" class="w-full h-20 stroke-bronze fill-none stroke-[0.8] opacity-50 my-6">
+                    <path d="M0,45 Q45,15 85,50 T165,40 T200,55" />
+                    <path d="M0,47 Q45,17 85,52 T165,42 T200,57" stroke-dasharray="1,3" />
+                    <circle cx="85" cy="50" r="2.5" class="fill-bronze" />
+                    <circle cx="165" cy="40" r="2.5" class="fill-bronze" />
+                    <text x="90" y="47" font-family="Cormorant Garamond" font-size="7" class="fill-bronze italic text-[6px]">Rio Ucayali</text>
+                    <text x="150" y="35" font-family="Cormorant Garamond" font-size="7" class="fill-bronze italic text-[6px]">Pucallpa Station</text>
+                </svg>
+            `,
+            luxuryBadgeSeal: `
+                <svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto stroke-bronze fill-none stroke-[0.5] opacity-90 my-4">
+                    <circle cx="50" cy="50" r="48" />
+                    <circle cx="50" cy="50" r="44" stroke-dasharray="2,1" />
+                    <path d="M35,50 L45,60 L65,40" stroke-width="1" />
+                    <path d="M50,10 L50,90" stroke-dasharray="1,5" />
+                    <path d="M10,50 L90,50" stroke-dasharray="1,5" />
+                </svg>
+            `
+        };
+
+        const bookPages = [
+            // PAGE 1: EXTREME LUXURY COVER
+            {
+                type: 'cover',
+                bg: 'jungle',
+                content: `
+                    <div class="flex flex-col items-center justify-between text-center h-full py-16">
+                        <div class="text-bronze tracking-[0.45em] text-[10px] uppercase font-semibold font-sans">An International Luxury Publishing House Presentation</div>
+                        <div class="space-y-8 my-auto">
+                            <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl tracking-superWide uppercase text-ivory leading-tight font-light">
+                                SHAMANIC<br><span class="text-bronze italic">TRAVELS</span>
+                            </h1>
+                            <div class="w-32 h-[1px] bg-bronze mx-auto"></div>
+                            <p class="font-sans text-xs tracking-[0.3em] uppercase text-sand/80 max-w-sm mx-auto leading-relaxed">
+                                Luxury Transformational Retreats in the Peruvian Amazon & Sacred Valley
+                            </p>
+                        </div>
+                        <div class="space-y-6">
+                            ${SVGS.geometricMedallion}
+                            <div class="text-[9px] tracking-widest text-sandDark/40 uppercase font-sans">DIRECTOR'S COFFEE-TABLE EDITION — EST. 2026</div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 2: HALF TITLE
+            {
+                type: 'title',
+                bg: 'ivory',
+                content: `
+                    <div class="flex flex-col justify-between h-full text-center py-20 max-w-md mx-auto">
+                        <span class="text-bronze tracking-widest text-[10px] uppercase font-bold font-sans">Volume I — The Sacred Union</span>
+                        <div class="space-y-6 my-auto">
+                            <h2 class="font-serif text-4xl tracking-editorial uppercase text-jungle">SHAMANIC TRAVELS</h2>
+                            <p class="font-serif italic text-charcoal/55 text-base">Onestà, Rigore, e Silenzio nella foresta del Perù.</p>
+                        </div>
+                        <span class="text-stoneGrey text-[10px] uppercase tracking-widest font-sans">Designed for Private Clients & Collectors</span>
+                    </div>
+                `
+            },
+
+            // PAGE 3: SILENT BREATHING PAGE (Visual storyteller)
+            {
+                type: 'image',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-between p-12 text-center bg-cover bg-center text-ivory" style="background-image: linear-gradient(to bottom, rgba(5,20,15,0.85), rgba(5,20,15,0.65)), url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&q=80&w=1200');">
+                        <span class="text-[9px] uppercase tracking-widest text-bronze font-sans">PHOTOGRAPHIC ESSAY</span>
+                        <div class="my-auto space-y-6">
+                            <p class="font-serif text-2xl lg:text-3xl italic text-sand max-w-md mx-auto leading-relaxed">"La foresta non cerca di convincerti... esiste."</p>
+                            <span class="block text-[11px] tracking-widest uppercase text-bronze font-semibold font-sans">— Marcello</span>
+                        </div>
+                        <span class="text-[9px] tracking-wider text-ivory/30 font-sans">Primary forest canopy near Pucallpa, Ucayali Region</span>
+                    </div>
+                `
+            },
+
+            // PAGE 4: FRONTISPIECE
+            {
+                type: 'image',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-between p-12 text-center bg-cover bg-center text-ivory" style="background-image: linear-gradient(to bottom, rgba(5,20,15,0.85), rgba(5,20,15,0.65)), url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1200');">
+                        <span class="text-[9px] uppercase tracking-widest text-bronze font-sans">FRONTISPIECE</span>
+                        <div class="my-auto space-y-6">
+                            <p class="font-serif text-2xl lg:text-3xl italic text-sand max-w-md mx-auto leading-relaxed font-light">"Il silenzio non è assenza di rumore. È la presenza della tua anima che si risveglia."</p>
+                            <span class="block text-[11px] tracking-widest uppercase text-bronze font-semibold font-sans">— Ucayali Basin</span>
+                        </div>
+                        <span class="text-[9px] tracking-wider text-ivory/30 font-sans">Photography: Morning mist rising over the Ucayali primary rainforest canopy, Pucallpa</span>
+                    </div>
+                `
+            },
+
+            // PAGE 5: TITLE PAGE & IMPRESSUM
+            {
+                type: 'title',
+                bg: 'ivory',
+                content: `
+                    <div class="flex flex-col justify-between h-full py-16 max-w-md mx-auto text-left">
+                        <div class="space-y-6">
+                            <span class="text-[10px] uppercase tracking-widest text-bronze font-bold font-sans">Edizione Speciale Limitata</span>
+                            <h1 class="font-serif text-4xl text-jungle uppercase tracking-editorial leading-tight font-light">SHAMANIC<br>TRAVELS</h1>
+                            <p class="font-sans text-[10px] tracking-widest uppercase text-charcoal/60">A Private Client Publication</p>
+                        </div>
+                        <div class="space-y-6 my-auto text-xs text-charcoal/70 leading-relaxed font-light font-sans">
+                            <p><strong>Autore:</strong> Marcello</p>
+                            <p><strong>Direzione Artistica:</strong> Luxury Editorial Studio Berlin/Lima</p>
+                            <p><strong>Ecosistemi Principali:</strong> Bacino dell'Ucayali (Pucallpa, Perù), Valle Sacra degli Inca (Cusco).</p>
+                        </div>
+                        <div class="border-t border-sandDark/40 pt-6 text-[9px] text-stoneGrey space-y-2 leading-relaxed font-sans">
+                            <p>Tutti i diritti sono riservati. Nessuna parte di questa pubblicazione può essere copiata o riprodotta.</p>
+                            <p>© 2026 Shamanic Travels S.A. Printed in Europe on acid-free linen paper.</p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 6: VISUAL INTRO TO PREFACE
+            {
+                type: 'image',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-between p-12 text-center bg-cover bg-center text-ivory" style="background-image: linear-gradient(to bottom, rgba(5,20,15,0.9), rgba(5,20,15,0.7)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1200');">
+                        <span class="text-[9px] uppercase tracking-widest text-bronze font-sans">EDITORIAL TRACKS</span>
+                        <div class="my-auto space-y-6">
+                            <div class="w-16 h-[1px] bg-bronze mx-auto"></div>
+                            <span class="font-serif text-sm tracking-widest uppercase text-sand/80">Ucayali Region coordinates</span>
+                            <p class="font-mono text-xs tracking-widest text-bronze">8.3791° S, 74.5539° W</p>
+                        </div>
+                        <span class="text-[9px] tracking-wider text-ivory/30 font-sans">Deep primary forest path, Pucallpa Region</span>
+                    </div>
+                `
+            },
+
+            // PAGE 7: PREFAZIONE TITLE
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold font-sans">Prefazione</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                La Più Grande Esperienza del Tuo Cammino in Questa Vita
+                            </h2>
+                            <div class="w-20 h-[1px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Solo per chi è disposto a crescere attraverso una sofferenza profonda al fine di scoprire se stesso.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 8: PREFAZIONE TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Se stai leggendo queste pagine, probabilmente qualcosa dentro di te si è già mosso. Forse hai sentito parlare dell'Amazzonia. Forse delle Piante Maestre. Forse dell'Ayahuasca. Oppure stai semplicemente attraversando un momento della tua vita in cui senti che il modo in cui hai vissuto fino ad oggi non è più sufficiente.
+                        </p>
+                        <p>
+                            Qualunque sia il motivo che ti ha portato qui, voglio dirti una cosa con assoluta sincerità. Questo non è un libro che promette miracoli. Non promette guarigioni. Non promette illuminazioni. Non promette risposte definitive. Viviamo in un'epoca in cui tutto viene venduto come una soluzione. Un corso per essere felici. Una tecnica per eliminare la paura. Una strategia per trovare se stessi.
+                        </p>
+                        <p>
+                            La realtà, almeno per la mia esperienza, è molto diversa. Le trasformazioni più profonde non arrivano quando trovi una nuova risposta. Arrivano quando smetti di scappare dalle domande. Per molti anni ho accompagnato persone attraverso percorsi di cambiamento personale. Ho visto uomini e donne trasformare radicalmente la propria vita.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 9: PREFAZIONE TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Ho visto persone liberarsi da convinzioni che le avevano imprigionate per decenni. Ho visto relazioni rinascere. Ho visto persone ritrovare una direzione dopo averla persa.
+                        </p>
+                        <p>
+                            Eppure c'è una cosa che ho imparato. Comprendere qualcosa non significa necessariamente trasformarsi. Molte persone sanno perfettamente cosa dovrebbero fare. Sanno quali abitudini stanno distruggendo la loro energia. Sanno quali relazioni non sono più sane. Sanno quali paure le stanno limitando. Lo sanno. Eppure continuano a vivere nello stesso modo.
+                        </p>
+                        <p>
+                            Perché tra la comprensione e la trasformazione esiste uno spazio che non può essere attraversato soltanto con la volontà. Serve qualcosa di più. Serve un ambiente. Serve un contesto. Serve un contenitore. È proprio qui che entra in gioco la tradizione amazzonica.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 10: PREFAZIONE TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Non come scorciatoia. Non come fuga dalla realtà. Non come esperienza estrema da aggiungere alla lista delle cose fatte nella vita. Ma come opportunità rara di creare le condizioni necessarie affinché qualcosa di autentico possa emergere. Le pagine che stai per leggere non sono una guida turistica. Non sono un manuale spirituale. Non sono una raccolta di promesse. Sono un invito.
+                        </p>
+                        <p>
+                            Un invito a comprendere ciò che esiste dietro parole che oggi vengono utilizzate troppo facilmente. Ayahuasca. Dieta. Piante Maestre. Purificazione. Trasformazione. Parole che vengono spesso ripetute. Molto più raramente comprese.
+                        </p>
+                        <p>
+                            Perché il vero viaggio non inizia quando arrivi nella foresta. Non inizia quando incontri uno sciamano. Non inizia durante una cerimonia. Il vero viaggio inizia quando smetti, anche solo per un momento, di difendere la persona che credi di essere. E permetti a qualcosa di più profondo di mostrarsi. Questo libro nasce per accompagnarti in quella direzione. Non per convincerti. Non per impressionarti. Non per venderti qualcosa. Ma per offrirti una prospettiva diversa su un percorso che, se affrontato con rispetto e sincerità, può diventare una delle esperienze più significative della tua vita.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 11: TABLE OF CONTENTS (PRECISE PAGINATION INDEX)
+            {
+                type: 'toc',
+                bg: 'ivory',
+                content: `
+                    <div class="flex flex-col justify-center h-full max-w-lg mx-auto space-y-8">
+                        <div class="text-[10px] uppercase tracking-[0.35em] text-bronze font-bold font-sans">Indice Generale del Volume</div>
+                        <h2 class="font-serif text-3xl text-jungle font-light tracking-wide">La Struttura Editoriale</h2>
+                        <div class="w-16 h-[1px] bg-bronze font-sans"></div>
+                        
+                        <div class="space-y-3 font-serif text-xs">
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Prefazione dell'Autore — La Più Grande Esperienza</span><span class="text-bronze font-light font-sans">Pag. 07</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 1 — Il Grande Equivoco Occidentale</span><span class="text-bronze font-light font-sans">Pag. 13</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 2 — Cos'è Davvero una Dieta Amazzonica</span><span class="text-bronze font-light font-sans">Pag. 21</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 3 — Le Piante Maestre</span><span class="text-bronze font-light font-sans">Pag. 29</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 4 — Quello Che Nessuno Ti Dice Abbastanza Chiaramente</span><span class="text-bronze font-light font-sans">Pag. 39</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 5 — Perché Continuo a Tornare</span><span class="text-bronze font-light font-sans">Pag. 46</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 6 — Chi Saresti Senza la Storia che Racconti a Te Stesso?</span><span class="text-bronze font-light font-sans">Pag. 53</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 7 — Il Contenitore della Trasformazione</span><span class="text-bronze font-light font-sans">Pag. 59</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 8 — 121 Giorni — Non un programma, un viaggio.</span><span class="text-bronze font-light font-sans">Pag. 67</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 9 — Solo Per Chi È Disposto a Crescere Attraverso una Sofferenza</span><span class="text-bronze font-light font-sans">Pag. 74</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Capitolo 10 — La Chiamata</span><span class="text-bronze font-light font-sans">Pag. 81</span></div>
+                            <div class="flex justify-between items-end border-b border-sand pb-1"><span class="italic text-jungle">Epilogo di Marcello — Ci Vediamo nella Foresta</span><span class="text-bronze font-light font-sans">Pag. 87</span></div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 12: BOTANICAL GALLERY SPREAD (Breathing Moment)
+            {
+                type: 'image',
+                bg: 'ivory',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-between p-10 text-center border border-sandDark/40 bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(249, 246, 240, 0.95), rgba(249, 246, 240, 0.8)), url('https://images.unsplash.com/photo-1525498128493-380d1990a112?auto=format&fit=crop&q=80&w=1200');">
+                        <span class="text-[9px] uppercase tracking-widest text-bronze font-bold font-sans">Studio Illustration</span>
+                        <div class="my-auto space-y-6 relative z-10">
+                            ${SVGS.botanicalLeaf}
+                            <h3 class="font-serif text-2xl tracking-widest text-jungle font-light">DOCUMENTARY ETHNO-BOTANY</h3>
+                            <p class="font-serif italic text-charcoal/60 text-xs max-w-xs mx-auto">Saggi d'inchiostro estratti dalla conca fluviale dell'alto Ucayali, Pucallpa.</p>
+                        </div>
+                        <span class="text-[9px] tracking-widest text-stoneGrey uppercase font-sans">Plates I — IV — Master Vine Taxonomy</span>
+                    </div>
+                `
+            },
+
+            // PAGE 13: CHAPTER 1 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold font-sans">Capitolo Primo</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Il Grande Equivoco Occidentale
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Cercare un'esperienza estemporanea, perdendo la maestosità e la lentezza del cammino rituale.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 14: CHAPTER 1 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Se chiedessi a cento persone cosa sia l'Ayahuasca, probabilmente riceverei cento risposte diverse. Alcuni parlerebbero di visioni. Altri di guarigione. Altri ancora di spiritualità, sciamani, cerimonie o stati di coscienza alterati. Negli ultimi anni l'interesse verso l'Amazzonia è cresciuto enormemente. Video. Podcast. Documentari. Testimonianze. Racconti straordinari. Milioni di parole sono state spese per descrivere ciò che accade durante una cerimonia.
+                        </p>
+                        <p>
+                            Eppure esiste un problema. Quasi tutti stanno osservando la stessa cosa. La punta dell'iceberg. Quello che si vede. Quello che si può raccontare. Quello che cattura l'attenzione. Le visioni. Le emozioni. Le intuizioni. Le esperienze straordinarie. Molto meno viene detto su ciò che rende possibile tutto questo.
+                        </p>
+                        <p>
+                            Per comprendere davvero la tradizione amazzonica bisogna fare un passo indietro.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 15: CHAPTER 1 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Molto indietro. Bisogna smettere di guardare l'evento e iniziare a guardare il processo. Perché nella cultura occidentale siamo stati educati a credere che il cambiamento avvenga grazie a un singolo momento. Un libro che cambia la vita. Un seminario. Una conversazione. Una decisione. Una cerimonia. La realtà è quasi sempre diversa.
+                        </p>
+                        <p>
+                            La trasformazione autentica raramente avviene in un istante. Nasce da una preparazione. Da una disponibilità. Da una progressiva apertura. Da un insieme di condizioni che permettono qualcosa di nuovo di emergere. La foresta lo sa. Le tradizioni ancestrali lo sanno. Noi spesso lo dimentichiamo.
+                        </p>
+                        <p>
+                            Per questo molte persone arrivano in Amazzonia cercando un'esperienza. E se ne vanno senza aver compreso il percorso. Cercano risposte. Quando forse avrebbero bisogno di sviluppare una capacità più rara. La capacità di ascoltare.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 16: CHAPTER 1 PULL QUOTE
+            {
+                type: 'quote',
+                bg: 'jungle',
+                content: `
+                    <div class="flex flex-col justify-center h-full text-center max-w-lg mx-auto space-y-8">
+                        <span class="text-[9px] uppercase tracking-[0.35em] text-bronze font-bold font-sans">L'Ossessione per l'Esperienza</span>
+                        <h3 class="font-serif text-3xl italic text-sand font-light leading-relaxed max-w-md mx-auto">
+                            "Viviamo in una società che consuma esperienze. Tutto deve essere intenso. Rapido. Memorabile. Immediato. Più forte. Più veloce. Più spettacolare."
+                        </h3>
+                        <div class="w-16 h-[1px] bg-bronze mx-auto"></div>
+                        <span class="text-[10px] tracking-widest text-sand/40 uppercase font-sans">Capitolo I — L'Equivoco Occidentale</span>
+                    </div>
+                `
+            },
+
+            // PAGE 17: CHAPTER 1 BREATHING SCENIC SPREAD
+            {
+                type: 'image',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-between p-12 text-center bg-cover bg-center text-ivory" style="background-image: linear-gradient(to bottom, rgba(5,20,15,0.92), rgba(5,20,15,0.7)), url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=1200');">
+                        <span class="text-[9px] uppercase tracking-widest text-bronze font-sans font-bold">BREATHING COMPOSITION</span>
+                        <div class="my-auto space-y-4">
+                            <p class="font-serif text-3xl italic text-sand max-w-sm mx-auto leading-relaxed">"Smettere di guardare l'evento e iniziare a guardare il processo."</p>
+                        </div>
+                        <span class="text-[9px] tracking-widest text-ivory/40 uppercase font-sans">Aman Retreat Concept Study</span>
+                    </div>
+                `
+            },
+
+            // PAGE 18: CHAPTER 1 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Questa mentalità si è infiltrata anche nel mondo della crescita personale. Molti cercano l'esperienza che li cambierà. La tecnica definitiva. La rivelazione. Il momento perfetto. La cerimonia perfetta. L'insegnante perfetto. La pianta perfetta.
+                        </p>
+                        <p>
+                            Ma la natura non funziona così. La natura non ha fretta. Un albero cresce lentamente. Un seme germoglia nel buio. Un fiume scava la roccia goccia dopo goccia. La trasformazione segue la stessa logica.
+                        </p>
+                        <p>
+                            Per questo motivo la tradizione amazzonica non è mai stata costruita attorno alla ricerca dell'esperienza. È stata costruita attorno alla relazione. Relazione con il corpo. Relazione con il silenzio. Relazione con la natura. Relazione con le piante. Relazione con se stessi.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 19: CHAPTER 1 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Ed è una differenza enorme. Perché un'esperienza può essere straordinaria e non lasciare alcuna traccia. Una relazione autentica, invece, ha il potere di trasformare una vita.
+                        </p>
+                        <p>
+                            Quando qualcuno racconta il proprio viaggio in Amazzonia, quasi sempre parla di ciò che è accaduto durante le cerimonie. È naturale. Sono i moments più intensi. Più emotivi. Più difficili da dimenticare. Ma ciò che accade durante una cerimonia rappresenta soltanto una parte della storia. Esiste tutto ciò che viene prima. La preparazione. La disciplina. L'alimentazione. Il silenzio. La purificazione. L'intenzione. Esiste tutto ciò che avviene tra un'esperienza e l'altra. E soprattutto esiste tutto ciò che accade dopo.
+                        </p>
+                        <p>
+                            Perché il valore di un'esperienza non si misura durante l'esperienza stessa. Si misura nel modo in cui cambia la tua vita una volta tornato a casa. Le tue relazioni. Le tue decisioni. Le tue abitudini. Le parole che usi.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 20: CHAPTER 1 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Le scelte che fai. La persona che diventi. Questa è la differenza tra vivere qualcosa di intenso e vivere qualcosa di trasformativo.
+                        </p>
+                        <p>
+                            Quando le persone sentono parlare di Dieta Amazzonica pensano immediatamente al cibo. È comprensibile. In Occidente la parola "dieta" significa quasi sempre alimentazione. In Amazzonia significa qualcosa di molto diverso. La Dieta non è semplicemente una lista di alimenti consentiti o proibiti. È una forma di preparazione. Una forma di ascolto. Una forma di relazione.
+                        </p>
+                        <p>
+                            È il processo attraverso cui una persona riduce il rumore esterno per poter percepire qualcosa che normalmente passa inosservato. Per questo motivo, nelle pagine successive, parleremo molto più della Dieta che delle cerimonie. Molto più della preparazione che delle visioni. Molto più della trasformazione che dell'esperienza.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 21: CHAPTER 2 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold font-sans">Capitolo Secondo</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Cos'è Davvero una Dieta Amazzonica
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Una relazione d'ascolto profondo che si estende ben oltre le sole restrizioni del cibo quotidiano.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 22: CHAPTER 2 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Una delle prime cose che scoprirai entrando in contatto con la tradizione amazzonica è che molte parole che credi di conoscere assumono un significato completamente diverso. "Dieta" è una di queste. Quando in Occidente sentiamo questa parola pensiamo immediatamente al cibo. Pensiamo a ciò che possiamo mangiare. A ciò che dobbiamo evitare. Alle calorie. Alle restrizioni. Al peso corporeo.
+                        </p>
+                        <p>
+                            In Amazzonia una Dieta non è nulla di tutto questo. O meglio. L'alimentazione è presente, ma rappresenta soltanto una piccola parte di qualcosa di molto più grande. La Dieta è una relazione. Una relazione tra un essere umano e una Pianta Maestra. Una relazione che richiede rispetto. Tempo. Disciplina. Disponibilità all'ascolto. E soprattutto umiltà.
+                        </p>
+                        <p>
+                            Perché una Dieta non consiste nell'aggiungere qualcosa alla propria vita. Consiste nel togliere.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 23: CHAPTER 2 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            La maggior parte delle persone non si rende conto di quanto rumore esista nella propria vita. Rumore fisico. Rumore mentale. Rumore emotivo. Rumore digitale. Rumore relazionale. Rumore alimentare. Rumore informativo.
+                        </p>
+                        <p>
+                            Ci svegliamo e guardiamo il telefono. Ascoltiamo notizie. Rispondiamo a messaggi. Consumiamo contenuti. Lavoriamo. Pensiamo. Parliamo. Mangiamo. Corriamo. Ripetiamo. E ricominciamo. Quasi senza pause. Quasi senza silenzio. Quasi senza ascolto.
+                        </p>
+                        <p>
+                            Dopo anni vissuti in questo modo, molte persone finiscono per non distinguere più la propria voce interiore da tutto il resto. Confondono i propri desideri con le aspettative degli altri. Confondono le proprie paure con la realtà.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 24: CHAPTER 2 PULL QUOTE
+            {
+                type: 'quote',
+                bg: 'jungle',
+                content: `
+                    <div class="flex flex-col justify-center h-full text-center max-w-lg mx-auto space-y-8">
+                        <span class="text-[9px] uppercase tracking-[0.35em] text-bronze font-bold font-sans">Relazioni Non Prodotti</span>
+                        <h3 class="font-serif text-3xl italic text-sand font-light leading-relaxed max-w-md mx-auto">
+                            "Le Piante Maestre non sono un prodotto. Questa è forse una delle differenze più difficili da comprendere per una mentalità occidentale."
+                        </h3>
+                        <div class="w-16 h-[1px] bg-bronze mx-auto font-sans"></div>
+                        <span class="text-[10px] tracking-widest text-sand/40 uppercase font-sans">Capitolo II — Cos'è una Dieta</span>
+                    </div>
+                `
+            },
+
+            // PAGE 25: CHAPTER 2 INTUITIVE VISUAL ESSAY
+            {
+                type: 'image',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-between p-12 text-center bg-cover bg-center text-ivory" style="background-image: linear-gradient(to bottom, rgba(5,20,15,0.92) 40%, rgba(5,20,15,0.4)), url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&q=80&w=1200');">
+                        <span class="text-[9px] uppercase tracking-widest text-bronze font-sans">Visual plate</span>
+                        <div class="my-auto space-y-6">
+                            ${SVGS.compassRose}
+                            <p class="font-serif text-2xl italic text-sand max-w-sm mx-auto leading-relaxed">"La Dieta interrompe questo meccanismo. Non attraverso la forza. Attraverso la sottrazione."</p>
+                        </div>
+                        <span class="text-[9px] tracking-widest text-ivory/40 uppercase font-sans">Ucayali River Tributary</span>
+                    </div>
+                `
+            },
+
+            // PAGE 26: CHAPTER 2 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            La Dieta interrompe questo meccanismo. Non attraverso la forza. Attraverso la sottrazione. Meno stimoli. Meno distrazioni. Meno rumore. Più presenza. Più osservazione. Più ascolto.
+                        </p>
+                        <p>
+                            Immagina di voler osservare il fondo di un lago. Se l'acqua è agitata non vedrai nulla. Potrai guardare per ore senza riuscire a distinguere ciò che si trova sotto la superficie. Ma se l'acqua si calma, lentamente tutto diventa visibile.
+                        </p>
+                        <p>
+                            La Dieta funziona in modo simile. Prima di cercare risposte, crea le condizioni per vedere. Prima di cercare comprensione, crea le condizioni per ascoltare. Prima di cercare trasformazione, crea le condizioni perché qualcosa possa emergere. È per questo che la preparazione occupa un ruolo così importante. Non è una formalità. Non è un requisito burocratico. Non è qualcosa da superare per arrivare alla parte interessante. È già parte del percorso. È già parte della medicina.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 27: CHAPTER 2 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Siamo abituati a considerare ogni cosa come uno strumento. Un mezzo per ottenere un risultato. Una tecnica. Un prodotto. Un servizio. Le Piante Maestre non appartengono a questa logica. Non sono qualcosa che utilizzi. Sono qualcosa con cui entri in relazione.
+                        </p>
+                        <p>
+                            Questo è il motivo per cui la tradizione amazzonica parla di insegnamento. Non perché le piante parlino nel modo in cui parlano gli esseri umani. Ma perché ogni incontro produce un apprendimento. A volte dolce. A volte intenso. A volte confuso. A volte chiarissimo. Ma sempre personale. Sempre unico. Sempre impossibile da replicare perfettamente nell'esperienza di qualcun altro. Per questo motivo diffida di chi promette risultati identici per tutti. La foresta non lavora in serie. Ogni persona arriva con una storia diversa. Ogni persona incontra ciò che è pronta a incontrare.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 28: CHAPTER 2 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Molte persone associano la parola "purificazione" a un concetto spirituale astratto. Altre la interpretano come una forma di sacrificio. Altre ancora come una prova da superare. In realtà la purificazione è qualcosa di molto più semplice e concreto. Significa creare spazio. Spazio nel corpo. Spazio nella mente. Spazio nelle emozioni. Spazio nella vita.
+                        </p>
+                        <p>
+                            Perché una vita completamente piena non può ricevere nulla di nuovo. Un bicchiere già colmo non può essere riempito ulteriormente. Prima bisogna svuotare. La tradizione amazzonica comprende questo principio da generazioni. Ed è per questo che il percorso non inizia con l'intensità. Inizia con la preparazione. Inizia con il rallentare. Inizia con l'osservare. Inizia con il fare spazio.
+                        </p>
+                        <p class="italic text-bronze font-serif text-sm">
+                            Mentre leggi queste pagine, prova a fermarti per qualche istante. E chiediti: Quanto rumore esiste oggi nella mia vita? Non quanto lavoro. Non quante responsabilità. Non quanti impegni. Quanto rumore. Quante cose occupano la tua attenzione ogni giorno? Quante voci competono per essere ascoltate? Quante di quelle voci appartengono davvero a te? Non serve trovare subito una risposta. A volte una buona domanda vale più di cento spiegazioni.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 29: CHAPTER 3 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold font-sans">Capitolo Terzo</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Le Piante Maestre
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Incontrare l'intelligenza e la voce curativa profonda delle piante che popolano l'ecosistema amazzonico.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 30: CHAPTER 3 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Una delle più grandi differenze tra il modo in cui la tradizione amazzonica guarda alle piante e il modo in cui spesso vengono percepite in Occidente riguarda una singola parola. Maestra. Non medicina. Non sostanza. Non prodotto. Non strumento. Maestra. Può sembrare una differenza sottile. Non lo è.
+                        </p>
+                        <p>
+                            Una sostanza viene utilizzata. Una maestra viene ascoltata. Una sostanza è qualcosa che consumi. Una maestra è qualcosa con cui entri in relazione. Questa distinzione cambia completamente il modo di avvicinarsi a questo percorso. Perché il punto non è prendere qualcosa. Il punto è imparare qualcosa. E come ogni vero insegnamento, ciò che viene appreso raramente coincide con ciò che ci aspettavamo di ricevere.
+                        </p>
+                        <p>
+                            Le culture indigene amazzoniche hanno sviluppato la propria conoscenza nel corso di generazioni.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 31: CHAPTER 3 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs tracking-wide text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Non attraverso laboratori. Non attraverso università. Non attraverso libri. Attraverso osservazione. Esperienza. Disciplina. Relazione.
+                        </p>
+                        <p>
+                            Per secoli uomini e donne hanno dedicato la propria vita a comprendere le proprietà delle piante e il modo in cui queste interagiscono con il corpo, la mente e lo spirito umano. Questo patrimonio di conoscenza rappresenta una delle più grandi ricchezze della foresta. E merita rispetto. Perché ogni pianta utilizzata in una Dieta porta con sé una storia molto più antica di chiunque oggi partecipi a questo percorso. Noi arriviamo. La foresta era già lì. Noi impariamo. La foresta insegna da molto prima che nascessimo.
+                        </p>
+                        <p>
+                            Uno degli errori più comuni consiste nel pensare che tutte le piante producano lo stesso tipo di esperienza. Non è così. Ogni Pianta Maestra possiede una propria natura. Una propria energia. Un proprio carattere. Un proprio insegnamento. Per questo motivo il lavoro non consiste nel cercare la pianta migliore. Consiste nel comprendere quale insegnamento una persona è pronta a ricevere in un determinato momento della propria vita.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 32: CHAPTER 3 PLANT SPOTLIGHT - MUCURA & AJOSACHA
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-6 font-light text-xs">
+                        <div class="p-8 bg-sand/20 rounded border border-sandDark/30 relative overflow-hidden" style="background-image: linear-gradient(to right, rgba(249, 246, 240, 0.96), rgba(249, 246, 240, 0.88)), url('https://images.unsplash.com/photo-1525498128493-380d1990a112?auto=format&fit=crop&q=80&w=600'); background-size: cover; background-position: center;">
+                            <h3 class="font-serif text-xl text-jungle font-semibold mb-3 relative z-10">Mucura</h3>
+                            <p class="leading-[1.8] text-charcoal/80 text-justify relative z-10 font-sans">
+                                Nella tradizione amazzonica la Mucura viene spesso associata alla pulizia e alla protezione. Molte persone la descrivono come una presenza capace di aiutare a liberare ciò che è stagnante. Ciò che è pesante. Ciò che è rimasto bloccato troppo a lungo. Ma ogni descrizione rimane inevitabilmente incompleta. Perché il vero insegnamento non si trova nelle parole. Si trova nell'incontro diretto.
+                            </p>
+                        </div>
+                        <div class="p-8 bg-sand/20 rounded border border-sandDark/30 relative overflow-hidden" style="background-image: linear-gradient(to right, rgba(249, 246, 240, 0.96), rgba(249, 246, 240, 0.88)), url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=600'); background-size: cover; background-position: center;">
+                            <h3 class="font-serif text-xl text-jungle font-semibold mb-3 relative z-10">Ajosacha</h3>
+                            <p class="leading-[1.8] text-charcoal/80 text-justify relative z-10 font-sans">
+                                Ajosacha è spesso collegata alla forza personale. Alla volontà. Alla determinazione. Alla capacità di procedere lungo il proprio cammino senza lasciarsi continuamente trascinare dalle influenze esterne. Molte persone scoprono, attraverso il lavoro con questa pianta, aspetti di sé che avevano dimenticato. Una forza che esisteva già. Ma che era stata coperta da anni di dubbi, paure o condizionamenti.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 33: CHAPTER 3 PLANT SPOTLIGHT - BOBINSANA
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs">
+                        <div class="p-8 bg-emeraldDark text-ivory rounded border border-emeraldLight/30 shadow-lg relative overflow-hidden min-h-[300px] flex flex-col justify-between" style="background-image: linear-gradient(to bottom, rgba(9, 34, 25, 0.95), rgba(9, 34, 25, 0.85)), url('https://images.unsplash.com/photo-1501901654757-9f28c6604141?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center;">
+                            <div class="relative z-10">
+                                <span class="text-[9px] uppercase tracking-widest text-bronze font-bold font-sans">Plate II — Botanical Spotlight</span>
+                                <h3 class="font-serif text-2xl text-ivory font-light mt-3 mb-4">Bobinsana (Calliandra angustifolia)</h3>
+                                <p class="leading-[1.8] text-sand/90 text-justify font-sans">
+                                    Se alcune piante lavorano sulla forza, Bobinsana viene spesso associata al cuore. Alla sensibilità. All'apertura. Alla capacità di sentire. In una cultura che insegna continuamente a difendersi, Bobinsana ricorda qualcosa di diverso. Che vulnerabilità e debolezza non sono la stessa cosa. Che sensibilità e fragilità non sono la stessa cosa. Che il cuore possiede una forma di intelligenza che la mente, da sola, non può comprendere.
+                                </p>
+                            </div>
+                            <div class="relative z-10 font-sans">
+                                <div class="w-16 h-[1px] bg-bronze my-4"></div>
+                                <span class="text-[10px] italic text-bronze font-serif font-light">Incontra il fiore rosa della laguna...</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 34: CHAPTER 3 PLANT SPOTLIGHT - CHIRIC SANANGO
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs">
+                        <div class="p-8 bg-sand/20 rounded border border-sandDark/30 relative overflow-hidden min-h-[340px] flex flex-col justify-center" style="background-image: linear-gradient(to right, rgba(249, 246, 240, 0.95), rgba(249, 246, 240, 0.85)), url('https://images.unsplash.com/photo-1509587524206-f300ec2e3c36?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center;">
+                            <h3 class="font-serif text-xl text-jungle font-semibold mb-3 relative z-10">Chiric Sanango</h3>
+                            <p class="leading-[1.8] text-charcoal/80 text-justify relative z-10 font-sans">
+                                Esistono momenti della vita in cui il problema non è la mancanza di conoscenza. È la presenza della paura. Paura del cambiamento. Paura della perdita. Paura dell'incertezza. Paura della vita stessa. Chiric Sanango è tradizionalmente associata al coraggio necessario per attraversare queste soglie. Non eliminando la paura. Ma modificando il rapporto che abbiamo con essa. Perché il coraggio non è assenza di paura. È la capacità di continuare nonostante la sua presenza.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 35: CHAPTER 3 PLANT SPOTLIGHT - CHUCHUHUASI & HUCHO SANANGO
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-6 font-light text-xs">
+                        <div class="p-8 bg-sand/20 rounded border border-sandDark/30 relative overflow-hidden" style="background-image: linear-gradient(to right, rgba(249, 246, 240, 0.96), rgba(249, 246, 240, 0.88)), url('https://images.unsplash.com/photo-1505144808419-1957a94ca61e?auto=format&fit=crop&q=80&w=600'); background-size: cover; background-position: center;">
+                            <h3 class="font-serif text-xl text-jungle font-semibold mb-3 relative z-10">Chuchuhuasi</h3>
+                            <p class="leading-[1.8] text-charcoal/80 text-justify relative z-10 font-sans">
+                                Nella tradizione amazzonica Chuchuhuasi è conosciuta come una pianta di forza e ricostruzione. Viene spesso associata alla vitalità. Alla resilienza. Alla capacità di recuperare energia dopo periodi difficili. Come molte altre Piante Maestre, il suo insegnamento non consiste semplicemente nel dare qualcosa. Consiste nel ricordare qualcosa che esiste già.
+                            </p>
+                        </div>
+                        <div class="p-8 bg-sand/20 rounded border border-sandDark/30 relative overflow-hidden" style="background-image: linear-gradient(to right, rgba(249, 246, 240, 0.96), rgba(249, 246, 240, 0.88)), url('https://images.unsplash.com/photo-1563200155-2d9d8b7b2505?auto=format&fit=crop&q=80&w=600'); background-size: cover; background-position: center;">
+                            <h3 class="font-serif text-xl text-jungle font-semibold mb-3 relative z-10">Hucho Sanango</h3>
+                            <p class="leading-[1.8] text-charcoal/80 text-justify relative z-10 font-sans">
+                                Ci sono momenti in cui una persona sa perfettamente cosa non vuole più. Ma non sa ancora quale direzione prendere. Hucho Sanango viene spesso collegata alla chiarezza. Alla capacità di orientarsi. Alla possibilità di riconoscere una direzione più autentica. Non necessariamente una risposta. Ma una direzione. E spesso una direzione è tutto ciò che serve per iniziare a camminare.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 36: CHAPTER 3 PLANT SPOTLIGHT - THE MEDICINAL TOBACCO STUDY
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify relative overflow-hidden p-8 rounded border border-sandDark/30 font-sans" style="background-image: linear-gradient(to right, rgba(249, 246, 240, 0.96), rgba(249, 246, 240, 0.88)), url('https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center;">
+                        <h3 class="font-serif text-2xl text-jungle font-light tracking-wide border-b border-sandDark pb-3 relative z-10">Il Tabacco Sacro (Nicotiana rustica)</h3>
+                        <p class="relative z-10">
+                            Per molte persone occidentali la parola tabacco evoca immediatamente immagini che non hanno nulla a che vedere con la tradizione amazzonica. In Amazzonia il tabacco occupa un posto completamente diverso. È una delle medicine più rispettate. Più antiche. Più profonde. Più impegnative.
+                        </p>
+                        <p class="relative z-10">
+                            Chi lo incontra con superficialità difficilmente comprende il suo ruolo. Chi lo incontra con rispetto scopre qualcosa di diverso. Il tabacco non cerca di compiacerti. Non cerca di intrattenerti. Non cerca di rendere l'esperienza piacevole. Spesso fa esattamente il contrario.
+                        </p>
+                        <p class="relative z-10">
+                            Ti mette davanti a ciò che deve essere lasciato andare. Ti confronta con ciò che deve essere espulso. Ti ricorda che la purificazione non è sempre confortevole. E che la crescita autentica raramente coincide con la comodità. Per questo motivo viene considerato una delle grandi medicine della foresta. Non per la sua dolcezza. Ma per la sua onestà.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 37: CHAPTER 3 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            È importante comprendere una cosa. Nessuna Pianta Maestra farà il lavoro al posto tuo. Nessuna pianta prenderà decisioni al posto tuo. Nessuna pianta costruirà la tua vita. Nessuna pianta cambierà le tue abitudini. Nessuna pianta guarirà automaticamente le tue relazioni.
+                        </p>
+                        <p>
+                            Le piante possono mostrare. Possono insegnare. Possono rivelare. Possono aiutare a vedere. Ma ciò che viene visto deve poi essere vissuto. Compreso. Integrato. Applicato.
+                        </p>
+                        <p>
+                            La trasformazione nonda soltanto nella foresta. Avviene nei mesi successivi. Nelle scelte quotidiane. Nelle conversazioni. Nei confini che impari a mettere. Nelle responsabilità che decidi di assumerti. Nella persona che scegli di diventare. Ed è proprio per questo che il viaggio non finisce con una cerimonia. In molti casi, è lì che inizia davvero.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 38: CHAPTER 3 BOTANICAL ARTWORK SPREAD
+            {
+                type: 'image',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-between p-12 text-center bg-cover bg-center text-ivory" style="background-image: linear-gradient(to top, rgba(5,20,15,0.92) 40%, rgba(5,20,15,0.4)), url('https://images.unsplash.com/photo-1515589654462-a9881e276b8a?auto=format&fit=crop&q=80&w=1200');">
+                        <span class="text-[9px] uppercase tracking-widest text-bronze font-sans">Visual plate</span>
+                        <div class="my-auto space-y-6 font-sans">
+                            ${SVGS.compassRose}
+                            <p class="font-serif text-2xl italic text-sand max-w-sm mx-auto leading-relaxed">"Ucayali Primary Forest, Pucallpa. L'universo delle liane sacre."</p>
+                        </div>
+                        <span class="text-[9px] tracking-widest text-ivory/40 uppercase font-sans">Natural Habitat documentation — Plate VI</span>
+                    </div>
+                `
+            },
+
+            // PAGE 39: CHAPTER 4 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10 font-sans">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold font-sans">Capitolo Quarto</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Quello Che Nessuno Ti Dice Abbastanza Chiaramente
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Un monito di onestà intellettuale sul reale rigore e le fatiche di una Dieta autentica.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 40: CHAPTER 4 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Prima di proseguire voglio essere completamente onesto con te. Probabilmente più onesto di quanto sarebbe conveniente essere. Perché se arriverai fino in Amazzonia, se deciderai di affrontare questo percorso, meriti di sapere la verità. Non una versione romantica. Non una versione commerciale. Non una versione costruita per convincerti. La verità.
+                        </p>
+                        <p>
+                            Questo non è per tutti. Molte persone leggono questa frase e pensano che sia marketing. Non lo è. È una constatazione. Esistono esperienze che possono essere adatte praticamente a chiunque. Questa non è una di quelle. Perché ciò che rende questo percorso prezioso è esattamente ciò che lo rende impegnativo. La sincerità. L'intensità. La profondità. La disponibilità a guardare ciò che normalmente evitiamo di guardare.
+                        </p>
+                        <p>
+                            Non tutti si trovano nello stesso momento della vita. Non tutti sentono la stessa chiamata. Non tutti sono pronti per lo stesso tipo di esperienza.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 41: CHAPTER 4 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            E va bene così. Non esiste nulla di sbagliato in questo. La foresta è meravigliosa. La natura è straordinaria. I tramonti sono bellissimi. I suoni della giungla sono qualcosa che difficilmente dimenticherai. Ma se stai cercando una vacanza, probabilmente esistono opzioni migliori. Molto migliori. Questo percorso non nasce per intrattenerti. Non nasce per offrirti comfort. Non nasce per regalarti una parentesi esotica da raccontare agli amici una volta tornato a casa.
+                        </p>
+                        <p>
+                            Nasce per creare uno spazio in cui qualcosa possa cambiare. E il cambiamento autentico raramente coincide con la comodità.
+                        </p>
+                        <p>
+                            Negli ultimi anni si è sviluppata una narrazione molto particolare attorno all'Amazzonia. Una narrazione fatta di immagini suggestive. Racconti straordinari. Promesse implicite. Esperienze spettacolari. A volte sembra quasi che basti attraversare mezzo pianeta, partecipare a una cerimonia e tornare a casa trasformati. Vorrei dirti che funziona così. Sarebbe più semplice. Sarebbe più facile da vendere.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 42: CHAPTER 4 PULL QUOTE
+            {
+                type: 'quote',
+                bg: 'jungle',
+                content: `
+                    <div class="flex flex-col justify-center h-full text-center max-w-lg mx-auto space-y-8">
+                        <span class="text-[9px] uppercase tracking-[0.35em] text-bronze font-bold font-sans">Un Atto di Responsabilità</span>
+                        <h3 class="font-serif text-3xl italic text-sand font-light leading-relaxed max-w-sm mx-auto font-sans">
+                            "La trasformazione non si compra con un biglietto aereo. La trasformazione richiede partecipazione. Responsabilità. Presenza. Disponibilità."
+                        </h3>
+                        <div class="w-16 h-[1px] bg-bronze mx-auto"></div>
+                        <span class="text-[10px] tracking-widest text-sand/40 uppercase font-sans">Capitolo IV — Quello Che Nessuno Ti Dice</span>
+                    </div>
+                `
+            },
+
+            // PAGE 43: CHAPTER 4 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            La trasformazione non si compra con un biglietto aereo. La trasformazione richiede partecipazione. Responsabilità. Presenza. Disponibilità. Nessuno può fare questo lavoro al posto tuo.
+                        </p>
+                        <p>
+                            Questo è forse uno degli aspetti meno raccontati. Molti immaginano che un percorso di crescita personale significhi incontrare soltanto amore. Soltanto pace. Soltanto armonia. Soltanto luce. A volte accade. Altre volte no. A volte ciò che emerge è esattamente ciò che avevi evitato per anni. Una paura. Una ferita. Una rabbia. Un dolore. Una verità scomoda. Una decisione rimandata troppo a lungo. Un conflitto che non può più essere ignorato. Non perché qualcosa stia andando storto. Ma perché qualcosa sta finalmente venendo visto. Ed è proprio per questo che il viaggio non finisce con una cerimonia.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 44: CHAPTER 4 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            E ciò che viene visto può essere compreso. Ciò che viene compreso può essere integrato. Ciò che viene integrato può trasformarsi.
+                        </p>
+                        <p>
+                            Esiste una tendenza molto occidentale a spiritualizzare tutto. A rendere poetico ciò che nella realtà è molto concreto. La purificazione non è sempre elegante. A volte è fisica. A volte è emotiva. A volte è mentale. A volte significa lasciare andare qualcosa che credevi di essere. A volte significa accorgerti che una storia che racconti da anni non ti appartiene più. A volte significa attraversare un disagio necessario. Perché alcune porte non si aprono evitando il passaggio. Si aprono attraversandolo.
+                        </p>
+                        <p>
+                            Molte persone arrivano con aspettative precise. Vogliono una risposta. Una conferma. Una direzione. Una rassicurazione. La foresta, però, non sempre risponde alle domande che portiamo. Spesso risponde a quelle che non abbiamo ancora avuto il coraggio di porci. Ed è qui che inizia il vero apprendimento. Quando smettiamo di cercare conferme e iniziamo ad ascoltare.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 45: CHAPTER 4 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Se il percorso può essere impegnativo. Se può essere scomodo. Se può metterti davanti a parti di te che preferiresti evitare. Perché farlo? Perché esiste una differenza enorme tra soffrire inconsapevolmente e attraversare consapevolmente ciò che deve essere attraversato. Molte persone stanno già vivendo una forma di sofferenza. La vivono ogni giorno. In relazioni che non funzionano. In lavori che non sentono propri. In abitudini che consumano energia. In paure che limitano la loro vita. In storie che continuano a raccontarsi.
+                        </p>
+                        <p>
+                            La differenza è che quella sofferenza spesso non porta da nessuna parte. Questo percorso non elimina la difficoltà. Ma può darle un significato. Può trasformarla in comprensione. Può trasformarla in crescita. Può trasformarla in direzione.
+                        </p>
+                        <p class="italic text-bronze font-serif text-sm">
+                            Prima di continuare a leggere, fermati un momento. E chiediti: Se nessuno mi promettesse guarigione. Se nessuno mi promettesse illuminazione. Se nessuno mi promettesse risultati straordinari. Sentirei comunque la chiamata verso questo percorso? Se la risposta è no, forse non è ancora il momento. Se la risposta è sì, allora forse stai cercando qualcosa di più profondo di un'esperienza. Forse stai cercando un incontro. Non con la foresta. Non con una pianta. Non con una tradizione. Ma con te stesso. Ed è da lì che tutto può cominciare.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 46: CHAPTER 5 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold font-sans">Capitolo Quinto</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Perché Continuo a Tornare
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Le ragioni di un mentore d'aula che nel silenzio amazzonico ha ritrovato l'essenza dell'insegnamento reale.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 47: CHAPTER 5 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            È una domanda che negli anni mi è stata fatta molte volte. Perché torni? Perché continui ad andare in Amazzonia? Perché, dopo tutto quello che hai fatto nella tua vita, senti ancora il bisogno di tornare lì? La risposta più sincera che posso dare è semplice. Perché ogni volta che torno, ricordo qualcosa che il mondo moderno cerca continuamente di farmi dimenticare.
+                        </p>
+                        <p>
+                            Ho passato gran parte della mia vita a lavorare sul cambiamento. For molti anni ho costruito aziende. Ho insegnato. Ho formato persone. Ho accompagnato uomini e donne attraverso percorsi di crescita personale. Ho studiato comunicazione. Comportamento umano. Linguaggio. Valori. Credenze. Relazioni. Ho osservato migliaia di persone cercare di migliorare la propria vita.
+                        </p>
+                        <p>
+                            E ho visto qualcosa che si ripeteva continuamente. Molti sapevano esattamente cosa fare. Sapevano quali decisioni prendere.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 48: CHAPTER 5 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Sapevano quali abitudini cambiare. Sapevano quali paure affrontare. Lo sapevano. Ma non riuscivano a trasformare quella comprensione in azione. Ed è lì che ho iniziato a comprendere una verità fondamentale. La conoscenza, da sola, non trasforma.
+                        </p>
+                        <p>
+                            L'essere umano non cambia attraverso le informazioni: questa è una delle illusioni più diffuse della nostra epoca. Pensiamo che più informazioni significhino automaticamente più consapevolezza. Più consapevolezza, più cambiamento. Ma non funziona così. Se funzionasse così, basterebbe leggere un libro per diventare la persona che vogliamo essere. Basterebbe ascoltare un podcast. Seguire un corso. Guardare un video.
+                        </p>
+                        <p>
+                            E invece sappiamo tutti che non è così. L'essere umano cambia quando cambia il contesto in cui vive. Quando cambia il proprio ambiente. Quando cambia ciò che vede. Ciò che ascolta. Ciò che respira. Ciò che sente. Le persone cambiano quando entrano in un contenitore diverso da quello che ha generato il problema. Ed è qui che la foresta inizia a insegnare.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 49: CHAPTER 5 PULL QUOTE
+            {
+                type: 'quote',
+                bg: 'jungle',
+                content: `
+                    <div class="flex flex-col justify-center h-full text-center max-w-lg mx-auto space-y-8">
+                        <span class="text-[9px] uppercase tracking-[0.35em] text-bronze font-bold font-sans">Il Contenitore</span>
+                        <h3 class="font-serif text-3xl italic text-sand font-light leading-relaxed max-w-sm mx-auto font-sans">
+                            "L'ambiente conta più della volontà. Molto più della volontà."
+                        </h3>
+                        <div class="w-16 h-[1px] bg-bronze mx-auto"></div>
+                        <span class="text-[10px] tracking-widest text-sand/40 uppercase font-sans">Capitolo V — Perché Continuo a Tornare</span>
+                    </div>
+                `
+            },
+
+            // PAGE 50: CHAPTER 5 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Una delle cose che più amo della foresta è che non ha bisogno di convincere nessuno. Non ha bisogno di marketing. Non ha bisogno di promesse. Non ha bisogno di raccontarti chi è. Esiste. E basta. Gli alberi crescono. I fiumi scorrono. La vita continua. Indipendentemente da ciò che pensiamo. Indipendentemente dalle nostre convinzioni. Indipendentemente dalle nostre storie. e quando vivi abbastanza tempo immerso in questo ambiente, qualcosa dentro di te inizia lentamente a riallinearsi. Non perché qualcuno ti abbia spiegato una teoria. Ma perché stai vivendo qualcosa. Direttamente. Senza filtri.
+                        </p>
+                        <p>
+                            Con il tempo ho capito che il mio ruolo non è insegnare. Non sono lì per dire alle persone cosa pensare. Non sono lì per spiegare come vivere. Non sono lì per consegnare risposte. Le risposte preconfezionate non mi hanno mai interessato. Quello che mi interessa è creare le condizioni affinché una persona possa iniziare a vedere con maggiore chiarezza. Perché quando una persona vede davvero, non ha più bisogno che qualcuno le dica cosa fare. Lo sa. Lo sente. Lo riconosce.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 51: CHAPTER 5 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Il problema è che nella vita quotidiana spesso non esistono le condizioni necessarie per vedere. Troppo rumore. Troppa velocità. Troppe distrazioni. Troppi ruoli da interpretare. Troppi personaggi da mantenere in vita.
+                        </p>
+                        <p>
+                            Se c'è una cosa che ho imparato nel mio percorso è questa. L'ambiente conta più della volontà. Molto più della volontà. Prendi un bambino nato in un paese qualsiasi e fallo crescere dall'altra parte del mondo. Parlerà una lingua diversa. Avrà valori diversi. Abitudini diverse. Una visione diversa della realtà. Perché? Perché il contenitore ha modellato l'esperienza. Lo stesso principio vale per gli adulti. Molte persone cercano di cambiare restando immerse nello stesso ambiente che ha prodotto i loro schemi.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 52: CHAPTER 5 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Lo stesso ritmo. Le stesse persone. Le stesse distrazioni. Le stesse abitudini. E poi si chiedono perché il cambiamento sia così difficile. La foresta interrompe questo ciclo. La Dieta interrompe questo ciclo. Il silenzio interrompe questo ciclo. La distanza dalla vita quotidiana interrompe questo ciclo. E all'improvviso diventano possibili osservazioni che prima erano invisibili.
+                        </p>
+                        <p>
+                            Non torno per cercare qualcosa di spettacolare. Non torno per accumulare esperienze. Non torno per inseguire visioni. Torno perché lì ritrovo una qualità di presenza che nel mondo moderno è diventata rara. Torno perché continuo a imparare. Torno perché continuo a scoprire aspetti di me stesso che non avevo ancora visto. Torno perché ogni volta che credo di aver capito qualcosa, la vita mi mostra che c'è ancora molto da imparare. Torno perché considero l'umiltà una delle forme più alte di intelligenza. E la foresta ha un modo molto particolare di insegnarla.
+                        </p>
+                        <p>
+                            Forse la cosa più importante che voglio dirti è questa. Questo percorso non riguarda me. Non riguarda la mia storia. Non riguarda i miei risultati. Non riguarda ciò che penso. Riguarda te. Riguarda ciò che sei pronto a vedere. Riguarda ciò che sei pronto a lasciare andare. Riguarda ciò che sei pronto a diventare. Se deciderai di intraprendere questo cammino, il mio compito non sarà guidarti verso una conclusione. Sarà contribuire a creare un ambiente nel quale tu possa incontrare la tua verità con maggiore chiarezza. Niente di più. Ma anche niente di meno. Perché, dopo molti anni di lavoro con le persone, continuo a credere che le trasformazioni più profonde non nascano dalle risposte che riceviamo. Nascono dalle verità che finalmente troviamo il coraggio di guardare.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 53: CHAPTER 6 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10 font-sans">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold font-sans">Capitolo Sesto</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Chi Saresti Senza la Storia che Racconti a Te Stesso?
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Una profonda auto-indagine linguistica e percezione dei fittizi racconti identitari che imprigionano il nostro presente.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 54: CHAPTER 6 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Esiste una domanda che per molti anni ha accompagnato il mio lavoro. Una domanda semplice. Una domanda che spesso genera silenzio. Una domanda che, in alcuni casi, continua a lavorare dentro una persona per mesi o addirittura anni. La domanda è questa: Chi saresti tu senza la storia che racconti a te stesso ogni giorno? Non il tuo nome. Non la tua professione. Non il tuo passato. Non le tue ferite. Non i tuoi successi. Non i tuoi fallimenti. Tu. Chi saresti?
+                        </p>
+                        <p>
+                            Viviamo dentro racconti. Molte persone credono di vivere dentro la realtà. In parte è vero. Ma in parte viviamo dentro le storie che raccontiamo sulla realtà. È una differenza enorme. Perché due persone possono vivere lo stesso evento e attribuirgli significati completamente diversi. Una vede una sconfitta.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 55: CHAPTER 6 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            L'altra vede un insegnamento. Una vede un rifiuto. L'altra vede una direzione diversa. Una vede la fine. L'altra vede un nuovo inizio. L'evento è identico. La storia cambia. E la storia modifica l'esperienza.
+                        </p>
+                        <p>
+                            Il passato e il racconto del passato non sono la stessa cosa: questa è una delle cose più difficili da comprendere. Il passato esiste. È accaduto. Nessuno può cambiarlo. Ma il modo in cui continuiamo a raccontarlo può cambiare completamente. Molte persone trascorrono anni raccontandosi sempre la stessa versione della propria vita. La stessa interpretazione. La stessa spiegazione. Lo stesso ruolo. La stessa identità. E lentamente quella storia diventa una prigione. Non perché sia falsa. Ma perché è incompleta. Perché ogni storia evidenzia alcuni elementi e ne nasconde altri. Ogni storia illumina una parte della realtà e lascia il resto nell'ombra.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 56: CHAPTER 6 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Durante alcuni percorsi ponevo spesso una seconda domanda. Una domanda che a volte crea ancora più silenzio della prima. Come sarebbe il tuo presente se non avessi il passato che continui a raccontarti? Fermati un momento. Non cercare una risposta immediata. Respira. E osserva cosa succede dentro di te. Perché spesso non è il passato a limitarci. È il significato che continuiamo ad attribuirgli. È la conclusione che abbiamo tratto. È l'identità che abbiamo costruito attorno a quell'esperienza.
+                        </p>
+                        <p>
+                            Le credenze sono occhiali invisibili. Ogni essere umano sviluppa nel tempo una serie di convinzioni sulla vita. Alcune sono utili. Altre meno. Alcune ci permettono di crescere. Altre ci impediscono di muoverci. Il problema è che raramente siamo consapevoli delle credenze che governano le nostre decisioni. Le consideriamo realtà. Le consideriamo fatti. Le consideriamo ovvie. Ma spesso sono semplicemente interpretazioni.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 57: CHAPTER 6 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Una persona può credere: "Non sono abbastanza." Un'altra: "Non merito amore." Un'altra ancora: "Ormai è troppo tardi." Oppure: "Devo fare tutto da solo." Con il tempo queste convinzioni diventano così familiari da sembrare vere. Ma una convinzione ripetuta per vent'anni non diventa necessariamente una verità. Diventa soltanto una convinzione molto allenata.
+                        </p>
+                        <p>
+                            Il linguaggio crea esperienza. Nel corso della mia vita ho sviluppato una particolare attenzione verso le parole. Non per amore della teoria. Per esperienza. Perché ho visto migliaia di volte il modo in cui il linguaggio modifica la percezione. Le parole non sono soltanto strumenti per comunicare. Sono strumenti per interpretare. Per organizzare. Per dare significato.
+                        </p>
+                        <p>
+                            Quando una persona dice: "Ho fallito." Sta vivendo un'esperienza. Quando dice: "Ho imparato." Ne sta vivendo un'altra. L'evento può essere identico. L'esperienza interna cambia completamente. Le parole che utilizzi ogni giorno non descrivono soltanto la tua realtà. Contribuiscono a costruirla.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 58: CHAPTER 6 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            Molti conflitti della vita non nascono dalla mancanza di informazioni. Nascono da valori in contrasto. Una parte di noi desidera libertà. Un'altra desidera sicurezza. Una parte desidera avventura. Un'altra stabilità. Una parte vuole crescere. Un'altra vuole restare al sicuro. Quando questi valori entrano in conflitto, la persona si sente bloccata. Confusa. Indecisa. Spesso pensa di avere un problema. In realtà sta vivendo una contraddizione interna. E fino a quando quella contraddizione non viene vista, continuerà a ripresentarsi sotto forme diverse. Nelle relazioni. Nel lavoro. Nelle scelte. Nella vita. Relazioni come specchi. Esiste un motivo per cui alcune persone ci fanno innamorare. Ed esiste un motivo per cui altre ci fanno arrabbiare. Molto spesso non riguarda loro. Riguarda noi. Le relazioni funzionano come specchi.
+                        </p>
+                        <p>
+                            Mostrano aspetti di noi che da soli fatichiamo a vedere. A volte mostrano le nostre ferite. A volte i nostri bisogni. A volte le nostre paure. A volte le nostre aspettative. Per questo motivo una relazione può diventare uno dei più grandi strumenti di crescita. Se siamo disposti a osservare. Non soltanto a reagire.
+                        </p>
+                        <p class="italic text-bronze font-serif text-sm">
+                            Prima di proseguire, prenditi qualche minuto. Prendi carta e penna. E completa questa frase dieci volte: "Io sono..." Scrivi rapidamente. Senza pensare troppo. Senza correggerti. Senza giudicarti. Quando hai finito, rileggi tutto. E chiediti: Quante di queste affermazioni descrivono chi sei veramente? E quante descrivono semplicemente la storia che hai imparato a raccontare? La risposta potrebbe sorprenderti.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 59: CHAPTER 7 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10 font-sans">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold">Capitolo Settimo</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Il Contenitore della Trasformazione
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze font-sans"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm font-sans">
+                                Progettare l'architettura ambientale del cambiamento. Perché la sola intenzione fallisce senza il contenitore ideale.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 60: CHAPTER 7 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Se c'è una parola che descrive meglio di qualsiasi altra ciò che stiamo creando, quella parola non è Ayahuasca. Non è foresta. Non è spiritualità. Non è guarigione. Non è nemmeno trasformazione. La parola è: Contenitore. Perché dopo anni di lavoro con le persone ho compreso una cosa semplice. Le persone non cambiano grazie a una singola esperienza. Cambiano quando vengono immerse in un ambiente che rende possibile il cambiamento.
+                        </p>
+                        <p>
+                            In Occidente siamo stati educati a pensare in termini di eventi. L'evento che cambia la vita. La conversazione che cambia tutto. Il libro giusto. La tecnica giusta. Il corso giusto. La cerimonia giusta. Ma la realtà è molto diversa. La trasformazione è quasi sempre il risultato di molte forze che agiscono contemporaneamente. Come in una foresta.
+                        </p>
+                        <p>
+                            Nessun albero cresce da solo. Nessun fiume esiste da solo. Nessuna forma di vita prospera isolatamente. Tutto è collegato. Tutto contribuisce. Tutto partecipa. Anche la crescita umana funziona così.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 61: CHAPTER 7 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Immagina una persona che desidera cambiare profondamente. Torna a casa. Si sveglia. Prende il telefono. Controlla le notifiche. Risponde alle email. Affronta il traffico. Parla con le stesse persone. Vive lo stesso ritmo. Poi si chiede perché sia così difficile trasformarsi. La risposta è semplice. Perché l'ambiente continua a rinforzare la versione precedente di se stesso. Ogni contesto possiede una forza invisibile. Ti ricorda continuamente chi eri ieri. E spesso ti impedisce di scoprire chi potresti diventare domani.
+                        </p>
+                        <p>
+                            Uno degli aspetti più potenti dell'Amazzonia non riguarda le piante. Riguarda la distanza. La distanza dalla vita abituale. Dalle distrazioni. Dalle notifiche. Dalle aspettative. Dai ruoli. Dalle maschere. Dalle abitudini. Per la prima volta dopo molto tempo, molte persone si trovano senza i meccanismi che utilizzano ogni giorno per evitare se stesse. Ed è lì che qualcosa inizia ad accadere. Non perché la foresta faccia qualcosa. Ma perché smette di fare tutto il resto.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 62: CHAPTER 7 BREATHING CARTOGRAPHY SPREAD
+            {
+                type: 'image',
+                bg: 'ivory',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-between p-10 text-center border border-sandDark/40 bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(249, 246, 240, 0.96), rgba(249, 246, 240, 0.82)), url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=1200');">
+                        <span class="text-[9px] uppercase tracking-widest text-bronze font-bold font-sans">Cartography Study Plate</span>
+                        <div class="my-auto space-y-6 relative z-10 font-sans">
+                            <h3 class="font-serif text-2xl tracking-widest text-jungle font-light">REGIONE UCAYALI, PUCALLPA</h3>
+                            <p class="font-serif italic text-charcoal/60 text-xs max-w-xs mx-auto leading-relaxed">Mappatura del bacino del fiume Ucayali, l'affluente primordiale dell'alto Rio delle Amazzoni.</p>
+                            ${SVGS.amazonRiverTrack}
+                        </div>
+                        <span class="text-[9px] tracking-widest text-stoneGrey uppercase font-sans">Scale: Primary Forest Canopy Ecosystem</span>
+                    </div>
+                `
+            },
+
+            // PAGE 63: CHAPTER 7 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Viviamo in un'epoca che teme il silenzio. Appena emerge uno spazio vuoto lo riempiamo immediatamente. Musica. Video. Podcast. Conversazioni. Notizie. Distrazioni. Qualunque cosa. Pur di non restare soli con noi stessi. Eppure il silenzio possiede una qualità straordinaria. Rende udibile ciò che normalmente viene coperto dal rumore. Pensieri. Emozioni. Intuizioni. Domande. Verità. Per questo il silenzio non è un'assenza. È una presenza. Una delle più potenti che esistano.
+                        </p>
+                        <p>
+                            Stiamo parlando molto poco delle piante. È intenzionale. Perché le piante rappresentano una parte del processo. Una parte importante. Ma pur sempre una parte. Esiste anche tutto il resto. L'ambiente. La preparazione. La Dieta. Le relazioni. L'integrazione. Il tempo. Il silenzio. La disciplina. La presenza. Quando tutte queste componenti iniziano a lavorare insieme, il risultato diventa molto più grande della somma delle singole parti.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 64: CHAPTER 7 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Una delle cose che ho imparato osservando il lavoro di Chichi è il rispetto. Profondo. Silenzioso. Autentico. Un rispetto che nasce dall'esperienza. Non dalla teoria. Non dalle mode. Non dai social media. Ma da una vita dedicata a questo percorso. Per questo motivo non ho mai sentito il bisogno di sovrapporre il mio lavoro al suo. Sono due mondi differenti. Due competenze differenti. Due percorsi differenti. Che però possono dialogare. Possono completarsi. Possono arricchirsi reciprocamente. Ed è esattamente ciò che desidero fare. Contribuire. Non sostituire. Arricchire. Non invadere. Integrare. Non dominare.
+                        </p>
+                        <p>
+                            Potresti chiederti: Se la foresta e le piante fanno già così tanto, perché aggiungere altro? La risposta è semplice. Perché comprendere un'esperienza è importante quanto viverla. Molte persone ricevono intuizioni profonde. Ma non sanno come integrarle. Non sanno come tradurle nella vita quotidiana. Non sanno come trasformarle in cambiamento concreto.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 65: CHAPTER 7 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            È qui che entrano strumenti che ho utilizzato per anni. Lavoro sui valori. Sulle credenze. Sull'identità. Sul linguaggio. Sulle relazioni. Sui modelli attraverso cui interpretiamo la realtà. Non come lezioni accademiche. Non come teoria. Ma come strumenti di integrazione. Perché una comprensione che non entra nella vita rimane soltanto un ricordo.
+                        </p>
+                        <p>
+                            Per molto tempo la nostra cultura ha separato tutto. La mente da una parte. Il corpo dall'altra. Le emozioni altrove. La spiritualità in un'altra stanza ancora. La foresta non ragiona così. La vita non ragiona così. Noi non ragioniamo così. Siamo un unico sistema. Quando cambia il corpo, cambia la mente. Quando cambia la mente, cambiano le emozioni. Quando cambiano le emozioni, cambia il modo in cui viviamo il mondo. Tutto è collegato. Tutto comunica. Tutto influenza tutto. Ed è proprio per questo che il contenitore deve essere completo.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 66: CHAPTER 7 TEXT 6
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <h4 class="font-serif text-2xl text-jungle font-semibold">Un contenitore che continua oltre la foresta</h4>
+                        <p>
+                            Forse la parte più importante di tutte è questa. Il contenitore non termina quando lasci l'Amazzonia. Non termina quando sali sull'aereo. Non termina quando torni a casa. Se il lavoro è stato autentico, continua. Nelle tue scelte. Nelle tue relazioni. Nel modo in cui parli. Nel modo in cui ascolti. Nel modo in cui vivi.
+                        </p>
+                        <p>
+                            Perché la vera misura di un percorso non è ciò che accade durante quei ventuno giorni. È ciò che continua ad accadere sei mesi dopo. Un anno dopo. Cinque anni dopo. Quando la foresta non è più davanti ai tuoi occhi. Ma qualcosa di ciò che ti ha insegnato continua a vivere dentro di te. E forse è proprio questo il significato più profondo della trasformazione. Non diventare qualcun altro. Ma ricordare chi sei sempre stato, sotto tutto il rumore.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 67: CHAPTER 8 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1509024644558-2f56ce76c490?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10 font-sans">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold">Capitolo Ottavo</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                121 Giorni
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Non un programma. Un viaggio. Le tre fasi evolutive del processo immersivo.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 68: CHAPTER 8 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Una delle domande che ricevo più spesso è: "Cosa faremo esattamente durante i 21 giorni?" È una domanda comprensibile. Viviamo in una cultura che ama sapere tutto in anticipo. Programmare. Controllare. Prevedere. Organizzare. Sapere esattamente cosa accadrà il giorno uno, il giorno sette, il giorno quattordici e il giorno ventuno.
+                        </p>
+                        <p>
+                            Ma c'è un limite. Perché alcune delle cose più importanti che accadono nella vita non possono essere programmate. Possono essere preparate. Possono essere facilitate. Possono essere accolte. Ma non possono essere controllate. Ed è per questo che preferisco descrivere questi 21 giorni non come un programma. Ma come un viaggio. Un viaggio attraverso tre fasi. Tre movimenti. Tre trasformazioni progressive.
+                        </p>
+                        <p>
+                            La maggior parte delle persone arriva portandosi dietro il mondo intero. Telefoni. Pensieri. Problemi. Aspettative. Abitudini. Rumore. Molto rumore. Ed è normale. Nessuno arriva in Amazzonia completamente vuoto. La prima settimana non serve a trovare risposte. Serve a rallentare abbastanza da poter finalmente ascoltare le domande.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 69: CHAPTER 8 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p>
+                            È il momento della purificazione. Dell'adattamento. Del distacco graduale dalla vita ordinaria. Il corpo inizia a cambiare ritmo. La mente inizia a perdere velocità. Il sistema nervoso inizia a respirare. Per molti è la parte più difficile. Perché rallentare sembra facile. Finché non provi a farlo davvero.
+                        </p>
+                        <p>
+                            Durante questa fase accade qualcosa di interessante. Le distrazioni diminuiscono. E ciò che normalmente rimane nascosto inizia a emergere. Pensieri. Paure. Emozioni. Domande. Molte persone scoprono di non essere abituate al silenzio. Scoprono quanto rumore produca la mente quando smettiamo di anestetizzarla. Eppure è proprio qui che inizia il lavoro. Non nel fare. Nell'osservare.
+                        </p>
+                        <p>
+                            La prima settimana è soprattutto questo. Fare spazio. Nel corpo. Nella mente. Nella vita. Perché soltanto ciò che possiede spazio può accogliere qualcosa di nuovo.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 70: CHAPTER 8 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <h4 class="font-serif text-2xl text-jungle font-semibold">Seconda Settimana — L'incontro</h4>
+                        <p>
+                            Quando il rumore diminuisce, l'ascolto diventa più profondo. Quando l'ascolto diventa più profondo, qualcosa inizia a emergere. Questa è la settimana dell'incontro. L'incontro con la foresta. Con le piante. Con il silenzio. Con gli altri. Ma soprattutto con se stessi.
+                        </p>
+                        <p>
+                            Molte persone arrivano pensando di dover scoprire qualcosa di nuovo. Spesso scoprono qualcosa di diverso. Ricordano. Ricordano aspetti di sé che avevano dimenticato. Parti lasciate indietro. Valori trascurati. Verità ignorate. Desideri sepolti.
+                        </p>
+                        <p>
+                            Una delle cose che la foresta fa meglio è togliere etichette. Professione. Status. Ruolo. Successo. Fallimento. Titoli. Maschere. All'improvviso resti tu. E questa semplicità può essere sorprendentemente potente. Perché molte persone passano anni a perfezionare il personaggio. Ma pochissimo tempo a conoscere la persona.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 71: CHAPTER 8 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Esploreremo i valori. Ciò che conta davvero. Non ciò che pensi dovrebbe contare. Ma ciò che realmente guida le tue decisioni. Perché una vita allineata ai propri valori genera energia. Una vita in conflitto con essi genera sofferenza.
+                        </p>
+                        <p>
+                            Esamineremo le storie che racconti a te stesso. Le convinzioni che governano le tue scelte. Le identità che hai costruito. Le definizioni che hai accettato. Non per distruggerle. Ma per capire se ti stanno ancora servendo. O se sono diventate una gabbia.
+                        </p>
+                        <p>
+                            La terza settimana serve a questo. A comprendere. A collegare. A dare significato. A tradurre intuizioni in direzioni. Esperienze in decisioni. Consapevolezze in cambiamenti concreti. Perché il valore di ciò che vivi non si misura nella profondità dell'esperienza. Si misura nella qualità della vita che costruirai una volta tornato a casa.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 72: CHAPTER 8 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Parleremo di relazioni. Di comunicazione. Di conflitti. Di ascolto. Di linguaggio. Perché gran parte della sofferenza umana nasce da incomprensioni. Da aspettative non espresse. Da parole usate senza consapevolezza. Da bisogni che non sappiamo nominare. Eppure le parole creano mondi. Creano relazioni. Creano identità. Creano futuro.
+                        </p>
+                        <p>
+                            Verso la fine del percorso emerge inevitabilmente una domanda. Non: "Cosa ho visto?" Non: "Cosa ho vissuto?" Ma: "Chi desidero essere da ora in avanti?" Questa domanda cambia tutto. Perché sposta l'attenzione dal passato al futuro. Dalla storia all'intenzione. Dalla memoria alla creazione.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 73: CHAPTER 8 TEXT 6
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <h4 class="font-serif text-2xl text-jungle font-semibold">Giorno 21 — Una delle domande più importanti della tua vita</h4>
+                        <p class="italic text-bronze font-serif text-lg leading-relaxed">
+                            "Se fossi stato presente a uno dei miei percorsi negli anni passati, probabilmente mi avresti sentito fare questa domanda. Una domanda semplice. Ma capace di cambiare una vita: Chi saresti senza la storia che racconti a te stesso ogni singolo giorno?"
+                        </p>
+                        <p>
+                            Non chi eri. Non chi credi di essere. Non chi gli altri si aspettano che tu sia. Tu. Senza tutte le definizioni. Senza tutte le etichette. Senza tutte le giustificazioni. Senza tutte le paure. Chi saresti?
+                        </p>
+                        <p>
+                            Per molti il viaggio inizia qui. Alla fine. Quando finalmente comprendono che la trasformazione non consiste nel diventare qualcun altro. Consiste nel rimuovere tutto ciò che impedisce di essere se stessi. E poi? La risposta è semplice. La vita. Torni a casa. Torni alle tue relazioni. Al tuo lavoro. Alle tue responsabilità. Al tuo mondo. Ma qualcosa è cambiato. Forse non fuori. Forse non immediatamente. Ma dentro. E quando cambia il modo in cui guardi il mondo, lentamente cambia anche il mondo che costruisci. Per questo i 21 giorni non sono il viaggio. Sono soltanto l'inizio. Il viaggio vero comincia quando torni a casa.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 74: CHAPTER 9 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10 font-sans">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold">Capitolo Nono</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Crescere Attraverso una Sofferenza Profonda
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Un'analisi rigorosa sul ruolo del dolore costruttivo rispetto all'inseguimento anestetizzante del comfort.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 75: CHAPTER 9 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p class="luxury-dropcap">
+                            Esiste una frase che probabilmente nessun reparto marketing approverebbe. Una frase che rende più difficile vendere. Più difficile convincere. Più difficile attrarre chi cerca scorciatoie. Ed è proprio per questo che sento il bisogno di scriverla. Questo percorso non è pensato per eliminare la sofferenza. È pensato per trasformare il rapporto che hai con essa.
+                        </p>
+                        <p>
+                            Viviamo in una cultura che ha dichiarato guerra al disagio. Ogni cosa viene progettata per essere più facile. Più veloce. Più comoda. Più immediata. Più indolore. Se qualcosa crea disagio, la eliminiamo. Se qualcosa ci mette in difficoltà, la evitiamo. Se qualcosa ci costringe a guardarci dentro, cambiamo argomento.
+                        </p>
+                        <p>
+                            Eppure esiste una domanda che raramente ci poniamo. Se evitare il dolore funzionasse davvero, perché così tante persone continuano a soffrire? Perché l'ansia aumenta? Perché le dipendenze aumentano?
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 76: CHAPTER 9 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Perché la solitudine aumenta? Perché la confusione aumenta? Perché continuiamo a sentirci persi pur vivendo nella società più comoda della storia umana? Forse perché il problema non è il dolore. Forse il problema è il modo in cui ci relazioniamo ad esso.
+                        </p>
+                        <p>
+                            Pensa a qualsiasi trasformazione importante della tua vita. Una relazione. Un trasferimento. La nascita di un figlio. La perdita di una persona cara. Un cambiamento professionale. Una grande decisione. Qualunque cosa abbia davvero cambiato la tua vita probabilmente è passata attraverso una forma di disagio. Di incertezza. Di paura. Di vulnerabilità. Di sofferenza. Non perché la sofferenza fosse l'obiettivo. Ma perché il cambiamento richiede inevitabilmente la morte di qualcosa. Un'identità. Una convinzione. Un'abitudine. Un ruolo. Una certezza.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 77: CHAPTER 9 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            E ogni morte simbolica viene percepita dall'ego come una perdita. Questa è una delle lezioni più difficili da accettare. Per anni ho osservato persone cercare disperatamente di eliminare qualsiasi forma di sofferenza dalla propria vita. Poi ho osservato qualcosa di curioso.
+                        </p>
+                        <p>
+                            Più combattevano la sofferenza, più ne diventavano prigionieri. Più cercavano di evitarla, più la loro vita iniziava a ruotare attorno ad essa. Più cercavano di controllarla, più ne venivano controllati. Non sto dicendo che la sofferenza sia bella. Non lo è. Non sto dicendo che debba essere cercata. Non deve esserlo. Sto dicendo qualcosa di diverso. Che alcune delle trasformazioni più profonde della vita avvengono quando smettiamo di scappare. E iniziamo ad ascoltare.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 78: CHAPTER 9 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            La foresta non anestetizza. Molti sistemi moderni funzionano attraverso l'anestesia. Distrarti. Intrattenerti. Occuparti. Riempirti. La foresta fa quasi il contrario. Riduce. Semplifica. Rallenta. Spoglia. E quando tutto ciò che normalmente usi per distrarti viene meno, incontri qualcosa. Te stesso. Per alcune persone questo è liberatorio. Per altre è difficile. Per la maggior parte è entrambe le cose.
+                        </p>
+                        <p>
+                            Esiste un aspetto molto concreto di cui si parla poco. La purificazione non è una metafora. A volte è fisica. Molto fisica. Il corpo lascia andare. Espelle. Scarica. Rilascia. Chi ha attraversato davvero questi processi sa di cosa sto parlando. Non c'è nulla di romantico. Non c'è nulla di spettacolare. Eppure, in modo paradossale, proprio lì molte persone iniziano a comprendere qualcosa. Quanto si siano allontanate dall'ascolto del proprio corpo. Quanto abbiano combattuto contro se stesse. Quanto abbiano ignorato segnali evidenti per anni.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 79: CHAPTER 9 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Molti arrivano chiedendo: "Quanto sarà difficile?" Non è la domanda giusta. La domanda giusta è: "Per cosa sono disposto ad attraversare una difficoltà?" Perché affrontare una difficoltà senza significato è sofferenza inutile. Attraversare una difficoltà che ti avvicina a qualcosa di autentico è un'altra cosa. È crescita. È evoluzione. È maturazione. È vita.
+                        </p>
+                        <p>
+                            C'è una frase che negli anni mi è tornata spesso in mente. Molte persone scelgono inconsapevolmente il dolore che conoscono invece della possibilità di affrontare quello che non conoscono. Restano nella relazione che le svuota. Nel lavoro che le spegne. Nelle abitudini che le consumano. Nelle paure che le limitano. Perché quel dolore è familiare. Prevedibile. Conosciuto. E il conosciuto dà un'illusione di sicurezza. Anche quando sta distruggendo lentamente la vita.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 80: CHAPTER 9 TEXT 6
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Il coraggio non consiste nel non avere paura. Consiste nel non permettere alla paura di decidere al posto tuo. Consiste nel continuare a camminare quando non hai tutte le risposte. Quando non hai tutte le garanzie. Quando non sai esattamente cosa troverai dall'altra parte. Chiunque aspetti di sentirsi completamente pronto prima di fare un passo importante probabilmente aspetterà per tutta la vita.
+                        </p>
+                        <p>
+                            Non prometto facilità. Non prometto esperienze piacevoli. Non prometto illuminazione. Non prometto guarigioni miracolose. Non prometto che tornerai a casa senza problemi. Non prometto che la vita diventerà improvvisamente perfetta. Prometto qualcosa di diverso. Un'opportunità. L'opportunità di incontrare te stesso in modo più sincero. Più profondo. Più autentico.
+                        </p>
+                        <p class="font-serif italic text-bronze text-sm leading-relaxed">
+                            "Per questo il titolo di questo libro non parla di sofferenza. Parla di crescita. La sofferenza è soltanto il ponte. La crescita è la destinazione. E la destinazione finale non è la foresta. Non è una cerimonia. Non è una pianta. La destinazione finale sei tu. La versione di te che esiste oltre la paura. Oltre le storie. Oltre le maschere. Oltre tutto ciò che hai creduto di essere. E che aspetta, pazientemente, che tu abbia il coraggio di incontrarla."
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 81: CHAPTER 10 COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10 font-sans">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold">Capitolo Decimo</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                La Chiamata
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm">
+                                Riconoscere l'inquietudine silenziosa asimmetrica come soglia d'ingresso al proprio reale destino.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 82: CHAPTER 10 TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Ci sono persone che leggeranno queste pagine e penseranno: "Interessante." Poi chiuderanno il libro. Torneranno alla loro vita. E probabilmente non ci penseranno più. E va bene così. Poi ci sono persone che arriveranno fino a questo punto e sentiranno qualcosa di diverso. Non necessariamente entusiasmo. Non necessariamente certezza. Forse nemmeno desiderio. Più probabilmente una sensazione difficile da spiegare. Come se qualcosa dentro di loro si fosse riconosciuto. Come se una parte silenziosa, rimasta in attesa per molto tempo, avesse finalmente sentito pronunciare una lingua che comprende.
+                        </p>
+                        <p>
+                            Alcune cose non si scelgono con la testa. Viviamo in una cultura che ci ha insegnato ad analizzare tutto. Confrontare. Misurare. Calcolare. Valutare. Ottimizzare. Eppure esistono decisioni che non nascono da un calcolo. Nascono da un riconoscimento. Lo sai quando accade. Ti è già successo. Con una persona. Con un luogo. Con una scelta. Con un libro. Con un viaggio. Non puoi spiegare esattamente perché. Ma qualcosa dentro di te sa. Non sempre subito. Non sempre chiaramente. Ma lo sa.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 83: CHAPTER 10 TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            La differenza tra curiosità e chiamata. La curiosità vuole informazioni. La chiamata vuole esperienza. La curiosità osserva da lontano. La chiamata ti costringe a fare un passo avanti. La curiosità domanda: "Cosa succederà?" La chiamata domanda: "Chi diventerò se rispondo?" Sono due energie completamente diverse. Entrambe legittime. Entrambe rispettabili. Ma profondamente diverse.
+                        </p>
+                        <p>
+                            Non tutti devono fare questo percorso. Questa potrebbe sembrare una frase strana da leggere. Soprattutto alla fine di un libro come questo. Eppure è vera. Non tutti devono fare questo percorso. Non tutti devono venire in Amazzonia. Non tutti devono affrontare questo tipo di esperienza. Non tutti devono seguire questa strada. Esistono molti modi per crescere. Molti modi per conoscersi. Molti modi per trasformarsi. Questo è soltanto uno di essi. Profondo. Intenso. Esigente. Ma pur sempre uno dei tanti. Per questo motivo non cerco di convincere nessuno. Non ho mai creduto nella persuasione quando si parla di percorsi interiori. Credo nel riconoscimento.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 84: CHAPTER 10 TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Se devi essere convinto, probabilmente non è il momento. Negli anni ho imparato a fidarmi di una cosa. Quando una persona è pronta per qualcosa di importante, raramente ha bisogno di essere spinta. Può avere paura. Può avere dubbi. Può avere resistenze. Ma sotto tutto questo esiste una chiarezza silenziosa. Una voce che continua a ripetere: "Devo capire cosa c'è lì." "Devo vedere." "Devo attraversarlo." Non perché qualcuno l'abbia convinta. Perché qualcosa dentro di lei continua a bussare.
+                        </p>
+                        <p>
+                            Le domande giuste. Forse non dovresti chiederti: "Questo percorso è giusto?" Forse dovresti chiederti: "Perché sto leggendo queste pagine?" "Perché sono arrivato fino a qui?" "Che cosa sto cercando veramente?" "Quale parte di me desidera essere ascoltata?" Le risposte potrebbero sorprenderti. La vita ci chiama continuamente. Molte persone immaginano la chiamata come un evento straordinario. Una voce. Un segno. Una visione. Spesso è molto più semplice. Molto più discreta. Molto più umana.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 85: CHAPTER 10 TEXT 4
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            A volte la chiamata è semplicemente un'inquietudine che non se ne va. Una sensazione che qualcosa deve cambiare. Una stanchezza che nessuna vacanza riesce a risolvere. Una domanda che continua a tornare. Un desiderio di autenticità che diventa sempre più difficile ignorare.
+                        </p>
+                        <p>
+                            Forse non stai cercando una risposta. Forse stai cercando uno spazio. Uno spazio dove smettere di interpretare un ruolo. Uno spazio dove non dover dimostrare nulla. Uno spazio dove poter osservare la tua vita senza il rumore abituale. Uno spazio dove ricordare. Perché a volte la crescita non consiste nell'aggiungere qualcosa. Consiste nel togliere. Togliere ciò che è superfluo. Togliere ciò che è diventato pesante. Togliere ciò che non appartiene più alla persona che stai diventando.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 86: CHAPTER 10 TEXT 5
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Il momento giusto. Una delle domande che mi vengono poste più spesso è: "Come faccio a sapere se questo è il momento giusto?" La risposta più onesta è che non lo so. E probabilmente non lo sai nemmeno tu. Perché la vita raramente ci offre certezze. Ci offre opportunità. Possibilità. Porte. Sta a noi decidere se attraversarle. Nessuno può fare quella scelta al posto tuo.
+                        </p>
+                        <p>
+                            Se deciderai di venire. Se deciderai di intraprendere questo cammino, non arriverai come cliente. Non arriverai come turista. Non arriverai come consumatore di esperienze. Arriverai come essere umano. Con la tua storia. Le tue paure. Le tue domande. Le tue speranze. Le tue ferite. Le tue possibilità. E questo sarà sufficiente. Non servirà essere perfetto. Non servirà essere preparato. Non servirà sapere tutto. Servirà soltanto essere sincero.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 87: CHAPTER 10 TEXT 6
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <h4 class="font-serif text-2xl text-jungle font-semibold">L'unica domanda che conta</h4>
+                        <p class="italic text-bronze font-serif text-lg leading-relaxed">
+                            "Alla fine di questo libro rimane una sola domanda. Non è una domanda che io posso rispondere per te. Non è una domanda che Chichi può rispondere per te. Non è una domanda che può risolvere una pianta. O una cerimonia. O una tecnica. O un insegnamento. È una domanda che appartiene esclusivamente a te: Se continuassi a vivere esattamente come stai vivendo oggi, dove ti porterà questa strada tra cinque anni? Non tra cinque giorni. Non tra cinque settimane. Tra cinque anni."
+                        </p>
+                        <p>
+                            Osserva la risposta. Ascoltala. Senza giudicarla. Senza modificarla. Senza raccontarti una storia migliore. Poi chiediti: È davvero lì che voglio andare? Se la risposta è sì, continua il tuo cammino. Se la risposta è no, forse la vita ti sta invitando a qualcosa di diverso. E forse è proprio questo che hai sentito mentre leggevi queste pagine. Non una promessa. Non una destinazione. Non una soluzione. Una chiamata. Silenziosa. Profonda. Personale. Che nessuno può ascoltare al posto tuo. E alla quale nessuno può rispondere al posto tuo. Il resto è il viaggio.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 88: EPILOGO COVER
+            {
+                type: 'divider',
+                bg: 'jungle',
+                content: `
+                    <div class="relative h-full w-full flex flex-col justify-center p-12 text-left bg-cover bg-center text-ivory" style="background-image: linear-gradient(to right, rgba(5,20,15,0.92) 35%, rgba(5,20,15,0.5) 100%), url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="max-w-md space-y-8 relative z-10 font-sans">
+                            <span class="text-bronze tracking-[0.35em] text-xs uppercase font-semibold">Epilogo di Marcello</span>
+                            <h2 class="font-serif text-4xl sm:text-5xl text-ivory tracking-wide leading-tight font-light uppercase">
+                                Ci Vediamo nella Foresta
+                            </h2>
+                            <div class="w-16 h-[2px] bg-bronze font-sans"></div>
+                            <p class="font-serif italic text-sand/70 text-sm max-w-sm font-sans">
+                                Le parole di saluto finali, prima di deporre le lenti interpretative del mondo e attraversare la soglia.
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 89: EPILOGO TEXT 1
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans">
+                        <p class="luxury-dropcap">
+                            Se sei arrivato fino a qui, voglio ringraziarti. Non per aver letto un libro. Ma per aver dedicato del tempo a qualcosa che, forse, parla di te. Perché in fondo queste pagine non parlano davvero della foresta. Non parlano delle piante. Non parlano dell'Amazzonia. Parlano di una possibilità. La possibilità di fermarti. La possibilità di ascoltarti. La possibilità di incontrarti in modo più sincero.
+                        </p>
+                        <p>
+                            Non so chi sei. Non so dove ti trovi mentre stai leggendo queste righe. Non conosco la tua storia. Non conosco le tue ferite. Non conosco le battaglie che stai combattendo in silenzio. Ma so una cosa. Ogni essere umano, prima o poi, arriva davanti a una soglia. Un momento in cui ciò che era sufficiente smette di esserlo. Un momento in cui le vecchie risposte non funzionano più. Un momento in cui qualcosa dentro inizia a chiedere di più. Più verità. Più presenza.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 90: EPILOGO TEXT 2
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Più significato. Più vita. Forse quel momento è adesso. Forse non lo è. E va bene in entrambi i casi. Perché la vita ha i suoi tempi. E nessuna trasformazione autentica può essere forzata.
+                        </p>
+                        <p>
+                            Per anni ho osservato persone cercare risposte nei luoghi più disparati. Nei libri. Nei corsi. Nei viaggi. Nelle relazioni. Nel successo. Nel denaro. Nella spiritualità. E ho osservato qualcosa di sorprendente. Le risposte che cercano non arrivano quasi mai dall'esterno. Arrivano quando finalmente si crea abbastanza spazio per ascoltare ciò che è sempre stato presente. La foresta non ti consegna una nuova identità. Ti aiuta a togliere quelle che non ti appartengono più. Le piante non ti trasformano in qualcun altro. Ti aiutano a vedere più chiaramente ciò che sei. Il silenzio non aggiunge nulla. Rimuove il rumore.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 91: EPILOGO TEXT 3
+            {
+                type: 'editorial-spread',
+                bg: 'ivory',
+                content: `
+                    <div class="space-y-8 font-light text-xs text-charcoal/80 leading-[1.8] text-justify font-sans font-light">
+                        <p>
+                            Questo è il motivo per cui continuo a tornare. Non per cercare qualcosa. Ma per ricordare. Ricordare che sotto tutti i ruoli esiste una persona. Sotto tutte le paure esiste una presenza. Sotto tutte le storie esiste una verità. E che spesso quella verità è molto più semplice di quanto immaginiamo.
+                        </p>
+                        <p>
+                            Se un giorno ci incontreremo, non sarà perché hai letto questo libro. Non sarà perché hai visto una pubblicità. Non sarà perché qualcuno ti ha convinto. Sarà perché qualcosa dentro di te avrà riconosciuto il momento. E avrai deciso di rispondere. Se quel momento non è arrivato, conserva queste pagine. Forse torneranno da te quando ne avrai bisogno. Forse alcune frasi assumeranno un significato diverso tra un anno. O tra cinque. O tra dieci. Le cose importanti funzionano spesso così. Aspettano.
+                        </p>
+                    </div>
+                `
+            },
+
+            // PAGE 92: RE-DESIGNED PRIVATE PROTOCOL (Left Spread Page of Final Chapter)
+            {
+                type: 'cta',
+                bg: 'ivory',
+                content: `
+                    <div class="flex flex-col justify-between h-full py-2 max-w-md mx-auto text-left font-sans">
+                        <div class="space-y-4">
+                            <span class="text-bronze tracking-[0.25em] text-[9px] uppercase font-bold block">PROTOCOLLO DI SELEZIONE</span>
+                            <h2 class="font-serif text-3xl text-jungle tracking-wide font-light leading-tight">Ammissione e Consulenza Privata</h2>
+                            <div class="w-12 h-[1px] bg-bronze"></div>
+                            <p class="text-[11px] text-charcoal/70 leading-relaxed font-light font-sans">
+                                Se invece senti che qualcosa si è mosso. Se senti che alcune domande sono diventate più vive. Se percepisci che una parte di te desidera esplorare questo cammino con serietà, sincerità e rispetto, allora il primo passo non è prenotare un viaggio. Non è prendere una decisione. Non è dire sì. Il primo passo è capire se questo percorso è realmente adatto a te. Per questo esiste l'Apply. Non come una selezione. Non come un ostacolo. Ma come un momento di verità. Per te. Per noi. Per comprendere insieme se questo contenitore è il luogo giusto per il momento della vita che stai attraversando.
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-4 my-6">
+                            <div class="flex items-start space-x-3.5 pb-3 border-b border-sandDark/20">
+                                <span class="font-serif text-lg text-bronze tracking-wider">01.</span>
+                                <div>
+                                    <h4 class="text-xs font-semibold uppercase text-jungle tracking-wide">Candidatura Formale (Apply)</h4>
+                                    <p class="text-[10px] text-charcoal/60 leading-relaxed">Presentazione della domanda iniziale focalizzata sulle tue reali intenzioni evolutive.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3.5 pb-3 border-b border-sandDark/20">
+                                <span class="font-serif text-lg text-bronze tracking-wider">02.</span>
+                                <div>
+                                    <h4 class="text-xs font-semibold uppercase text-jungle tracking-wide">Screening Clinico & Medico</h4>
+                                    <p class="text-[10px] text-charcoal/60 leading-relaxed">Rigorosa valutazione della compatibilità fisiologica con le Piante Maestre e il Tabacco.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3.5">
+                                <span class="font-serif text-lg text-bronze tracking-wider">03.</span>
+                                <div>
+                                    <h4 class="text-xs font-semibold uppercase text-jungle tracking-wide">Colloquio Conoscitivo con Marcello</h4>
+                                    <p class="text-[10px] text-charcoal/60 leading-relaxed">Dialogo privato per calibrare l'intenzione, i valori e l'assegnazione della Dieta.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-sand/30 p-4 rounded border border-sandDark/20 text-[9px] text-charcoal/60 leading-relaxed italic">
+                            "Arriva con umiltà. Arriva con rispetto. Arriva con il coraggio di non sapere. Arriva disposto ad ascoltare. Arriva disposto a lasciare andare ciò che non serve più. Arriva disposto a incontrarti. Davvero. Il resto... non può essere raccontato. Può soltanto essere vissuto. Ci vediamo nella foresta. Marcello."
+                        </div>
+                    </div>
+                `
+            },
+
+            // PAGE 93: CINEMATIC CLOSING CARD (Right Spread Page)
+            {
+                type: 'cta',
+                bg: 'jungle',
+                content: `
+                    <div class="flex flex-col justify-between h-full text-center py-4 max-w-md mx-auto text-ivory font-sans relative">
+                        <div class="space-y-4">
+                            <span class="text-bronze tracking-[0.35em] text-[9px] uppercase font-bold block">SHAMANIC TRAVELS CONCIERGE</span>
+                            <h2 class="font-serif text-3xl text-ivory tracking-superWide uppercase leading-tight font-light">YOUR JOURNEY<br><span class="text-bronze italic">BEGINS HERE</span></h2>
+                            <p class="text-[10px] text-sand/60 italic font-serif leading-relaxed">"Oltre la nebbia del fiume, oltre le storie che racconti a te stesso."</p>
+                        </div>
+                        
+                        <!-- Premium Contact & Portal Grid -->
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-3.5 my-6 text-left border-t border-b border-ivory/10 py-5">
+                            <div class="space-y-0.5">
+                                <span class="text-bronze text-[8px] uppercase tracking-wider block font-semibold"><i class="fa-solid fa-globe mr-1"></i> Portale Web</span>
+                                <a href="https://shamanictravels.com" target="_blank" class="text-[10px] font-bold text-ivory/90 hover:text-bronze transition-colors">shamanictravels.com</a>
+                            </div>
+                            <div class="space-y-0.5">
+                                <span class="text-bronze text-[8px] uppercase tracking-wider block font-semibold"><i class="fa-solid fa-calendar-check mr-1"></i> Candidature</span>
+                                <a href="https://shamanictravels.com/book" target="_blank" class="text-[10px] font-bold text-ivory/90 hover:text-bronze transition-colors">shamanictravels.com/apply</a>
+                            </div>
+                            <div class="space-y-0.5">
+                                <span class="text-bronze text-[8px] uppercase tracking-wider block font-semibold"><i class="fa-solid fa-envelope mr-1"></i> Email Advisory</span>
+                                <span class="text-[10px] font-bold text-ivory/90 font-sans font-semibold">concierge@shamanictravels.com</span>
+                            </div>
+                            <div class="space-y-0.5">
+                                <span class="text-bronze text-[8px] uppercase tracking-wider block font-semibold"><i class="fa-solid fa-whatsapp mr-1"></i> VIP WhatsApp Line</span>
+                                <span class="text-[10px] font-bold text-ivory/90 font-mono font-semibold">+51 900 121 121</span>
+                            </div>
+                            <div class="space-y-0.5 col-span-2 border-t border-ivory/5 pt-3 flex justify-between items-center">
+                                <div class="space-y-1">
+                                    <span class="text-bronze text-[8px] uppercase tracking-wider block font-semibold"><i class="fa-brands fa-instagram mr-1"></i> @shamanic.travels</span>
+                                    <span class="text-bronze text-[8px] uppercase tracking-wider block font-semibold"><i class="fa-brands fa-youtube mr-1"></i> youtube.com/shamanictravels</span>
+                                    <span class="text-bronze text-[8px] uppercase tracking-wider block font-semibold"><i class="fa-brands fa-facebook mr-1"></i> Facebook Inner Circle</span>
+                                </div>
+                                <div class="w-12 h-12 bg-ivory/10 border border-bronze/30 p-1 rounded flex items-center justify-center" title="Esegui scansione per accedere al portale privato">
+                                    <i class="fa-solid fa-qrcode text-bronze text-xl opacity-80"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="https://shamanictravels.com/book" target="_blank" class="w-full py-3.5 bg-bronze hover:bg-bronzeDark text-jungle font-bold uppercase text-[9px] tracking-widest rounded transition-all text-center">
+                            Richiedi il tuo Colloquio d'Ammissione
+                        </a>
+                    </div>
+                `
+            },
+
+            // PAGE 94: BACK COVER (THE ARCHIVAL FINISH)
+            {
+                type: 'back-cover',
+                bg: 'jungle',
+                content: `
+                    <div class="flex flex-col items-center justify-between text-center h-full py-20 font-sans">
+                        <div class="text-bronze/60 tracking-[0.45em] text-[10px] uppercase font-light">Shamanic Travels S.A.</div>
+                        <div class="space-y-8 max-w-xs px-6">
+                            <p class="font-serif italic text-xl text-sand/90 leading-relaxed">
+                                "La destinazione finale non è la foresta, non è la cerimonia. La destinazione finale sei tu."
+                            </p>
+                            <div class="w-16 h-[1px] bg-bronze mx-auto"></div>
+                            <span class="text-xs text-bronze tracking-widest uppercase block font-bold">Shamanic Travels</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="w-14 h-14 bg-ivory/10 mx-auto p-2 border border-bronze/30 rounded flex items-center justify-center">
+                                <i class="fa-solid fa-qrcode text-bronze text-2xl opacity-60"></i>
+                            </div>
+                            <div class="text-[9px] tracking-widest text-sandDark/40 uppercase">Archival Code ST-2026-PC</div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        let currentPage = 0; // Starts on spread 0 (Pages 1 & 2)
+        const totalPages = bookPages.length;
+        const totalSpreads = Math.ceil(totalPages / 2);
+        let currentZoom = 1.0;
+        let isSpreadMode = true;
+        let isGuidelinesActive = false;
+        let isBleedActive = false;
+        let isEditorModeActive = false;
+
+        window.onload = function() {
+            initWorkspace();
+        };
+
+        function initWorkspace() {
+            renderSidebarTOC();
+            renderSpread();
+            renderScrollMode();
+            
+            // Add custom keyboard listeners for editorial controls
+            document.addEventListener('keydown', (e) => {
+                if (isEditorModeActive) return; // Prevent interference when writing
+                if (e.key === 'ArrowRight') nextPage();
+                if (e.key === 'ArrowLeft') prevPage();
+            });
+
+            // Set up mobile swipe gesture detection for spreads
+            setupSwipeGestures();
+        }
+
+        function renderSidebarTOC() {
+            const listContainer = document.getElementById('sidebar-toc-list');
+            listContainer.innerHTML = '';
+            
+            bookPages.forEach((page, i) => {
+                if (page.type === 'divider' || page.type === 'cover' || page.type === 'cta' || page.type === 'toc' || i === 7 || i === 87) {
+                    let title = "";
+                    if (page.type === 'cover') title = "Copertina Principale";
+                    else if (page.type === 'toc') title = "Indice Generale";
+                    else if (i === 7) title = "Prefazione d'Autore";
+                    else if (i === 87) title = "Epilogo di Marcello";
+                    else if (page.type === 'cta' && i === 92) title = "Protocollo Ammissione";
+                    else if (page.type === 'cta' && i === 93) title = "Portale Candidature";
+                    else {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = page.content;
+                        const h2 = tempDiv.querySelector('h2');
+                        title = h2 ? h2.innerText : `Sezione ${i + 1}`;
+                    }
+                    
+                    const item = document.createElement('a');
+                    item.href = "javascript:void(0)";
+                    item.onclick = () => jumpToPage(i);
+                    item.className = "flex justify-between items-center py-2 border-b border-sandDark/20 hover:text-bronze transition-colors text-[10px] uppercase tracking-wider font-light font-sans";
+                    item.innerHTML = `
+                        <span class="truncate max-w-[240px] font-semibold">${title}</span>
+                        <span class="text-bronze">Pag. ${padZero(i + 1)}</span>
+                    `;
+                    listContainer.appendChild(item);
+                }
+            });
+        }
+
+        function renderSpread() {
+            const leftIndex = currentPage * 2;
+            const rightIndex = leftIndex + 1;
+            
+            const leftData = bookPages[leftIndex];
+            const rightData = bookPages[rightIndex];
+            
+            const leftContainer = document.getElementById('page-left');
+            const rightContainer = document.getElementById('page-right');
+            
+            applyPageStyling(leftContainer, leftData);
+            applyPageStyling(rightContainer, rightData);
+
+            document.getElementById('page-left-content').innerHTML = leftData ? leftData.content : '';
+            document.getElementById('page-right-content').innerHTML = rightData ? rightData.content : `
+                <div class="flex flex-col items-center justify-center text-center h-full text-stoneGrey">
+                    <p class="italic text-xs font-light">Pagina bianca intenzionale per rilegatura.</p>
+                </div>
+            `;
+
+            if (isEditorModeActive) {
+                enableContentEditing(true);
+            }
+
+            document.getElementById('page-left-number').innerText = padZero(leftIndex + 1);
+            document.getElementById('page-right-number').innerText = rightData ? padZero(rightIndex + 1) : '';
+
+            document.getElementById('page-right-running-header').innerText = getRunningHeaderName(rightIndex);
+
+            const spreadIndex = currentPage + 1;
+            const progressPct = (spreadIndex / totalSpreads) * 100;
+            document.getElementById('spread-progress-bar').style.width = `${progressPct}%`;
+            document.getElementById('spread-indicator').innerText = `Spread ${spreadIndex} di ${totalSpreads} (Pagina ${leftIndex + 1}-${rightData ? rightIndex + 1 : 'Fine'})`;
+        }
+
+        function getRunningHeaderName(index) {
+            if (index <= 2) return "Copertina & Titoli";
+            if (index <= 5) return "Frontispiece & Impressum";
+            if (index <= 10) return "Prefazione d'Autore";
+            if (index <= 12) return "Indice Generale";
+            if (index <= 20) return "Cap. 1 — L'Equivoco";
+            if (index <= 28) return "Cap. 2 — Cos'è la Dieta";
+            if (index <= 38) return "Cap. 3 — Le Piante Maestre";
+            if (index <= 45) return "Cap. 4 — Quello che nessuno dice";
+            if (index <= 52) return "Cap. 5 — Perché torno";
+            if (index <= 58) return "Cap. 6 — Chi saresti senza la tua storia?";
+            if (index <= 66) return "Cap. 7 — Il Contenitore";
+            if (index <= 73) return "Cap. 8 — 21 Giorni";
+            if (index <= 80) return "Cap. 9 — La Sofferenza";
+            if (index <= 86) return "Cap. 10 — La Chiamata";
+            if (index <= 91) return "Epilogo — Ci vediamo nella foresta";
+            return "Portale Candidature";
+        }
+
+        function applyPageStyling(element, data) {
+            if (!element) return;
+            
+            element.className = "w-full lg:w-1/2 p-16 sm:p-20 lg:p-24 flex flex-col justify-between relative min-h-[50vh] lg:min-h-auto overflow-hidden transition-all duration-300";
+            
+            if (!data) {
+                element.classList.add("luxury-paper-texture", "text-charcoal");
+                return;
+            }
+
+            if (data.bg === 'jungle') {
+                element.classList.add("dark-paper-texture", "text-ivory");
+            } else if (data.bg === 'ivory') {
+                element.classList.add("luxury-paper-texture", "text-charcoal");
+            } else {
+                element.classList.add("bg-[#EAE2D5]", "text-jungle");
+            }
+
+            if (isGuidelinesActive) {
+                const guide = element.querySelector('.guideline-grid');
+                if (guide) guide.classList.remove('hidden');
+            }
+            if (isBleedActive) {
+                const bleed = element.querySelector('.bleed-guide');
+                if (bleed) bleed.classList.remove('hidden');
+            }
+        }
+
+        function renderScrollMode() {
+            const container = document.getElementById('workspace-scroll');
+            container.innerHTML = '';
+
+            bookPages.forEach((page, i) => {
+                const section = document.createElement('section');
+                section.id = `scroll-page-${i}`;
+                section.className = `p-16 sm:p-20 md:p-24 rounded shadow-2xl relative my-16 border border-sandDark/20 transition-all overflow-hidden max-w-3xl mx-auto`;
+                
+                if (page.bg === 'jungle') {
+                    section.className += " dark-paper-texture text-ivory";
+                } else if (page.bg === 'ivory') {
+                    section.className += " luxury-paper-texture text-charcoal";
+                } else {
+                    section.className += " bg-[#EAE2D5] text-jungle";
+                }
+
+                section.innerHTML = `
+                    <div class="flex justify-between items-center text-[9px] uppercase tracking-[0.25em] opacity-50 mb-12 border-b border-current/10 pb-4 font-sans">
+                        <span>Shamanic Travels Luxury Edition</span>
+                        <span>Sezione ${padZero(i + 1)} di ${totalPages}</span>
+                    </div>
+                    <div class="min-h-[50vh] flex flex-col justify-center relative z-10 font-sans">
+                        ${page.content}
+                    </div>
+                    <div class="flex justify-between items-center text-[9px] uppercase tracking-[0.25em] opacity-50 mt-12 border-t border-current/10 pt-4 font-sans">
+                        <span>${getRunningHeaderName(i)}</span>
+                        <span>Pagina ${padZero(i + 1)}</span>
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+        }
+
+        function nextPage() {
+            if (currentPage < totalSpreads - 1) {
+                currentPage++;
+                renderSpread();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                renderSpread();
+            }
+        }
+
+        function jumpToPage(index) {
+            if (isSpreadMode) {
+                currentPage = Math.floor(index / 2);
+                renderSpread();
+            } else {
+                const target = document.getElementById(`scroll-page-${index}`);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+            toggleTOC();
+        }
+
+        function switchView(mode) {
+            const btnSpread = document.getElementById('btn-spread-view');
+            const btnScroll = document.getElementById('btn-scroll-view');
+            const spreadCont = document.getElementById('workspace-spread');
+            const scrollCont = document.getElementById('workspace-scroll');
+
+            if (mode === 'spread') {
+                isSpreadMode = true;
+                btnSpread.className = "px-4 py-2 rounded transition-all bg-bronze text-jungle font-bold";
+                btnScroll.className = "px-4 py-2 rounded transition-all text-ivory/60 hover:text-ivory";
+                spreadCont.classList.remove('hidden');
+                scrollCont.classList.add('hidden');
+                renderSpread();
+            } else {
+                isSpreadMode = false;
+                btnScroll.className = "px-4 py-2 rounded transition-all bg-bronze text-jungle font-bold";
+                btnSpread.className = "px-4 py-2 rounded transition-all text-ivory/60 hover:text-ivory";
+                spreadCont.classList.add('hidden');
+                scrollCont.classList.remove('hidden');
+            }
+        }
+
+        function changeZoom(factor) {
+            currentZoom = Math.min(Math.max(0.5, currentZoom + factor), 1.8);
+            const scaleStr = `${Math.round(currentZoom * 100)}%`;
+            document.getElementById('zoom-value').innerText = scaleStr;
+            
+            const canvas = document.getElementById('canvas-spread');
+            if (canvas) {
+                canvas.style.transform = `scale(${currentZoom})`;
+            }
+        }
+
+        function toggleGuidelines() {
+            isGuidelinesActive = !isGuidelinesActive;
+            const guides = document.querySelectorAll('.guideline-grid');
+            guides.forEach(g => {
+                if (isGuidelinesActive) g.classList.remove('hidden');
+                else g.classList.add('hidden');
+            });
+        }
+
+        function toggleBleed() {
+            isBleedActive = !isBleedActive;
+            const bleeds = document.querySelectorAll('.bleed-guide');
+            bleeds.forEach(b => {
+                if (isBleedActive) b.classList.remove('hidden');
+                else b.classList.add('hidden');
+            });
+        }
+
+        function toggleTOC() {
+            const drawer = document.getElementById('toc-drawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        function toggleCanvaEditor() {
+            isEditorModeActive = !isEditorModeActive;
+            const textBtn = document.getElementById('btn-editor-text');
+            
+            if (isEditorModeActive) {
+                textBtn.innerText = "Modo Lettura";
+                enableContentEditing(true);
+            } else {
+                textBtn.innerText = "Modo Editor";
+                enableContentEditing(false);
+            }
+        }
+
+        function enableContentEditing(enable) {
+            const editables = document.querySelectorAll('#page-left-content p, #page-left-content h1, #page-left-content h2, #page-left-content h3, #page-left-content blockquote, #page-right-content p, #page-right-content h1, #page-right-content h2, #page-right-content h3, #page-right-content blockquote');
+            
+            editables.forEach(el => {
+                if (enable) {
+                    el.setAttribute('contenteditable', 'true');
+                    el.classList.add('outline-dotted', 'outline-1', 'outline-bronze', 'cursor-text');
+                } else {
+                    el.removeAttribute('contenteditable');
+                    el.className = el.className.replace(/\boutline-dotted\b/g, '')
+                                             .replace(/\boutline-1\b/g, '')
+                                             .replace(/\boutline-bronze\b/g, '')
+                                             .replace(/\bcursor-text\b/g, '');
+                }
+            });
+        }
+
+        function setupSwipeGestures() {
+            let touchstartX = 0;
+            let touchendX = 0;
+            const canvas = document.getElementById('canvas-spread');
+
+            canvas.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+            });
+
+            canvas.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                if (touchendX < touchstartX - 50) {
+                    nextPage(); // Swipe Left
+                }
+                if (touchendX > touchstartX + 50) {
+                    prevPage(); // Swipe Right
+                }
+            }
+        }
+
+        function padZero(num) {
+            return num < 10 ? `0${num}` : num;
+        }
+    </script>
+</body>
+</html>
