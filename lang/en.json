@@ -346,5 +346,14 @@
     "guide_note": "No spam. Only relevant content about the path and master plants.",
     "footer_based_value": "London \u00b7 Lima \u00b7 Milan",
     "footer_copy": "\u00a9 2026 \u00b7 Private Curated Journeys"
+  },
+  "thank_you": {
+    "title": "Your request has been received",
+    "desc": "We review every request personally. If there is alignment, we will be in touch within 72 hours.",
+    "letters_title": "Letters of Reference",
+    "letters_intro": "Should our conversation progress, we may ask for two letters of reference. These are not formal documents \u2014 they are personal accounts from people who know you, describing what they believe you seek and why this journey may be meaningful for you at this time.",
+    "letters_note": "All references are treated with complete discretion and read only by Marcello.",
+    "quote": "Some journeys change where you are. Others change who you become.",
+    "back": "\u2190 Return to Shamanic Travels"
   }
 }
