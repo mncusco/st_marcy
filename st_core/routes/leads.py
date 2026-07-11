@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/leads", tags=["Leads"])
 @router.post("", response_model=dict)
 def create_lead(lead: LeadCreate, db: Session = Depends(get_db)):
     db_lead = LeadService.create_lead(db, lead)
-    return {"success": True, "id": db_lead.id}
+    return {"success": True, "id": db_lead.id, "download_token": db_lead.download_token}
 
 @router.get("", response_model=List[LeadResponse])
 def get_leads(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):

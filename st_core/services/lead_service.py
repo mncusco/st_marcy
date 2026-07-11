@@ -1,4 +1,5 @@
-from datetime import datetime
+import secrets
+from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, or_
 from fastapi import HTTPException
@@ -11,7 +12,10 @@ class LeadService:
         if db.query(Lead).filter(Lead.email == lead_data.email).first():
             raise HTTPException(status_code=400, detail="Email già registrata")
 
-        db_lead = Lead(**lead_data.model_dump())
+        lead_dict = lead_data.model_dump()
+        lead_dict["download_token"] = secrets.token_urlsafe(48)
+        lead_dict["download_expires_at"] = datetime.utcnow() + timedelta(days=30)
+        db_lead = Lead(**lead_dict)
         db.add(db_lead)
         db.commit()
         db.refresh(db_lead)
@@ -81,8 +85,26 @@ class LeadService:
         return lead
 
     @staticmethod
+    def get_lead_by_token(db: Session, token: str) -> Lead:
+        lead = db.query(Lead).filter(Lead.download_token == token).first()
+        if not lead:
+            raise HTTPException(status_code=404, detail="Token non valido")
+        return lead
+
+    @staticmethod
     def mark_downloaded(db: Session, lead_id: int) -> Lead:
         lead = LeadService.get_lead_by_id(db, lead_id)
+        lead.downloaded_editorial = True
+        lead.downloaded_at = datetime.utcnow()
+        db.commit()
+        db.refresh(lead)
+        return lead
+
+    @staticmethod
+    def mark_downloaded_by_token(db: Session, token: str) -> Lead:
+        lead = LeadService.get_lead_by_token(db, token)
+        if lead.download_expires_at and datetime.utcnow() > lead.download_expires_at:
+            raise HTTPException(status_code=410, detail="Token scaduto")
         lead.downloaded_editorial = True
         lead.downloaded_at = datetime.utcnow()
         db.commit()

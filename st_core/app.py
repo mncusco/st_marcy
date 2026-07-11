@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 
 from database import engine, Base
-from routes import leads, dashboard, health
+from routes import leads, dashboard, health, download
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,3 +25,4 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(health.router)
 app.include_router(leads.router)
 app.include_router(dashboard.router)
+app.include_router(download.router)

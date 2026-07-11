@@ -17,6 +17,8 @@ class Settings(BaseSettings):
         "sr": "Il_Ritiro_Nella_Selva_SR.pdf",
     }
 
+    EDITORIAL_FILES_DIR: str = "./ebooks"
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
@@ -26,3 +28,4 @@ settings = Settings()
 
 os.makedirs("./database", exist_ok=True)
 os.makedirs("./uploads", exist_ok=True)
+os.makedirs(settings.EDITORIAL_FILES_DIR, exist_ok=True)
