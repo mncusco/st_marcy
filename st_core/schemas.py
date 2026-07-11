@@ -44,6 +44,22 @@ class LeadResponse(LeadBase):
 
     model_config = ConfigDict(from_attributes=True)
 
+class LeadEventResponse(BaseModel):
+    id: int
+    lead_id: int
+    event_type: str
+    title: str
+    description: Optional[str] = None
+    metadata_json: Optional[str] = None
+    created_by: Optional[str] = None
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+class LeadEventWithLeadName(LeadEventResponse):
+    lead_name: str = ""
+    lead_email: str = ""
+
 class DashboardFilters(BaseModel):
     status: Optional[str] = None
     language: Optional[str] = None

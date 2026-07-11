@@ -172,9 +172,22 @@
         .badge-contacted { border-color: #2d5a27; color: #2d5a27; }
         .badge-interview { border-color: #5a7d9a; color: #3a6b8a; }
         .badge-approved { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
+        .badge-booked { border-color: #2d5a27; color: #2d5a27; background: #e0f0e0; }
+        .badge-completed { border-color: #1a4a1a; color: #1a4a1a; background: #d0e8d0; }
         .badge-rejected { border-color: #9a5a5a; color: #9a5a5a; }
         .badge-archived { border-color: #aaa; color: #888; }
         .badge-downloaded { border-color: #b89a5a; color: #b89a5a; background: #faf6ee; }
+
+        .doc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .doc-card {
+            border: 1px dashed #d4cfc6;
+            padding: 20px;
+            text-align: center;
+            color: #8c8c8c;
+        }
+        .doc-card .doc-icon { font-size: 24px; margin-bottom: 8px; }
+        .doc-card .doc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+        .doc-card .doc-status { font-size: 10px; margin-top: 4px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -252,26 +265,16 @@
         <div class="card">
             <h2>Timeline</h2>
             <div class="timeline">
+                {% for ev in events %}
                 <div class="timeline-item">
-                    <div class="date">{{ lead.created_at.strftime('%d %b %Y, %H:%M') }}</div>
-                    <div class="event">Lead created — <strong>{{ lead.first_name }} {{ lead.last_name }}</strong> registered via <small>{{ lead.source_page or 'direct' }}</small></div>
+                    <div class="date">{{ ev.created_at.strftime('%d %b %Y, %H:%M') }}</div>
+                    <div class="event">{{ ev.title }}{% if ev.description %} — <small>{{ ev.description }}</small>{% endif %}</div>
                 </div>
-                {% if lead.downloaded_editorial and lead.downloaded_at %}
+                {% else %}
                 <div class="timeline-item">
-                    <div class="date">{{ lead.downloaded_at.strftime('%d %b %Y, %H:%M') }}</div>
-                    <div class="event">Editorial downloaded — language: <strong>{{ lead.language or 'en' }}</strong></div>
+                    <div class="event" style="color:#8c8c8c;">No events recorded.</div>
                 </div>
-                {% endif %}
-                {% if lead.notes %}
-                <div class="timeline-item">
-                    <div class="date">—</div>
-                    <div class="event">Internal notes added: <small>{{ lead.notes[:100] }}{% if lead.notes|length > 100 %}…{% endif %}</small></div>
-                </div>
-                {% endif %}
-                <div class="timeline-item">
-                    <div class="date">{{ lead.updated_at.strftime('%d %b %Y, %H:%M') }}</div>
-                    <div class="event">Last status: <span class="badge badge-{{ lead.status.value.lower() }}">{{ lead.status.value }}</span></div>
-                </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -309,6 +312,32 @@
             <h2>Interview</h2>
             <div class="placeholder">
                 Interview scheduling and notes will appear here in a future update.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Documents</h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">📄</div>
+                    <div class="doc-label">Recommendation Letter</div>
+                    <div class="doc-status">Not uploaded</div>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-icon">🛂</div>
+                    <div class="doc-label">Passport</div>
+                    <div class="doc-status">Not uploaded</div>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-icon">🏥</div>
+                    <div class="doc-label">Medical Notes</div>
+                    <div class="doc-status">Not uploaded</div>
+                </div>
+                <div class="doc-card">
+                    <div class="doc-icon">📝</div>
+                    <div class="doc-label">Agreement</div>
+                    <div class="doc-status">Not uploaded</div>
+                </div>
             </div>
         </div>
     </div>
