@@ -1,5 +1,7 @@
 import os
+import warnings
 from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     PROJECT_NAME: str
@@ -8,6 +10,8 @@ class Settings(BaseSettings):
     ADMIN_PASSWORD: str
     CONTACT_EMAIL: str
     SECRET_KEY: str
+
+    DEBUG: bool = False
 
     EDITORIAL_FILES: dict = {
         "en": "Il_Ritiro_Nella_Selva_EN.pdf",
@@ -28,12 +32,29 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8"
         extra = "ignore"
 
+
 settings = Settings()
+
+if settings.DEBUG:
+    warnings.warn("DEBUG mode is ON — disable for production", RuntimeWarning)
+
+_insecure_keys = ("change_me", "dev-secret-key-not-for-production", "CHANGE_THIS")
+if settings.SECRET_KEY in _insecure_keys or len(settings.SECRET_KEY) < 16:
+    warnings.warn(
+        "SECRET_KEY is weak or default — generate a strong random key for production",
+        RuntimeWarning,
+    )
+if settings.ADMIN_PASSWORD in _insecure_keys or settings.ADMIN_PASSWORD == "change_me":
+    warnings.warn(
+        "ADMIN_PASSWORD is the default value — change immediately for production",
+        RuntimeWarning,
+    )
 
 os.makedirs("./database", exist_ok=True)
 os.makedirs("./uploads", exist_ok=True)
 os.makedirs(settings.EDITORIAL_FILES_DIR, exist_ok=True)
 os.makedirs("./logs/emails", exist_ok=True)
+os.makedirs("./logs", exist_ok=True)
 os.makedirs(settings.EDITORIAL_DIRECTORY, exist_ok=True)
 for _lang in settings.SUPPORTED_LANGUAGES:
     os.makedirs(os.path.join(settings.EDITORIAL_DIRECTORY, _lang), exist_ok=True)

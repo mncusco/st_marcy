@@ -271,6 +271,27 @@
         .interview-badge.requested { border-color: #b89a5a; color: #b89a5a; }
         .interview-badge.completed { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
 
+        .analysis-widget { background: #fff; border: 1px solid #e8e3da; margin-top: 20px; }
+        .analysis-widget h3 {
+            font-size: 12px; font-weight: 400; text-transform: uppercase;
+            letter-spacing: 2px; color: #b89a5a; padding: 16px 18px 0;
+        }
+        .analysis-stats { display: flex; gap: 8px; padding: 12px 18px; flex-wrap: wrap; }
+        .analysis-stat {
+            flex: 1; min-width: 50px; text-align: center;
+            padding: 8px 4px; border: 1px solid #f0ede8;
+        }
+        .analysis-stat .num { font-size: 16px; font-weight: 700; color: #2c2c2c; }
+        .analysis-stat .label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; color: #8c8c8c; }
+        .analysis-list { padding: 0 18px 16px; }
+        .analysis-item {
+            display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f0ede8;
+            font-size: 11px; align-items: center;
+        }
+        .analysis-item:last-child { border-bottom: none; }
+        .analysis-score { font-weight: 700; font-size: 14px; min-width: 28px; }
+        .analysis-recommend { flex: 1; color: #555; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
+
         .timeline-widget { background: #fff; border: 1px solid #e8e3da; }
         .tw-list { padding: 12px 18px 18px; }
         .tw-item {
@@ -309,6 +330,60 @@
             text-align: right;
             min-width: 60px;
         }
+
+        .bi-section { margin-bottom: 24px; }
+        .bi-section h2 {
+            font-size: 14px; font-weight: 400; text-transform: uppercase;
+            letter-spacing: 2px; color: #b89a5a; margin-bottom: 16px;
+            padding-bottom: 10px; border-bottom: 1px solid #e8e3da;
+        }
+        .bi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .bi-card { background: #fff; border: 1px solid #e8e3da; padding: 20px 24px; }
+        .bi-card h3 {
+            font-size: 11px; font-weight: 400; text-transform: uppercase;
+            letter-spacing: 1.5px; color: #8c8c8c; margin-bottom: 14px;
+        }
+        .funnel { display: flex; flex-direction: column; gap: 6px; }
+        .funnel-row { display: flex; align-items: center; gap: 12px; font-size: 12px; }
+        .funnel-row .label { width: 80px; color: #555; flex-shrink: 0; }
+        .funnel-row .bar-wrap { flex: 1; height: 18px; background: #f0ede8; position: relative; }
+        .funnel-row .bar { height: 100%; background: #2d5a27; transition: width 0.3s; }
+        .funnel-row .bar.dim { background: #b89a5a; }
+        .funnel-row .val { width: 60px; text-align: right; color: #1a1a1a; font-weight: 700; font-size: 12px; }
+        .funnel-row .pct { width: 50px; text-align: right; color: #8c8c8c; font-size: 10px; }
+
+        .source-list { display: flex; flex-direction: column; gap: 8px; }
+        .source-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+        .source-row .s-label { width: 80px; color: #555; text-transform: capitalize; }
+        .source-row .s-bar { flex: 1; height: 14px; background: #f0ede8; }
+        .source-row .s-bar .fill { height: 100%; background: #b89a5a; }
+        .source-row .s-val { width: 40px; text-align: right; color: #1a1a1a; font-weight: 700; }
+
+        .monthly-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+        .monthly-col { text-align: center; }
+        .monthly-col .m-bar {
+            width: 100%; background: #f0ede8; position: relative;
+            display: flex; align-items: flex-end; justify-content: center;
+        }
+        .monthly-col .m-fill { width: 100%; background: #2d5a27; min-height: 2px; }
+        .monthly-col .m-label { font-size: 9px; color: #8c8c8c; margin-top: 6px; text-transform: uppercase; }
+        .monthly-col .m-val { font-size: 11px; font-weight: 700; color: #1a1a1a; margin-top: 2px; }
+
+        .pipe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .pipe-item { text-align: center; padding: 10px; border: 1px solid #f0ede8; }
+        .pipe-item .p-num { font-size: 20px; font-weight: 700; color: #2c2c2c; }
+        .pipe-item .p-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #8c8c8c; margin-top: 2px; }
+        .pipe-item.new { border-color: #b89a5a; }
+        .pipe-item.approved { border-color: #2d5a27; background: #eaf5e8; }
+        .pipe-item.completed { border-color: #1a4a1a; background: #d0e8d0; }
+        .pipe-item.rejected { border-color: #9a5a5a; }
+        .export-btn {
+            display: inline-block; padding: 6px 14px; font-size: 10px; font-family: inherit;
+            letter-spacing: 1px; text-transform: uppercase; border: 1px solid #d4cfc6;
+            cursor: pointer; background: #faf8f5; color: #2c2c2c; text-decoration: none;
+            transition: all 0.15s; margin-top: 14px;
+        }
+        .export-btn:hover { background: #b89a5a; color: #fff; border-color: #b89a5a; }
     </style>
 </head>
 <body>
@@ -332,6 +407,104 @@
             <div class="stat-card"><div class="num bronze">{{ stats.rejected }}</div><div class="label">Rejected</div></div>
             <div class="stat-card"><div class="num bronze">{{ stats.archived }}</div><div class="label">Archived</div></div>
             <div class="stat-card"><div class="num bronze">{{ stats.total_downloads }}</div><div class="label">Downloads</div></div>
+        </div>
+
+        <div class="bi-section">
+            <h2>Business Intelligence</h2>
+            <div class="bi-grid">
+                <div class="bi-card">
+                    <h3>Conversion Funnel</h3>
+                    <div class="funnel">
+                        {% set m = bi_metrics %}
+                        {% set max_val = [m.total_leads, m.downloads, m.interviews, m.approved, m.booked, m.completed] | max %}
+                        <div class="funnel-row">
+                            <span class="label">Leads</span>
+                            <div class="bar-wrap"><div class="bar" style="width:{{ (m.total_leads / max_val * 100) if max_val else 0 }}%;"></div></div>
+                            <span class="val">{{ m.total_leads }}</span>
+                            <span class="pct">100%</span>
+                        </div>
+                        <div class="funnel-row">
+                            <span class="label">Download</span>
+                            <div class="bar-wrap"><div class="bar dim" style="width:{{ (m.downloads / max_val * 100) if max_val else 0 }}%;"></div></div>
+                            <span class="val">{{ m.downloads }}</span>
+                            <span class="pct">{{ m.lead_to_download }}%</span>
+                        </div>
+                        <div class="funnel-row">
+                            <span class="label">Interview</span>
+                            <div class="bar-wrap"><div class="bar" style="width:{{ (m.interviews / max_val * 100) if max_val else 0 }}%;"></div></div>
+                            <span class="val">{{ m.interviews }}</span>
+                            <span class="pct">{{ m.download_to_interview }}%</span>
+                        </div>
+                        <div class="funnel-row">
+                            <span class="label">Approved</span>
+                            <div class="bar-wrap"><div class="bar dim" style="width:{{ (m.approved / max_val * 100) if max_val else 0 }}%;"></div></div>
+                            <span class="val">{{ m.approved }}</span>
+                            <span class="pct">{{ m.interview_to_approved }}%</span>
+                        </div>
+                        <div class="funnel-row">
+                            <span class="label">Booked</span>
+                            <div class="bar-wrap"><div class="bar" style="width:{{ (m.booked / max_val * 100) if max_val else 0 }}%;"></div></div>
+                            <span class="val">{{ m.booked }}</span>
+                            <span class="pct">{{ m.approved_to_booked }}%</span>
+                        </div>
+                        <div class="funnel-row">
+                            <span class="label">Completed</span>
+                            <div class="bar-wrap"><div class="bar dim" style="width:{{ (m.completed / max_val * 100) if max_val else 0 }}%;"></div></div>
+                            <span class="val">{{ m.completed }}</span>
+                            <span class="pct">{{ m.booked_to_completed }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bi-card">
+                    <h3>Traffic Sources</h3>
+                    {% set src_total = bi_sources.organic + bi_sources.instagram + bi_sources.facebook + bi_sources.direct + bi_sources.other %}
+                    <div class="source-list">
+                        {% for key, label in [('organic','Organic'), ('instagram','Instagram'), ('facebook','Facebook'), ('direct','Direct'), ('other','Other')] %}
+                        <div class="source-row">
+                            <span class="s-label">{{ label }}</span>
+                            <div class="s-bar"><div class="fill" style="width:{{ (bi_sources[key] / src_total * 100) if src_total else 0 }}%;"></div></div>
+                            <span class="s-val">{{ bi_sources[key] }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="bi-card">
+                    <h3>Monthly Leads</h3>
+                    {% if bi_monthly %}
+                    {% set max_m = bi_monthly | map(attribute='count') | max %}
+                    <div class="monthly-grid">
+                        {% for m in bi_monthly %}
+                        <div class="monthly-col">
+                            <div class="m-bar" style="height:60px;">
+                                <div class="m-fill" style="height:{{ (m.count / max_m * 100) if max_m else 0 }}%;"></div>
+                            </div>
+                            <div class="m-label">{{ m.month[-2:] }}</div>
+                            <div class="m-val">{{ m.count }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div style="text-align:center;padding:20px 0;color:#8c8c8c;font-size:11px;font-style:italic;">No monthly data yet</div>
+                    {% endif %}
+                </div>
+
+                <div class="bi-card">
+                    <h3>Candidate Pipeline</h3>
+                    <div class="pipe-grid">
+                        <div class="pipe-item new"><div class="p-num">{{ bi_pipeline.NEW }}</div><div class="p-label">New</div></div>
+                        <div class="pipe-item"><div class="p-num">{{ bi_pipeline.CONTACTED }}</div><div class="p-label">Contacted</div></div>
+                        <div class="pipe-item"><div class="p-num">{{ bi_pipeline.INTERVIEW }}</div><div class="p-label">Interview</div></div>
+                        <div class="pipe-item approved"><div class="p-num">{{ bi_pipeline.APPROVED }}</div><div class="p-label">Approved</div></div>
+                        <div class="pipe-item"><div class="p-num">{{ bi_pipeline.BOOKED }}</div><div class="p-label">Booked</div></div>
+                        <div class="pipe-item completed"><div class="p-num">{{ bi_pipeline.COMPLETED }}</div><div class="p-label">Completed</div></div>
+                        <div class="pipe-item rejected"><div class="p-num">{{ bi_pipeline.REJECTED }}</div><div class="p-label">Rejected</div></div>
+                        <div class="pipe-item"><div class="p-num">{{ bi_pipeline.ARCHIVED }}</div><div class="p-label">Archived</div></div>
+                    </div>
+                    <a href="/admin/export/leads" class="export-btn">↓ Export CSV</a>
+                </div>
+            </div>
         </div>
 
         <form class="filters" method="GET" action="/admin">
@@ -471,6 +644,26 @@
                     </div>
                     {% else %}
                     <div style="text-align:center;padding:16px 0;color:#8c8c8c;font-size:11px;font-style:italic;">No emails queued</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="analysis-widget">
+                <h3>AI Candidate Analysis</h3>
+                <div class="analysis-stats">
+                    <div class="analysis-stat"><div class="num">{{ ai_stats.total }}</div><div class="label">Analyzed</div></div>
+                    <div class="analysis-stat"><div class="num">{{ ai_stats.avg_score }}</div><div class="label">Avg Score</div></div>
+                    <div class="analysis-stat"><div class="num">{{ ai_stats.high }}</div><div class="label">High (80+)</div></div>
+                    <div class="analysis-stat"><div class="num">{{ ai_stats.low }}</div><div class="label">Low (&lt;60)</div></div>
+                </div>
+                <div class="analysis-list">
+                    {% for a in recent_analyses %}
+                    <div class="analysis-item">
+                        <span class="analysis-score" style="color:{% if a.score >= 80 %}#4caf50{% elif a.score >= 60 %}#b89a5a{% else %}#e74c3c{% endif %};">{{ a.score }}</span>
+                        <span class="analysis-recommend">{{ a.recommendation[:50] }}{% if a.recommendation|length > 50 %}...{% endif %}</span>
+                    </div>
+                    {% else %}
+                    <div style="text-align:center;padding:16px 0;color:#8c8c8c;font-size:11px;font-style:italic;">No analyses yet</div>
                     {% endfor %}
                 </div>
             </div>

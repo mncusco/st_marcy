@@ -88,7 +88,7 @@
       })
       .then(function (data) {
         if (data.download_token) {
-          window.location.href = '/download/' + data.download_token;
+          window.location.href = '/thank-you.html?token=' + encodeURIComponent(data.download_token);
         } else {
           showError('Unexpected response. Please try again.');
         }

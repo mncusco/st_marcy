@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-i18n>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -771,18 +771,19 @@ footer {
     </p>
   </div>
 
-  <form class="reveal" action="https://formspree.io/f/xjgqzpvj" method="POST">
+  <form class="reveal" id="lead-form">
     <div class="form-field">
-      <label for="first-name">First Name</label>
+      <label for="first_name">First Name</label>
       <input
         type="text"
-        id="first-name"
-        name="first-name"
+        id="first_name"
+        name="first_name"
         placeholder="Your first name"
         maxlength="100"
         required
         autocomplete="given-name">
     </div>
+    <input type="hidden" name="last_name" value="">
     <div class="form-field">
       <label for="email">Email</label>
       <input
@@ -867,7 +868,6 @@ footer {
         <option value="VN">Vietnam</option>
       </select>
     </div>
-    <input type="hidden" name="_subject" value="Private Edition Request — Shamanic Travels">
     <div class="form-submit">
       <button type="submit">Send me the Private Edition</button>
     </div>
@@ -887,6 +887,11 @@ footer {
   </div>
 </footer>
 
+
+<script src="i18n.js"></script>
+<script>i18n.init();</script>
+
+<script src="/static/js/st-core-submit.js"></script>
 
 <script>
 /* ── SCROLL INDICATOR FADE ── */

@@ -74,6 +74,7 @@ class Lead(Base):
     editorial_edition: Mapped[Optional["EditorialEdition"]] = relationship(back_populates="leads")
     download_events: Mapped[list["DownloadEvent"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     interviews: Mapped[list["Interview"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
+    analysis: Mapped[Optional["CandidateAnalysis"]] = relationship(back_populates="lead", uselist=False, cascade="all, delete-orphan")
 
 class LeadEvent(Base):
     __tablename__ = "lead_events"
@@ -161,3 +162,18 @@ class Interview(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     lead: Mapped["Lead"] = relationship(back_populates="interviews")
+
+
+class CandidateAnalysis(Base):
+    __tablename__ = "candidate_analyses"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    lead_id: Mapped[int] = mapped_column(ForeignKey("leads.id"), unique=True)
+    score: Mapped[int] = mapped_column()
+    summary: Mapped[str] = mapped_column(Text())
+    strengths: Mapped[str] = mapped_column(Text(), default="[]")
+    concerns: Mapped[str] = mapped_column(Text(), default="[]")
+    recommendation: Mapped[str] = mapped_column(default="")
+    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+
+    lead: Mapped["Lead"] = relationship(back_populates="analysis")

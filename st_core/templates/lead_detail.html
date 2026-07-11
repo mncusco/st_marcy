@@ -186,6 +186,25 @@
         .badge-scheduled { border-color: #5a7d9a; color: #3a6b8a; }
         .badge-no_show { border-color: #9a5a5a; color: #9a5a5a; }
 
+        .analysis-box { display: flex; gap: 24px; flex-wrap: wrap; }
+        .analysis-box .score-badge {
+            width: 72px; height: 72px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 700; flex-shrink: 0;
+        }
+        .analysis-box .score-badge.high { background: #eaf5e8; color: #2d5a27; border: 2px solid #2d5a27; }
+        .analysis-box .score-badge.medium { background: #faf6ee; color: #b89a5a; border: 2px solid #b89a5a; }
+        .analysis-box .score-badge.low { background: #fdf0f0; color: #9a5a5a; border: 2px solid #9a5a5a; }
+        .analysis-box .analysis-body { flex: 1; min-width: 200px; }
+        .analysis-box .analysis-body p { font-size: 13px; line-height: 1.6; margin-bottom: 8px; color: #3a3a3a; }
+        .analysis-box .analysis-body .meta { font-size: 11px; color: #8c8c8c; margin-top: 8px; }
+        .analysis-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+        .analysis-lists h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #8c8c8c; margin-bottom: 8px; }
+        .analysis-lists ul { list-style: none; padding: 0; }
+        .analysis-lists li { font-size: 12px; padding: 3px 0; color: #3a3a3a; }
+        .analysis-lists li::before { content: '— '; color: #b89a5a; }
+        .analyze-btn { margin-top: 16px; }
+
         .doc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .doc-card {
             border: 1px dashed #d4cfc6;
@@ -419,6 +438,51 @@
             </div>
             {% else %}
             <div class="placeholder">No interviews scheduled for this lead yet.</div>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>AI Candidate Analysis</h2>
+            {% if analysis %}
+            <div class="analysis-box">
+                {% set score_class = 'high' if analysis.score >= 80 else ('medium' if analysis.score >= 60 else 'low') %}
+                <div class="score-badge {{ score_class }}">{{ analysis.score }}</div>
+                <div class="analysis-body">
+                    <p>{{ analysis.summary }}</p>
+                    <div class="meta"><strong>Recommendation:</strong> {{ analysis.recommendation }}</div>
+                    <div class="meta">Analyzed {{ analysis.created_at.strftime('%d %b %Y at %H:%M') }}</div>
+                    <div class="analysis-lists">
+                        <div>
+                            <h4>Strengths</h4>
+                            <ul>
+                            {% for s in analysis.strengths | from_json %}
+                                <li>{{ s }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Concerns</h4>
+                            <ul>
+                            {% for c in analysis.concerns | from_json %}
+                                <li>{{ c }}</li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="analyze-btn">
+                <form method="POST" action="/admin/lead/{{ lead.id }}/analyze" style="display:inline;">
+                    <button type="submit" class="btn btn-secondary" style="padding:6px 16px;font-size:10px;">Regenerate Analysis</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="placeholder">This lead has not been analyzed yet.</div>
+            <div class="analyze-btn">
+                <form method="POST" action="/admin/lead/{{ lead.id }}/analyze" style="display:inline;">
+                    <button type="submit" class="btn btn-primary" style="padding:6px 16px;font-size:10px;">+ Analyze Candidate</button>
+                </form>
+            </div>
             {% endif %}
         </div>
 

@@ -288,6 +288,14 @@ footer {
   </div>
 </section>
 
+<!-- ══════════════════════ DOWNLOAD ══════════════════════ -->
+<section id="download-section" style="padding:60px 24px;text-align:center;max-width:560px;margin:0 auto;">
+  <div class="reveal">
+    <a id="download-link" href="#" class="btn-download" style="display:inline-block;padding:20px 48px;background:var(--foreground);color:var(--background);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;font-family:'Inter',sans-serif;font-weight:400;border:none;cursor:pointer;transition:background 0.5s,color 0.5s;">Download Your Private Edition</a>
+    <p style="margin-top:20px;font-size:11px;color:var(--muted);letter-spacing:0.02em;">Your exclusive editorial will be delivered as a PDF.</p>
+  </div>
+</section>
+
 <!-- ══════════════════════ QUOTE ══════════════════════ -->
 <section id="quote-section">
   <div class="quote-inner reveal">
@@ -315,6 +323,17 @@ footer {
 </footer>
 
 <script src="i18n.js"></script>
+<script>
+/* ── Wire download token ── */
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token');
+  if (token) {
+    var link = document.getElementById('download-link');
+    if (link) link.href = '/download/' + encodeURIComponent(token);
+  }
+})();
+</script>
 <script>
 i18n.init();
 

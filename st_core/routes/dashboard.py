@@ -1,7 +1,8 @@
+import json
 from typing import Optional
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, Request, Form, Query
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from dependencies import get_db
@@ -13,12 +14,15 @@ from services.interview_service import (
     create_interview, schedule_interview, complete_interview,
     cancel_interview, mark_no_show, get_lead_interviews,
 )
-from schemas import EmailQueueResponse
+from schemas import EmailQueueResponse, CandidateAnalysisResponse
 from schemas import LeadUpdate
 from models import LeadStatus
+from services.ai_service import AIService
+from services.analytics_service import AnalyticsService
 
 router = APIRouter(prefix="/admin", tags=["Dashboard"])
 templates = Jinja2Templates(directory="templates")
+templates.env.filters["from_json"] = lambda v: json.loads(v) if v else []
 
 PERIOD_MAP = {
     "today": (datetime.utcnow().strftime("%Y-%m-%d"), None),
@@ -70,6 +74,15 @@ def admin_dashboard(
     interview_stats = get_interview_stats(db)
     upcoming_interviews = get_upcoming_interviews(db, limit=10)
     today_interviews = get_today_interviews(db)
+    ai_service = AIService(db)
+    ai_stats = ai_service.get_analysis_stats()
+    recent_analyses = ai_service.get_recent_analyses(limit=5)
+    analytics = AnalyticsService(db)
+    bi_metrics = analytics.get_conversion_metrics()
+    bi_sources = analytics.get_lead_sources()
+    bi_pipeline = analytics.get_pipeline_value()
+    bi_monthly = analytics.get_monthly_leads()
+    bi_downloads = analytics.get_download_statistics()
 
     return templates.TemplateResponse(
         request,
@@ -98,6 +111,13 @@ def admin_dashboard(
             "interview_stats": interview_stats,
             "upcoming_interviews": upcoming_interviews,
             "today_interviews": today_interviews,
+            "ai_stats": ai_stats,
+            "recent_analyses": recent_analyses,
+            "bi_metrics": bi_metrics,
+            "bi_sources": bi_sources,
+            "bi_pipeline": bi_pipeline,
+            "bi_monthly": bi_monthly,
+            "bi_downloads": bi_downloads,
             "now": datetime.utcnow,
         },
     )
@@ -114,10 +134,12 @@ def admin_lead_detail(
     emails = EmailEngine(db).get_recent_emails()
     lead_emails = [e for e in emails if e.lead_id == lead_id]
     lead_interviews = get_lead_interviews(db, lead_id)
+    ai_service = AIService(db)
+    lead_analysis = ai_service.get_analysis(lead_id)
     return templates.TemplateResponse(
         request,
         "lead_detail.html",
-        {"lead": lead, "events": events, "emails": lead_emails, "interviews": lead_interviews, "statuses": list(LeadStatus)},
+        {"lead": lead, "events": events, "emails": lead_emails, "interviews": lead_interviews, "statuses": list(LeadStatus), "analysis": lead_analysis},
     )
 
 @router.post("/lead/{lead_id}")
@@ -170,6 +192,17 @@ def admin_reprocess_automation(
     AutomationEngine(db).on_status_changed(lead, lead.status, lead.status)
     return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
 
+@router.post("/lead/{lead_id}/analyze")
+def admin_analyze_lead(
+    lead_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    lead = LeadService.get_lead_by_id(db, lead_id)
+    AIService(db).analyze_candidate(lead)
+    return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+
+
 @router.post("/lead/{lead_id}/interview/create")
 def admin_create_interview(
     lead_id: int,
@@ -220,6 +253,35 @@ def admin_cancel_interview(
     interview = cancel_interview(db, interview_id, notes=notes or None, created_by=admin)
     db.commit()
     return RedirectResponse(url=f"/admin/lead/{interview.lead_id}", status_code=303)
+
+@router.get("/export/leads")
+def admin_export_leads(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    import csv, io
+    leads = db.query(Lead).order_by(Lead.created_at.desc()).all()
+    buf = io.StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(["id", "uuid", "first_name", "last_name", "email", "country",
+                     "language", "status", "source_page", "campaign", "referrer",
+                     "utm_source", "utm_medium", "utm_campaign", "downloaded_editorial",
+                     "created_at", "updated_at"])
+    for l in leads:
+        writer.writerow([
+            l.id, l.uuid, l.first_name, l.last_name, l.email, l.country,
+            l.language, l.status.value, l.source_page, l.campaign, l.referrer,
+            l.utm_source, l.utm_medium, l.utm_campaign,
+            "yes" if l.downloaded_editorial else "no",
+            l.created_at.isoformat() if l.created_at else "",
+            l.updated_at.isoformat() if l.updated_at else "",
+        ])
+    return Response(
+        content=buf.getvalue(),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=leads_export.csv"},
+    )
+
 
 @router.post("/interview/{interview_id}/no-show")
 def admin_no_show_interview(
