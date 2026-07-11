@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from typing import Optional
 from datetime import datetime
-from models import LeadStatus, EmailStatus
+from models import LeadStatus, EmailStatus, InterviewStatus
 
 class LeadBase(BaseModel):
     first_name: str = Field(..., min_length=1, max_length=100)
@@ -95,6 +95,19 @@ class DownloadEventResponse(BaseModel):
     created_at: datetime
     ip_address: Optional[str] = None
     user_agent: Optional[str] = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+class InterviewResponse(BaseModel):
+    id: int
+    lead_id: int
+    scheduled_at: Optional[datetime] = None
+    duration_minutes: int
+    status: InterviewStatus
+    meeting_url: Optional[str] = None
+    notes: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
 

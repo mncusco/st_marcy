@@ -182,6 +182,9 @@
         .badge-sent { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
         .badge-failed { border-color: #9a5a5a; color: #9a5a5a; }
         .badge-cancelled { border-color: #aaa; color: #888; }
+        .badge-requested { border-color: #b89a5a; color: #b89a5a; }
+        .badge-scheduled { border-color: #5a7d9a; color: #3a6b8a; }
+        .badge-no_show { border-color: #9a5a5a; color: #9a5a5a; }
 
         .doc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .doc-card {
@@ -356,10 +359,67 @@
         </div>
 
         <div class="card">
-            <h2>Interview</h2>
-            <div class="placeholder">
-                Interview scheduling and notes will appear here in a future update.
+            <h2>Interview History</h2>
+            <div class="email-actions" style="margin-bottom:16px;">
+                <form method="POST" action="/admin/lead/{{ lead.id }}/interview/create" style="display:inline;">
+                    <button type="submit" class="btn btn-secondary" style="padding:6px 16px;font-size:10px;">+ Request Interview</button>
+                </form>
             </div>
+            {% if interviews %}
+            <div style="border:1px solid #e8e3da;">
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:#f7f4ef;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;">
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Status</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Scheduled</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Duration</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Meeting</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Notes</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inv in interviews %}
+                        <tr style="border-bottom:1px solid #f0ede8;font-size:12px;">
+                            <td style="padding:10px 14px;"><span class="badge badge-{{ inv.status.value.lower() }}">{{ inv.status.value }}</span></td>
+                            <td style="padding:10px 14px;color:#8c8c8c;font-size:11px;">{{ inv.scheduled_at.strftime('%d %b %Y, %H:%M') if inv.scheduled_at else '—' }}</td>
+                            <td style="padding:10px 14px;font-size:11px;">{{ inv.duration_minutes }} min</td>
+                            <td style="padding:10px 14px;font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;">{% if inv.meeting_url %}<a href="{{ inv.meeting_url }}" target="_blank" style="color:#b89a5a;">Link</a>{% else %}—{% endif %}</td>
+                            <td style="padding:10px 14px;font-size:11px;color:#8c8c8c;max-width:150px;overflow:hidden;text-overflow:ellipsis;">{{ inv.notes or '—' }}</td>
+                            <td style="padding:10px 14px;">
+                                {% if inv.status.value in ('REQUESTED',) %}
+                                <details style="display:inline-block;position:relative;">
+                                    <summary style="cursor:pointer;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;color:#b89a5a;padding:4px 8px;border:1px solid #d4cfc6;list-style:none;">Schedule</summary>
+                                    <div style="position:absolute;right:0;top:100%;background:#fff;border:1px solid #e8e3da;padding:12px;z-index:10;width:220px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                                        <form method="POST" action="/admin/interview/{{ inv.id }}/schedule" style="display:flex;flex-direction:column;gap:6px;">
+                                            <input type="datetime-local" name="scheduled_at" required style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                                            <input type="number" name="duration_minutes" value="30" min="15" max="180" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;" placeholder="Duration (min)">
+                                            <input type="text" name="meeting_url" placeholder="Meeting URL (optional)" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                                            <button type="submit" class="btn btn-primary" style="padding:6px 12px;font-size:10px;">Schedule</button>
+                                        </form>
+                                    </div>
+                                </details>
+                                {% endif %}
+                                {% if inv.status.value in ('REQUESTED', 'SCHEDULED') %}
+                                <form method="POST" action="/admin/interview/{{ inv.id }}/complete" style="display:inline;">
+                                    <button type="submit" class="btn btn-secondary" style="padding:4px 8px;font-size:9px;">Complete</button>
+                                </form>
+                                <form method="POST" action="/admin/interview/{{ inv.id }}/no-show" style="display:inline;">
+                                    <button type="submit" class="btn btn-secondary" style="padding:4px 8px;font-size:9px;">No Show</button>
+                                </form>
+                                <form method="POST" action="/admin/interview/{{ inv.id }}/cancel" style="display:inline;">
+                                    <button type="submit" class="btn btn-secondary" style="padding:4px 8px;font-size:9px;">Cancel</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="placeholder">No interviews scheduled for this lead yet.</div>
+            {% endif %}
         </div>
 
         <div class="card">

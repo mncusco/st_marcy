@@ -29,6 +29,13 @@ class EmailStatus(str, enum.Enum):
     FAILED = "FAILED"
     CANCELLED = "CANCELLED"
 
+class InterviewStatus(str, enum.Enum):
+    REQUESTED = "REQUESTED"
+    SCHEDULED = "SCHEDULED"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
+    NO_SHOW = "NO_SHOW"
+
 class Lead(Base):
     __tablename__ = "leads"
 
@@ -66,6 +73,7 @@ class Lead(Base):
     emails: Mapped[list["EmailQueue"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     editorial_edition: Mapped[Optional["EditorialEdition"]] = relationship(back_populates="leads")
     download_events: Mapped[list["DownloadEvent"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
+    interviews: Mapped[list["Interview"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
 
 class LeadEvent(Base):
     __tablename__ = "lead_events"
@@ -138,3 +146,18 @@ class DownloadEvent(Base):
 
     lead: Mapped["Lead"] = relationship(back_populates="download_events")
     editorial: Mapped[Optional["EditorialEdition"]] = relationship()
+
+class Interview(Base):
+    __tablename__ = "interviews"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    scheduled_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    duration_minutes: Mapped[int] = mapped_column(Integer, default=30)
+    status: Mapped[InterviewStatus] = mapped_column(SQLEnum(InterviewStatus), default=InterviewStatus.REQUESTED)
+    meeting_url: Mapped[str] = mapped_column(String(512), nullable=True)
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    lead: Mapped["Lead"] = relationship(back_populates="interviews")

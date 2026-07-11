@@ -8,6 +8,11 @@ from dependencies import get_db
 from security import verify_admin
 from services.lead_service import LeadService
 from services.email_engine import EmailEngine
+from services.interview_service import (
+    get_upcoming_interviews, get_today_interviews, get_interview_stats,
+    create_interview, schedule_interview, complete_interview,
+    cancel_interview, mark_no_show, get_lead_interviews,
+)
 from schemas import EmailQueueResponse
 from schemas import LeadUpdate
 from models import LeadStatus
@@ -62,6 +67,9 @@ def admin_dashboard(
     recent_events = LeadService.get_recent_events(db, limit=15)
     email_stats = EmailEngine(db).get_queue_stats()
     recent_emails = EmailEngine(db).get_recent_emails(limit=10)
+    interview_stats = get_interview_stats(db)
+    upcoming_interviews = get_upcoming_interviews(db, limit=10)
+    today_interviews = get_today_interviews(db)
 
     return templates.TemplateResponse(
         request,
@@ -87,6 +95,9 @@ def admin_dashboard(
             "recent_events": recent_events,
             "email_stats": email_stats,
             "recent_emails": recent_emails,
+            "interview_stats": interview_stats,
+            "upcoming_interviews": upcoming_interviews,
+            "today_interviews": today_interviews,
             "now": datetime.utcnow,
         },
     )
@@ -102,10 +113,11 @@ def admin_lead_detail(
     events = LeadService.get_lead_events(db, lead_id)
     emails = EmailEngine(db).get_recent_emails()
     lead_emails = [e for e in emails if e.lead_id == lead_id]
+    lead_interviews = get_lead_interviews(db, lead_id)
     return templates.TemplateResponse(
         request,
         "lead_detail.html",
-        {"lead": lead, "events": events, "emails": lead_emails, "statuses": list(LeadStatus)},
+        {"lead": lead, "events": events, "emails": lead_emails, "interviews": lead_interviews, "statuses": list(LeadStatus)},
     )
 
 @router.post("/lead/{lead_id}")
@@ -157,3 +169,65 @@ def admin_reprocess_automation(
     AutomationEngine(db).on_lead_created(lead)
     AutomationEngine(db).on_status_changed(lead, lead.status, lead.status)
     return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+
+@router.post("/lead/{lead_id}/interview/create")
+def admin_create_interview(
+    lead_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    create_interview(db, lead_id, created_by=admin)
+    db.commit()
+    return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+
+@router.post("/interview/{interview_id}/schedule")
+def admin_schedule_interview(
+    interview_id: int,
+    scheduled_at: str = Form(...),
+    duration_minutes: int = Form(30),
+    meeting_url: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    from datetime import datetime
+    try:
+        dt = datetime.strptime(scheduled_at, "%Y-%m-%dT%H:%M")
+    except ValueError:
+        dt = datetime.strptime(scheduled_at, "%Y-%m-%d %H:%M")
+    interview = schedule_interview(db, interview_id, dt, duration_minutes,
+                                    meeting_url=meeting_url or None, created_by=admin)
+    db.commit()
+    return RedirectResponse(url=f"/admin/lead/{interview.lead_id}", status_code=303)
+
+@router.post("/interview/{interview_id}/complete")
+def admin_complete_interview(
+    interview_id: int,
+    notes: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    interview = complete_interview(db, interview_id, notes=notes or None, created_by=admin)
+    db.commit()
+    return RedirectResponse(url=f"/admin/lead/{interview.lead_id}", status_code=303)
+
+@router.post("/interview/{interview_id}/cancel")
+def admin_cancel_interview(
+    interview_id: int,
+    notes: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    interview = cancel_interview(db, interview_id, notes=notes or None, created_by=admin)
+    db.commit()
+    return RedirectResponse(url=f"/admin/lead/{interview.lead_id}", status_code=303)
+
+@router.post("/interview/{interview_id}/no-show")
+def admin_no_show_interview(
+    interview_id: int,
+    notes: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    interview = mark_no_show(db, interview_id, notes=notes or None, created_by=admin)
+    db.commit()
+    return RedirectResponse(url=f"/admin/lead/{interview.lead_id}", status_code=303)

@@ -243,6 +243,34 @@
         .email-status-badge.pending { border-color: #b89a5a; color: #b89a5a; }
         .email-status-badge.cancelled { border-color: #aaa; color: #888; }
 
+        .interview-widget { background: #fff; border: 1px solid #e8e3da; margin-top: 20px; }
+        .interview-widget h3 {
+            font-size: 12px; font-weight: 400; text-transform: uppercase;
+            letter-spacing: 2px; color: #b89a5a; padding: 16px 18px 0;
+        }
+        .interview-stats { display: flex; gap: 8px; padding: 12px 18px; flex-wrap: wrap; }
+        .interview-stat {
+            flex: 1; min-width: 50px; text-align: center;
+            padding: 8px 4px; border: 1px solid #f0ede8;
+        }
+        .interview-stat .num { font-size: 16px; font-weight: 700; color: #2c2c2c; }
+        .interview-stat .label { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; color: #8c8c8c; }
+        .interview-list { padding: 0 18px 16px; }
+        .interview-item {
+            display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f0ede8;
+            font-size: 11px; align-items: center;
+        }
+        .interview-item:last-child { border-bottom: none; }
+        .interview-name { flex: 1; color: #1a1a1a; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .interview-time { color: #8c8c8c; font-size: 10px; white-space: nowrap; }
+        .interview-badge {
+            font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 2px 6px; border: 1px solid #d4cfc6;
+        }
+        .interview-badge.scheduled { border-color: #5a7d9a; color: #3a6b8a; }
+        .interview-badge.requested { border-color: #b89a5a; color: #b89a5a; }
+        .interview-badge.completed { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
+
         .timeline-widget { background: #fff; border: 1px solid #e8e3da; }
         .tw-list { padding: 12px 18px 18px; }
         .tw-item {
@@ -445,6 +473,41 @@
                     <div style="text-align:center;padding:16px 0;color:#8c8c8c;font-size:11px;font-style:italic;">No emails queued</div>
                     {% endfor %}
                 </div>
+            </div>
+
+            <div class="interview-widget">
+                <h3>Interviews</h3>
+                <div class="interview-stats">
+                    <div class="interview-stat"><div class="num">{{ interview_stats.requested }}</div><div class="label">Requested</div></div>
+                    <div class="interview-stat"><div class="num">{{ interview_stats.scheduled }}</div><div class="label">Scheduled</div></div>
+                    <div class="interview-stat"><div class="num">{{ interview_stats.completed }}</div><div class="label">Done</div></div>
+                </div>
+                {% if today_interviews %}
+                <div style="padding:0 18px 4px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#b89a5a;">Today</div>
+                <div class="interview-list">
+                    {% for inv, fn, ln, email in today_interviews %}
+                    <div class="interview-item">
+                        <span class="interview-name">{{ fn }} {{ ln }}</span>
+                        <span class="interview-badge {{ inv.status.value.lower() }}">{{ inv.status.value }}</span>
+                        <span class="interview-time">{{ inv.scheduled_at.strftime('%H:%M') }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if upcoming_interviews %}
+                <div style="padding:0 18px 4px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#b89a5a;">Upcoming</div>
+                <div class="interview-list">
+                    {% for inv, fn, ln, email in upcoming_interviews %}
+                    <div class="interview-item">
+                        <span class="interview-name">{{ fn }} {{ ln }}</span>
+                        <span class="interview-badge scheduled">SCHEDULED</span>
+                        <span class="interview-time">{{ inv.scheduled_at.strftime('%d %b %H:%M') }}</span>
+                    </div>
+                    {% else %}
+                    <div style="text-align:center;padding:8px 0;color:#8c8c8c;font-size:10px;font-style:italic;">No upcoming interviews</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
