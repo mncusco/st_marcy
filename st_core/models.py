@@ -21,6 +21,13 @@ class DocType(str, enum.Enum):
     MEDICAL_NOTES = "MEDICAL_NOTES"
     AGREEMENT = "AGREEMENT"
 
+class EmailStatus(str, enum.Enum):
+    PENDING = "PENDING"
+    PROCESSING = "PROCESSING"
+    SENT = "SENT"
+    FAILED = "FAILED"
+    CANCELLED = "CANCELLED"
+
 class Lead(Base):
     __tablename__ = "leads"
 
@@ -52,6 +59,7 @@ class Lead(Base):
 
     events: Mapped[list["LeadEvent"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     documents: Mapped[list["LeadDocument"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
+    emails: Mapped[list["EmailQueue"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
 
 class LeadEvent(Base):
     __tablename__ = "lead_events"
@@ -79,3 +87,22 @@ class LeadDocument(Base):
     notes: Mapped[str] = mapped_column(Text, nullable=True)
 
     lead: Mapped["Lead"] = relationship(back_populates="documents")
+
+class EmailQueue(Base):
+    __tablename__ = "email_queue"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    email_type: Mapped[str] = mapped_column(String(50))
+    subject: Mapped[str] = mapped_column(String(255))
+    language: Mapped[str] = mapped_column(String(10))
+    status: Mapped[EmailStatus] = mapped_column(SQLEnum(EmailStatus), default=EmailStatus.PENDING)
+    template_name: Mapped[str] = mapped_column(String(100))
+    payload_json: Mapped[str] = mapped_column(Text, nullable=True)
+    scheduled_for: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    sent_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    error_message: Mapped[str] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    lead: Mapped["Lead"] = relationship(back_populates="emails")

@@ -201,8 +201,8 @@
         .empty { text-align: center; padding: 40px 20px; color: #8c8c8c; }
         .empty p { font-size: 13px; font-style: italic; }
 
-        .timeline-widget { background: #fff; border: 1px solid #e8e3da; }
-        .timeline-widget h3 {
+        .email-widget { background: #fff; border: 1px solid #e8e3da; margin-top: 20px; }
+        .email-widget h3 {
             font-size: 12px;
             font-weight: 400;
             text-transform: uppercase;
@@ -210,6 +210,40 @@
             color: #b89a5a;
             padding: 16px 18px 0;
         }
+        .email-stats { display: flex; gap: 8px; padding: 12px 18px; flex-wrap: wrap; }
+        .email-stat {
+            flex: 1; min-width: 60px; text-align: center;
+            padding: 10px 6px; border: 1px solid #f0ede8;
+        }
+        .email-stat .num { font-size: 18px; font-weight: 700; color: #2c2c2c; }
+        .email-stat .label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #8c8c8c; }
+        .email-actions { display: flex; gap: 6px; padding: 0 18px 12px; flex-wrap: wrap; }
+        .email-actions form { display: inline; }
+        .email-btn {
+            padding: 5px 10px; font-size: 10px; font-family: inherit; letter-spacing: 0.5px;
+            text-transform: uppercase; border: 1px solid #d4cfc6; cursor: pointer;
+            background: #faf8f5; color: #2c2c2c; transition: all 0.15s;
+            text-decoration: none;
+        }
+        .email-btn:hover { background: #b89a5a; color: #fff; border-color: #b89a5a; }
+        .email-list { padding: 0 18px 16px; }
+        .email-item {
+            display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f0ede8;
+            font-size: 11px; align-items: center;
+        }
+        .email-item:last-child { border-bottom: none; }
+        .email-type { color: #b89a5a; font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; min-width: 80px; }
+        .email-subject { flex: 1; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .email-status-badge {
+            font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 2px 6px; border: 1px solid #d4cfc6;
+        }
+        .email-status-badge.sent { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
+        .email-status-badge.failed { border-color: #9a5a5a; color: #9a5a5a; }
+        .email-status-badge.pending { border-color: #b89a5a; color: #b89a5a; }
+        .email-status-badge.cancelled { border-color: #aaa; color: #888; }
+
+        .timeline-widget { background: #fff; border: 1px solid #e8e3da; }
         .tw-list { padding: 12px 18px 18px; }
         .tw-item {
             display: flex;
@@ -383,6 +417,32 @@
                     </div>
                     {% else %}
                     <div style="text-align:center;padding:30px 0;color:#8c8c8c;font-size:12px;font-style:italic;">No activity yet</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="email-widget">
+                <h3>Email Queue</h3>
+                <div class="email-stats">
+                    <div class="email-stat"><div class="num">{{ email_stats.pending }}</div><div class="label">Pending</div></div>
+                    <div class="email-stat"><div class="num">{{ email_stats.sent }}</div><div class="label">Sent</div></div>
+                    <div class="email-stat"><div class="num">{{ email_stats.failed }}</div><div class="label">Failed</div></div>
+                    <div class="email-stat"><div class="num">{{ email_stats.total }}</div><div class="label">Total</div></div>
+                </div>
+                <div class="email-actions">
+                    <form method="POST" action="/admin/email/process">
+                        <button type="submit" class="email-btn">Process Queue</button>
+                    </form>
+                </div>
+                <div class="email-list">
+                    {% for em in recent_emails %}
+                    <div class="email-item">
+                        <span class="email-type">{{ em.email_type }}</span>
+                        <span class="email-subject">{{ em.subject[:40] }}{% if em.subject|length > 40 %}...{% endif %}</span>
+                        <span class="email-status-badge {{ em.status.value.lower() }}">{{ em.status.value }}</span>
+                    </div>
+                    {% else %}
+                    <div style="text-align:center;padding:16px 0;color:#8c8c8c;font-size:11px;font-style:italic;">No emails queued</div>
                     {% endfor %}
                 </div>
             </div>

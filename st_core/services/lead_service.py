@@ -6,6 +6,7 @@ from sqlalchemy import desc, or_, and_
 from fastapi import HTTPException
 from models import Lead, LeadEvent, LeadStatus
 from schemas import LeadCreate, LeadUpdate
+from services.automation_engine import AutomationEngine
 
 ALLOWED_TRANSITIONS = {
     LeadStatus.NEW: [LeadStatus.CONTACTED, LeadStatus.REJECTED, LeadStatus.ARCHIVED],
@@ -53,6 +54,12 @@ class LeadService:
             {"email": lead_data.email, "source_page": lead_data.source_page})
         db.commit()
         db.refresh(db_lead)
+
+        try:
+            AutomationEngine(db).on_lead_created(db_lead)
+        except Exception:
+            pass
+
         return db_lead
 
     @staticmethod
@@ -130,6 +137,8 @@ class LeadService:
     def update_lead(db: Session, lead_id: int, lead_update: LeadUpdate, created_by: str = None) -> Lead:
         lead = LeadService.get_lead_by_id(db, lead_id)
         update_data = lead_update.model_dump(exclude_unset=True)
+        _old_status = lead.status
+        _status_changed = False
 
         if "status" in update_data:
             new_status = update_data["status"]
@@ -142,6 +151,7 @@ class LeadService:
                     )
                 old_status = lead.status
                 lead.status = new_status
+                _status_changed = True
                 LeadService._create_event(db, lead_id, "status_changed",
                     f"Status: {old_status.value} → {new_status.value}",
                     f"Status changed from {old_status.value} to {new_status.value}",
@@ -163,6 +173,13 @@ class LeadService:
 
         db.commit()
         db.refresh(lead)
+
+        if _status_changed:
+            try:
+                AutomationEngine(db).on_status_changed(lead, _old_status, lead.status)
+            except Exception:
+                pass
+
         return lead
 
     @staticmethod
@@ -193,6 +210,12 @@ class LeadService:
             f"Language: {lead.language or 'en'}")
         db.commit()
         db.refresh(lead)
+
+        try:
+            AutomationEngine(db).on_editorial_download(lead)
+        except Exception:
+            pass
+
         return lead
 
     @staticmethod

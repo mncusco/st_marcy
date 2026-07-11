@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from typing import Optional
 from datetime import datetime
-from models import LeadStatus
+from models import LeadStatus, EmailStatus
 
 class LeadBase(BaseModel):
     first_name: str = Field(..., min_length=1, max_length=100)
@@ -59,6 +59,23 @@ class LeadEventResponse(BaseModel):
 class LeadEventWithLeadName(LeadEventResponse):
     lead_name: str = ""
     lead_email: str = ""
+
+class EmailQueueResponse(BaseModel):
+    id: int
+    lead_id: int
+    email_type: str
+    subject: str
+    language: str
+    status: EmailStatus
+    template_name: str
+    payload_json: Optional[str] = None
+    scheduled_for: Optional[datetime] = None
+    sent_at: Optional[datetime] = None
+    attempts: int
+    error_message: Optional[str] = None
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
 
 class DashboardFilters(BaseModel):
     status: Optional[str] = None

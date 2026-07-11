@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     }
 
     EDITORIAL_FILES_DIR: str = "./ebooks"
+    EMAIL_BACKEND: str = "log"
 
     class Config:
         env_file = ".env"
@@ -29,3 +30,4 @@ settings = Settings()
 os.makedirs("./database", exist_ok=True)
 os.makedirs("./uploads", exist_ok=True)
 os.makedirs(settings.EDITORIAL_FILES_DIR, exist_ok=True)
+os.makedirs("./logs/emails", exist_ok=True)

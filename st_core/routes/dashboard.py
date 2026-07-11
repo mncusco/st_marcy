@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 from dependencies import get_db
 from security import verify_admin
 from services.lead_service import LeadService
+from services.email_engine import EmailEngine
+from schemas import EmailQueueResponse
 from schemas import LeadUpdate
 from models import LeadStatus
 
@@ -58,6 +60,8 @@ def admin_dashboard(
     stats = LeadService.get_dashboard_stats(db)
     total_pages = (total + per_page - 1) // per_page
     recent_events = LeadService.get_recent_events(db, limit=15)
+    email_stats = EmailEngine(db).get_queue_stats()
+    recent_emails = EmailEngine(db).get_recent_emails(limit=10)
 
     return templates.TemplateResponse(
         request,
@@ -81,6 +85,8 @@ def admin_dashboard(
             "sort_order": sort_order,
             "status_list": list(LeadStatus),
             "recent_events": recent_events,
+            "email_stats": email_stats,
+            "recent_emails": recent_emails,
             "now": datetime.utcnow,
         },
     )
@@ -94,10 +100,12 @@ def admin_lead_detail(
 ):
     lead = LeadService.get_lead_by_id(db, lead_id)
     events = LeadService.get_lead_events(db, lead_id)
+    emails = EmailEngine(db).get_recent_emails()
+    lead_emails = [e for e in emails if e.lead_id == lead_id]
     return templates.TemplateResponse(
         request,
         "lead_detail.html",
-        {"lead": lead, "events": events, "statuses": list(LeadStatus)},
+        {"lead": lead, "events": events, "emails": lead_emails, "statuses": list(LeadStatus)},
     )
 
 @router.post("/lead/{lead_id}")
@@ -110,4 +118,42 @@ def admin_update_lead(
 ):
     update_data = LeadUpdate(status=status, notes=notes)
     LeadService.update_lead(db, lead_id, update_data, created_by=admin)
+    return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+
+@router.post("/email/process")
+def admin_process_email_queue(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    count = EmailEngine(db).process_pending()
+    return RedirectResponse(url="/admin", status_code=303)
+
+@router.post("/email/{email_id}/cancel")
+def admin_cancel_email(
+    email_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    EmailEngine(db).cancel_email(email_id)
+    return RedirectResponse(url="/admin", status_code=303)
+
+@router.post("/email/{email_id}/retry")
+def admin_retry_email(
+    email_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    EmailEngine(db).retry_email(email_id)
+    return RedirectResponse(url="/admin", status_code=303)
+
+@router.post("/lead/{lead_id}/reprocess-automation")
+def admin_reprocess_automation(
+    lead_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    from services.automation_engine import AutomationEngine
+    lead = LeadService.get_lead_by_id(db, lead_id)
+    AutomationEngine(db).on_lead_created(lead)
+    AutomationEngine(db).on_status_changed(lead, lead.status, lead.status)
     return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
