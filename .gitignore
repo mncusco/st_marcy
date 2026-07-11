@@ -3,3 +3,11 @@ files (1)/
 files (2)/
 files (1).zip
 files (2).zip
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Backend local config / data
+st_core/.env
+st_core/database/

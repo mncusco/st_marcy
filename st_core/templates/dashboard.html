@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ST CORE - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Shamanic Travels Admissions</h1>
+        
+        <div class="grid grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                <h3 class="text-gray-500 text-sm font-medium">Candidati Totali</h3>
+                <p class="text-3xl font-bold mt-2">{{ stats.total }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                <h3 class="text-gray-500 text-sm font-medium">Nuovi Lead</h3>
+                <p class="text-3xl font-bold mt-2 text-blue-600">{{ stats.new }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+                <h3 class="text-gray-500 text-sm font-medium">Contattati</h3>
+                <p class="text-3xl font-bold mt-2 text-green-600">{{ stats.contacted }}</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nome</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for lead in leads %}
+                    <tr class="hover:bg-gray-50 cursor-pointer" onclick="window.location='/admin/lead/{{ lead.id }}'">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ lead.first_name }} {{ lead.last_name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.email }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                {{ lead.status.value }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:text-blue-900">
+                            <a href="/admin/lead/{{ lead.id }}">Dettagli</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
