@@ -28,6 +28,7 @@ class Lead(Base):
     status: Mapped[LeadStatus] = mapped_column(SQLEnum(LeadStatus), default=LeadStatus.NEW)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
     downloaded_editorial: Mapped[bool] = mapped_column(Boolean, default=False)
+    downloaded_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     ip_address: Mapped[str] = mapped_column(String(45), nullable=True)

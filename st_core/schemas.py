@@ -22,12 +22,24 @@ class LeadUpdate(BaseModel):
     status: Optional[LeadStatus] = None
     notes: Optional[str] = None
 
+class LeadDownload(BaseModel):
+    email: str = Field(...)
+
 class LeadResponse(LeadBase):
     id: int
     uuid: str
     status: LeadStatus
     notes: Optional[str]
+    downloaded_at: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+class DashboardFilters(BaseModel):
+    status: Optional[str] = None
+    language: Optional[str] = None
+    country: Optional[str] = None
+    search: Optional[str] = None
+    skip: int = 0
+    limit: int = 20

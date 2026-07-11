@@ -1,5 +1,5 @@
-from typing import List
-from fastapi import APIRouter, Depends
+from typing import List, Optional
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from dependencies import get_db
 from schemas import LeadCreate, LeadResponse, LeadUpdate
@@ -23,3 +23,8 @@ def get_lead(lead_id: int, db: Session = Depends(get_db)):
 @router.patch("/{lead_id}", response_model=LeadResponse)
 def update_lead(lead_id: int, lead_update: LeadUpdate, db: Session = Depends(get_db)):
     return LeadService.update_lead(db, lead_id, lead_update)
+
+@router.post("/{lead_id}/download", response_model=dict)
+def track_download(lead_id: int, db: Session = Depends(get_db)):
+    lead = LeadService.mark_downloaded(db, lead_id)
+    return {"success": True, "downloaded": True}

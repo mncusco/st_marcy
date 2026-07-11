@@ -2,57 +2,318 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ST CORE - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST CORE — Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f2ec;
+            color: #2c2c2c;
+            min-height: 100vh;
+        }
+        .topbar {
+            background: #2d5a27;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #f5f2ec;
+        }
+        .topbar h1 { font-size: 20px; font-weight: 400; letter-spacing: 1px; }
+        .topbar h1 span { color: #b89a5a; }
+        .topbar .sub { font-size: 12px; opacity: 0.7; letter-spacing: 2px; text-transform: uppercase; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 32px; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: #fff;
+            border: 1px solid #e8e3da;
+            padding: 20px 16px;
+            text-align: center;
+            border-radius: 0;
+            transition: box-shadow 0.2s;
+        }
+        .stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .stat-card .num {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c2c2c;
+            margin-bottom: 4px;
+        }
+        .stat-card .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8c8c8c;
+        }
+        .stat-card .num.bronze { color: #b89a5a; }
+        .stat-card .num.green { color: #2d5a27; }
+
+        .filters {
+            background: #fff;
+            border: 1px solid #e8e3da;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .filters select, .filters input {
+            padding: 8px 12px;
+            border: 1px solid #d4cfc6;
+            background: #faf8f5;
+            font-family: inherit;
+            font-size: 13px;
+            color: #2c2c2c;
+            min-width: 140px;
+        }
+        .filters select:focus, .filters input:focus {
+            outline: none;
+            border-color: #b89a5a;
+            background: #fff;
+        }
+        .filters input { min-width: 180px; }
+        .filters button {
+            background: #b89a5a;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            font-family: inherit;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .filters button:hover { background: #a6894d; }
+        .filters .clear {
+            background: transparent;
+            color: #8c8c8c;
+            border: 1px solid #d4cfc6;
+        }
+        .filters .clear:hover { background: #f0ece6; color: #2c2c2c; }
+
+        .table-wrap {
+            background: #fff;
+            border: 1px solid #e8e3da;
+            overflow-x: auto;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead th {
+            background: #f7f4ef;
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8c8c8c;
+            font-weight: 400;
+            border-bottom: 1px solid #e8e3da;
+            white-space: nowrap;
+        }
+        thead th a { color: inherit; text-decoration: none; }
+        thead th a:hover { color: #b89a5a; }
+        tbody tr {
+            border-bottom: 1px solid #f0ede8;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        tbody tr:hover { background: #faf8f5; }
+        tbody td {
+            padding: 14px 16px;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+        tbody td .name {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        tbody td .email {
+            color: #8c8c8c;
+            font-size: 12px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 1px solid #d4cfc6;
+        }
+        .badge-new { border-color: #b89a5a; color: #b89a5a; }
+        .badge-contacted { border-color: #2d5a27; color: #2d5a27; }
+        .badge-interview { border-color: #5a7d9a; color: #3a6b8a; }
+        .badge-approved { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
+        .badge-rejected { border-color: #9a5a5a; color: #9a5a5a; }
+        .badge-archived { border-color: #aaa; color: #888; }
+        .badge-downloaded { border-color: #b89a5a; color: #b89a5a; background: #faf6ee; }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px;
+            border-top: 1px solid #f0ede8;
+        }
+        .pagination a, .pagination span {
+            padding: 6px 14px;
+            font-size: 13px;
+            color: #2c2c2c;
+            text-decoration: none;
+            border: 1px solid #d4cfc6;
+            transition: all 0.15s;
+        }
+        .pagination a:hover { background: #b89a5a; color: #fff; border-color: #b89a5a; }
+        .pagination .active { background: #b89a5a; color: #fff; border-color: #b89a5a; }
+        .pagination .disabled { color: #ccc; border-color: #e8e3da; pointer-events: none; }
+        .pagination .info { border: none; font-size: 12px; color: #8c8c8c; }
+
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8c8c8c;
+        }
+        .empty p { font-size: 14px; font-style: italic; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-gray-900 mb-8">Shamanic Travels Admissions</h1>
-        
-        <div class="grid grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                <h3 class="text-gray-500 text-sm font-medium">Candidati Totali</h3>
-                <p class="text-3xl font-bold mt-2">{{ stats.total }}</p>
+<body>
+    <div class="topbar">
+        <div>
+            <h1><span>ST</span> CORE</h1>
+            <div class="sub">Shamanic Travels · Admissions Dashboard</div>
+        </div>
+        <div class="sub">{{ stats.total }} leads</div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="num green">{{ stats.total }}</div>
+                <div class="label">Total</div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                <h3 class="text-gray-500 text-sm font-medium">Nuovi Lead</h3>
-                <p class="text-3xl font-bold mt-2 text-blue-600">{{ stats.new }}</p>
+            <div class="stat-card">
+                <div class="num bronze">{{ stats.new }}</div>
+                <div class="label">New</div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
-                <h3 class="text-gray-500 text-sm font-medium">Contattati</h3>
-                <p class="text-3xl font-bold mt-2 text-green-600">{{ stats.contacted }}</p>
+            <div class="stat-card">
+                <div class="num bronze">{{ stats.contacted }}</div>
+                <div class="label">Contacted</div>
+            </div>
+            <div class="stat-card">
+                <div class="num bronze">{{ stats.interview }}</div>
+                <div class="label">Interview</div>
+            </div>
+            <div class="stat-card">
+                <div class="num green">{{ stats.approved }}</div>
+                <div class="label">Approved</div>
+            </div>
+            <div class="stat-card">
+                <div class="num bronze">{{ stats.rejected }}</div>
+                <div class="label">Rejected</div>
+            </div>
+            <div class="stat-card">
+                <div class="num bronze">{{ stats.archived }}</div>
+                <div class="label">Archived</div>
+            </div>
+            <div class="stat-card">
+                <div class="num bronze">{{ stats.total_downloads }}</div>
+                <div class="label">Downloads</div>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+        <form class="filters" method="GET" action="/admin">
+            <select name="status">
+                <option value="">All statuses</option>
+                {% for s in status_list %}
+                <option value="{{ s.value }}" {% if status_filter == s.value %}selected{% endif %}>{{ s.value }}</option>
+                {% endfor %}
+            </select>
+            <select name="language">
+                <option value="">All languages</option>
+                <option value="en" {% if language_filter == 'en' %}selected{% endif %}>English</option>
+                <option value="it" {% if language_filter == 'it' %}selected{% endif %}>Italiano</option>
+                <option value="es" {% if language_filter == 'es' %}selected{% endif %}>Español</option>
+                <option value="ru" {% if language_filter == 'ru' %}selected{% endif %}>Русский</option>
+                <option value="sr" {% if language_filter == 'sr' %}selected{% endif %}>Srpski</option>
+            </select>
+            <input type="text" name="country" placeholder="Country..." value="{{ country_filter or '' }}">
+            <input type="text" name="search" placeholder="Search name or email..." value="{{ search_filter or '' }}">
+            <button type="submit">Filter</button>
+            <a href="/admin" class="clear" style="padding:8px 20px;border:1px solid #d4cfc6;text-decoration:none;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8c8c8c;background:transparent;font-family:inherit;">Clear</a>
+        </form>
+
+        <div class="table-wrap">
+            {% if leads %}
+            <table>
+                <thead>
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Data</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nome</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Azioni</th>
+                        <th><a href="?sort_by=created_at&sort_order={% if sort_by == 'created_at' and sort_order == 'desc' %}asc{% else %}desc{% endif %}&page=1{% if status_filter %}&status={{ status_filter }}{% endif %}{% if language_filter %}&language={{ language_filter }}{% endif %}{% if country_filter %}&country={{ country_filter }}{% endif %}{% if search_filter %}&search={{ search_filter }}{% endif %}">Date{% if sort_by == 'created_at' %}{% if sort_order == 'desc' %} ▾{% else %} ▴{% endif %}{% endif %}</a></th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                        <th>Lang</th>
+                        <th>Status</th>
+                        <th>Source</th>
+                        <th>Download</th>
+                        <th></th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody>
                     {% for lead in leads %}
-                    <tr class="hover:bg-gray-50 cursor-pointer" onclick="window.location='/admin/lead/{{ lead.id }}'">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.created_at.strftime('%Y-%m-%d') }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ lead.first_name }} {{ lead.last_name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ lead.email }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                {{ lead.status.value }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:text-blue-900">
-                            <a href="/admin/lead/{{ lead.id }}">Dettagli</a>
-                        </td>
+                    <tr onclick="window.location='/admin/lead/{{ lead.id }}'">
+                        <td>{{ lead.created_at.strftime('%d %b %Y') }}</td>
+                        <td><span class="name">{{ lead.first_name }} {{ lead.last_name }}</span></td>
+                        <td><span class="email">{{ lead.email }}</span></td>
+                        <td>{{ lead.country or '—' }}</td>
+                        <td>{{ lead.language or '—' }}</td>
+                        <td><span class="badge badge-{{ lead.status.value.lower() }}">{{ lead.status.value }}</span></td>
+                        <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ lead.source_page or '—' }}</td>
+                        <td>{% if lead.downloaded_editorial %}<span class="badge badge-downloaded">✓</span>{% else %}—{% endif %}</td>
+                        <td><a href="/admin/lead/{{ lead.id }}" style="color:#b89a5a;text-decoration:none;font-size:12px;letter-spacing:0.5px;">Open →</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+            <div class="empty">
+                <p>No leads found.</p>
+            </div>
+            {% endif %}
+
+            {% if total_pages > 1 %}
+            <div class="pagination">
+                {% if page > 1 %}
+                <a href="?page={{ page - 1 }}&per_page={{ per_page }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if language_filter %}&language={{ language_filter }}{% endif %}{% if country_filter %}&country={{ country_filter }}{% endif %}{% if search_filter %}&search={{ search_filter }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}">‹ Prev</a>
+                {% else %}
+                <span class="disabled">‹ Prev</span>
+                {% endif %}
+
+                {% for p in range(1, total_pages + 1) %}
+                    {% if p == page %}
+                    <span class="active">{{ p }}</span>
+                    {% elif p <= 3 or p > total_pages - 2 or (p >= page - 1 and p <= page + 1) %}
+                    <a href="?page={{ p }}&per_page={{ per_page }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if language_filter %}&language={{ language_filter }}{% endif %}{% if country_filter %}&country={{ country_filter }}{% endif %}{% if search_filter %}&search={{ search_filter }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}">{{ p }}</a>
+                    {% elif p == 2 or p == total_pages - 1 %}
+                    <span class="disabled" style="border:none;">…</span>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page < total_pages %}
+                <a href="?page={{ page + 1 }}&per_page={{ per_page }}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if language_filter %}&language={{ language_filter }}{% endif %}{% if country_filter %}&country={{ country_filter }}{% endif %}{% if search_filter %}&search={{ search_filter }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}">Next ›</a>
+                {% else %}
+                <span class="disabled">Next ›</span>
+                {% endif %}
+                <span class="info">Page {{ page }} of {{ total_pages }} ({{ total }} total)</span>
+            </div>
+            {% endif %}
         </div>
     </div>
 </body>

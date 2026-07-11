@@ -2,53 +2,314 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dettaglio Lead - {{ lead.first_name }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ lead.first_name }} {{ lead.last_name }} — ST CORE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f2ec;
+            color: #2c2c2c;
+            min-height: 100vh;
+        }
+        .topbar {
+            background: #2d5a27;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #f5f2ec;
+        }
+        .topbar h1 { font-size: 20px; font-weight: 400; letter-spacing: 1px; }
+        .topbar h1 span { color: #b89a5a; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 32px; }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: #8c8c8c;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            transition: color 0.15s;
+        }
+        .back-link:hover { color: #b89a5a; }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e8e3da;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+        .card h2 {
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #b89a5a;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e8e3da;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .profile-grid .field label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8c8c8c;
+            margin-bottom: 4px;
+        }
+        .profile-grid .field .val {
+            font-size: 15px;
+            color: #1a1a1a;
+        }
+        .profile-grid .field .val.bronze { color: #b89a5a; }
+
+        .timeline { position: relative; padding-left: 28px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 4px;
+            bottom: 4px;
+            width: 1px;
+            background: #d4cfc6;
+        }
+        .timeline-item { position: relative; margin-bottom: 20px; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #b89a5a;
+            border: 2px solid #f5f2ec;
+        }
+        .timeline-item .date {
+            font-size: 11px;
+            color: #8c8c8c;
+            letter-spacing: 0.5px;
+        }
+        .timeline-item .event {
+            font-size: 14px;
+            color: #1a1a1a;
+            margin-top: 2px;
+        }
+        .timeline-item .event small { color: #8c8c8c; font-style: italic; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8c8c8c;
+            margin-bottom: 6px;
+        }
+        .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d4cfc6;
+            background: #faf8f5;
+            font-family: inherit;
+            font-size: 14px;
+            color: #2c2c2c;
+        }
+        .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #b89a5a;
+            background: #fff;
+        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        .btn-row { display: flex; gap: 12px; justify-content: flex-end; }
+        .btn {
+            padding: 10px 28px;
+            font-family: inherit;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-decoration: none;
+        }
+        .btn-primary { background: #b89a5a; color: #fff; }
+        .btn-primary:hover { background: #a6894d; }
+        .btn-secondary {
+            background: transparent;
+            color: #8c8c8c;
+            border: 1px solid #d4cfc6;
+        }
+        .btn-secondary:hover { background: #f0ece6; color: #2c2c2c; }
+
+        .placeholder {
+            border: 1px dashed #d4cfc6;
+            padding: 24px;
+            text-align: center;
+            color: #8c8c8c;
+            font-style: italic;
+            font-size: 13px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 1px solid #d4cfc6;
+        }
+        .badge-new { border-color: #b89a5a; color: #b89a5a; }
+        .badge-contacted { border-color: #2d5a27; color: #2d5a27; }
+        .badge-interview { border-color: #5a7d9a; color: #3a6b8a; }
+        .badge-approved { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
+        .badge-rejected { border-color: #9a5a5a; color: #9a5a5a; }
+        .badge-archived { border-color: #aaa; color: #888; }
+        .badge-downloaded { border-color: #b89a5a; color: #b89a5a; background: #faf6ee; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-    <div class="max-w-4xl mx-auto px-4 py-8">
-        <div class="mb-6 flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-gray-900">Profilo Candidato</h1>
-            <a href="/admin" class="text-blue-600 hover:underline">&larr; Torna alla Dashboard</a>
-        </div>
-        
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-            <h2 class="text-xl font-semibold mb-4 border-b pb-2">Informazioni Base</h2>
-            <div class="grid grid-cols-2 gap-4 text-sm">
-                <p><span class="font-medium text-gray-500">ID:</span> {{ lead.uuid }}</p>
-                <p><span class="font-medium text-gray-500">Registrato il:</span> {{ lead.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
-                <p><span class="font-medium text-gray-500">Nome:</span> {{ lead.first_name }} {{ lead.last_name }}</p>
-                <p><span class="font-medium text-gray-500">Email:</span> <a href="mailto:{{ lead.email }}" class="text-blue-600">{{ lead.email }}</a></p>
-                <p><span class="font-medium text-gray-500">Nazione:</span> {{ lead.country or '-' }}</p>
-                <p><span class="font-medium text-gray-500">Lingua:</span> {{ lead.language or '-' }}</p>
-                <p><span class="font-medium text-gray-500">Download Editoriale:</span> {{ 'Sì' if lead.downloaded_editorial else 'No' }}</p>
-                <p><span class="font-medium text-gray-500">Campagna:</span> {{ lead.campaign or '-' }}</p>
+<body>
+    <div class="topbar">
+        <h1><span>ST</span> CORE</h1>
+        <div style="font-size:12px;opacity:0.7;letter-spacing:2px;text-transform:uppercase;">Lead Detail</div>
+    </div>
+
+    <div class="container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+
+        <div class="card">
+            <h2>Profile</h2>
+            <div class="profile-grid">
+                <div class="field">
+                    <label>Name</label>
+                    <div class="val">{{ lead.first_name }} {{ lead.last_name }}</div>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <div class="val bronze">{{ lead.email }}</div>
+                </div>
+                <div class="field">
+                    <label>Status</label>
+                    <div class="val"><span class="badge badge-{{ lead.status.value.lower() }}">{{ lead.status.value }}</span></div>
+                </div>
+                <div class="field">
+                    <label>Lead ID</label>
+                    <div class="val" style="font-size:12px;color:#8c8c8c;">{{ lead.uuid }}</div>
+                </div>
+                <div class="field">
+                    <label>Country</label>
+                    <div class="val">{{ lead.country or '—' }}</div>
+                </div>
+                <div class="field">
+                    <label>Language</label>
+                    <div class="val">{{ lead.language or '—' }}</div>
+                </div>
+                <div class="field">
+                    <label>Source Page</label>
+                    <div class="val" style="font-size:12px;">{{ lead.source_page or '—' }}</div>
+                </div>
+                <div class="field">
+                    <label>Campaign</label>
+                    <div class="val">{{ lead.campaign or '—' }}</div>
+                </div>
+                <div class="field">
+                    <label>IP Address</label>
+                    <div class="val" style="font-size:12px;">{{ lead.ip_address or '—' }}</div>
+                </div>
+                <div class="field">
+                    <label>Created</label>
+                    <div class="val">{{ lead.created_at.strftime('%d %b %Y, %H:%M') }}</div>
+                </div>
+                <div class="field">
+                    <label>Last Updated</label>
+                    <div class="val">{{ lead.updated_at.strftime('%d %b %Y, %H:%M') }}</div>
+                </div>
+                <div class="field">
+                    <label>Editorial Download</label>
+                    <div class="val">
+                        {% if lead.downloaded_editorial %}
+                            <span class="badge badge-downloaded">✓ Downloaded</span>
+                            {% if lead.downloaded_at %}
+                            <span style="display:block;font-size:11px;color:#8c8c8c;margin-top:4px;">{{ lead.downloaded_at.strftime('%d %b %Y, %H:%M') }}</span>
+                            {% endif %}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="bg-white shadow rounded-lg p-6">
-            <h2 class="text-xl font-semibold mb-4 border-b pb-2">Gestione Amministrativa</h2>
-            <form action="/admin/lead/{{ lead.id }}" method="POST">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Status Candidatura</label>
-                    <select name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md border">
+        <div class="card">
+            <h2>Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="date">{{ lead.created_at.strftime('%d %b %Y, %H:%M') }}</div>
+                    <div class="event">Lead created — <strong>{{ lead.first_name }} {{ lead.last_name }}</strong> registered via <small>{{ lead.source_page or 'direct' }}</small></div>
+                </div>
+                {% if lead.downloaded_editorial and lead.downloaded_at %}
+                <div class="timeline-item">
+                    <div class="date">{{ lead.downloaded_at.strftime('%d %b %Y, %H:%M') }}</div>
+                    <div class="event">Editorial downloaded — language: <strong>{{ lead.language or 'en' }}</strong></div>
+                </div>
+                {% endif %}
+                {% if lead.notes %}
+                <div class="timeline-item">
+                    <div class="date">—</div>
+                    <div class="event">Internal notes added: <small>{{ lead.notes[:100] }}{% if lead.notes|length > 100 %}…{% endif %}</small></div>
+                </div>
+                {% endif %}
+                <div class="timeline-item">
+                    <div class="date">{{ lead.updated_at.strftime('%d %b %Y, %H:%M') }}</div>
+                    <div class="event">Last status: <span class="badge badge-{{ lead.status.value.lower() }}">{{ lead.status.value }}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <form action="/admin/lead/{{ lead.id }}" method="POST">
+            <div class="card">
+                <h2>Management</h2>
+                <div class="form-group">
+                    <label>Application Status</label>
+                    <select name="status">
                         {% for status in statuses %}
-                            <option value="{{ status.value }}" {% if lead.status == status %}selected{% endif %}>{{ status.value }}</option>
+                        <option value="{{ status.value }}" {% if lead.status == status %}selected{% endif %}>{{ status.value }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Note Interne (CRM)</label>
-                    <textarea name="notes" rows="4" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md border p-2">{{ lead.notes or '' }}</textarea>
+                <div class="form-group">
+                    <label>Internal Notes (CRM)</label>
+                    <textarea name="notes">{{ lead.notes or '' }}</textarea>
                 </div>
+                <div class="btn-row">
+                    <a href="/admin" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </form>
 
-                <div class="flex justify-end">
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Salva Modifiche
-                    </button>
-                </div>
-            </form>
+        <div class="card">
+            <h2>Email History</h2>
+            <div class="placeholder">
+                Email tracking will appear here once the email service is connected.<br>
+                <span style="font-size:11px;">(send_editorial, send_followup, send_interview)</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Interview</h2>
+            <div class="placeholder">
+                Interview scheduling and notes will appear here in a future update.
+            </div>
         </div>
     </div>
 </body>

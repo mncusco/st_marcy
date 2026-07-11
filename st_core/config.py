@@ -9,6 +9,14 @@ class Settings(BaseSettings):
     CONTACT_EMAIL: str
     SECRET_KEY: str
 
+    EDITORIAL_FILES: dict = {
+        "en": "Il_Ritiro_Nella_Selva_EN.pdf",
+        "it": "Il_Ritiro_Nella_Selva_IT.pdf",
+        "es": "Il_Ritiro_Nella_Selva_ES.pdf",
+        "ru": "Il_Ritiro_Nella_Selva_RU.pdf",
+        "sr": "Il_Ritiro_Nella_Selva_SR.pdf",
+    }
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
