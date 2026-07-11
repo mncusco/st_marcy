@@ -1,5 +1,6 @@
 import uuid
 import enum
+from typing import Optional
 from datetime import datetime
 from sqlalchemy import String, Text, Boolean, DateTime, Integer, ForeignKey, Enum as SQLEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -57,9 +58,14 @@ class Lead(Base):
     ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
     user_agent: Mapped[str] = mapped_column(Text, nullable=True)
 
+    editorial_edition_id: Mapped[int] = mapped_column(Integer, ForeignKey("editorial_editions.id"), nullable=True)
+    editorial_assigned_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+
     events: Mapped[list["LeadEvent"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     documents: Mapped[list["LeadDocument"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     emails: Mapped[list["EmailQueue"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
+    editorial_edition: Mapped[Optional["EditorialEdition"]] = relationship(back_populates="leads")
+    download_events: Mapped[list["DownloadEvent"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
 
 class LeadEvent(Base):
     __tablename__ = "lead_events"
@@ -106,3 +112,29 @@ class EmailQueue(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     lead: Mapped["Lead"] = relationship(back_populates="emails")
+
+class EditorialEdition(Base):
+    __tablename__ = "editorial_editions"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    language: Mapped[str] = mapped_column(String(10), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(255))
+    file_path: Mapped[str] = mapped_column(String(512), nullable=True)
+    version: Mapped[str] = mapped_column(String(50), default="1.0")
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    leads: Mapped[list["Lead"]] = relationship(back_populates="editorial_edition")
+
+class DownloadEvent(Base):
+    __tablename__ = "download_events"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    editorial_id: Mapped[int] = mapped_column(Integer, ForeignKey("editorial_editions.id"), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
+    user_agent: Mapped[str] = mapped_column(Text, nullable=True)
+
+    lead: Mapped["Lead"] = relationship(back_populates="download_events")
+    editorial: Mapped[Optional["EditorialEdition"]] = relationship()

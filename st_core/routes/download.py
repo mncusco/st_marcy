@@ -1,5 +1,5 @@
 import os
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import FileResponse, HTMLResponse
 from sqlalchemy.orm import Session
 from dependencies import get_db
@@ -9,8 +9,10 @@ from config import settings
 router = APIRouter(tags=["Download"])
 
 @router.get("/download/{token}")
-def download_editorial(token: str, db: Session = Depends(get_db)):
-    lead = LeadService.mark_downloaded_by_token(db, token)
+def download_editorial(token: str, request: Request, db: Session = Depends(get_db)):
+    client_ip = request.client.host if request.client else None
+    user_agent = request.headers.get("user-agent")
+    lead = LeadService.mark_downloaded_by_token(db, token, ip_address=client_ip, user_agent=user_agent)
     lang = lead.language or "en"
     filename = settings.EDITORIAL_FILES.get(lang, settings.EDITORIAL_FILES["en"])
     filepath = os.path.join(settings.EDITORIAL_FILES_DIR, filename)

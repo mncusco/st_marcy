@@ -77,6 +77,27 @@ class EmailQueueResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+class EditorialEditionResponse(BaseModel):
+    id: int
+    language: str
+    name: str
+    file_path: Optional[str] = None
+    version: str
+    active: bool
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+class DownloadEventResponse(BaseModel):
+    id: int
+    lead_id: int
+    editorial_id: Optional[int] = None
+    created_at: datetime
+    ip_address: Optional[str] = None
+    user_agent: Optional[str] = None
+
+    model_config = ConfigDict(from_attributes=True)
+
 class DashboardFilters(BaseModel):
     status: Optional[str] = None
     language: Optional[str] = None

@@ -3,12 +3,21 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import os
 
-from database import engine, Base
+from database import engine, Base, SessionLocal
 from routes import leads, dashboard, health, download
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
+    db = SessionLocal()
+    try:
+        from services.editorial_service import seed_editorials
+        seed_editorials(db)
+        db.commit()
+    except Exception:
+        db.rollback()
+    finally:
+        db.close()
     yield
 
 app = FastAPI(

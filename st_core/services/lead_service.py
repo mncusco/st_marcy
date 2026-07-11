@@ -7,6 +7,7 @@ from fastapi import HTTPException
 from models import Lead, LeadEvent, LeadStatus
 from schemas import LeadCreate, LeadUpdate
 from services.automation_engine import AutomationEngine
+from services.editorial_service import assign_editorial_to_lead, record_download_event
 
 ALLOWED_TRANSITIONS = {
     LeadStatus.NEW: [LeadStatus.CONTACTED, LeadStatus.REJECTED, LeadStatus.ARCHIVED],
@@ -57,6 +58,12 @@ class LeadService:
 
         try:
             AutomationEngine(db).on_lead_created(db_lead)
+        except Exception:
+            pass
+
+        try:
+            assign_editorial_to_lead(db, db_lead)
+            db.commit()
         except Exception:
             pass
 
@@ -190,16 +197,23 @@ class LeadService:
         return lead
 
     @staticmethod
-    def mark_downloaded(db: Session, lead_id: int) -> Lead:
+    def mark_downloaded(db: Session, lead_id: int, ip_address: str = None, user_agent: str = None) -> Lead:
         lead = LeadService.get_lead_by_id(db, lead_id)
         lead.downloaded_editorial = True
         lead.downloaded_at = datetime.utcnow()
         db.commit()
         db.refresh(lead)
+
+        try:
+            record_download_event(db, lead, ip_address=ip_address, user_agent=user_agent)
+            db.commit()
+        except Exception:
+            pass
+
         return lead
 
     @staticmethod
-    def mark_downloaded_by_token(db: Session, token: str) -> Lead:
+    def mark_downloaded_by_token(db: Session, token: str, ip_address: str = None, user_agent: str = None) -> Lead:
         lead = LeadService.get_lead_by_token(db, token)
         if lead.download_expires_at and datetime.utcnow() > lead.download_expires_at:
             raise HTTPException(status_code=410, detail="Token scaduto")
@@ -213,6 +227,12 @@ class LeadService:
 
         try:
             AutomationEngine(db).on_editorial_download(lead)
+        except Exception:
+            pass
+
+        try:
+            record_download_event(db, lead, ip_address=ip_address, user_agent=user_agent)
+            db.commit()
         except Exception:
             pass
 
