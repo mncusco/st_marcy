@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST CORE — Backups</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f2ec;
+            color: #2c2c2c;
+            min-height: 100vh;
+        }
+        .topbar {
+            background: #2d5a27;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #f5f2ec;
+        }
+        .topbar h1 { font-size: 20px; font-weight: 400; letter-spacing: 1px; }
+        .topbar h1 span { color: #b89a5a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 32px; }
+        .back-link {
+            display: inline-block; margin-bottom: 24px; color: #8c8c8c;
+            text-decoration: none; font-size: 13px; letter-spacing: 0.5px;
+        }
+        .back-link:hover { color: #b89a5a; }
+        .card {
+            background: #fff; border: 1px solid #e8e3da; padding: 28px 32px; margin-bottom: 24px;
+        }
+        .card h2 {
+            font-size: 14px; font-weight: 400; text-transform: uppercase;
+            letter-spacing: 2px; color: #b89a5a; margin-bottom: 20px;
+            padding-bottom: 12px; border-bottom: 1px solid #e8e3da;
+        }
+        .btn {
+            padding: 10px 28px; font-family: inherit; font-size: 12px;
+            letter-spacing: 1px; text-transform: uppercase; border: none;
+            cursor: pointer; transition: all 0.15s; text-decoration: none;
+        }
+        .btn-primary { background: #b89a5a; color: #fff; }
+        .btn-primary:hover { background: #a6894d; }
+        .btn-secondary {
+            background: transparent; color: #8c8c8c;
+            border: 1px solid #d4cfc6;
+        }
+        .btn-secondary:hover { background: #f0ece6; color: #2c2c2c; }
+        .btn-danger { color: #9a5a5a; border-color: #9a5a5a; }
+        .btn-danger:hover { background: #fdf0f0; color: #9a5a5a; }
+        table { width: 100%; border-collapse: collapse; }
+        thead th {
+            background: #f7f4ef; text-align: left; padding: 10px 14px;
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+            color: #8c8c8c; font-weight: 400; border-bottom: 1px solid #e8e3da;
+        }
+        tbody td {
+            padding: 12px 14px; font-size: 12px; border-bottom: 1px solid #f0ede8;
+        }
+        .empty { text-align: center; padding: 40px 20px; color: #8c8c8c; }
+        .badge {
+            display: inline-block; padding: 2px 8px; font-size: 9px;
+            letter-spacing: 0.5px; text-transform: uppercase;
+            border: 1px solid #d4cfc6; color: #8c8c8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <h1><span>ST</span> CORE</h1>
+        <div style="font-size:12px;opacity:0.7;letter-spacing:2px;text-transform:uppercase;">Backup Manager</div>
+    </div>
+    <div class="container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+
+        <div class="card">
+            <h2>Create Backup</h2>
+            <form method="POST" action="/admin/backups/create" style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+                <div style="flex:1;min-width:200px;">
+                    <label style="display:block;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;margin-bottom:4px;">Label (optional)</label>
+                    <input type="text" name="label" placeholder="e.g. pre-migration" style="width:100%;padding:8px 12px;border:1px solid #d4cfc6;background:#faf8f5;font-family:inherit;font-size:13px;">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Backup Now</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Available Backups</h2>
+            {% if backups %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in backups %}
+                    <tr>
+                        <td style="font-family:monospace;font-size:11px;">{{ b.name }}</td>
+                        <td>{{ (b.size_bytes / 1024)|round(1) }} KB</td>
+                        <td>{{ b.created_at }}</td>
+                        <td style="display:flex;gap:6px;">
+                            <form method="POST" action="/admin/backups/restore" style="display:inline;">
+                                <input type="hidden" name="backup_name" value="{{ b.name }}">
+                                <button type="submit" class="btn btn-secondary" style="padding:4px 10px;font-size:9px;" onclick="return confirm('Restore backup {{ b.name }}? Current data will be preserved as a safety backup.')">Restore</button>
+                            </form>
+                            <form method="POST" action="/admin/backups/delete" style="display:inline;">
+                                <input type="hidden" name="backup_name" value="{{ b.name }}">
+                                <button type="submit" class="btn btn-secondary btn-danger" style="padding:4px 10px;font-size:9px;" onclick="return confirm('Delete backup {{ b.name }} permanently?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty">No backups yet. Create one above.</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
