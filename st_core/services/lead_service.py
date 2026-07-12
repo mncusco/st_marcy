@@ -20,7 +20,22 @@ ALLOWED_TRANSITIONS = {
     LeadStatus.ARCHIVED: [],
 }
 
+PRIORITY_WEIGHTS = {
+    LeadStatus.INTERVIEW: 30,
+    LeadStatus.APPROVED: 50,
+    LeadStatus.BOOKED: 60,
+    LeadStatus.COMPLETED: 80,
+}
+
 class LeadService:
+    @staticmethod
+    def _compute_priority(lead: Lead) -> int:
+        score = 0
+        if lead.downloaded_editorial:
+            score += 10
+        score += PRIORITY_WEIGHTS.get(lead.status, 0)
+        return score
+
     @staticmethod
     def _create_event(db: Session, lead_id: int, event_type: str, title: str,
                       description: str = None, metadata_json: dict = None,
@@ -66,6 +81,10 @@ class LeadService:
             db.commit()
         except Exception:
             pass
+
+        db_lead.priority_score = LeadService._compute_priority(db_lead)
+        db.commit()
+        db.refresh(db_lead)
 
         return db_lead
 
@@ -178,6 +197,7 @@ class LeadService:
             if key not in ("status", "notes"):
                 setattr(lead, key, value)
 
+        lead.priority_score = LeadService._compute_priority(lead)
         db.commit()
         db.refresh(lead)
 
@@ -201,6 +221,7 @@ class LeadService:
         lead = LeadService.get_lead_by_id(db, lead_id)
         lead.downloaded_editorial = True
         lead.downloaded_at = datetime.utcnow()
+        lead.priority_score = LeadService._compute_priority(lead)
         db.commit()
         db.refresh(lead)
 
@@ -219,6 +240,7 @@ class LeadService:
             raise HTTPException(status_code=410, detail="Token scaduto")
         lead.downloaded_editorial = True
         lead.downloaded_at = datetime.utcnow()
+        lead.priority_score = LeadService._compute_priority(lead)
         LeadService._create_event(db, lead.id, "editorial_downloaded",
             "Editorial downloaded",
             f"Language: {lead.language or 'en'}")

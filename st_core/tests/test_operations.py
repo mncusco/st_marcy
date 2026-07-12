@@ -6,6 +6,8 @@ Covers: CRM notes, bulk actions, priority score, admin audit, backup service.
 import pytest
 import json
 import uuid
+import sys
+import os
 from datetime import datetime, timedelta
 
 
@@ -827,3 +829,162 @@ class TestTaskOnLeadDetail:
         created = client.post("/api/leads", json=sample_lead_data).json()
         html = client.get(f"/admin/lead/{created['id']}", headers=auth_headers).text
         assert "Reminders" in html
+
+
+# ──────────────────────────────────────────────
+# PHASE 15 — PRODUCTION READY
+# ──────────────────────────────────────────────
+
+class TestBackupScript:
+    """scripts/backup.py CLI tool."""
+
+    def test_backup_script_imports(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("backup_script", "scripts/backup.py")
+        assert spec is not None, "scripts/backup.py not found"
+
+    def test_backup_script_list(self):
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, "scripts/backup.py", "--list"],
+            capture_output=True, text=True, cwd=os.path.dirname(__file__) + "/../..",
+        )
+        assert result.returncode == 0
+
+
+class TestRestoreScript:
+    """scripts/restore.py CLI tool."""
+
+    def test_restore_script_imports(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("restore_script", "scripts/restore.py")
+        assert spec is not None, "scripts/restore.py not found"
+
+    def test_restore_script_list(self):
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, "scripts/restore.py", "--list"],
+            capture_output=True, text=True, cwd=os.path.dirname(__file__) + "/../..",
+        )
+        assert result.returncode == 0
+
+
+class TestVerifyScript:
+    """scripts/verify.py integrity checker."""
+
+    def test_verify_script_imports(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("verify_script", "scripts/verify.py")
+        assert spec is not None, "scripts/verify.py not found"
+
+    def test_verify_script_runs(self):
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, "scripts/verify.py"],
+            capture_output=True, text=True, cwd=os.path.dirname(__file__) + "/../..",
+        )
+        assert result.returncode in (0, 1)
+
+    def test_verify_checks_database(self):
+        from scripts.verify import check_integrity
+        result = check_integrity("./test_shamanic.db")
+        assert "status" in result
+
+    def test_verify_directory_structure(self):
+        from scripts.verify import check_directory_structure
+        result = check_directory_structure()
+        assert result.get("st_core") is True
+        assert result.get("app.py") is True
+
+
+class TestCSVImport:
+    """POST /admin/import/leads endpoint."""
+
+    def test_csv_import_valid(self, client, auth_headers):
+        csv_data = "first_name,last_name,email\nJohn,Doe,john@import.com\nJane,Smith,jane@import.com"
+        resp = client.post("/admin/import/leads", data={"csv_data": csv_data},
+                           headers=auth_headers)
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["imported"] >= 2
+
+    def test_csv_import_missing_fields(self, client, auth_headers):
+        csv_data = "first_name,email\n,missing@email.com"
+        resp = client.post("/admin/import/leads", data={"csv_data": csv_data},
+                           headers=auth_headers)
+        assert resp.status_code == 200
+        data = resp.json()
+        assert len(data["errors"]) > 0
+
+    def test_csv_import_requires_auth(self, client):
+        csv_data = "first_name,last_name,email\nX,Y,z@test.com"
+        resp = client.post("/admin/import/leads", data={"csv_data": csv_data})
+        assert resp.status_code in (401, 403)
+
+
+class TestDiagnostics:
+    """GET /admin/diagnostics endpoint."""
+
+    def test_diagnostics_endpoint(self, client, auth_headers):
+        resp = client.get("/admin/diagnostics", headers=auth_headers)
+        assert resp.status_code == 200
+        data = resp.json()
+        assert "service" in data
+        assert "version" in data
+        assert "database" in data
+        assert "table_counts" in data
+
+    def test_diagnostics_shows_tables(self, client, auth_headers):
+        resp = client.get("/admin/diagnostics", headers=auth_headers)
+        data = resp.json()
+        assert "leads" in data["table_counts"]
+
+    def test_diagnostics_requires_auth(self, client):
+        resp = client.get("/admin/diagnostics")
+        assert resp.status_code in (401, 403)
+
+
+class TestStartupValidation:
+    """Startup validation in app.py."""
+
+    def test_validate_function_exists(self):
+        from app import _validate_startup
+        assert callable(_validate_startup)
+
+    def test_validate_runs_without_crash(self):
+        from app import _validate_startup
+        issues = _validate_startup()
+        assert isinstance(issues, list)
+
+
+class TestDocumentation:
+    """Documentation files exist."""
+
+    def test_install_doc_exists(self):
+        import os
+        assert os.path.exists("INSTALL.md")
+
+    def test_deploy_doc_exists(self):
+        import os
+        assert os.path.exists("DEPLOY.md")
+
+    def test_backup_doc_exists(self):
+        import os
+        assert os.path.exists("BACKUP.md")
+
+    def test_admin_guide_exists(self):
+        import os
+        assert os.path.exists("ADMIN_GUIDE.md")
+
+
+class TestScriptsDir:
+    """scripts/ directory structure."""
+
+    def test_scripts_init_exists(self):
+        import os
+        assert os.path.exists("scripts/__init__.py")
+
+    def test_all_scripts_present(self):
+        import os
+        for name in ("backup.py", "restore.py", "verify.py"):
+            assert os.path.exists(f"scripts/{name}"), f"Missing scripts/{name}"

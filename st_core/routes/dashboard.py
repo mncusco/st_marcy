@@ -664,6 +664,72 @@ def admin_mark_notification_read(
     return RedirectResponse(url="/admin", status_code=303)
 
 
+@router.post("/import/leads")
+def admin_import_leads(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+    csv_data: str = Form(...),
+):
+    import csv, io
+    reader = csv.DictReader(io.StringIO(csv_data))
+    imported = 0
+    errors = []
+    for row in reader:
+        try:
+            lead_data = {
+                "first_name": row.get("first_name", "").strip(),
+                "last_name": row.get("last_name", "").strip(),
+                "email": row.get("email", "").strip(),
+            }
+            if not lead_data["first_name"] or not lead_data["email"]:
+                errors.append(f"Row {imported + 2}: missing first_name or email")
+                continue
+            from schemas import LeadCreate
+            from services.lead_service import LeadService
+            create = LeadCreate(**lead_data)
+            LeadService.create_lead(db, create)
+            imported += 1
+        except Exception as e:
+            errors.append(f"Row {imported + 2}: {e}")
+    _log_audit(db, admin, "csv_import", "lead", None, f"Imported {imported} leads with {len(errors)} errors")
+    return {"imported": imported, "errors": errors}
+
+
+@router.get("/diagnostics")
+def admin_diagnostics(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    from database import check_database_health
+    from core.version import VERSION, APP_NAME
+    import os
+
+    db_health = check_database_health()
+    table_counts = {}
+    try:
+        from models import Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit
+        for model in (Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit):
+            table_counts[model.__tablename__] = db.query(model).count()
+    except Exception:
+        pass
+
+    env_check = {
+        "PROJECT_NAME": bool(os.getenv("PROJECT_NAME")),
+        "DATABASE_URL": bool(os.getenv("DATABASE_URL")),
+        "ADMIN_USERNAME": bool(os.getenv("ADMIN_USERNAME")),
+        "SECRET_KEY_OK": len(os.getenv("SECRET_KEY", "")) >= 16,
+    }
+
+    return {
+        "service": APP_NAME,
+        "version": VERSION,
+        "debug": bool(os.getenv("DEBUG", "")),
+        "database": db_health,
+        "table_counts": table_counts,
+        "environment": env_check,
+    }
+
+
 @router.get("/audit-log", response_class=HTMLResponse)
 def admin_audit_log(
     request: Request,

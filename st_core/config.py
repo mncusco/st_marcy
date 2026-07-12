@@ -23,6 +23,15 @@ class Settings(BaseSettings):
 
     EDITORIAL_FILES_DIR: str = "./ebooks"
     EMAIL_BACKEND: str = "log"
+    EMAIL_MAX_RETRIES: int = 3
+    SMTP_HOST: str = "localhost"
+    SMTP_PORT: int = 587
+    SMTP_USERNAME: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_TLS: bool = True
+    SMTP_SSL: bool = False
+    FROM_EMAIL: str = "noreply@shamanictravels.com"
+    FROM_NAME: str = "ST Care"
     DEFAULT_LANGUAGE: str = "en"
     SUPPORTED_LANGUAGES: list[str] = ["en", "it", "es", "ru", "sr"]
     EDITORIAL_DIRECTORY: str = "./editorials"
