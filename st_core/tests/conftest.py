@@ -15,7 +15,7 @@ os.environ["DEBUG"] = "true"
 import pytest
 from fastapi.testclient import TestClient
 from app import app
-from database import engine, Base
+from database import engine, Base, SessionLocal
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -36,6 +36,12 @@ def _db():
 @pytest.fixture
 def client():
     return TestClient(app)
+
+@pytest.fixture
+def db_session():
+    session = SessionLocal()
+    yield session
+    session.close()
 
 
 @pytest.fixture

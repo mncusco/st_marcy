@@ -242,6 +242,14 @@
                     <div class="val"><span class="badge badge-{{ lead.status.value.lower() }}">{{ lead.status.value }}</span></div>
                 </div>
                 <div class="field">
+                    <label>Priority Score</label>
+                    <div class="val">
+                        {% set p = lead.priority_score %}
+                        <span style="font-weight:700;font-size:18px;{% if p >= 60 %}color:#2d5a27{% elif p >= 30 %}color:#b89a5a{% else %}color:#8c8c8c{% endif %};">{{ p }}</span>
+                        <span style="font-size:10px;color:#8c8c8c;margin-left:6px;">/ 100</span>
+                    </div>
+                </div>
+                <div class="field">
                     <label>Lead ID</label>
                     <div class="val" style="font-size:12px;color:#8c8c8c;">{{ lead.uuid }}</div>
                 </div>
@@ -326,6 +334,33 @@
                 </div>
             </div>
         </form>
+
+        <div class="card">
+            <h2>CRM Notes</h2>
+            <div style="margin-bottom:20px;">
+                <form method="POST" action="/admin/lead/{{ lead.id }}/notes/add" style="display:flex;gap:10px;flex-direction:column;">
+                    <textarea name="content" placeholder="Add a note about this lead…" required style="width:100%;padding:10px 12px;border:1px solid #d4cfc6;background:#faf8f5;font-family:inherit;font-size:13px;min-height:80px;resize:vertical;"></textarea>
+                    <div style="display:flex;justify-content:flex-end;">
+                        <button type="submit" class="btn btn-primary" style="padding:8px 20px;font-size:11px;">Add Note</button>
+                    </div>
+                </form>
+            </div>
+            {% if crm_notes %}
+            <div style="border:1px solid #e8e3da;">
+                {% for n in crm_notes %}
+                <div style="padding:14px 18px;border-bottom:1px solid #f0ede8;{% if loop.last %}border-bottom:none;{% endif %}">
+                    <div style="font-size:13px;color:#1a1a1a;margin-bottom:6px;">{{ n.content }}</div>
+                    <div style="font-size:10px;color:#8c8c8c;display:flex;gap:12px;">
+                        <span>{{ n.created_by or 'System' }}</span>
+                        <span>{{ n.created_at.strftime('%d %b %Y, %H:%M') }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="placeholder">No CRM notes yet. Add one above.</div>
+            {% endif %}
+        </div>
 
         <div class="card">
             <h2>Email History</h2>
@@ -439,6 +474,98 @@
             {% else %}
             <div class="placeholder">No interviews scheduled for this lead yet.</div>
             {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Tasks</h2>
+            <div class="email-actions" style="margin-bottom:16px;">
+                <details style="display:inline-block;position:relative;">
+                    <summary style="cursor:pointer;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#b89a5a;padding:6px 16px;border:1px solid #d4cfc6;list-style:none;">+ Add Task</summary>
+                    <div style="position:absolute;left:0;top:100%;background:#fff;border:1px solid #e8e3da;padding:12px;z-index:10;width:280px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                        <form method="POST" action="/admin/task" style="display:flex;flex-direction:column;gap:6px;">
+                            <input type="hidden" name="lead_id" value="{{ lead.id }}">
+                            <input type="text" name="title" placeholder="Task title" required style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                            <input type="text" name="description" placeholder="Description (optional)" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                            <div style="display:flex;gap:6px;">
+                                <select name="priority" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;flex:1;">
+                                    <option value="low">Low</option>
+                                    <option value="normal" selected>Normal</option>
+                                    <option value="high">High</option>
+                                </select>
+                                <input type="datetime-local" name="due_at" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;flex:1;" placeholder="Due">
+                            </div>
+                            <input type="text" name="assigned_to" placeholder="Assign to (optional)" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                            <button type="submit" class="btn btn-primary" style="padding:6px 12px;font-size:10px;">Create Task</button>
+                        </form>
+                    </div>
+                </details>
+            </div>
+            {% if tasks %}
+            <div style="border:1px solid #e8e3da;">
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:#f7f4ef;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;">
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Status</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Title</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Priority</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Due</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Assigned</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in tasks %}
+                        <tr style="border-bottom:1px solid #f0ede8;font-size:12px;">
+                            <td style="padding:10px 14px;"><span class="badge badge-{{ t.status.value.lower() }}">{{ t.status.value }}</span></td>
+                            <td style="padding:10px 14px;">{{ t.title }}</td>
+                            <td style="padding:10px 14px;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;">{{ t.priority }}</td>
+                            <td style="padding:10px 14px;color:#8c8c8c;font-size:11px;">{{ t.due_at.strftime('%d %b %Y, %H:%M') if t.due_at else '—' }}</td>
+                            <td style="padding:10px 14px;font-size:11px;">{{ t.assigned_to or '—' }}</td>
+                            <td style="padding:10px 14px;">
+                                <form method="POST" action="/admin/task/{{ t.id }}/update" style="display:inline;">
+                                    <select name="status" onchange="this.form.submit()" style="padding:2px 4px;border:1px solid #d4cfc6;font-size:9px;font-family:inherit;">
+                                        <option value="PENDING" {% if t.status.value == 'PENDING' %}selected{% endif %}>Pending</option>
+                                        <option value="IN_PROGRESS" {% if t.status.value == 'IN_PROGRESS' %}selected{% endif %}>In Progress</option>
+                                        <option value="COMPLETED" {% if t.status.value == 'COMPLETED' %}selected{% endif %}>Completed</option>
+                                        <option value="CANCELLED" {% if t.status.value == 'CANCELLED' %}selected{% endif %}>Cancelled</option>
+                                    </select>
+                                </form>
+                                <form method="POST" action="/admin/task/{{ t.id }}/delete" style="display:inline;" onsubmit="return confirm('Delete this task?')">
+                                    <button type="submit" class="btn btn-secondary" style="padding:2px 8px;font-size:9px;">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="placeholder">No tasks for this lead yet.</div>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Reminders</h2>
+            {% if reminders %}
+            <ul style="list-style:none;padding:0;">
+                {% for r in reminders %}
+                <li style="padding:10px 0;border-bottom:1px solid #f0ede8;font-size:13px;display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <strong>{{ r.title }}</strong>
+                        <div style="font-size:11px;color:#8c8c8c;">{{ r.reminder_type.value }} — {{ r.remind_at.strftime('%d %b %Y') }}</div>
+                    </div>
+                    <span class="badge badge-{{ 'sent' if r.notified else 'pending' }}">{{ 'Notified' if r.notified else 'Active' }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="placeholder">No reminders for this lead yet.</div>
+            {% endif %}
+            <div style="margin-top:12px;">
+                <form method="POST" action="/admin/lead/{{ lead.id }}/create-reminders" style="display:inline;">
+                    <button type="submit" class="btn btn-secondary" style="padding:6px 16px;font-size:10px;">Generate Follow-up Reminders</button>
+                </form>
+            </div>
         </div>
 
         <div class="card">

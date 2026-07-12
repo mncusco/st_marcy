@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from models import EmailQueue, Lead, LeadStatus
 from services.email_engine import EmailEngine, TEMPLATE_SUBJECTS
+from services.task_service import TaskService
 
 logger = logging.getLogger("st_core.automation_engine")
 
@@ -41,6 +42,12 @@ class AutomationEngine:
             scheduled_for=datetime.utcnow() + timedelta(days=FOLLOWUP_DELAY_DAYS),
         )
         queued.append(e)
+
+        try:
+            TaskService(self.db).auto_create_followup_reminders(lead)
+        except Exception:
+            pass
+
         return queued
 
     def on_editorial_download(self, lead: Lead) -> list[EmailQueue]:

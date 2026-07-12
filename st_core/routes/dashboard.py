@@ -1,27 +1,32 @@
 import json
+import os
 from typing import Optional
 from datetime import datetime, timedelta
-from fastapi import APIRouter, Depends, Request, Form, Query
-from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi import APIRouter, Depends, Request, Form, Query, HTTPException
+from fastapi.responses import HTMLResponse, RedirectResponse, Response, JSONResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from dependencies import get_db
 from security import verify_admin
 from services.lead_service import LeadService
 from services.email_engine import EmailEngine
+from services.note_service import NoteService
+from services.backup_service import BackupService
 from services.interview_service import (
     get_upcoming_interviews, get_today_interviews, get_interview_stats,
     create_interview, schedule_interview, complete_interview,
     cancel_interview, mark_no_show, get_lead_interviews,
 )
-from schemas import EmailQueueResponse, CandidateAnalysisResponse
-from schemas import LeadUpdate
-from models import LeadStatus
+from schemas import EmailQueueResponse, CandidateAnalysisResponse, LeadNoteCreate
+from schemas import LeadUpdate, TaskCreate, TaskUpdate
+from models import Lead, LeadStatus, AdminAudit
 from services.ai_service import AIService
 from services.analytics_service import AnalyticsService
+from services.task_service import TaskService
 
 router = APIRouter(prefix="/admin", tags=["Dashboard"])
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "..", "templates"))
 templates.env.filters["from_json"] = lambda v: json.loads(v) if v else []
 
 PERIOD_MAP = {
@@ -84,6 +89,32 @@ def admin_dashboard(
     bi_monthly = analytics.get_monthly_leads()
     bi_downloads = analytics.get_download_statistics()
 
+    today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+    today_leads = db.query(func.count(Lead.id)).filter(Lead.created_at >= today_start).scalar() or 0
+    today_downloads = db.query(func.count(Lead.id)).filter(
+        Lead.downloaded_editorial == True, Lead.downloaded_at >= today_start
+    ).scalar() or 0
+
+    pipeline_value = 0
+    stage_values = {LeadStatus.NEW: 0, LeadStatus.CONTACTED: 100, LeadStatus.INTERVIEW: 300,
+                    LeadStatus.APPROVED: 500, LeadStatus.BOOKED: 1000, LeadStatus.COMPLETED: 1500}
+    for status_enum, val in stage_values.items():
+        count = db.query(func.count(Lead.id)).filter(Lead.status == status_enum).scalar() or 0
+        pipeline_value += count * val
+
+    high_priority = db.query(func.count(Lead.id)).filter(Lead.priority_score >= 50).scalar() or 0
+
+    note_service = NoteService(db)
+    recent_notes = note_service.get_recent_notes(limit=5)
+
+    task_service = TaskService(db)
+    today_tasks = task_service.get_today_tasks()
+    overdue_tasks = task_service.get_overdue_tasks()
+    unread_notifications = task_service.get_unread_notifications(limit=10)
+    need_followup = db.query(Lead).filter(Lead.status == LeadStatus.CONTACTED).count()
+    need_approval = db.query(Lead).filter(Lead.status == LeadStatus.INTERVIEW).count()
+    need_booking = db.query(Lead).filter(Lead.status == LeadStatus.APPROVED).count()
+
     return templates.TemplateResponse(
         request,
         "dashboard.html",
@@ -118,6 +149,17 @@ def admin_dashboard(
             "bi_pipeline": bi_pipeline,
             "bi_monthly": bi_monthly,
             "bi_downloads": bi_downloads,
+            "today_leads": today_leads,
+            "today_downloads": today_downloads,
+            "pipeline_value": pipeline_value,
+            "high_priority": high_priority,
+            "recent_notes": recent_notes,
+            "today_tasks": today_tasks,
+            "overdue_tasks": overdue_tasks,
+            "unread_notifications": unread_notifications,
+            "need_followup": need_followup,
+            "need_approval": need_approval,
+            "need_booking": need_booking,
             "now": datetime.utcnow,
         },
     )
@@ -136,10 +178,16 @@ def admin_lead_detail(
     lead_interviews = get_lead_interviews(db, lead_id)
     ai_service = AIService(db)
     lead_analysis = ai_service.get_analysis(lead_id)
+    crm_notes = NoteService(db).get_notes(lead_id)
+    task_service = TaskService(db)
+    lead_tasks = task_service.get_lead_tasks(lead_id)
+    lead_reminders = task_service.get_lead_reminders(lead_id)
     return templates.TemplateResponse(
         request,
         "lead_detail.html",
-        {"lead": lead, "events": events, "emails": lead_emails, "interviews": lead_interviews, "statuses": list(LeadStatus), "analysis": lead_analysis},
+        {"lead": lead, "events": events, "emails": lead_emails, "interviews": lead_interviews,
+         "statuses": list(LeadStatus), "analysis": lead_analysis, "crm_notes": crm_notes,
+         "tasks": lead_tasks, "reminders": lead_reminders},
     )
 
 @router.post("/lead/{lead_id}")
@@ -152,6 +200,8 @@ def admin_update_lead(
 ):
     update_data = LeadUpdate(status=status, notes=notes)
     LeadService.update_lead(db, lead_id, update_data, created_by=admin)
+    _log_audit(db, admin, "status_update", "lead", str(lead_id),
+               f"Status changed to {status.value}")
     return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
 
 @router.post("/email/process")
@@ -160,6 +210,18 @@ def admin_process_email_queue(
     admin: str = Depends(verify_admin),
 ):
     count = EmailEngine(db).process_pending()
+    _log_audit(db, admin, "email_process_queue", "email", None, f"Processed {count} emails")
+    return RedirectResponse(url="/admin", status_code=303)
+
+@router.post("/email/test")
+def admin_test_email(
+    test_email: str = Form(...),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    result = EmailEngine(db).send_test_email(to=test_email)
+    _log_audit(db, admin, "email_test", "email", None,
+               f"Test email to {test_email}: {'OK' if result.get('success') else 'FAILED'}")
     return RedirectResponse(url="/admin", status_code=303)
 
 @router.post("/email/{email_id}/cancel")
@@ -293,3 +355,324 @@ def admin_no_show_interview(
     interview = mark_no_show(db, interview_id, notes=notes or None, created_by=admin)
     db.commit()
     return RedirectResponse(url=f"/admin/lead/{interview.lead_id}", status_code=303)
+
+
+# ── Admin Audit Helper ──────────────────────────
+
+def _log_audit(db: Session, admin_user: str, action: str, resource_type: str = None,
+               resource_id: str = None, details: str = None, ip_address: str = None):
+    entry = AdminAudit(
+        admin_user=admin_user,
+        action=action,
+        resource_type=resource_type,
+        resource_id=str(resource_id) if resource_id else None,
+        details=details,
+        ip_address=ip_address,
+    )
+    db.add(entry)
+    db.commit()
+
+
+# ── CRM Notes ───────────────────────────────────
+
+@router.post("/lead/{lead_id}/notes/add")
+def admin_add_note(
+    lead_id: int,
+    content: str = Form(...),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    NoteService(db).add_note(lead_id, content, created_by=admin)
+    _log_audit(db, admin, "note_added", "lead", str(lead_id), f"Added CRM note")
+    return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+
+@router.get("/lead/{lead_id}/notes", response_class=JSONResponse)
+def admin_get_notes(
+    lead_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    notes = NoteService(db).get_notes(lead_id)
+    return [{"id": n.id, "content": n.content, "created_by": n.created_by,
+             "created_at": n.created_at.isoformat()} for n in notes]
+
+
+# ── Bulk Actions ────────────────────────────────
+
+@router.post("/bulk")
+def admin_bulk_action(
+    lead_ids: str = Form(...),
+    bulk_action: str = Form(...),
+    bulk_status: Optional[str] = Form(None),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    try:
+        ids = [int(x.strip()) for x in lead_ids.split(",") if x.strip()]
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid lead IDs")
+
+    if not ids:
+        raise HTTPException(status_code=400, detail="No lead IDs provided")
+
+    if bulk_action == "status_update":
+        if not bulk_status:
+            raise HTTPException(status_code=400, detail="Status required for status_update")
+        new_status = LeadStatus(bulk_status.upper())
+        updated = 0
+        for lid in ids:
+            try:
+                lead = LeadService.get_lead_by_id(db, lid)
+                update = LeadUpdate(status=new_status)
+                LeadService.update_lead(db, lid, update, created_by=admin)
+                updated += 1
+            except Exception:
+                pass
+        _log_audit(db, admin, "bulk_status_update", "lead", ",".join(str(i) for i in ids),
+                   f"Set {updated}/{len(ids)} leads to {new_status.value}")
+        return RedirectResponse(url="/admin", status_code=303)
+
+    elif bulk_action == "delete":
+        from models import Lead
+        deleted = 0
+        for lid in ids:
+            try:
+                lead = LeadService.get_lead_by_id(db, lid)
+                db.delete(lead)
+                db.commit()
+                deleted += 1
+            except Exception:
+                pass
+        _log_audit(db, admin, "bulk_delete", "lead", ",".join(str(i) for i in ids),
+                   f"Deleted {deleted}/{len(ids)} leads")
+        return RedirectResponse(url="/admin", status_code=303)
+
+    raise HTTPException(status_code=400, detail="Unknown action")
+
+@router.post("/bulk/export")
+def admin_bulk_export(
+    lead_ids: str = Form(...),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    try:
+        ids = [int(x.strip()) for x in lead_ids.split(",") if x.strip()]
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid lead IDs")
+    leads = db.query(Lead).filter(Lead.id.in_(ids)).order_by(Lead.created_at.desc()).all()
+    import csv, io
+    buf = io.StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(["id", "first_name", "last_name", "email", "country",
+                     "language", "status", "source_page", "downloaded_editorial",
+                     "priority_score", "created_at"])
+    for l in leads:
+        writer.writerow([
+            l.id, l.first_name, l.last_name, l.email, l.country,
+            l.language, l.status.value, l.source_page,
+            "yes" if l.downloaded_editorial else "no",
+            l.priority_score,
+            l.created_at.isoformat() if l.created_at else "",
+        ])
+    _log_audit(db, admin, "bulk_export", "lead", ",".join(str(i) for i in ids),
+               f"Exported {len(leads)} leads")
+    return Response(
+        content=buf.getvalue(),
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename=leads_bulk_export.csv"},
+    )
+
+
+# ── Task CRUD ────────────────────────────────────
+
+@router.post("/task")
+def admin_create_task(
+    title: str = Form(...),
+    lead_id: Optional[int] = Form(None),
+    description: str = Form(""),
+    priority: str = Form("normal"),
+    due_at: Optional[str] = Form(None),
+    assigned_to: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    parsed_due = None
+    if due_at:
+        try:
+            parsed_due = datetime.strptime(due_at, "%Y-%m-%dT%H:%M")
+        except ValueError:
+            parsed_due = datetime.strptime(due_at, "%Y-%m-%d")
+    svc = TaskService(db)
+    task = svc.create_task(
+        title=title, lead_id=lead_id, description=description or None,
+        priority=priority, due_at=parsed_due,
+        assigned_to=assigned_to or None, created_by=admin,
+    )
+    _log_audit(db, admin, "task_created", "task", str(task.id), f"Task: {title}")
+    if lead_id:
+        return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+    return RedirectResponse(url="/admin", status_code=303)
+
+@router.post("/task/{task_id}/update")
+def admin_update_task(
+    task_id: int,
+    title: str = Form(None),
+    description: str = Form(None),
+    status: str = Form(None),
+    priority: str = Form(None),
+    due_at: Optional[str] = Form(None),
+    assigned_to: str = Form(None),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    svc = TaskService(db)
+    task = svc.get_task(task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    parsed_due = None
+    if due_at:
+        try:
+            parsed_due = datetime.strptime(due_at, "%Y-%m-%dT%H:%M")
+        except ValueError:
+            parsed_due = datetime.strptime(due_at, "%Y-%m-%d")
+    kwargs = {}
+    if title: kwargs["title"] = title
+    if description: kwargs["description"] = description
+    if status: kwargs["status"] = status
+    if priority: kwargs["priority"] = priority
+    if parsed_due: kwargs["due_at"] = parsed_due
+    if assigned_to: kwargs["assigned_to"] = assigned_to
+    svc.update_task(task_id, **kwargs)
+    _log_audit(db, admin, "task_updated", "task", str(task_id), f"Updated task {task_id}")
+    if task.lead_id:
+        return RedirectResponse(url=f"/admin/lead/{task.lead_id}", status_code=303)
+    return RedirectResponse(url="/admin", status_code=303)
+
+@router.post("/task/{task_id}/delete")
+def admin_delete_task(
+    task_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    svc = TaskService(db)
+    task = svc.get_task(task_id)
+    lead_id = task.lead_id if task else None
+    svc.delete_task(task_id)
+    _log_audit(db, admin, "task_deleted", "task", str(task_id), "Deleted task")
+    if lead_id:
+        return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+    return RedirectResponse(url="/admin", status_code=303)
+
+@router.post("/lead/{lead_id}/create-reminders")
+def admin_create_lead_reminders(
+    lead_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    from models import Lead
+    lead = db.query(Lead).filter(Lead.id == lead_id).first()
+    if not lead:
+        raise HTTPException(status_code=404, detail="Lead not found")
+    svc = TaskService(db)
+    svc.auto_create_followup_reminders(lead)
+    _log_audit(db, admin, "reminders_created", "lead", str(lead_id), "Generated follow-up reminders")
+    return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+
+
+# ── Backup Management ───────────────────────────
+
+@router.get("/backups", response_class=HTMLResponse)
+def admin_backups(
+    request: Request,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    backup_service = BackupService()
+    backups = backup_service.list_backups()
+    return templates.TemplateResponse(
+        request,
+        "backups.html",
+        {"backups": backups},
+    )
+
+@router.post("/backups/create")
+def admin_create_backup(
+    label: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    backup_service = BackupService()
+    result = backup_service.create_backup(label=label)
+    _log_audit(db, admin, "backup_create", "backup", result.get("path"),
+               f"Created backup with label '{label}'")
+    return RedirectResponse(url="/admin/backups", status_code=303)
+
+@router.post("/backups/restore")
+def admin_restore_backup(
+    backup_name: str = Form(...),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    backup_service = BackupService()
+    result = backup_service.restore_backup(backup_name)
+    _log_audit(db, admin, "backup_restore", "backup", backup_name,
+               f"Restored backup: {result.get('success')}")
+    return RedirectResponse(url="/admin/backups", status_code=303)
+
+@router.post("/backups/delete")
+def admin_delete_backup(
+    backup_name: str = Form(...),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    backup_service = BackupService()
+    result = backup_service.delete_backup(backup_name)
+    _log_audit(db, admin, "backup_delete", "backup", backup_name,
+               f"Deleted backup: {result.get('success')}")
+    return RedirectResponse(url="/admin/backups", status_code=303)
+
+
+# ── Admin Audit Log ─────────────────────────────
+
+@router.post("/reminders/process")
+def admin_process_reminders(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    svc = TaskService(db)
+    active = svc.get_active_reminders()
+    count = 0
+    for r in active:
+        svc.create_notification(
+            lead_id=r.lead_id,
+            title=r.title,
+            message=r.message,
+            notification_type="reminder",
+        )
+        svc.mark_reminder_notified(r.id)
+        count += 1
+    _log_audit(db, admin, "reminders_processed", "reminder", None, f"Processed {count} reminders")
+    return RedirectResponse(url="/admin", status_code=303)
+
+@router.post("/notification/{notification_id}/read")
+def admin_mark_notification_read(
+    notification_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    TaskService(db).mark_notification_read(notification_id)
+    return RedirectResponse(url="/admin", status_code=303)
+
+
+@router.get("/audit-log", response_class=HTMLResponse)
+def admin_audit_log(
+    request: Request,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    entries = db.query(AdminAudit).order_by(AdminAudit.created_at.desc()).limit(100).all()
+    return templates.TemplateResponse(
+        request,
+        "audit_log.html",
+        {"entries": entries},
+    )

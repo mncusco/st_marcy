@@ -54,6 +54,21 @@
         }
         .stat-card .num.bronze { color: #b89a5a; }
         .stat-card .num.green { color: #2d5a27; }
+        .stat-card .num.red { color: #c0392b; }
+        .crm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .crm-widget { background: #fff; border: 1px solid #e8e3da; padding: 20px; }
+        .crm-widget h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #b89a5a; margin-bottom: 14px; font-weight:400; }
+        .crm-widget ul { list-style: none; padding: 0; }
+        .crm-widget li { padding: 8px 0; border-bottom: 1px solid #f0ede8; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+        .crm-widget li:last-child { border-bottom: none; }
+        .crm-widget .badge { font-size: 9px; padding: 2px 8px; background: #f0ede8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .crm-widget .badge-high { background: #fce4e4; color: #c0392b; }
+        .crm-widget .badge-normal { background: #f0ede8; color: #8c8c8c; }
+        .crm-widget .badge-low { background: #e8f0e6; color: #2d5a27; }
+        .crm-count { font-size: 22px; font-weight: 700; color: #2c2c2c; }
+        .crm-sub { font-size: 10px; color: #8c8c8c; text-transform: uppercase; letter-spacing: 1px; }
+        .crm-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .crm-box { flex: 1; min-width: 100px; background: #faf8f5; padding: 12px; text-align: center; border: 1px solid #e8e3da; }
 
         .filters {
             background: #fff;
@@ -392,8 +407,11 @@
             <h1><span>ST</span> CORE</h1>
             <div class="sub">Shamanic Travels · Admissions Dashboard</div>
         </div>
-        <div class="sub">{{ stats.total }} leads</div>
-    </div>
+        <div style="display:flex;gap:16px;align-items:center;">
+            <a href="/admin/backups" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;">Backups</a>
+            <a href="/admin/audit-log" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;">Audit Log</a>
+            <div class="sub">{{ stats.total }} leads</div>
+        </div>
 
     <div class="container">
         <div class="stats-grid">
@@ -407,6 +425,25 @@
             <div class="stat-card"><div class="num bronze">{{ stats.rejected }}</div><div class="label">Rejected</div></div>
             <div class="stat-card"><div class="num bronze">{{ stats.archived }}</div><div class="label">Archived</div></div>
             <div class="stat-card"><div class="num bronze">{{ stats.total_downloads }}</div><div class="label">Downloads</div></div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+            <div style="background:#fff;border:1px solid #e8e3da;padding:16px 20px;flex:1;min-width:140px;text-align:center;">
+                <div style="font-size:22px;font-weight:700;color:#2d5a27;">{{ today_leads }}</div>
+                <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;margin-top:4px;">Today's Leads</div>
+            </div>
+            <div style="background:#fff;border:1px solid #e8e3da;padding:16px 20px;flex:1;min-width:140px;text-align:center;">
+                <div style="font-size:22px;font-weight:700;color:#b89a5a;">{{ today_downloads }}</div>
+                <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;margin-top:4px;">Today's Downloads</div>
+            </div>
+            <div style="background:#fff;border:1px solid #e8e3da;padding:16px 20px;flex:1;min-width:140px;text-align:center;">
+                <div style="font-size:22px;font-weight:700;color:#2d5a27;">${{ "{:,.0f}".format(pipeline_value) }}</div>
+                <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;margin-top:4px;">Pipeline Value</div>
+            </div>
+            <div style="background:#fff;border:1px solid #e8e3da;padding:16px 20px;flex:1;min-width:140px;text-align:center;">
+                <div style="font-size:22px;font-weight:700;color:#5a7d9a;">{{ high_priority }}</div>
+                <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;margin-top:4px;">High Priority</div>
+            </div>
         </div>
 
         <div class="bi-section">
@@ -507,6 +544,76 @@
             </div>
         </div>
 
+        <div class="crm-grid">
+            <div class="crm-widget">
+                <h3>Today's Tasks</h3>
+                {% if today_tasks %}
+                <ul>
+                    {% for t in today_tasks %}
+                    <li>
+                        <span>{{ t.title[:40] }}{% if t.title|length > 40 %}...{% endif %}</span>
+                        <span class="badge badge-{{ t.priority }}">{{ t.priority }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div style="font-size:13px;color:#8c8c8c;">No tasks due today.</div>
+                {% endif %}
+            </div>
+            <div class="crm-widget">
+                <h3>Overdue Tasks</h3>
+                {% if overdue_tasks %}
+                <ul>
+                    {% for t in overdue_tasks[:6] %}
+                    <li>
+                        <span>{{ t.title[:35] }}{% if t.title|length > 35 %}...{% endif %}</span>
+                        <span class="badge badge-high">Overdue</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div style="font-size:13px;color:#8c8c8c;">No overdue tasks.</div>
+                {% endif %}
+            </div>
+            <div class="crm-widget">
+                <h3>Upcoming Interviews</h3>
+                {% if today_interviews %}
+                <ul>
+                    {% for inv in today_interviews[:5] %}
+                    <li>
+                        <span>{{ inv.lead.first_name }} {{ inv.lead.last_name }}</span>
+                        <span class="badge badge-normal">{{ inv.scheduled_at.strftime('%H:%M') if inv.scheduled_at else '—' }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div style="font-size:13px;color:#8c8c8c;">No interviews today.</div>
+                {% endif %}
+            </div>
+            <div class="crm-widget">
+                <h3>Notifications</h3>
+                {% if unread_notifications %}
+                <ul>
+                    {% for n in unread_notifications[:5] %}
+                    <li>
+                        <span>{{ n.title[:35] }}{% if n.title|length > 35 %}...{% endif %}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div style="font-size:13px;color:#8c8c8c;">No unread notifications.</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="crm-row" style="margin-bottom:24px;">
+            <div class="crm-box"><div class="crm-count">{{ stats.new or 0 }}</div><div class="crm-sub">New Leads</div></div>
+            <div class="crm-box"><div class="crm-count">{{ need_followup }}</div><div class="crm-sub">Need Follow-up</div></div>
+            <div class="crm-box"><div class="crm-count">{{ need_approval }}</div><div class="crm-sub">Need Approval</div></div>
+            <div class="crm-box"><div class="crm-count">{{ need_booking }}</div><div class="crm-sub">Need Booking</div></div>
+            <div class="crm-box"><div class="crm-count">{{ upcoming_interviews|length }}</div><div class="crm-sub">Upcoming Interviews</div></div>
+        </div>
+
         <form class="filters" method="GET" action="/admin">
             <div class="quick-filters">
                 <a href="/admin" class="{% if not period_filter and not status_filter and not downloaded_filter %}active{% endif %}">All</a>
@@ -539,17 +646,42 @@
 
         <div class="main-grid">
             <div>
+                <div id="bulk-bar" style="display:none;background:#fff;border:1px solid #e8e3da;padding:10px 16px;margin-bottom:12px;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <span style="font-size:12px;color:#2c2c2c;"><span id="bulk-count">0</span> selected</span>
+                    <form method="POST" action="/admin/bulk" style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <input type="hidden" name="lead_ids" id="bulk-ids">
+                        <input type="hidden" name="bulk_action" value="status_update">
+                        <select name="bulk_status" style="padding:5px 8px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;background:#faf8f5;">
+                            <option value="">Change status to…</option>
+                            {% for s in status_list %}
+                            <option value="{{ s.value }}">{{ s.value }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="email-btn" onclick="return confirm('Update status for selected leads?')">Apply</button>
+                    </form>
+                    <form method="POST" action="/admin/bulk/export" style="display:inline;">
+                        <input type="hidden" name="lead_ids" id="bulk-ids-export">
+                        <button type="submit" class="email-btn" onclick="return setBulkIds()">Export Selected</button>
+                    </form>
+                    <form method="POST" action="/admin/bulk" style="display:inline;">
+                        <input type="hidden" name="lead_ids" id="bulk-ids-delete">
+                        <input type="hidden" name="bulk_action" value="delete">
+                        <button type="submit" class="email-btn" style="color:#9a5a5a;border-color:#9a5a5a;" onclick="return confirm('Permanently delete selected leads? This cannot be undone.')">Delete</button>
+                    </form>
+                </div>
                 <div class="table-wrap">
                     {% if leads %}
                     <table>
                         <thead>
                             <tr>
+                                <th style="width:32px;"><input type="checkbox" id="select-all" onclick="toggleAll(this)"></th>
                                 <th><a href="?sort_by=created_at&sort_order={% if sort_by == 'created_at' and sort_order == 'desc' %}asc{% else %}desc{% endif %}&page=1{% if status_filter %}&status={{ status_filter }}{% endif %}{% if language_filter %}&language={{ language_filter }}{% endif %}{% if country_filter %}&country={{ country_filter }}{% endif %}{% if search_filter %}&search={{ search_filter }}{% endif %}{% if period_filter %}&period={{ period_filter }}{% endif %}{% if downloaded_filter %}&downloaded=true{% endif %}">Date{% if sort_by == 'created_at' %}{% if sort_order == 'desc' %} ▾{% else %} ▴{% endif %}{% endif %}</a></th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Country</th>
                                 <th>Lang</th>
                                 <th>Status</th>
+                                <th>Priority</th>
                                 <th>Source</th>
                                 <th>Dl</th>
                                 <th></th>
@@ -557,15 +689,20 @@
                         </thead>
                         <tbody>
                             {% for lead in leads %}
-                            <tr onclick="window.location='/admin/lead/{{ lead.id }}'">
-                                <td>{{ lead.created_at.strftime('%d %b %Y') }}</td>
-                                <td><span class="name">{{ lead.first_name }} {{ lead.last_name }}</span></td>
-                                <td><span class="email">{{ lead.email }}</span></td>
-                                <td>{{ lead.country or '—' }}</td>
-                                <td>{{ lead.language or '—' }}</td>
-                                <td><span class="badge badge-{{ lead.status.value.lower() }}">{{ lead.status.value }}</span></td>
-                                <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ lead.source_page or '—' }}</td>
-                                <td style="text-align:center;">{% if lead.downloaded_editorial %}<span style="color:#b89a5a;">✓</span>{% else %}—{% endif %}</td>
+                            <tr>
+                                <td style="text-align:center;"><input type="checkbox" class="lead-checkbox" value="{{ lead.id }}" onclick="event.stopPropagation()"></td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'">{{ lead.created_at.strftime('%d %b %Y') }}</td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'"><span class="name">{{ lead.first_name }} {{ lead.last_name }}</span></td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'"><span class="email">{{ lead.email }}</span></td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'">{{ lead.country or '—' }}</td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'">{{ lead.language or '—' }}</td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'"><span class="badge badge-{{ lead.status.value.lower() }}">{{ lead.status.value }}</span></td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'" style="text-align:center;">
+                                    {% set p = lead.priority_score %}
+                                    <span style="font-weight:700;font-size:12px;{% if p >= 60 %}color:#2d5a27{% elif p >= 30 %}color:#b89a5a{% else %}color:#8c8c8c{% endif %};">{{ p }}</span>
+                                </td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'" style="max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ lead.source_page or '—' }}</td>
+                                <td onclick="window.location='/admin/lead/{{ lead.id }}'" style="text-align:center;">{% if lead.downloaded_editorial %}<span style="color:#b89a5a;">✓</span>{% else %}—{% endif %}</td>
                                 <td><a href="/admin/lead/{{ lead.id }}" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:0.5px;">Open →</a></td>
                             </tr>
                             {% endfor %}
@@ -626,13 +763,22 @@
                 <h3>Email Queue</h3>
                 <div class="email-stats">
                     <div class="email-stat"><div class="num">{{ email_stats.pending }}</div><div class="label">Pending</div></div>
+                    <div class="email-stat"><div class="num">{{ email_stats.processing }}</div><div class="label">Sending</div></div>
                     <div class="email-stat"><div class="num">{{ email_stats.sent }}</div><div class="label">Sent</div></div>
                     <div class="email-stat"><div class="num">{{ email_stats.failed }}</div><div class="label">Failed</div></div>
-                    <div class="email-stat"><div class="num">{{ email_stats.total }}</div><div class="label">Total</div></div>
+                    <div class="email-stat"><div class="num">{{ email_stats.total_retries }}</div><div class="label">Retries</div></div>
+                    <div class="email-stat"><div class="num">{{ email_stats.max_retries }}</div><div class="label">Max</div></div>
                 </div>
                 <div class="email-actions">
-                    <form method="POST" action="/admin/email/process">
+                    <form method="POST" action="/admin/email/process" style="display:inline;">
                         <button type="submit" class="email-btn">Process Queue</button>
+                    </form>
+                    <form method="POST" action="/admin/reminders/process" style="display:inline;">
+                        <button type="submit" class="email-btn">Process Reminders</button>
+                    </form>
+                    <form method="POST" action="/admin/email/test" style="display:inline;">
+                        <input type="email" name="test_email" placeholder="test@example.com" required style="padding:5px 8px;border:1px solid #d4cfc6;font-size:10px;font-family:inherit;background:#faf8f5;width:150px;">
+                        <button type="submit" class="email-btn">Send Test</button>
                     </form>
                 </div>
                 <div class="email-list">
@@ -703,6 +849,57 @@
                 {% endif %}
             </div>
         </div>
+            <div class="interview-widget">
+                <h3>CRM Notes</h3>
+                <div class="interview-list">
+                    {% for n in recent_notes %}
+                    <div class="interview-item">
+                        <span class="interview-name" style="font-weight:400;font-size:10px;">{{ n.lead_name }}</span>
+                        <span style="flex:1;font-size:10px;color:#555;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ n.content[:50] }}{% if n.content|length > 50 %}...{% endif %}</span>
+                        <span class="interview-time">{{ n.created_at.strftime('%d %b') }}</span>
+                    </div>
+                    {% else %}
+                    <div style="text-align:center;padding:16px 0;color:#8c8c8c;font-size:10px;font-style:italic;">No CRM notes yet</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+    function toggleAll(source) {
+        var checkboxes = document.querySelectorAll('.lead-checkbox');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+        updateBulkBar();
+    }
+    function updateBulkBar() {
+        var checked = document.querySelectorAll('.lead-checkbox:checked');
+        var bar = document.getElementById('bulk-bar');
+        var count = document.getElementById('bulk-count');
+        if (checked.length > 0) {
+            bar.style.display = 'flex';
+            count.textContent = checked.length;
+            var ids = Array.from(checked).map(function(cb) { return cb.value; }).join(',');
+            document.getElementById('bulk-ids').value = ids;
+            document.getElementById('bulk-ids-export').value = ids;
+            document.getElementById('bulk-ids-delete').value = ids;
+        } else {
+            bar.style.display = 'none';
+        }
+    }
+    document.addEventListener('change', function(e) {
+        if (e.target && e.target.classList.contains('lead-checkbox')) {
+            updateBulkBar();
+        }
+    });
+    function setBulkIds() {
+        var checked = document.querySelectorAll('.lead-checkbox:checked');
+        var ids = Array.from(checked).map(function(cb) { return cb.value; }).join(',');
+        document.getElementById('bulk-ids-export').value = ids;
+        return true;
+    }
+    </script>
 </body>
 </html>

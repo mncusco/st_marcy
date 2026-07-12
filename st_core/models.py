@@ -68,6 +68,11 @@ class Lead(Base):
     editorial_edition_id: Mapped[int] = mapped_column(Integer, ForeignKey("editorial_editions.id"), nullable=True)
     editorial_assigned_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
+    priority_score: Mapped[int] = mapped_column(Integer, default=0)
+    estimated_value: Mapped[float] = mapped_column(Integer, default=0.0)
+    owner: Mapped[str] = mapped_column(String(100), nullable=True)
+
+    crm_notes: Mapped[list["LeadNote"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     events: Mapped[list["LeadEvent"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     documents: Mapped[list["LeadDocument"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     emails: Mapped[list["EmailQueue"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
@@ -75,6 +80,9 @@ class Lead(Base):
     download_events: Mapped[list["DownloadEvent"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     interviews: Mapped[list["Interview"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     analysis: Mapped[Optional["CandidateAnalysis"]] = relationship(back_populates="lead", uselist=False, cascade="all, delete-orphan")
+    tasks: Mapped[list["Task"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
+    reminders: Mapped[list["Reminder"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
+    notifications: Mapped[list["Notification"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
 
 class LeadEvent(Base):
     __tablename__ = "lead_events"
@@ -177,3 +185,102 @@ class CandidateAnalysis(Base):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
     lead: Mapped["Lead"] = relationship(back_populates="analysis")
+
+class LeadNote(Base):
+    __tablename__ = "lead_notes"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    content: Mapped[str] = mapped_column(Text)
+    created_by: Mapped[str] = mapped_column(String(100), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    lead: Mapped["Lead"] = relationship(back_populates="crm_notes")
+
+
+class EmailTemplate(Base):
+    __tablename__ = "email_templates"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String(100), unique=True, index=True)
+    subject: Mapped[str] = mapped_column(String(255))
+    body_html: Mapped[str] = mapped_column(Text, nullable=True)
+    body_text: Mapped[str] = mapped_column(Text, nullable=True)
+    language: Mapped[str] = mapped_column(String(10), default="en")
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class TaskStatus(str, enum.Enum):
+    PENDING = "PENDING"
+    IN_PROGRESS = "IN_PROGRESS"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
+
+class ReminderType(str, enum.Enum):
+    FOLLOWUP_3D = "FOLLOWUP_3D"
+    FOLLOWUP_7D = "FOLLOWUP_7D"
+    FOLLOWUP_14D = "FOLLOWUP_14D"
+    FOLLOWUP_30D = "FOLLOWUP_30D"
+    CUSTOM = "CUSTOM"
+
+class Task(Base):
+    __tablename__ = "tasks"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True, nullable=True)
+    title: Mapped[str] = mapped_column(String(255))
+    description: Mapped[str] = mapped_column(Text, nullable=True)
+    status: Mapped[TaskStatus] = mapped_column(SQLEnum(TaskStatus), default=TaskStatus.PENDING)
+    priority: Mapped[str] = mapped_column(String(20), default="normal")
+    due_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    assigned_to: Mapped[str] = mapped_column(String(100), nullable=True)
+    created_by: Mapped[str] = mapped_column(String(100), nullable=True)
+    completed_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    lead: Mapped[Optional["Lead"]] = relationship(back_populates="tasks")
+
+class Reminder(Base):
+    __tablename__ = "reminders"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    reminder_type: Mapped[ReminderType] = mapped_column(SQLEnum(ReminderType))
+    title: Mapped[str] = mapped_column(String(255))
+    message: Mapped[str] = mapped_column(Text, nullable=True)
+    remind_at: Mapped[datetime] = mapped_column(DateTime)
+    status: Mapped[str] = mapped_column(String(20), default="active")
+    notified: Mapped[bool] = mapped_column(Boolean, default=False)
+    notified_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    lead: Mapped["Lead"] = relationship(back_populates="reminders")
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True, nullable=True)
+    title: Mapped[str] = mapped_column(String(255))
+    message: Mapped[str] = mapped_column(Text, nullable=True)
+    notification_type: Mapped[str] = mapped_column(String(50))
+    read: Mapped[bool] = mapped_column(Boolean, default=False)
+    read_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    lead: Mapped[Optional["Lead"]] = relationship(back_populates="notifications")
+
+class AdminAudit(Base):
+    __tablename__ = "admin_audit"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    admin_user: Mapped[str] = mapped_column(String(100))
+    action: Mapped[str] = mapped_column(String(100))
+    resource_type: Mapped[str] = mapped_column(String(50), nullable=True)
+    resource_id: Mapped[str] = mapped_column(String(50), nullable=True)
+    details: Mapped[str] = mapped_column(Text, nullable=True)
+    ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

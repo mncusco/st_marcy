@@ -40,6 +40,31 @@ class EmailEngine:
         cls = BACKEND_MAP.get(key, ConsoleProvider)
         return cls()
 
+    def send_test_email(self, to: str) -> dict:
+        try:
+            html_body = f"""<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="font-family:Georgia,serif;background:#f5f2ec;color:#2c2c2c;padding:40px 20px;">
+<div style="max-width:600px;margin:0 auto;background:#fff;border:1px solid #e8e3da;padding:40px;">
+<div style="text-align:center;margin-bottom:30px;"><span style="font-size:24px;letter-spacing:2px;color:#2d5a27;">ST</span> <span style="font-size:24px;letter-spacing:2px;color:#b89a5a;">CARE</span></div>
+<h1 style="font-size:20px;font-weight:400;letter-spacing:1px;color:#2d5a27;text-align:center;">Test Email</h1>
+<p style="font-size:14px;line-height:1.6;margin-top:24px;">This is a test email from ST CORE.</p>
+<p style="font-size:14px;line-height:1.6;">Backend: <strong>{settings.EMAIL_BACKEND}</strong></p>
+<p style="font-size:14px;line-height:1.6;">If you received this, your email configuration is working correctly.</p>
+<p style="font-size:14px;line-height:1.6;margin-top:24px;">— ST CORE</p>
+</div></body></html>"""
+            backend = self._get_backend()
+            success = backend.send(
+                to=to,
+                subject=f"Test Email from ST CORE ({settings.EMAIL_BACKEND})",
+                html_body=html_body,
+                lead_id=0,
+                email_type="test",
+            )
+            return {"success": success, "backend": settings.EMAIL_BACKEND, "to": to}
+        except Exception as e:
+            logger.exception("Test email failed: %s", e)
+            return {"success": False, "error": str(e)}
+
     def render_template(self, template_name: str, language: str, context: dict) -> str:
         import os
         from jinja2 import Environment, FileSystemLoader
@@ -121,6 +146,8 @@ class EmailEngine:
                 "first_name": lead.first_name,
                 "last_name": lead.last_name,
                 "email": lead.email,
+                "language": entry.language,
+                "_contact_email": settings.CONTACT_EMAIL,
                 **payload,
             }
             html_body = self.render_template(entry.template_name, entry.language, context)
@@ -139,10 +166,12 @@ class EmailEngine:
             return False
 
     def process_pending(self, batch_size: int = 20) -> int:
+        max_retries = settings.EMAIL_MAX_RETRIES
         entries = (
             self.db.query(EmailQueue)
             .filter(EmailQueue.status == EmailStatus.PENDING)
             .filter(EmailQueue.scheduled_for <= datetime.utcnow())
+            .filter(EmailQueue.attempts < max_retries)
             .order_by(EmailQueue.created_at.asc())
             .limit(batch_size)
             .all()
@@ -160,8 +189,12 @@ class EmailEngine:
                 entry.sent_at = datetime.utcnow()
                 sent_count += 1
             else:
-                entry.status = EmailStatus.FAILED
-                entry.error_message = "Failed after processing"
+                if entry.attempts >= max_retries:
+                    entry.status = EmailStatus.FAILED
+                    entry.error_message = f"Failed after {entry.attempts} attempts"
+                else:
+                    entry.status = EmailStatus.PENDING
+                    entry.error_message = f"Attempt {entry.attempts}/{max_retries} failed"
             self.db.commit()
 
         return sent_count
@@ -171,6 +204,12 @@ class EmailEngine:
         pending = (
             self.db.query(func.count(EmailQueue.id))
             .filter(EmailQueue.status == EmailStatus.PENDING)
+            .scalar()
+            or 0
+        )
+        processing = (
+            self.db.query(func.count(EmailQueue.id))
+            .filter(EmailQueue.status == EmailStatus.PROCESSING)
             .scalar()
             or 0
         )
@@ -186,7 +225,29 @@ class EmailEngine:
             .scalar()
             or 0
         )
-        return {"total": total, "pending": pending, "failed": failed, "sent": sent}
+        cancelled = (
+            self.db.query(func.count(EmailQueue.id))
+            .filter(EmailQueue.status == EmailStatus.CANCELLED)
+            .scalar()
+            or 0
+        )
+        total_retries = (
+            self.db.query(func.sum(EmailQueue.attempts))
+            .filter(EmailQueue.status != EmailStatus.PENDING)
+            .scalar()
+            or 0
+        )
+        max_retries = settings.EMAIL_MAX_RETRIES
+        return {
+            "total": total,
+            "pending": pending,
+            "processing": processing,
+            "failed": failed,
+            "sent": sent,
+            "cancelled": cancelled,
+            "total_retries": total_retries,
+            "max_retries": max_retries,
+        }
 
     def get_recent_emails(self, limit: int = 50):
         entries = (
