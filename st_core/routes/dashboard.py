@@ -24,6 +24,7 @@ from models import Lead, LeadStatus, AdminAudit
 from services.ai_service import AIService
 from services.analytics_service import AnalyticsService
 from services.task_service import TaskService
+from services.booking_service import BookingService
 
 router = APIRouter(prefix="/admin", tags=["Dashboard"])
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "..", "templates"))
@@ -115,6 +116,10 @@ def admin_dashboard(
     need_approval = db.query(Lead).filter(Lead.status == LeadStatus.INTERVIEW).count()
     need_booking = db.query(Lead).filter(Lead.status == LeadStatus.APPROVED).count()
 
+    bsvc = BookingService(db)
+    booking_stats = bsvc.get_booking_stats()
+    upcoming_retreats = bsvc.get_upcoming_retreats(limit=10)
+
     return templates.TemplateResponse(
         request,
         "dashboard.html",
@@ -161,6 +166,8 @@ def admin_dashboard(
             "need_approval": need_approval,
             "need_booking": need_booking,
             "now": datetime.utcnow,
+            "booking_stats": booking_stats,
+            "upcoming_retreats": upcoming_retreats,
         },
     )
 
@@ -182,12 +189,14 @@ def admin_lead_detail(
     task_service = TaskService(db)
     lead_tasks = task_service.get_lead_tasks(lead_id)
     lead_reminders = task_service.get_lead_reminders(lead_id)
+    bsvc = BookingService(db)
+    lead_bookings = bsvc.get_lead_bookings(lead_id)
     return templates.TemplateResponse(
         request,
         "lead_detail.html",
         {"lead": lead, "events": events, "emails": lead_emails, "interviews": lead_interviews,
          "statuses": list(LeadStatus), "analysis": lead_analysis, "crm_notes": crm_notes,
-         "tasks": lead_tasks, "reminders": lead_reminders},
+         "tasks": lead_tasks, "reminders": lead_reminders, "bookings": lead_bookings},
     )
 
 @router.post("/lead/{lead_id}")
@@ -355,6 +364,167 @@ def admin_no_show_interview(
     interview = mark_no_show(db, interview_id, notes=notes or None, created_by=admin)
     db.commit()
     return RedirectResponse(url=f"/admin/lead/{interview.lead_id}", status_code=303)
+
+
+# ── Booking / Retreat Endpoints ─────────────────
+
+@router.post("/retreat/create")
+def admin_create_retreat(
+    name: str = Form(...),
+    description: str = Form(""),
+    location: str = Form(""),
+    start_date: Optional[str] = Form(None),
+    end_date: Optional[str] = Form(None),
+    max_participants: int = Form(10),
+    price: float = Form(0.0),
+    currency: str = Form("EUR"),
+    status: str = Form("DRAFT"),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    parsed_start = None
+    parsed_end = None
+    if start_date:
+        try:
+            parsed_start = datetime.strptime(start_date, "%Y-%m-%d")
+        except ValueError:
+            pass
+    if end_date:
+        try:
+            parsed_end = datetime.strptime(end_date, "%Y-%m-%d")
+        except ValueError:
+            pass
+    bsvc = BookingService(db)
+    retreat = bsvc.create_retreat(
+        name=name, description=description or None,
+        location=location or None, start_date=parsed_start,
+        end_date=parsed_end, max_participants=max_participants,
+        price=price, currency=currency, status=status,
+    )
+    _log_audit(db, admin, "retreat_created", "retreat", str(retreat.id), f"Created retreat: {name}")
+    return RedirectResponse(url="/admin", status_code=303)
+
+
+@router.post("/booking/create")
+def admin_create_booking(
+    lead_id: int = Form(...),
+    retreat_id: int = Form(...),
+    seats_reserved: int = Form(1),
+    notes: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    bsvc = BookingService(db)
+    try:
+        booking = bsvc.create_booking(
+            lead_id=lead_id, retreat_id=retreat_id,
+            seats_reserved=seats_reserved, notes=notes or None,
+        )
+        _log_audit(db, admin, "booking_created", "booking", str(booking.id),
+                   f"Booking for retreat {retreat_id} (status: {booking.status.value})")
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+
+
+@router.post("/booking/{booking_id}/confirm")
+def admin_confirm_booking(
+    booking_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    bsvc = BookingService(db)
+    booking = bsvc.confirm_booking(booking_id)
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found or cannot be confirmed")
+    _log_audit(db, admin, "booking_confirmed", "booking", str(booking_id), "Booking confirmed")
+    return RedirectResponse(url=f"/admin/lead/{booking.lead_id}", status_code=303)
+
+
+@router.post("/booking/{booking_id}/cancel")
+def admin_cancel_booking(
+    booking_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    bsvc = BookingService(db)
+    booking = bsvc.cancel_booking(booking_id)
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    _log_audit(db, admin, "booking_cancelled", "booking", str(booking_id), "Booking cancelled")
+    return RedirectResponse(url=f"/admin/lead/{booking.lead_id}", status_code=303)
+
+
+@router.post("/booking/{booking_id}/complete")
+def admin_complete_booking(
+    booking_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    bsvc = BookingService(db)
+    booking = bsvc.complete_booking(booking_id)
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    _log_audit(db, admin, "booking_completed", "booking", str(booking_id), "Booking completed")
+    return RedirectResponse(url=f"/admin/lead/{booking.lead_id}", status_code=303)
+
+
+@router.post("/booking/{booking_id}/payment")
+def admin_record_payment(
+    booking_id: int,
+    amount: float = Form(...),
+    payment_type: str = Form("DEPOSIT"),
+    payment_method: str = Form(""),
+    notes: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    bsvc = BookingService(db)
+    try:
+        payment = bsvc.record_payment(
+            booking_id=booking_id, amount=amount,
+            payment_type=payment_type,
+            payment_method=payment_method or None,
+            notes=notes or None,
+        )
+        _log_audit(db, admin, "payment_recorded", "booking", str(booking_id),
+                   f"{payment_type} payment of {amount}")
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    booking = bsvc.get_booking(booking_id)
+    return RedirectResponse(url=f"/admin/lead/{booking.lead_id}", status_code=303)
+
+
+@router.post("/booking/{booking_id}/participant/add")
+def admin_add_participant(
+    booking_id: int,
+    first_name: str = Form(...),
+    last_name: str = Form(...),
+    email: str = Form(""),
+    passport_number: str = Form(""),
+    nationality: str = Form(""),
+    date_of_birth: Optional[str] = Form(None),
+    special_requirements: str = Form(""),
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    bsvc = BookingService(db)
+    dob = None
+    if date_of_birth:
+        try:
+            dob = datetime.strptime(date_of_birth, "%Y-%m-%d")
+        except ValueError:
+            pass
+    bsvc.add_participant(
+        booking_id=booking_id, first_name=first_name, last_name=last_name,
+        email=email or None, passport_number=passport_number or None,
+        nationality=nationality or None, date_of_birth=dob,
+        special_requirements=special_requirements or None,
+    )
+    _log_audit(db, admin, "participant_added", "booking", str(booking_id),
+               f"Added participant {first_name} {last_name}")
+    booking = bsvc.get_booking(booking_id)
+    return RedirectResponse(url=f"/admin/lead/{booking.lead_id}", status_code=303)
 
 
 # ── Admin Audit Helper ──────────────────────────
@@ -707,8 +877,8 @@ def admin_diagnostics(
     db_health = check_database_health()
     table_counts = {}
     try:
-        from models import Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit
-        for model in (Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit):
+        from models import Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit, Retreat, Booking, Payment
+        for model in (Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit, Retreat, Booking, Payment):
             table_counts[model.__tablename__] = db.query(model).count()
     except Exception:
         pass

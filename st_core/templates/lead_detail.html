@@ -185,6 +185,10 @@
         .badge-requested { border-color: #b89a5a; color: #b89a5a; }
         .badge-scheduled { border-color: #5a7d9a; color: #3a6b8a; }
         .badge-no_show { border-color: #9a5a5a; color: #9a5a5a; }
+        .badge-reserved { border-color: #5a7d9a; color: #3a6b8a; }
+        .badge-confirmed { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
+        .badge-waiting { border-color: #b89a5a; color: #b89a5a; }
+        .badge-completed { border-color: #1a4a1a; color: #1a4a1a; background: #d0e8d0; }
 
         .analysis-box { display: flex; gap: 24px; flex-wrap: wrap; }
         .analysis-box .score-badge {
@@ -566,6 +570,94 @@
                     <button type="submit" class="btn btn-secondary" style="padding:6px 16px;font-size:10px;">Generate Follow-up Reminders</button>
                 </form>
             </div>
+        </div>
+
+        <div class="card">
+            <h2>Retreat Bookings</h2>
+            <div class="email-actions" style="margin-bottom:16px;">
+                <details style="display:inline-block;position:relative;">
+                    <summary style="cursor:pointer;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#b89a5a;padding:6px 16px;border:1px solid #d4cfc6;list-style:none;">+ New Booking</summary>
+                    <div style="position:absolute;left:0;top:100%;background:#fff;border:1px solid #e8e3da;padding:12px;z-index:10;width:280px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                        <form method="POST" action="/admin/booking/create" style="display:flex;flex-direction:column;gap:6px;">
+                            <input type="hidden" name="lead_id" value="{{ lead.id }}">
+                            <label style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#8c8c8c;">Retreat ID</label>
+                            <input type="number" name="retreat_id" placeholder="Retreat ID" required style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                            <label style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#8c8c8c;">Seats</label>
+                            <input type="number" name="seats_reserved" value="1" min="1" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                            <textarea name="notes" placeholder="Notes (optional)" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;min-height:40px;"></textarea>
+                            <button type="submit" class="btn btn-primary" style="padding:6px 12px;font-size:10px;">Create Booking</button>
+                        </form>
+                    </div>
+                </details>
+            </div>
+            {% if bookings %}
+            <div style="border:1px solid #e8e3da;">
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:#f7f4ef;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;">
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Retreat</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Status</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Seats</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Total</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Deposit</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Balance</th>
+                            <th style="padding:10px 14px;text-align:left;font-weight:400;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for b in bookings %}
+                        <tr style="border-bottom:1px solid #f0ede8;font-size:12px;">
+                            <td style="padding:10px 14px;">Retreat #{{ b.retreat_id }}</td>
+                            <td style="padding:10px 14px;"><span class="badge badge-{{ b.status.value.lower() }}">{{ b.status.value }}</span></td>
+                            <td style="padding:10px 14px;">{{ b.seats_reserved }}</td>
+                            <td style="padding:10px 14px;">${{ "{:,.0f}".format(b.total_amount) }}</td>
+                            <td style="padding:10px 14px;">{% if b.deposit_paid %}<span style="color:#2d5a27;">Paid</span>{% else %}<span style="color:#b89a5a;">${{ "{:,.0f}".format(b.deposit_amount) }}</span>{% endif %}</td>
+                            <td style="padding:10px 14px;">{% if b.balance_paid %}<span style="color:#2d5a27;">Paid</span>{% else %}<span style="color:#b89a5a;">Pending</span>{% endif %}</td>
+                            <td style="padding:10px 14px;display:flex;gap:4px;flex-wrap:wrap;">
+                                {% if b.status.value == 'RESERVED' %}
+                                <form method="POST" action="/admin/booking/{{ b.id }}/confirm" style="display:inline;" onsubmit="return confirm('Confirm this booking?')">
+                                    <button type="submit" class="btn btn-secondary" style="padding:4px 8px;font-size:9px;">Confirm</button>
+                                </form>
+                                {% endif %}
+                                {% if b.status.value in ('RESERVED', 'CONFIRMED') %}
+                                <details style="display:inline-block;position:relative;">
+                                    <summary style="cursor:pointer;padding:4px 8px;border:1px solid #d4cfc6;font-size:9px;text-transform:uppercase;list-style:none;color:#2c2c2c;">Pay</summary>
+                                    <div style="position:absolute;right:0;top:100%;background:#fff;border:1px solid #e8e3da;padding:10px;z-index:10;width:220px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                                        <form method="POST" action="/admin/booking/{{ b.id }}/payment" style="display:flex;flex-direction:column;gap:6px;">
+                                            <input type="number" name="amount" step="0.01" placeholder="Amount" required style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                                            <select name="payment_type" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                                                <option value="DEPOSIT">Deposit</option>
+                                                <option value="BALANCE">Balance</option>
+                                            </select>
+                                            <select name="payment_method" style="padding:4px 6px;border:1px solid #d4cfc6;font-size:11px;font-family:inherit;">
+                                                <option value="">Method…</option>
+                                                <option value="CASH">Cash</option>
+                                                <option value="TRANSFER">Transfer</option>
+                                                <option value="CARD">Card</option>
+                                                <option value="OTHER">Other</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-primary" style="padding:6px 12px;font-size:10px;">Record Payment</button>
+                                        </form>
+                                    </div>
+                                </details>
+                                <form method="POST" action="/admin/booking/{{ b.id }}/cancel" style="display:inline;" onsubmit="return confirm('Cancel this booking? Waiting list may be promoted.')">
+                                    <button type="submit" class="btn btn-secondary" style="padding:4px 8px;font-size:9px;color:#9a5a5a;border-color:#9a5a5a;">Cancel</button>
+                                </form>
+                                {% endif %}
+                                {% if b.status.value == 'CONFIRMED' %}
+                                <form method="POST" action="/admin/booking/{{ b.id }}/complete" style="display:inline;" onsubmit="return confirm('Mark booking as completed?')">
+                                    <button type="submit" class="btn btn-secondary" style="padding:4px 8px;font-size:9px;color:#2d5a27;border-color:#2d5a27;">Complete</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="placeholder">No bookings for this lead yet.</div>
+            {% endif %}
         </div>
 
         <div class="card">

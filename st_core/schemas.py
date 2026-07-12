@@ -247,3 +247,84 @@ class NotificationResponse(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class RetreatCreate(BaseModel):
+    name: str = Field(..., min_length=1, max_length=255)
+    description: Optional[str] = None
+    location: Optional[str] = None
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+    max_participants: int = 10
+    price: float = 0.0
+    currency: str = "EUR"
+    status: Optional[str] = None
+
+
+class RetreatResponse(BaseModel):
+    id: int
+    name: str
+    description: Optional[str] = None
+    location: Optional[str] = None
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+    max_participants: int
+    price: float
+    currency: str
+    status: str
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class BookingCreate(BaseModel):
+    lead_id: int
+    retreat_id: int
+    seats_reserved: int = 1
+    notes: Optional[str] = None
+
+
+class BookingResponse(BaseModel):
+    id: int
+    lead_id: int
+    retreat_id: int
+    status: str
+    seats_reserved: int
+    total_amount: float
+    deposit_amount: float
+    deposit_paid: bool
+    balance_paid: bool
+    notes: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class PaymentResponse(BaseModel):
+    id: int
+    booking_id: int
+    amount: float
+    payment_type: str
+    payment_method: Optional[str] = None
+    notes: Optional[str] = None
+    paid_at: Optional[datetime] = None
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ParticipantResponse(BaseModel):
+    id: int
+    booking_id: int
+    first_name: str
+    last_name: str
+    email: Optional[str] = None
+    passport_number: Optional[str] = None
+    nationality: Optional[str] = None
+    date_of_birth: Optional[datetime] = None
+    special_requirements: Optional[str] = None
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)

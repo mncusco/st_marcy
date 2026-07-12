@@ -614,6 +614,45 @@
             <div class="crm-box"><div class="crm-count">{{ upcoming_interviews|length }}</div><div class="crm-sub">Upcoming Interviews</div></div>
         </div>
 
+        <div class="crm-row" style="margin-bottom:24px;">
+            <div class="crm-box"><div class="crm-count green">{{ booking_stats.seats_available }}</div><div class="crm-sub">Seats Available</div></div>
+            <div class="crm-box"><div class="crm-count green">{{ booking_stats.booked }}</div><div class="crm-sub">Booked</div></div>
+            <div class="crm-box"><div class="crm-count bronze">{{ booking_stats.waiting }}</div><div class="crm-sub">Waiting List</div></div>
+            <div class="crm-box"><div class="crm-count" style="color:#5a7d9a;">{{ booking_stats.pending_deposits }}</div><div class="crm-sub">Deposits Pending</div></div>
+            <div class="crm-box"><div class="crm-count bronze">${{ "{:,.0f}".format(booking_stats.revenue) }}</div><div class="crm-sub">Revenue</div></div>
+            <div class="crm-box"><div class="crm-count" style="color:#5a7d9a;">{{ upcoming_retreats|length }}</div><div class="crm-sub">Upcoming Retreats</div></div>
+        </div>
+
+        {% if upcoming_retreats %}
+        <div style="margin-bottom:24px;">
+            <div style="background:#fff;border:1px solid #e8e3da;">
+                <div style="padding:14px 18px;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#b89a5a;">Upcoming Retreats</div>
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:#f7f4ef;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;">
+                            <th style="padding:8px 14px;text-align:left;font-weight:400;">Name</th>
+                            <th style="padding:8px 14px;text-align:left;font-weight:400;">Location</th>
+                            <th style="padding:8px 14px;text-align:left;font-weight:400;">Dates</th>
+                            <th style="padding:8px 14px;text-align:left;font-weight:400;">Price</th>
+                            <th style="padding:8px 14px;text-align:left;font-weight:400;">Capacity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for r in upcoming_retreats %}
+                        <tr style="border-bottom:1px solid #f0ede8;font-size:12px;">
+                            <td style="padding:8px 14px;font-weight:700;">{{ r.name }}</td>
+                            <td style="padding:8px 14px;color:#8c8c8c;">{{ r.location or '—' }}</td>
+                            <td style="padding:8px 14px;color:#8c8c8c;font-size:11px;">{% if r.start_date %}{{ r.start_date.strftime('%d %b %Y') }}{% endif %}{% if r.end_date %} — {{ r.end_date.strftime('%d %b %Y') }}{% endif %}</td>
+                            <td style="padding:8px 14px;">${{ "{:,.0f}".format(r.price) }}</td>
+                            <td style="padding:8px 14px;color:#8c8c8c;">{{ r.max_participants }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
         <form class="filters" method="GET" action="/admin">
             <div class="quick-filters">
                 <a href="/admin" class="{% if not period_filter and not status_filter and not downloaded_filter %}active{% endif %}">All</a>

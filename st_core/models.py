@@ -83,6 +83,7 @@ class Lead(Base):
     tasks: Mapped[list["Task"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     reminders: Mapped[list["Reminder"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
     notifications: Mapped[list["Notification"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
+    bookings: Mapped[list["Booking"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
 
 class LeadEvent(Base):
     __tablename__ = "lead_events"
@@ -272,6 +273,118 @@ class Notification(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     lead: Mapped[Optional["Lead"]] = relationship(back_populates="notifications")
+
+class RetreatStatus(str, enum.Enum):
+    DRAFT = "DRAFT"
+    ACTIVE = "ACTIVE"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
+
+class BookingStatus(str, enum.Enum):
+    RESERVED = "RESERVED"
+    CONFIRMED = "CONFIRMED"
+    CANCELLED = "CANCELLED"
+    COMPLETED = "COMPLETED"
+    WAITING = "WAITING"
+
+class PaymentType(str, enum.Enum):
+    DEPOSIT = "DEPOSIT"
+    BALANCE = "BALANCE"
+    REFUND = "REFUND"
+
+class PaymentMethod(str, enum.Enum):
+    CASH = "CASH"
+    TRANSFER = "TRANSFER"
+    CARD = "CARD"
+    OTHER = "OTHER"
+
+class Retreat(Base):
+    __tablename__ = "retreats"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String(255))
+    description: Mapped[str] = mapped_column(Text, nullable=True)
+    location: Mapped[str] = mapped_column(String(255), nullable=True)
+    start_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    end_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    max_participants: Mapped[int] = mapped_column(Integer, default=10)
+    price: Mapped[float] = mapped_column(Integer, default=0.0)
+    currency: Mapped[str] = mapped_column(String(10), default="EUR")
+    status: Mapped[RetreatStatus] = mapped_column(SQLEnum(RetreatStatus), default=RetreatStatus.DRAFT)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    bookings: Mapped[list["Booking"]] = relationship(back_populates="retreat", cascade="all, delete-orphan")
+
+
+class Booking(Base):
+    __tablename__ = "bookings"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    retreat_id: Mapped[int] = mapped_column(Integer, ForeignKey("retreats.id"), index=True)
+    status: Mapped[BookingStatus] = mapped_column(SQLEnum(BookingStatus), default=BookingStatus.RESERVED)
+    seats_reserved: Mapped[int] = mapped_column(Integer, default=1)
+    total_amount: Mapped[float] = mapped_column(Integer, default=0.0)
+    deposit_amount: Mapped[float] = mapped_column(Integer, default=0.0)
+    deposit_paid: Mapped[bool] = mapped_column(Boolean, default=False)
+    balance_paid: Mapped[bool] = mapped_column(Boolean, default=False)
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    lead: Mapped["Lead"] = relationship(back_populates="bookings")
+    retreat: Mapped["Retreat"] = relationship(back_populates="bookings")
+    payments: Mapped[list["Payment"]] = relationship(back_populates="booking", cascade="all, delete-orphan")
+    participants: Mapped[list["Participant"]] = relationship(back_populates="booking", cascade="all, delete-orphan")
+    room_assignments: Mapped[list["RoomAssignment"]] = relationship(back_populates="booking", cascade="all, delete-orphan")
+
+
+class Payment(Base):
+    __tablename__ = "payments"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    booking_id: Mapped[int] = mapped_column(Integer, ForeignKey("bookings.id"), index=True)
+    amount: Mapped[float] = mapped_column(Integer, default=0.0)
+    payment_type: Mapped[PaymentType] = mapped_column(SQLEnum(PaymentType), default=PaymentType.DEPOSIT)
+    payment_method: Mapped[PaymentMethod] = mapped_column(SQLEnum(PaymentMethod), nullable=True)
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+    paid_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    booking: Mapped["Booking"] = relationship(back_populates="payments")
+
+
+class Participant(Base):
+    __tablename__ = "participants"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    booking_id: Mapped[int] = mapped_column(Integer, ForeignKey("bookings.id"), index=True)
+    first_name: Mapped[str] = mapped_column(String(100))
+    last_name: Mapped[str] = mapped_column(String(100))
+    email: Mapped[str] = mapped_column(String(255), nullable=True)
+    passport_number: Mapped[str] = mapped_column(String(50), nullable=True)
+    nationality: Mapped[str] = mapped_column(String(100), nullable=True)
+    date_of_birth: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    special_requirements: Mapped[str] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    booking: Mapped["Booking"] = relationship(back_populates="participants")
+
+
+class RoomAssignment(Base):
+    __tablename__ = "room_assignments"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    participant_id: Mapped[int] = mapped_column(Integer, ForeignKey("participants.id"), index=True, nullable=True)
+    booking_id: Mapped[int] = mapped_column(Integer, ForeignKey("bookings.id"), index=True)
+    room_type: Mapped[str] = mapped_column(String(50), nullable=True)
+    room_number: Mapped[str] = mapped_column(String(50), nullable=True)
+    notes: Mapped[str] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    booking: Mapped["Booking"] = relationship(back_populates="room_assignments")
+
 
 class AdminAudit(Base):
     __tablename__ = "admin_audit"

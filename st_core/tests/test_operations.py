@@ -988,3 +988,232 @@ class TestScriptsDir:
         import os
         for name in ("backup.py", "restore.py", "verify.py"):
             assert os.path.exists(f"scripts/{name}"), f"Missing scripts/{name}"
+
+
+# ═══════════════════════════════════════════════
+# PHASE 16 — RETREAT BOOKING
+# ═══════════════════════════════════════════════
+
+class TestRetreatModel:
+    """Retreat CRUD operations."""
+
+    def test_create_retreat(self, client, auth_headers):
+        resp = client.post("/admin/retreat/create", data={
+            "name": "Amazon Retreat",
+            "description": "A journey into the jungle",
+            "location": "Peru",
+            "start_date": "2026-09-01",
+            "end_date": "2026-09-14",
+            "max_participants": 10,
+            "price": 2500.0,
+            "currency": "USD",
+            "status": "ACTIVE",
+        }, headers=auth_headers, follow_redirects=False)
+        assert resp.status_code == 303
+        html = client.get("/admin", headers=auth_headers).text
+        assert "Amazon Retreat" in html
+
+    def test_retreat_appears_in_dashboard(self, client, auth_headers):
+        from datetime import datetime, timedelta
+        future = (datetime.utcnow() + timedelta(days=30)).strftime("%Y-%m-%d")
+        client.post("/admin/retreat/create", data={
+            "name": "Sacred Valley",
+            "max_participants": 8,
+            "price": 1800.0,
+            "status": "ACTIVE",
+            "start_date": future,
+        }, headers=auth_headers)
+        html = client.get("/admin", headers=auth_headers).text
+        assert "Sacred Valley" in html
+        assert "8" in html
+
+
+class TestBookingFlow:
+    """Booking lifecycle: reserve, confirm, cancel, waiting list."""
+
+    def _create_retreat(self, client, auth_headers, max_pax=2, name="Test Retreat"):
+        client.post("/admin/retreat/create", data={
+            "name": name, "max_participants": max_pax, "price": 1000.0, "status": "ACTIVE",
+        }, headers=auth_headers)
+
+    def _create_lead_and_book(self, client, auth_headers, email_suffix="a"):
+        data = {"first_name": f"Test{email_suffix}", "last_name": "User",
+                "email": f"test{email_suffix}@example.com"}
+        created = client.post("/api/leads", json=data).json()
+        return created["id"]
+
+    def test_reserve_booking(self, client, auth_headers, sample_lead_data):
+        created = client.post("/api/leads", json=sample_lead_data).json()
+        lead_id = created["id"]
+        self._create_retreat(client, auth_headers)
+        html = client.get("/admin", headers=auth_headers).text
+        import re
+        match = re.search(r'/admin/retreat/create', html)
+
+        resp = client.post("/admin/booking/create", data={
+            "lead_id": lead_id, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers, follow_redirects=False)
+        assert resp.status_code == 303
+        detail = client.get(f"/admin/lead/{lead_id}", headers=auth_headers).text
+        assert "RESERVED" in detail
+
+    def test_confirm_booking(self, client, auth_headers):
+        lead_id = self._create_lead_and_book(client, auth_headers, "conf")
+        self._create_retreat(client, auth_headers)
+        client.post("/admin/booking/create", data={
+            "lead_id": lead_id, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        resp = client.post("/admin/booking/1/confirm", headers=auth_headers, follow_redirects=False)
+        assert resp.status_code == 303
+        detail = client.get(f"/admin/lead/{lead_id}", headers=auth_headers).text
+        assert "CONFIRMED" in detail
+
+    def test_cancel_booking(self, client, auth_headers):
+        lead_id = self._create_lead_and_book(client, auth_headers, "cancel")
+        self._create_retreat(client, auth_headers)
+        client.post("/admin/booking/create", data={
+            "lead_id": lead_id, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        client.post("/admin/booking/1/confirm", headers=auth_headers)
+        resp = client.post("/admin/booking/1/cancel", headers=auth_headers, follow_redirects=False)
+        assert resp.status_code == 303
+        detail = client.get(f"/admin/lead/{lead_id}", headers=auth_headers).text
+        assert "CANCELLED" in detail
+
+    def test_complete_booking(self, client, auth_headers):
+        lead_id = self._create_lead_and_book(client, auth_headers, "compl")
+        self._create_retreat(client, auth_headers)
+        client.post("/admin/booking/create", data={
+            "lead_id": lead_id, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        client.post("/admin/booking/1/confirm", headers=auth_headers)
+        resp = client.post("/admin/booking/1/complete", headers=auth_headers, follow_redirects=False)
+        assert resp.status_code == 303
+        detail = client.get(f"/admin/lead/{lead_id}", headers=auth_headers).text
+        assert "COMPLETED" in detail
+
+    def test_waiting_list_when_full(self, client, auth_headers):
+        lead1 = self._create_lead_and_book(client, auth_headers, "wl1")
+        lead2 = self._create_lead_and_book(client, auth_headers, "wl2")
+        self._create_retreat(client, auth_headers, max_pax=1, name="Limited Retreat")
+        r1 = client.post("/admin/booking/create", data={
+            "lead_id": lead1, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        detail1 = client.get(f"/admin/lead/{lead1}", headers=auth_headers).text
+        assert "RESERVED" in detail1
+
+        r2 = client.post("/admin/booking/create", data={
+            "lead_id": lead2, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        detail2 = client.get(f"/admin/lead/{lead2}", headers=auth_headers).text
+        assert "WAITING" in detail2
+
+    def test_promote_from_waiting_on_cancel(self, client, auth_headers):
+        lead1 = self._create_lead_and_book(client, auth_headers, "prom1")
+        lead2 = self._create_lead_and_book(client, auth_headers, "prom2")
+        self._create_retreat(client, auth_headers, max_pax=1, name="Promo Retreat")
+        client.post("/admin/booking/create", data={
+            "lead_id": lead1, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        client.post("/admin/booking/create", data={
+            "lead_id": lead2, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        client.post("/admin/booking/1/cancel", headers=auth_headers)
+        detail2 = client.get(f"/admin/lead/{lead2}", headers=auth_headers).text
+        assert "RESERVED" in detail2
+
+
+class TestBookingPayments:
+    """Payment tracking for bookings."""
+
+    def test_record_deposit_payment(self, client, auth_headers, sample_lead_data):
+        created = client.post("/api/leads", json=sample_lead_data).json()
+        lead_id = created["id"]
+        client.post("/admin/retreat/create", data={
+            "name": "Payment Retreat", "max_participants": 5, "price": 2000.0, "status": "ACTIVE",
+        }, headers=auth_headers)
+        client.post("/admin/booking/create", data={
+            "lead_id": lead_id, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        resp = client.post("/admin/booking/1/payment", data={
+            "amount": 600.0, "payment_type": "DEPOSIT", "payment_method": "TRANSFER",
+        }, headers=auth_headers, follow_redirects=False)
+        assert resp.status_code == 303
+        detail = client.get(f"/admin/lead/{lead_id}", headers=auth_headers).text
+        assert "Paid" in detail
+
+    def test_record_balance_payment(self, client, auth_headers, sample_lead_data):
+        created = client.post("/api/leads", json=sample_lead_data).json()
+        lead_id = created["id"]
+        client.post("/admin/retreat/create", data={
+            "name": "Balance Retreat", "max_participants": 5, "price": 2000.0, "status": "ACTIVE",
+        }, headers=auth_headers)
+        client.post("/admin/booking/create", data={
+            "lead_id": lead_id, "retreat_id": 1, "seats_reserved": 1,
+        }, headers=auth_headers)
+        client.post("/admin/booking/1/confirm", headers=auth_headers)
+        client.post("/admin/booking/1/payment", data={
+            "amount": 600.0, "payment_type": "DEPOSIT", "payment_method": "TRANSFER",
+        }, headers=auth_headers)
+        client.post("/admin/booking/1/payment", data={
+            "amount": 1400.0, "payment_type": "BALANCE", "payment_method": "TRANSFER",
+        }, headers=auth_headers)
+        detail = client.get(f"/admin/lead/{lead_id}", headers=auth_headers).text
+        assert "Paid" in detail
+        assert "Balance" not in detail or detail.count("Paid") >= 2
+
+    def test_payment_requires_auth(self, client):
+        resp = client.post("/admin/booking/1/payment", data={"amount": 100.0, "payment_type": "DEPOSIT"})
+        assert resp.status_code in (401, 403)
+
+    def test_booking_requires_auth(self, client):
+        resp = client.post("/admin/booking/create", data={"lead_id": 1, "retreat_id": 1})
+        assert resp.status_code in (401, 403)
+
+    def test_retreat_create_requires_auth(self, client):
+        resp = client.post("/admin/retreat/create", data={"name": "Unauthorized"})
+        assert resp.status_code in (401, 403)
+
+
+class TestBookingDashboardWidgets:
+    """Booking stats appear on dashboard."""
+
+    def test_booking_stats_row_shown(self, client, auth_headers):
+        html = client.get("/admin", headers=auth_headers).text
+        assert "Seats Available" in html
+        assert "Booked" in html
+        assert "Waiting List" in html
+        assert "Revenue" in html
+        assert "Upcoming Retreats" in html
+
+    def test_booking_stats_update_after_reservation(self, client, auth_headers):
+        html = client.get("/admin", headers=auth_headers).text
+        html2 = client.get("/admin", headers=auth_headers).text
+        assert "Seats Available" in html2
+
+
+class TestBookingService:
+    """Direct BookingService unit tests."""
+
+    def test_service_creates_retreat(self, db_session):
+        from services.booking_service import BookingService
+        svc = BookingService(db_session)
+        retreat = svc.create_retreat("Unit Test Retreat", max_participants=5, price=500.0)
+        assert retreat.id is not None
+        assert retreat.name == "Unit Test Retreat"
+        assert retreat.max_participants == 5
+
+    def test_service_seats_available(self, db_session):
+        from services.booking_service import BookingService
+        svc = BookingService(db_session)
+        retreat = svc.create_retreat("Seats Test", max_participants=10, price=100.0, status="ACTIVE")
+        assert svc.seats_available(retreat.id) == 10
+
+    def test_service_get_booking_stats(self, db_session):
+        from services.booking_service import BookingService
+        svc = BookingService(db_session)
+        stats = svc.get_booking_stats()
+        assert "seats_available" in stats
+        assert "booked" in stats
+        assert "waiting" in stats
+        assert "revenue" in stats
