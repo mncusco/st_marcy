@@ -1,5 +1,4 @@
 import enum
-import re
 
 class LanguageCode(str, enum.Enum):
     EN = "en"

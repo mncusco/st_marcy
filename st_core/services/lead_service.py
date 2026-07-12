@@ -1,13 +1,16 @@
 import json
 import secrets
+import logging
 from datetime import datetime, timedelta
-from sqlalchemy.orm import Session, joinedload
-from sqlalchemy import desc, or_, and_
+from sqlalchemy.orm import Session
+from sqlalchemy import desc, or_
 from fastapi import HTTPException
 from models import Lead, LeadEvent, LeadStatus
 from schemas import LeadCreate, LeadUpdate
 from services.automation_engine import AutomationEngine
 from services.editorial_service import assign_editorial_to_lead, record_download_event
+
+logger = logging.getLogger("st_core.lead_service")
 
 ALLOWED_TRANSITIONS = {
     LeadStatus.NEW: [LeadStatus.CONTACTED, LeadStatus.REJECTED, LeadStatus.ARCHIVED],
@@ -73,14 +76,14 @@ class LeadService:
 
         try:
             AutomationEngine(db).on_lead_created(db_lead)
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("Automation on_lead_created failed for lead %d: %s", db_lead.id, e)
 
         try:
             assign_editorial_to_lead(db, db_lead)
             db.commit()
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("Editorial assignment failed for lead %d: %s", db_lead.id, e)
 
         db_lead.priority_score = LeadService._compute_priority(db_lead)
         db.commit()
@@ -204,8 +207,8 @@ class LeadService:
         if _status_changed:
             try:
                 AutomationEngine(db).on_status_changed(lead, _old_status, lead.status)
-            except Exception:
-                pass
+            except Exception as e:
+                logger.error("Automation on_status_changed failed for lead %d: %s", lead.id, e)
 
         return lead
 
@@ -228,8 +231,8 @@ class LeadService:
         try:
             record_download_event(db, lead, ip_address=ip_address, user_agent=user_agent)
             db.commit()
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("Download event recording failed for lead %d: %s", lead.id, e)
 
         return lead
 
@@ -249,14 +252,14 @@ class LeadService:
 
         try:
             AutomationEngine(db).on_editorial_download(lead)
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("Automation on_editorial_download failed for lead %d: %s", lead.id, e)
 
         try:
             record_download_event(db, lead, ip_address=ip_address, user_agent=user_agent)
             db.commit()
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("Download event recording failed for lead %d: %s", lead.id, e)
 
         return lead
 

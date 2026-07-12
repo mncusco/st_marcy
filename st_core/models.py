@@ -2,7 +2,7 @@ import uuid
 import enum
 from typing import Optional
 from datetime import datetime
-from sqlalchemy import String, Text, Boolean, DateTime, Integer, ForeignKey, Enum as SQLEnum
+from sqlalchemy import String, Text, Boolean, DateTime, Integer, Float, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import Base
 
@@ -38,6 +38,15 @@ class InterviewStatus(str, enum.Enum):
 
 class Lead(Base):
     __tablename__ = "leads"
+    __table_args__ = (
+        Index("ix_leads_status", "status"),
+        Index("ix_leads_created_at", "created_at"),
+        Index("ix_leads_source_page", "source_page"),
+        Index("ix_leads_country", "country"),
+        Index("ix_leads_language", "language"),
+        Index("ix_leads_downloaded_editorial", "downloaded_editorial"),
+        Index("ix_leads_priority_score", "priority_score"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     uuid: Mapped[str] = mapped_column(String(36), unique=True, index=True, default=lambda: str(uuid.uuid4()))
@@ -69,7 +78,7 @@ class Lead(Base):
     editorial_assigned_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
     priority_score: Mapped[int] = mapped_column(Integer, default=0)
-    estimated_value: Mapped[float] = mapped_column(Integer, default=0.0)
+    estimated_value: Mapped[float] = mapped_column(Float, default=0.0)
     owner: Mapped[str] = mapped_column(String(100), nullable=True)
 
     crm_notes: Mapped[list["LeadNote"]] = relationship(back_populates="lead", cascade="all, delete-orphan")
@@ -87,9 +96,13 @@ class Lead(Base):
 
 class LeadEvent(Base):
     __tablename__ = "lead_events"
+    __table_args__ = (
+        Index("ix_lead_events_lead_id", "lead_id"),
+        Index("ix_lead_events_created_at", "created_at"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"))
     event_type: Mapped[str] = mapped_column(String(50))
     title: Mapped[str] = mapped_column(String(255))
     description: Mapped[str] = mapped_column(Text, nullable=True)
@@ -114,6 +127,12 @@ class LeadDocument(Base):
 
 class EmailQueue(Base):
     __tablename__ = "email_queue"
+    __table_args__ = (
+        Index("ix_email_queue_status", "status"),
+        Index("ix_email_queue_created_at", "created_at"),
+        Index("ix_email_queue_scheduled_for", "scheduled_for"),
+        Index("ix_email_queue_email_type", "email_type"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
@@ -159,9 +178,14 @@ class DownloadEvent(Base):
 
 class Interview(Base):
     __tablename__ = "interviews"
+    __table_args__ = (
+        Index("ix_interviews_lead_id", "lead_id"),
+        Index("ix_interviews_status", "status"),
+        Index("ix_interviews_scheduled_at", "scheduled_at"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"))
     scheduled_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     duration_minutes: Mapped[int] = mapped_column(Integer, default=30)
     status: Mapped[InterviewStatus] = mapped_column(SQLEnum(InterviewStatus), default=InterviewStatus.REQUESTED)
@@ -189,9 +213,13 @@ class CandidateAnalysis(Base):
 
 class LeadNote(Base):
     __tablename__ = "lead_notes"
+    __table_args__ = (
+        Index("ix_lead_notes_lead_id", "lead_id"),
+        Index("ix_lead_notes_created_at", "created_at"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"))
     content: Mapped[str] = mapped_column(Text)
     created_by: Mapped[str] = mapped_column(String(100), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
@@ -228,9 +256,15 @@ class ReminderType(str, enum.Enum):
 
 class Task(Base):
     __tablename__ = "tasks"
+    __table_args__ = (
+        Index("ix_tasks_lead_id", "lead_id"),
+        Index("ix_tasks_assigned_to", "assigned_to"),
+        Index("ix_tasks_status", "status"),
+        Index("ix_tasks_due_at", "due_at"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True, nullable=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), nullable=True)
     title: Mapped[str] = mapped_column(String(255))
     description: Mapped[str] = mapped_column(Text, nullable=True)
     status: Mapped[TaskStatus] = mapped_column(SQLEnum(TaskStatus), default=TaskStatus.PENDING)
@@ -246,9 +280,14 @@ class Task(Base):
 
 class Reminder(Base):
     __tablename__ = "reminders"
+    __table_args__ = (
+        Index("ix_reminders_lead_id", "lead_id"),
+        Index("ix_reminders_remind_at", "remind_at"),
+        Index("ix_reminders_notified", "notified"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"))
     reminder_type: Mapped[ReminderType] = mapped_column(SQLEnum(ReminderType))
     title: Mapped[str] = mapped_column(String(255))
     message: Mapped[str] = mapped_column(Text, nullable=True)
@@ -262,9 +301,13 @@ class Reminder(Base):
 
 class Notification(Base):
     __tablename__ = "notifications"
+    __table_args__ = (
+        Index("ix_notifications_lead_id", "lead_id"),
+        Index("ix_notifications_read", "read"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True, nullable=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), nullable=True)
     title: Mapped[str] = mapped_column(String(255))
     message: Mapped[str] = mapped_column(Text, nullable=True)
     notification_type: Mapped[str] = mapped_column(String(50))
@@ -308,7 +351,7 @@ class Retreat(Base):
     start_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     end_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     max_participants: Mapped[int] = mapped_column(Integer, default=10)
-    price: Mapped[float] = mapped_column(Integer, default=0.0)
+    price: Mapped[float] = mapped_column(Float, default=0.0)
     currency: Mapped[str] = mapped_column(String(10), default="EUR")
     status: Mapped[RetreatStatus] = mapped_column(SQLEnum(RetreatStatus), default=RetreatStatus.DRAFT)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
@@ -319,14 +362,20 @@ class Retreat(Base):
 
 class Booking(Base):
     __tablename__ = "bookings"
+    __table_args__ = (
+        Index("ix_bookings_lead_id", "lead_id"),
+        Index("ix_bookings_retreat_id", "retreat_id"),
+        Index("ix_bookings_status", "status"),
+        Index("ix_bookings_created_at", "created_at"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
-    retreat_id: Mapped[int] = mapped_column(Integer, ForeignKey("retreats.id"), index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"))
+    retreat_id: Mapped[int] = mapped_column(Integer, ForeignKey("retreats.id"))
     status: Mapped[BookingStatus] = mapped_column(SQLEnum(BookingStatus), default=BookingStatus.RESERVED)
     seats_reserved: Mapped[int] = mapped_column(Integer, default=1)
-    total_amount: Mapped[float] = mapped_column(Integer, default=0.0)
-    deposit_amount: Mapped[float] = mapped_column(Integer, default=0.0)
+    total_amount: Mapped[float] = mapped_column(Float, default=0.0)
+    deposit_amount: Mapped[float] = mapped_column(Float, default=0.0)
     deposit_paid: Mapped[bool] = mapped_column(Boolean, default=False)
     balance_paid: Mapped[bool] = mapped_column(Boolean, default=False)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
@@ -345,7 +394,7 @@ class Payment(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     booking_id: Mapped[int] = mapped_column(Integer, ForeignKey("bookings.id"), index=True)
-    amount: Mapped[float] = mapped_column(Integer, default=0.0)
+    amount: Mapped[float] = mapped_column(Float, default=0.0)
     payment_type: Mapped[PaymentType] = mapped_column(SQLEnum(PaymentType), default=PaymentType.DEPOSIT)
     payment_method: Mapped[PaymentMethod] = mapped_column(SQLEnum(PaymentMethod), nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
@@ -388,6 +437,11 @@ class RoomAssignment(Base):
 
 class AdminAudit(Base):
     __tablename__ = "admin_audit"
+    __table_args__ = (
+        Index("ix_admin_audit_admin_user", "admin_user"),
+        Index("ix_admin_audit_action", "action"),
+        Index("ix_admin_audit_created_at", "created_at"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     admin_user: Mapped[str] = mapped_column(String(100))

@@ -67,7 +67,8 @@ async def lifespan(app: FastAPI):
         from services.editorial_service import seed_editorials
         seed_editorials(db)
         db.commit()
-    except Exception:
+    except Exception as e:
+        logger.warning("Seed editorials failed: %s", e)
         db.rollback()
     finally:
         db.close()
@@ -90,25 +91,24 @@ register_error_handlers(app)
 
 @app.middleware("http")
 async def csrf_middleware(request: Request, call_next):
-    if request.method in ("POST", "PUT", "PATCH", "DELETE") and request.url.path.startswith("/admin"):
-        if not settings.DEBUG:
-            origin = request.headers.get("origin") or ""
-            referer = request.headers.get("referer") or ""
-            if origin or referer:
-                allowed_origins = {
-                    "http://localhost:8000",
-                    "http://127.0.0.1:8000",
-                    request.base_url.rstrip("/"),
-                }
-                ok = False
-                if origin and origin in allowed_origins:
-                    ok = True
-                if referer:
-                    ref_origin = "/".join(referer.rstrip("/").split("/")[:3])
-                    if ref_origin in allowed_origins:
-                        ok = True
-                if not ok:
-                    return JSONResponse(status_code=403, content={"detail": "CSRF check failed"})
+    if request.method in ("POST", "PUT", "PATCH", "DELETE") and request.url.path.startswith("/admin") and not settings.DEBUG:
+        origin = request.headers.get("origin") or ""
+        referer = request.headers.get("referer") or ""
+        allowed_origins = {
+            "http://localhost:8000",
+            "http://127.0.0.1:8000",
+            request.base_url.rstrip("/"),
+        }
+        ok = False
+        if origin and origin in allowed_origins:
+            ok = True
+        if referer:
+            ref_origin = "/".join(referer.rstrip("/").split("/")[:3])
+            if ref_origin in allowed_origins:
+                ok = True
+        if not ok:
+            logger.warning("CSRF check failed: origin=%s referer=%s", origin, referer)
+            return JSONResponse(status_code=403, content={"detail": "CSRF check failed"})
     return await call_next(request)
 
 

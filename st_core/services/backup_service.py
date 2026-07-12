@@ -1,8 +1,5 @@
-import os
 import shutil
-import time
 from datetime import datetime
-from typing import Optional
 from pathlib import Path
 
 
@@ -54,8 +51,14 @@ class BackupService:
             })
         return backups
 
+    def _resolve_backup(self, backup_name: str) -> Path:
+        resolved = (self.backup_dir / backup_name).resolve()
+        if not str(resolved).startswith(str(self.backup_dir.resolve())):
+            raise ValueError("Invalid backup name")
+        return resolved
+
     def restore_backup(self, backup_name: str) -> dict:
-        backup_path = self.backup_dir / backup_name
+        backup_path = self._resolve_backup(backup_name)
         if not backup_path.exists():
             return {"success": False, "error": "Backup not found"}
 
@@ -72,7 +75,7 @@ class BackupService:
         return {"success": True, "restored_from": backup_name, "safety_backup": safety}
 
     def delete_backup(self, backup_name: str) -> dict:
-        backup_path = self.backup_dir / backup_name
+        backup_path = self._resolve_backup(backup_name)
         if not backup_path.exists():
             return {"success": False, "error": "Backup not found"}
         if backup_path.is_dir():

@@ -1,5 +1,6 @@
 from typing import Optional
 from datetime import datetime
+import logging
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from models import (
@@ -7,6 +8,8 @@ from models import (
     Payment, PaymentType, PaymentMethod,
     Participant, RoomAssignment, Lead
 )
+
+logger = logging.getLogger("st_core.booking_service")
 
 
 class BookingService:
@@ -290,5 +293,5 @@ class BookingService:
         try:
             from services.lead_service import LeadService
             LeadService._create_event(self.db, lead_id, event_type, title, title)
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("Failed to create event for lead %d: %s", lead_id, e)

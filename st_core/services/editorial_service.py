@@ -5,7 +5,7 @@ from typing import Optional
 from sqlalchemy.orm import Session
 
 from config import settings
-from core.languages import normalize_language, SUPPORTED_CODES, SUPPORTED_NAMES
+from core.languages import normalize_language, SUPPORTED_CODES
 from models import EditorialEdition, DownloadEvent, Lead
 
 logger = logging.getLogger("st_core.editorial_service")

@@ -81,7 +81,8 @@ class EmailEngine:
             try:
                 t = env.get_template(tmpl)
                 return t.render(**context)
-            except Exception:
+            except Exception as e:
+                logger.debug("Template %s not found: %s", tmpl, e)
                 continue
 
         raise FileNotFoundError(f"Template not found in any language: {template_name}")

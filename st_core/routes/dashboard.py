@@ -1,5 +1,6 @@
 import json
 import os
+import logging
 from typing import Optional
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, Request, Form, Query, HTTPException
@@ -18,13 +19,14 @@ from services.interview_service import (
     create_interview, schedule_interview, complete_interview,
     cancel_interview, mark_no_show, get_lead_interviews,
 )
-from schemas import EmailQueueResponse, CandidateAnalysisResponse, LeadNoteCreate
-from schemas import LeadUpdate, TaskCreate, TaskUpdate
+from schemas import TaskCreate, TaskUpdate, LeadUpdate
 from models import Lead, LeadStatus, AdminAudit
 from services.ai_service import AIService
 from services.analytics_service import AnalyticsService
 from services.task_service import TaskService
 from services.booking_service import BookingService
+
+logger = logging.getLogger("st_core.dashboard")
 
 router = APIRouter(prefix="/admin", tags=["Dashboard"])
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "..", "templates"))
@@ -88,20 +90,29 @@ def admin_dashboard(
     bi_sources = analytics.get_lead_sources()
     bi_pipeline = analytics.get_pipeline_value()
     bi_monthly = analytics.get_monthly_leads()
-    bi_downloads = analytics.get_download_statistics()
 
     today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
-    today_leads = db.query(func.count(Lead.id)).filter(Lead.created_at >= today_start).scalar() or 0
-    today_downloads = db.query(func.count(Lead.id)).filter(
-        Lead.downloaded_editorial == True, Lead.downloaded_at >= today_start
-    ).scalar() or 0
+    today_counts = dict(
+        db.query(Lead.downloaded_editorial, func.count(Lead.id))
+        .filter(Lead.created_at >= today_start)
+        .group_by(Lead.downloaded_editorial)
+        .all()
+    )
+    today_leads = today_counts.get(False, 0) + today_counts.get(True, 0)
+    today_downloads = today_counts.get(True, 0)
 
-    pipeline_value = 0
-    stage_values = {LeadStatus.NEW: 0, LeadStatus.CONTACTED: 100, LeadStatus.INTERVIEW: 300,
-                    LeadStatus.APPROVED: 500, LeadStatus.BOOKED: 1000, LeadStatus.COMPLETED: 1500}
-    for status_enum, val in stage_values.items():
-        count = db.query(func.count(Lead.id)).filter(Lead.status == status_enum).scalar() or 0
-        pipeline_value += count * val
+    status_counts = dict(
+        db.query(Lead.status, func.count(Lead.id))
+        .group_by(Lead.status)
+        .all()
+    )
+    pipeline_value = sum(
+        status_counts.get(s, 0) * v
+        for s, v in {
+            LeadStatus.NEW: 0, LeadStatus.CONTACTED: 100, LeadStatus.INTERVIEW: 300,
+            LeadStatus.APPROVED: 500, LeadStatus.BOOKED: 1000, LeadStatus.COMPLETED: 1500,
+        }.items()
+    )
 
     high_priority = db.query(func.count(Lead.id)).filter(Lead.priority_score >= 50).scalar() or 0
 
@@ -112,9 +123,9 @@ def admin_dashboard(
     today_tasks = task_service.get_today_tasks()
     overdue_tasks = task_service.get_overdue_tasks()
     unread_notifications = task_service.get_unread_notifications(limit=10)
-    need_followup = db.query(Lead).filter(Lead.status == LeadStatus.CONTACTED).count()
-    need_approval = db.query(Lead).filter(Lead.status == LeadStatus.INTERVIEW).count()
-    need_booking = db.query(Lead).filter(Lead.status == LeadStatus.APPROVED).count()
+    need_followup = status_counts.get(LeadStatus.CONTACTED, 0)
+    need_approval = status_counts.get(LeadStatus.INTERVIEW, 0)
+    need_booking = status_counts.get(LeadStatus.APPROVED, 0)
 
     bsvc = BookingService(db)
     booking_stats = bsvc.get_booking_stats()
@@ -153,7 +164,6 @@ def admin_dashboard(
             "bi_sources": bi_sources,
             "bi_pipeline": bi_pipeline,
             "bi_monthly": bi_monthly,
-            "bi_downloads": bi_downloads,
             "today_leads": today_leads,
             "today_downloads": today_downloads,
             "pipeline_value": pipeline_value,
@@ -596,8 +606,8 @@ def admin_bulk_action(
                 update = LeadUpdate(status=new_status)
                 LeadService.update_lead(db, lid, update, created_by=admin)
                 updated += 1
-            except Exception:
-                pass
+            except Exception as e:
+                logger.warning("Bulk status update: lead %d failed: %s", lid, e)
         _log_audit(db, admin, "bulk_status_update", "lead", ",".join(str(i) for i in ids),
                    f"Set {updated}/{len(ids)} leads to {new_status.value}")
         return RedirectResponse(url="/admin", status_code=303)
@@ -611,8 +621,8 @@ def admin_bulk_action(
                 db.delete(lead)
                 db.commit()
                 deleted += 1
-            except Exception:
-                pass
+            except Exception as e:
+                logger.warning("Bulk delete: lead %d failed: %s", lid, e)
         _log_audit(db, admin, "bulk_delete", "lead", ",".join(str(i) for i in ids),
                    f"Deleted {deleted}/{len(ids)} leads")
         return RedirectResponse(url="/admin", status_code=303)
@@ -880,8 +890,8 @@ def admin_diagnostics(
         from models import Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit, Retreat, Booking, Payment
         for model in (Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit, Retreat, Booking, Payment):
             table_counts[model.__tablename__] = db.query(model).count()
-    except Exception:
-        pass
+    except Exception as e:
+        logger.warning("Diagnostics table count failed: %s", e)
 
     env_check = {
         "PROJECT_NAME": bool(os.getenv("PROJECT_NAME")),

@@ -45,8 +45,8 @@ class AutomationEngine:
 
         try:
             TaskService(self.db).auto_create_followup_reminders(lead)
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error("Failed to auto-create followup reminders for lead %d: %s", lead.id, e)
 
         return queued
 

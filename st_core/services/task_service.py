@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timedelta
 from typing import Optional
 from sqlalchemy.orm import Session
-from sqlalchemy import desc, and_
+from sqlalchemy import desc
 from models import Task, TaskStatus, Reminder, ReminderType, Notification, LeadEvent, Lead
 
 REMINDER_DELAYS = {
