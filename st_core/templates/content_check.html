@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST CORE — Content Verification</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #f5f2ec; color: #2c2c2c; min-height: 100vh; }
+        .topbar { background: #2d5a27; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; color: #f5f2ec; }
+        .topbar h1 { font-size: 20px; font-weight: 400; letter-spacing: 1px; }
+        .topbar h1 span { color: #b89a5a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 32px; }
+        .back-link { display: inline-block; margin-bottom: 24px; color: #8c8c8c; text-decoration: none; font-size: 13px; letter-spacing: 0.5px; }
+        .back-link:hover { color: #b89a5a; }
+        .card { background: #fff; border: 1px solid #e8e3da; padding: 28px 32px; margin-bottom: 24px; }
+        .card h2 { font-size: 14px; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; color: #b89a5a; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e8e3da; }
+        .issue { padding: 14px 16px; border: 1px solid #f0ede8; margin-bottom: 8px; display: flex; gap: 12px; align-items: flex-start; }
+        .issue .sev { flex-shrink: 0; padding: 2px 8px; font-size: 8px; text-transform: uppercase; letter-spacing: 1px; border: 1px solid; margin-top: 2px; }
+        .issue .sev.error { border-color: #c0392b; color: #c0392b; background: #fce4e4; }
+        .issue .sev.warning { border-color: #b89a5a; color: #b89a5a; background: #faf6ee; }
+        .issue .sev.info { border-color: #5a7d9a; color: #5a7d9a; background: #eef4f8; }
+        .issue .msg { flex: 1; font-size: 13px; }
+        .issue .detail { font-size: 10px; color: #8c8c8c; margin-top: 4px; font-family: monospace; }
+        .empty-state { text-align: center; padding: 40px 20px; color: #2d5a27; font-size: 14px; }
+        .empty-state .icon { font-size: 32px; margin-bottom: 8px; }
+        .badge { display: inline-block; padding: 2px 8px; font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid #d4cfc6; }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <h1><span>ST</span> CORE</h1>
+        <div style="font-size:12px;opacity:0.7;letter-spacing:2px;text-transform:uppercase;">Content Verification</div>
+    </div>
+    <div class="container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+        <div class="card">
+            <h2>Issues Found: {{ issues|length }}</h2>
+            {% if issues %}
+                {% for issue in issues %}
+                <div class="issue">
+                    <span class="sev {{ issue.severity }}">{{ issue.severity }}</span>
+                    <div class="msg">
+                        <strong>{{ issue.category }}</strong>: {{ issue.message }}
+                        {% if issue.details %}
+                        <div class="detail">{{ issue.details|join(', ') }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="empty-state">
+                <div class="icon">✓</div>
+                <div>All content checks passed. No issues found.</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST CORE — Email Diagnostics</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #f5f2ec; color: #2c2c2c; min-height: 100vh; }
+        .topbar { background: #2d5a27; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; color: #f5f2ec; }
+        .topbar h1 { font-size: 20px; font-weight: 400; letter-spacing: 1px; }
+        .topbar h1 span { color: #b89a5a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 32px; }
+        .back-link { display: inline-block; margin-bottom: 24px; color: #8c8c8c; text-decoration: none; font-size: 13px; letter-spacing: 0.5px; }
+        .back-link:hover { color: #b89a5a; }
+        .card { background: #fff; border: 1px solid #e8e3da; padding: 28px 32px; margin-bottom: 24px; }
+        .card h2 { font-size: 14px; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; color: #b89a5a; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e8e3da; }
+        .diag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .diag-item { padding: 10px 14px; border: 1px solid #f0ede8; }
+        .diag-item .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #8c8c8c; }
+        .diag-item .value { font-size: 14px; font-weight: 700; color: #2c2c2c; margin-top: 4px; }
+        .diag-item .value.ok { color: #2d5a27; }
+        .diag-item .value.fail { color: #c0392b; }
+        .diag-item .value.skipped { color: #8c8c8c; }
+        .badge { display: inline-block; padding: 2px 8px; font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid #d4cfc6; }
+        .badge.ok { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
+        .badge.fail { border-color: #c0392b; color: #c0392b; background: #fce4e4; }
+        .error-box { margin-top: 12px; padding: 12px; background: #fdf0f0; border: 1px solid #e8c0c0; font-family: monospace; font-size: 11px; color: #9a5a5a; }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <h1><span>ST</span> CORE</h1>
+        <div style="font-size:12px;opacity:0.7;letter-spacing:2px;text-transform:uppercase;">Email Diagnostics</div>
+    </div>
+    <div class="container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+        <div class="card">
+            <h2>SMTP Configuration</h2>
+            <div class="diag-grid">
+                <div class="diag-item"><div class="label">Backend</div><div class="value">{{ diag.backend }}</div></div>
+                <div class="diag-item"><div class="label">Host</div><div class="value">{{ diag.host or '—' }}</div></div>
+                <div class="diag-item"><div class="label">Port</div><div class="value">{{ diag.port or '—' }}</div></div>
+                <div class="diag-item"><div class="label">TLS</div><div class="value">{{ 'Enabled' if diag.tls else 'Disabled' }}</div></div>
+                <div class="diag-item"><div class="label">SSL</div><div class="value">{{ 'Enabled' if diag.ssl else 'Disabled' }}</div></div>
+                <div class="diag-item"><div class="label">Username</div><div class="value">{{ 'Configured' if diag.username_configured else 'Not set' }}</div></div>
+                <div class="diag-item"><div class="label">Password</div><div class="value">{{ 'Configured' if diag.password_configured else 'Not set' }}</div></div>
+                <div class="diag-item"><div class="label">From Email</div><div class="value">{{ diag.from_email or '—' }}</div></div>
+                <div class="diag-item"><div class="label">From Name</div><div class="value">{{ diag.from_name or '—' }}</div></div>
+                <div class="diag-item"><div class="label">Contact Email</div><div class="value">{{ diag.contact_email or '—' }}</div></div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Connection Test</h2>
+            <div class="diag-grid">
+                <div class="diag-item">
+                    <div class="label">Status</div>
+                    <div class="value {{ diag.connection_test }}">{{ diag.connection_test|upper }}</div>
+                </div>
+                <div class="diag-item">
+                    <div class="label">Latency</div>
+                    <div class="value">{{ diag.latency_ms ~ 'ms' if diag.latency_ms is not none else '—' }}</div>
+                </div>
+                <div class="diag-item">
+                    <div class="label">Auth Test</div>
+                    <div class="value">{{ diag.auth_test if diag.auth_test else 'N/A' }}</div>
+                </div>
+            </div>
+            {% if diag.error %}
+            <div class="error-box">Error: {{ diag.error }}</div>
+            {% endif %}
+        </div>
+        <div class="card">
+            <h2>Queue &amp; Recent Activity</h2>
+            <div class="diag-grid">
+                <div class="diag-item"><div class="label">Queue Pending</div><div class="value">{{ diag.queue_stats.pending }}</div></div>
+                <div class="diag-item"><div class="label">Queue Sent</div><div class="value">{{ diag.queue_stats.sent }}</div></div>
+                <div class="diag-item"><div class="label">Queue Failed</div><div class="value">{{ diag.queue_stats.failed }}</div></div>
+                <div class="diag-item"><div class="label">Max Retries</div><div class="value">{{ diag.queue_stats.max_retries }}</div></div>
+                <div class="diag-item"><div class="label">Last Sent</div><div class="value" style="font-size:12px;">{{ diag.last_sent_at or '—' }}</div></div>
+                <div class="diag-item"><div class="label">Last Sent To</div><div class="value" style="font-size:12px;">{{ diag.last_sent_to or '—' }}</div></div>
+                <div class="diag-item"><div class="label">Last Failed</div><div class="value" style="font-size:12px;">{{ diag.last_failed_at or '—' }}</div></div>
+                <div class="diag-item"><div class="label">Last Error</div><div class="value" style="font-size:11px;color:#9a5a5a;">{{ diag.last_failed_error or '—' }}</div></div>
+            </div>
+        </div>
+        <div style="text-align:center;padding:8px 0;">
+            <a href="/admin/email-diagnostics/json" style="color:#b89a5a;font-size:11px;letter-spacing:0.5px;">View Raw JSON</a>
+            <span style="color:#d4cfc6;margin:0 8px;">|</span>
+            <span style="color:#8c8c8c;font-size:10px;">Tested {{ now().strftime('%H:%M:%S') if now else '' }}</span>
+        </div>
+    </div>
+</body>
+</html>

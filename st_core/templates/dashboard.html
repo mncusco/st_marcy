@@ -408,10 +408,28 @@
             <div class="sub">Shamanic Travels · Admissions Dashboard</div>
         </div>
         <div style="display:flex;gap:16px;align-items:center;">
+            <a href="/admin/email-diagnostics" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;" title="SMTP Diagnostics">Email Diag</a>
+            <a href="/admin/system" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;" title="System Diagnostics">System</a>
+            <a href="/admin/content-check" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;" title="Content Verification">Content</a>
+            <a href="/admin/link-check" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;" title="Link Checker">Links</a>
             <a href="/admin/backups" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;">Backups</a>
-            <a href="/admin/audit-log" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;">Audit Log</a>
+            <a href="/admin/audit-log" style="color:#b89a5a;text-decoration:none;font-size:11px;letter-spacing:1px;text-transform:uppercase;">Audit</a>
             <div class="sub">{{ stats.total }} leads</div>
         </div>
+    </div>
+
+    <div style="background:#fff;border-bottom:1px solid #e8e3da;padding:8px 32px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:11px;">
+        <span style="color:#2d5a27;font-weight:700;text-transform:uppercase;letter-spacing:1px;">System</span>
+        <span style="color:#8c8c8c;">Email: {{ email_stats.sent }} sent / {{ email_stats.failed }} failed</span>
+        <span style="color:#8c8c8c;">Leads today: {{ today_leads }}</span>
+        {% if booking_stats.booked > 0 %}
+        <span style="color:#8c8c8c;">Bookings: {{ booking_stats.booked }}</span>
+        {% endif %}
+        {% if high_priority > 0 %}
+        <span style="color:#c0392b;font-weight:700;">{{ high_priority }} high priority</span>
+        {% else %}
+        <span style="color:#2d5a27;">No alerts</span>
+        {% endif %}
     </div>
 
     <div class="container">

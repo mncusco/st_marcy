@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from datetime import datetime
 from typing import Optional
 
@@ -64,6 +65,73 @@ class EmailEngine:
         except Exception as e:
             logger.exception("Test email failed: %s", e)
             return {"success": False, "error": str(e)}
+
+    def diagnose(self) -> dict:
+        results = {
+            "backend": settings.EMAIL_BACKEND,
+            "host": getattr(settings, "SMTP_HOST", None),
+            "port": getattr(settings, "SMTP_PORT", None),
+            "tls": getattr(settings, "SMTP_TLS", False),
+            "ssl": getattr(settings, "SMTP_SSL", False),
+            "username_configured": bool(getattr(settings, "SMTP_USERNAME", None)),
+            "password_configured": bool(getattr(settings, "SMTP_PASSWORD", None)),
+            "from_email": getattr(settings, "FROM_EMAIL", None),
+            "from_name": getattr(settings, "FROM_NAME", None),
+            "contact_email": getattr(settings, "CONTACT_EMAIL", None),
+            "retry_count": getattr(settings, "EMAIL_MAX_RETRIES", 3),
+            "queue_stats": self.get_queue_stats(),
+            "connection_test": None,
+            "latency_ms": None,
+            "error": None,
+        }
+        if settings.EMAIL_BACKEND.lower() in ("smtp",):
+            import smtplib
+            import socket
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(10)
+            try:
+                start = time.time()
+                if settings.SMTP_SSL:
+                    server = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10)
+                else:
+                    server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10)
+                    server.ehlo()
+                    if settings.SMTP_TLS:
+                        server.starttls()
+                        server.ehlo()
+                results["latency_ms"] = round((time.time() - start) * 1000)
+                if settings.SMTP_USERNAME:
+                    server.login(settings.SMTP_USERNAME, settings.SMTP_PASSWORD)
+                    results["auth_test"] = "ok"
+                results["connection_test"] = "ok"
+                server.quit()
+            except Exception as e:
+                results["connection_test"] = "fail"
+                results["error"] = str(e)
+            finally:
+                sock.close()
+        else:
+            results["connection_test"] = "skipped"
+        last_sent = (
+            self.db.query(EmailQueue)
+            .filter(EmailQueue.status == EmailStatus.SENT)
+            .order_by(EmailQueue.sent_at.desc())
+            .first()
+        )
+        last_failed = (
+            self.db.query(EmailQueue)
+            .filter(EmailQueue.status == EmailStatus.FAILED)
+            .order_by(EmailQueue.created_at.desc())
+            .first()
+        )
+        results["last_sent_at"] = last_sent.sent_at.isoformat() if last_sent else None
+        results["last_sent_to"] = (
+            self.db.query(Lead.email).filter(Lead.id == last_sent.lead_id).scalar()
+            if last_sent else None
+        )
+        results["last_failed_at"] = last_failed.created_at.isoformat() if last_failed else None
+        results["last_failed_error"] = last_failed.error_message if last_failed else None
+        return results
 
     def render_template(self, template_name: str, language: str, context: dict) -> str:
         import os

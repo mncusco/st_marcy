@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST CORE — System Diagnostics</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, 'Times New Roman', serif; background: #f5f2ec; color: #2c2c2c; min-height: 100vh; }
+        .topbar { background: #2d5a27; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; color: #f5f2ec; }
+        .topbar h1 { font-size: 20px; font-weight: 400; letter-spacing: 1px; }
+        .topbar h1 span { color: #b89a5a; }
+        .container { max-width: 900px; margin: 0 auto; padding: 32px; }
+        .back-link { display: inline-block; margin-bottom: 24px; color: #8c8c8c; text-decoration: none; font-size: 13px; letter-spacing: 0.5px; }
+        .back-link:hover { color: #b89a5a; }
+        .card { background: #fff; border: 1px solid #e8e3da; padding: 28px 32px; margin-bottom: 24px; }
+        .card h2 { font-size: 14px; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; color: #b89a5a; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e8e3da; }
+        .diag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .diag-item { padding: 10px 14px; border: 1px solid #f0ede8; }
+        .diag-item .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #8c8c8c; }
+        .diag-item .value { font-size: 14px; font-weight: 700; color: #2c2c2c; margin-top: 4px; }
+        .diag-item .value.ok { color: #2d5a27; }
+        .diag-item .value.fail { color: #c0392b; }
+        .badge { display: inline-block; padding: 2px 8px; font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid #d4cfc6; }
+        .badge.ok { border-color: #2d5a27; color: #2d5a27; background: #eaf5e8; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        thead th { background: #f7f4ef; text-align: left; padding: 8px 12px; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #8c8c8c; font-weight: 400; border-bottom: 1px solid #e8e3da; }
+        tbody td { padding: 8px 12px; border-bottom: 1px solid #f0ede8; }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <h1><span>ST</span> CORE</h1>
+        <div style="font-size:12px;opacity:0.7;letter-spacing:2px;text-transform:uppercase;">System Diagnostics</div>
+    </div>
+    <div class="container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+        <div class="card">
+            <h2>Service Info</h2>
+            <div class="diag-grid">
+                <div class="diag-item"><div class="label">Application</div><div class="value">{{ app_name }}</div></div>
+                <div class="diag-item"><div class="label">Version</div><div class="value">{{ version }}</div></div>
+                <div class="diag-item"><div class="label">Debug Mode</div><div class="value">{{ 'ON' if debug else 'OFF' }}</div></div>
+                <div class="diag-item"><div class="label">Python</div><div class="value" style="font-size:12px;">{{ python.python_version.split()[0] }}</div></div>
+                <div class="diag-item"><div class="label">Working Dir</div><div class="value" style="font-size:11px;">{{ python.cwd }}</div></div>
+                <div class="diag-item"><div class="label">PID</div><div class="value">{{ python.pid }}</div></div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Database Health</h2>
+            <div class="diag-grid">
+                <div class="diag-item">
+                    <div class="label">Status</div>
+                    <div class="value {% if database.status == 'ok' %}ok{% else %}fail{% endif %}">{{ database.status }}</div>
+                </div>
+                <div class="diag-item">
+                    <div class="label">Detail</div>
+                    <div class="value" style="font-size:12px;">{{ database.database }}</div>
+                </div>
+                <div class="diag-item">
+                    <div class="label">Query Latency</div>
+                    <div class="value" style="font-size:12px;">{{ uptime_hint }}</div>
+                </div>
+            </div>
+            <div style="margin-top:16px;">
+                <h3 style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#8c8c8c;margin-bottom:8px;">Table Counts</h3>
+                <table>
+                    <thead><tr><th>Table</th><th>Rows</th></tr></thead>
+                    <tbody>
+                        {% for name, count in table_counts.items()|sort %}
+                        <tr><td style="font-family:monospace;">{{ name }}</td><td>{{ count }}</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Environment Variables</h2>
+            <div class="diag-grid">
+                {% for key, ok in environment.items() %}
+                <div class="diag-item">
+                    <div class="label">{{ key }}</div>
+                    <div class="value {% if ok %}ok{% else %}fail{% endif %}">{{ 'Set' if ok else 'Missing/Weak' }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

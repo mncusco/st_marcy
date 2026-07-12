@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from database import engine, Base, SessionLocal
-from routes import leads, dashboard, health, download
+from routes import leads, dashboard, health, download, system
 from core.error_handlers import register_error_handlers
 from core.logger import setup_logging
 from config import settings
@@ -120,3 +120,4 @@ app.include_router(health.router)
 app.include_router(leads.router)
 app.include_router(dashboard.router)
 app.include_router(download.router)
+app.include_router(system.router)
