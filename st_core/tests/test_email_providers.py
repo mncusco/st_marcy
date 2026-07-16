@@ -273,7 +273,11 @@ class TestEmailEngineSMTP:
     def test_smtp_unreachable_via_engine(self, db_session):
         from services.email_engine import EmailEngine
         original_backend = settings.EMAIL_BACKEND
+        original_host = settings.SMTP_HOST
+        original_port = settings.SMTP_PORT
         settings.EMAIL_BACKEND = "smtp"
+        settings.SMTP_HOST = "192.0.2.1"
+        settings.SMTP_PORT = 25
         try:
             engine = EmailEngine(db_session)
             result = engine.send_test_email("test@example.com")
@@ -281,6 +285,8 @@ class TestEmailEngineSMTP:
             assert result["backend"] == "smtp"
         finally:
             settings.EMAIL_BACKEND = original_backend
+            settings.SMTP_HOST = original_host
+            settings.SMTP_PORT = original_port
 
 
 class TestEmailLogging:

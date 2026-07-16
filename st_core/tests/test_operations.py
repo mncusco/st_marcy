@@ -431,14 +431,25 @@ class TestSmtpProvider:
         assert hasattr(settings, "FROM_NAME")
         assert hasattr(settings, "EMAIL_MAX_RETRIES")
 
-    def test_smtp_config_defaults(self):
-        from config import settings
-        assert settings.SMTP_HOST == "localhost"
-        assert settings.SMTP_PORT == 587
-        assert settings.SMTP_TLS is True
-        assert settings.SMTP_SSL is False
-        assert settings.FROM_EMAIL == "noreply@shamanictravels.com"
-        assert settings.EMAIL_MAX_RETRIES == 3
+    def test_smtp_config_defaults(self, monkeypatch):
+        monkeypatch.delenv("SMTP_HOST", raising=False)
+        monkeypatch.delenv("SMTP_PORT", raising=False)
+        monkeypatch.delenv("SMTP_TLS", raising=False)
+        monkeypatch.delenv("SMTP_SSL", raising=False)
+        monkeypatch.delenv("SMTP_USERNAME", raising=False)
+        monkeypatch.delenv("SMTP_PASSWORD", raising=False)
+        monkeypatch.delenv("SMTP_TIMEOUT", raising=False)
+        monkeypatch.delenv("FROM_EMAIL", raising=False)
+        monkeypatch.delenv("FROM_NAME", raising=False)
+        monkeypatch.delenv("EMAIL_MAX_RETRIES", raising=False)
+        from config import Settings
+        s = Settings(_env_file=None)
+        assert s.SMTP_HOST == "localhost"
+        assert s.SMTP_PORT == 587
+        assert s.SMTP_TLS is True
+        assert s.SMTP_SSL is False
+        assert s.FROM_EMAIL == "noreply@shamanictravels.com"
+        assert s.EMAIL_MAX_RETRIES == 3
 
 
 class TestTestEmailEndpoint:

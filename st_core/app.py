@@ -19,15 +19,16 @@ def _validate_startup():
 
     required_env = ["PROJECT_NAME", "DATABASE_URL", "ADMIN_USERNAME", "ADMIN_PASSWORD", "SECRET_KEY"]
     for var in required_env:
-        val = os.getenv(var, "")
+        val = getattr(settings, var, "")
         if not val:
             issues.append(f"Missing environment variable: {var}")
 
-    if len(os.getenv("SECRET_KEY", "")) < 16:
+    sk = getattr(settings, "SECRET_KEY", "")
+    if len(sk) < 16:
         issues.append("SECRET_KEY is too short (min 16 characters)")
 
     insecure = ("change_me", "dev-secret-key-not-for-production", "CHANGE_THIS")
-    if os.getenv("ADMIN_PASSWORD", "") in insecure:
+    if getattr(settings, "ADMIN_PASSWORD", "") in insecure:
         issues.append("ADMIN_PASSWORD is set to an insecure default value")
 
     _dirs = ["./database", "./uploads", settings.EDITORIAL_FILES_DIR, "./logs", settings.EDITORIAL_DIRECTORY]
