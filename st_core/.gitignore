@@ -1,0 +1,20 @@
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Test artifacts
+.pytest_cache/
+*.db
+*.sqlite
+*.sqlite3
+.coverage
+coverage.xml
+htmlcov/
+
+# Runtime
+logs/
+backups/
+uploads/
+
+# Environment
+.env

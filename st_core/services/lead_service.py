@@ -1,7 +1,7 @@
 import json
 import secrets
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, or_
 from fastapi import HTTPException
@@ -62,7 +62,7 @@ class LeadService:
 
         lead_dict = lead_data.model_dump()
         lead_dict["download_token"] = secrets.token_urlsafe(48)
-        lead_dict["download_expires_at"] = datetime.utcnow() + timedelta(days=30)
+        lead_dict["download_expires_at"] = datetime.now(timezone.utc) + timedelta(days=30)
         db_lead = Lead(**lead_dict)
         db.add(db_lead)
         db.flush()
@@ -223,7 +223,7 @@ class LeadService:
     def mark_downloaded(db: Session, lead_id: int, ip_address: str = None, user_agent: str = None) -> Lead:
         lead = LeadService.get_lead_by_id(db, lead_id)
         lead.downloaded_editorial = True
-        lead.downloaded_at = datetime.utcnow()
+        lead.downloaded_at = datetime.now(timezone.utc)
         lead.priority_score = LeadService._compute_priority(lead)
         db.commit()
         db.refresh(lead)
@@ -239,10 +239,14 @@ class LeadService:
     @staticmethod
     def mark_downloaded_by_token(db: Session, token: str, ip_address: str = None, user_agent: str = None) -> Lead:
         lead = LeadService.get_lead_by_token(db, token)
-        if lead.download_expires_at and datetime.utcnow() > lead.download_expires_at:
-            raise HTTPException(status_code=410, detail="Token scaduto")
+        expires = lead.download_expires_at
+        if expires is not None:
+            if expires.tzinfo is None:
+                expires = expires.replace(tzinfo=timezone.utc)
+            if datetime.now(timezone.utc) > expires:
+                raise HTTPException(status_code=410, detail="Token scaduto")
         lead.downloaded_editorial = True
-        lead.downloaded_at = datetime.utcnow()
+        lead.downloaded_at = datetime.now(timezone.utc)
         lead.priority_score = LeadService._compute_priority(lead)
         LeadService._create_event(db, lead.id, "editorial_downloaded",
             "Editorial downloaded",

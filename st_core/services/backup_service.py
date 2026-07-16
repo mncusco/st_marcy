@@ -1,5 +1,5 @@
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -11,7 +11,7 @@ class BackupService:
         self.backup_dir.mkdir(parents=True, exist_ok=True)
 
     def create_backup(self, label: str = "") -> dict:
-        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         safe_label = f"_{label}" if label else ""
         backup_name = f"st_core_backup_{timestamp}{safe_label}"
         backup_path = self.backup_dir / backup_name

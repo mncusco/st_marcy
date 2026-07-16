@@ -18,19 +18,25 @@ from app import app
 from database import engine, Base, SessionLocal
 
 
-@pytest.fixture(scope="function", autouse=True)
-def _db():
-    Base.metadata.create_all(bind=engine)
-    yield
+def _clean_db():
+    import time
     Base.metadata.drop_all(bind=engine)
     engine.dispose()
-    import os as _os
-    for f in ("./test_shamanic.db",):
-        if _os.path.exists(f):
-            try:
-                _os.remove(f)
-            except PermissionError:
-                pass
+    for _ in range(5):
+        try:
+            if os.path.exists("./test_shamanic.db"):
+                os.remove("./test_shamanic.db")
+            break
+        except PermissionError:
+            time.sleep(0.1)
+
+
+@pytest.fixture(scope="function", autouse=True)
+def _db():
+    _clean_db()
+    Base.metadata.create_all(bind=engine)
+    yield
+    _clean_db()
 
 
 @pytest.fixture

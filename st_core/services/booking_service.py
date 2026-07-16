@@ -1,5 +1,5 @@
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 from sqlalchemy.orm import Session
 from sqlalchemy import func
@@ -49,7 +49,7 @@ class BookingService:
         return q.order_by(Retreat.start_date.desc()).all()
 
     def get_upcoming_retreats(self, limit: int = 10) -> list[Retreat]:
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         return (
             self.db.query(Retreat)
             .filter(Retreat.status == RetreatStatus.ACTIVE, Retreat.start_date >= now)
@@ -185,7 +185,7 @@ class BookingService:
             payment_type=PaymentType(payment_type),
             payment_method=PaymentMethod(payment_method) if payment_method else None,
             notes=notes,
-            paid_at=datetime.utcnow(),
+            paid_at=datetime.now(timezone.utc),
         )
         self.db.add(payment)
 

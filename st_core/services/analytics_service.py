@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from models import Lead, LeadStatus, DownloadEvent
@@ -96,7 +96,7 @@ class AnalyticsService:
         return counts
 
     def get_monthly_leads(self, months: int = 6):
-        since = datetime.utcnow() - timedelta(days=months * 30)
+        since = datetime.now(timezone.utc) - timedelta(days=months * 30)
         rows = self.db.query(
             func.strftime("%Y-%m", Lead.created_at).label("month"),
             func.count(Lead.id).label("cnt"),

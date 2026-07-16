@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
@@ -54,7 +54,7 @@ class TaskService:
         if "status" in kwargs and kwargs["status"] != old_status.value:
             new_status = kwargs["status"]
             if new_status == TaskStatus.COMPLETED.value:
-                task.completed_at = datetime.utcnow()
+                task.completed_at = datetime.now(timezone.utc)
             if task.lead_id:
                 self._create_timeline_event(task.lead_id, "task_status_changed",
                     f"Task '{task.title}': {old_status.value} -> {new_status}")
@@ -80,7 +80,7 @@ class TaskService:
         ).order_by(desc(Task.created_at)).all()
 
     def get_today_tasks(self) -> list[Task]:
-        today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+        today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
         tomorrow = today_start + timedelta(days=1)
         return self.db.query(Task).filter(
             Task.status.in_([TaskStatus.PENDING, TaskStatus.IN_PROGRESS]),
@@ -89,7 +89,7 @@ class TaskService:
         ).order_by(Task.due_at.asc()).all()
 
     def get_overdue_tasks(self) -> list[Task]:
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         return self.db.query(Task).filter(
             Task.status.in_([TaskStatus.PENDING, TaskStatus.IN_PROGRESS]),
             Task.due_at < now,
@@ -99,7 +99,7 @@ class TaskService:
                         title: str, message: Optional[str] = None,
                         base_date: Optional[datetime] = None) -> Reminder:
         delay = REMINDER_DELAYS.get(reminder_type, timedelta(days=3))
-        remind_at = (base_date or datetime.utcnow()) + delay
+        remind_at = (base_date or datetime.now(timezone.utc)) + delay
 
         reminder = Reminder(
             lead_id=lead_id,
@@ -124,14 +124,14 @@ class TaskService:
         return self.db.query(Reminder).filter(
             Reminder.status == "active",
             Reminder.notified == False,
-            Reminder.remind_at <= datetime.utcnow(),
+            Reminder.remind_at <= datetime.now(timezone.utc),
         ).order_by(Reminder.remind_at.asc()).all()
 
     def mark_reminder_notified(self, reminder_id: int) -> Reminder:
         r = self.db.query(Reminder).filter(Reminder.id == reminder_id).first()
         if r:
             r.notified = True
-            r.notified_at = datetime.utcnow()
+            r.notified_at = datetime.now(timezone.utc)
             self.db.commit()
             self.db.refresh(r)
         return r
@@ -159,7 +159,7 @@ class TaskService:
         n = self.db.query(Notification).filter(Notification.id == notification_id).first()
         if n:
             n.read = True
-            n.read_at = datetime.utcnow()
+            n.read_at = datetime.now(timezone.utc)
             self.db.commit()
             self.db.refresh(n)
         return n
@@ -170,7 +170,7 @@ class TaskService:
         ).order_by(desc(Reminder.created_at)).all()
 
     def auto_create_followup_reminders(self, lead: Lead):
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         existing = {r.reminder_type for r in self.db.query(Reminder.reminder_type).filter(
             Reminder.lead_id == lead.id, Reminder.status == "active").all()}
 

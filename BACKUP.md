@@ -18,30 +18,30 @@ Access the admin dashboard at `/admin/backups` to:
 ### Create a backup
 
 ```bash
-python scripts/backup.py
-python scripts/backup.py --label before-update
+python ../scripts/backup.py
+python ../scripts/backup.py --label before-update
 ```
 
 ### List backups
 
 ```bash
-python scripts/backup.py --list
+python ../scripts/backup.py --list
 ```
 
 ### Delete a backup
 
 ```bash
-python scripts/backup.py --delete st_core_backup_20260711_120000
+python ../scripts/backup.py --delete st_core_backup_20260711_120000
 ```
 
 ### Restore a backup
 
 ```bash
 # Dry-run
-python scripts/restore.py st_core_backup_20260711_120000
+python ../scripts/restore.py st_core_backup_20260711_120000
 
 # Actually restore
-python scripts/restore.py st_core_backup_20260711_120000 --apply
+python ../scripts/restore.py st_core_backup_20260711_120000 --apply
 ```
 
 The restore command creates a safety backup before restoring.
@@ -56,14 +56,14 @@ Backups are retained up to the configured maximum (default: 10). When the limit 
 
 ```cron
 # Daily backup at 02:00
-0 2 * * * /opt/st_core/venv/bin/python /opt/st_core/scripts/backup.py >> /var/log/st_core_backup.log 2>&1
+0 2 * * * cd /opt/st_core/st_core && /opt/st_core/venv/bin/python ../scripts/backup.py >> /var/log/st_core_backup.log 2>&1
 ```
 
 ### Windows Task Scheduler
 
 ```powershell
 # Create a scheduled task to run daily at 2 AM
-$action = New-ScheduledTaskAction -Execute "C:\path\to\venv\Scripts\python.exe" -Argument "C:\path\to\st_core\scripts\backup.py"
+$action = New-ScheduledTaskAction -Execute "C:\path\to\venv\Scripts\python.exe" -Argument "C:\path\to\st_core\st_core\..\scripts\backup.py" -WorkingDirectory "C:\path\to\st_core\st_core"
 $trigger = New-ScheduledTaskTrigger -Daily -At 02:00
 Register-ScheduledTask -TaskName "STCORE_Backup" -Action $action -Trigger $trigger -RunLevel Highest
 ```
@@ -72,10 +72,10 @@ Register-ScheduledTask -TaskName "STCORE_Backup" -Action $action -Trigger $trigg
 
 ```bash
 # Direct file copy (safe when app is not writing)
-cp ./database/st_core.db ./backups/manual_backup_$(date +%Y%m%d).db
+cp ./shamanic.db ./manually_backed_up_$(date +%Y%m%d).db
 
 # Or use SQLite's backup API
-sqlite3 ./database/st_core.db ".backup './backups/sqlite_backup.db'"
+sqlite3 ./shamanic.db ".backup './manually_backed_up.db'"
 ```
 
 ## Integrity Verification

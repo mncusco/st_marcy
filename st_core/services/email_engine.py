@@ -1,7 +1,7 @@
 import json
 import logging
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from sqlalchemy.orm import Session
@@ -78,6 +78,7 @@ class EmailEngine:
             "from_email": getattr(settings, "FROM_EMAIL", None),
             "from_name": getattr(settings, "FROM_NAME", None),
             "contact_email": getattr(settings, "CONTACT_EMAIL", None),
+            "timeout": getattr(settings, "SMTP_TIMEOUT", 30),
             "retry_count": getattr(settings, "EMAIL_MAX_RETRIES", 3),
             "queue_stats": self.get_queue_stats(),
             "connection_test": None,
@@ -88,13 +89,14 @@ class EmailEngine:
             import smtplib
             import socket
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(10)
+            sock.settimeout(settings.SMTP_TIMEOUT)
             try:
                 start = time.time()
+                to = settings.SMTP_TIMEOUT
                 if settings.SMTP_SSL:
-                    server = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10)
+                    server = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, timeout=to)
                 else:
-                    server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10)
+                    server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=to)
                     server.ehlo()
                     if settings.SMTP_TLS:
                         server.starttls()
@@ -177,7 +179,7 @@ class EmailEngine:
             status=EmailStatus.PENDING,
             template_name=template_name,
             payload_json=json.dumps(payload) if payload else None,
-            scheduled_for=scheduled_for or datetime.utcnow(),
+            scheduled_for=scheduled_for or datetime.now(timezone.utc),
         )
         self.db.add(entry)
         self.db.commit()
@@ -239,7 +241,7 @@ class EmailEngine:
         entries = (
             self.db.query(EmailQueue)
             .filter(EmailQueue.status == EmailStatus.PENDING)
-            .filter(EmailQueue.scheduled_for <= datetime.utcnow())
+            .filter(EmailQueue.scheduled_for <= datetime.now(timezone.utc))
             .filter(EmailQueue.attempts < max_retries)
             .order_by(EmailQueue.created_at.asc())
             .limit(batch_size)
@@ -255,7 +257,7 @@ class EmailEngine:
             success = self._render_and_send(entry)
             if success:
                 entry.status = EmailStatus.SENT
-                entry.sent_at = datetime.utcnow()
+                entry.sent_at = datetime.now(timezone.utc)
                 sent_count += 1
             else:
                 if entry.attempts >= max_retries:

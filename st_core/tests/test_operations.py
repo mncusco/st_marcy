@@ -8,7 +8,7 @@ import json
 import uuid
 import sys
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 # ──────────────────────────────────────────────
@@ -615,7 +615,7 @@ class TestTaskService:
         from services.task_service import TaskService
         from datetime import datetime
         svc = TaskService(db_session)
-        svc.create_task(title="Today Task", due_at=datetime.utcnow())
+        svc.create_task(title="Today Task", due_at=datetime.now(timezone.utc))
         today = svc.get_today_tasks()
         assert any(t.title == "Today Task" for t in today)
 
@@ -623,7 +623,7 @@ class TestTaskService:
         from services.task_service import TaskService
         from datetime import datetime, timedelta
         svc = TaskService(db_session)
-        svc.create_task(title="Overdue Task", due_at=datetime.utcnow() - timedelta(days=1))
+        svc.create_task(title="Overdue Task", due_at=datetime.now(timezone.utc) - timedelta(days=1))
         overdue = svc.get_overdue_tasks()
         assert any(t.title == "Overdue Task" for t in overdue)
 
@@ -698,7 +698,7 @@ class TestReminderAutoCreation:
         svc = TaskService(db_session)
         r = svc.create_reminder(lead_id=lead.id, reminder_type=ReminderType.FOLLOWUP_3D,
                                  title="Test Reminder")
-        r.remind_at = datetime.utcnow() - timedelta(hours=1)
+        r.remind_at = datetime.now(timezone.utc) - timedelta(hours=1)
         db_session.commit()
         db_session.close()
         resp = client.post("/admin/reminders/process", headers=auth_headers, follow_redirects=False)
@@ -800,15 +800,15 @@ class TestTaskSchema:
         from schemas import TaskResponse
         from datetime import datetime
         s = TaskResponse(id=1, title="Test", status="PENDING", priority="normal",
-                         created_at=datetime.utcnow(), updated_at=datetime.utcnow())
+                         created_at=datetime.now(timezone.utc), updated_at=datetime.now(timezone.utc))
         assert s.title == "Test"
 
     def test_reminder_response_schema(self):
         from schemas import ReminderResponse
         from datetime import datetime
         s = ReminderResponse(id=1, lead_id=1, reminder_type="FOLLOWUP_3D", title="Reminder",
-                             remind_at=datetime.utcnow(), status="active", notified=False,
-                             created_at=datetime.utcnow())
+                             remind_at=datetime.now(timezone.utc), status="active", notified=False,
+                             created_at=datetime.now(timezone.utc))
         assert s.title == "Reminder"
 
 
@@ -872,29 +872,45 @@ class TestRestoreScript:
 class TestVerifyScript:
     """scripts/verify.py integrity checker."""
 
+    SCRIPTS_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "scripts")
+    ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
+
     def test_verify_script_imports(self):
         import importlib.util
-        spec = importlib.util.spec_from_file_location("verify_script", "scripts/verify.py")
+        spec = importlib.util.spec_from_file_location(
+            "verify_script", os.path.join(self.SCRIPTS_DIR, "verify.py")
+        )
         assert spec is not None, "scripts/verify.py not found"
 
     def test_verify_script_runs(self):
         import subprocess
         result = subprocess.run(
-            [sys.executable, "scripts/verify.py"],
-            capture_output=True, text=True, cwd=os.path.dirname(__file__) + "/../..",
+            [sys.executable, os.path.join(self.SCRIPTS_DIR, "verify.py")],
+            capture_output=True, text=True, cwd=self.ROOT,
         )
         assert result.returncode in (0, 1)
 
     def test_verify_checks_database(self):
-        from scripts.verify import check_integrity
-        result = check_integrity("./test_shamanic.db")
-        assert "status" in result
+        sys.path.insert(0, self.ROOT)
+        try:
+            from scripts.verify import check_integrity
+            result = check_integrity(os.path.join(os.path.dirname(__file__), "..", "test_shamanic.db"))
+            assert "status" in result
+        finally:
+            sys.path.pop(0)
 
     def test_verify_directory_structure(self):
-        from scripts.verify import check_directory_structure
-        result = check_directory_structure()
-        assert result.get("st_core") is True
-        assert result.get("app.py") is True
+        sys.path.insert(0, self.ROOT)
+        old_cwd = os.getcwd()
+        try:
+            os.chdir(self.ROOT)
+            from scripts.verify import check_directory_structure
+            result = check_directory_structure()
+            assert result.get("st_core") is True
+            assert result.get("app.py") is True
+        finally:
+            os.chdir(old_cwd)
+            sys.path.pop(0)
 
 
 class TestCSVImport:
@@ -960,34 +976,32 @@ class TestStartupValidation:
 class TestDocumentation:
     """Documentation files exist."""
 
+    ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
+
     def test_install_doc_exists(self):
-        import os
-        assert os.path.exists("INSTALL.md")
+        assert os.path.exists(os.path.join(self.ROOT, "INSTALL.md"))
 
     def test_deploy_doc_exists(self):
-        import os
-        assert os.path.exists("DEPLOY.md")
+        assert os.path.exists(os.path.join(self.ROOT, "DEPLOY.md"))
 
     def test_backup_doc_exists(self):
-        import os
-        assert os.path.exists("BACKUP.md")
+        assert os.path.exists(os.path.join(self.ROOT, "BACKUP.md"))
 
     def test_admin_guide_exists(self):
-        import os
-        assert os.path.exists("ADMIN_GUIDE.md")
+        assert os.path.exists(os.path.join(self.ROOT, "ADMIN_GUIDE.md"))
 
 
 class TestScriptsDir:
     """scripts/ directory structure."""
 
+    SCRIPTS = os.path.join(os.path.dirname(__file__), "..", "..", "scripts")
+
     def test_scripts_init_exists(self):
-        import os
-        assert os.path.exists("scripts/__init__.py")
+        assert os.path.exists(os.path.join(self.SCRIPTS, "__init__.py"))
 
     def test_all_scripts_present(self):
-        import os
         for name in ("backup.py", "restore.py", "verify.py"):
-            assert os.path.exists(f"scripts/{name}"), f"Missing scripts/{name}"
+            assert os.path.exists(os.path.join(self.SCRIPTS, name)), f"Missing scripts/{name}"
 
 
 # ═══════════════════════════════════════════════
@@ -1015,7 +1029,7 @@ class TestRetreatModel:
 
     def test_retreat_appears_in_dashboard(self, client, auth_headers):
         from datetime import datetime, timedelta
-        future = (datetime.utcnow() + timedelta(days=30)).strftime("%Y-%m-%d")
+        future = (datetime.now(timezone.utc) + timedelta(days=30)).strftime("%Y-%m-%d")
         client.post("/admin/retreat/create", data={
             "name": "Sacred Valley",
             "max_participants": 8,

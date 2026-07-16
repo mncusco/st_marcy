@@ -1,7 +1,7 @@
 import uuid
 import enum
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import String, Text, Boolean, DateTime, Integer, Float, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import Base
@@ -69,8 +69,8 @@ class Lead(Base):
     utm_campaign: Mapped[str] = mapped_column(String(255), nullable=True)
     utm_content: Mapped[str] = mapped_column(String(255), nullable=True)
     utm_term: Mapped[str] = mapped_column(String(255), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
     user_agent: Mapped[str] = mapped_column(Text, nullable=True)
 
@@ -108,7 +108,7 @@ class LeadEvent(Base):
     description: Mapped[str] = mapped_column(Text, nullable=True)
     metadata_json: Mapped[str] = mapped_column(Text, nullable=True)
     created_by: Mapped[str] = mapped_column(String(100), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     lead: Mapped["Lead"] = relationship(back_populates="events")
 
@@ -146,7 +146,7 @@ class EmailQueue(Base):
     sent_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     attempts: Mapped[int] = mapped_column(Integer, default=0)
     error_message: Mapped[str] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     lead: Mapped["Lead"] = relationship(back_populates="emails")
 
@@ -159,7 +159,7 @@ class EditorialEdition(Base):
     file_path: Mapped[str] = mapped_column(String(512), nullable=True)
     version: Mapped[str] = mapped_column(String(50), default="1.0")
     active: Mapped[bool] = mapped_column(Boolean, default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     leads: Mapped[list["Lead"]] = relationship(back_populates="editorial_edition")
 
@@ -169,7 +169,7 @@ class DownloadEvent(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), index=True)
     editorial_id: Mapped[int] = mapped_column(Integer, ForeignKey("editorial_editions.id"), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
     ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
     user_agent: Mapped[str] = mapped_column(Text, nullable=True)
 
@@ -191,8 +191,8 @@ class Interview(Base):
     status: Mapped[InterviewStatus] = mapped_column(SQLEnum(InterviewStatus), default=InterviewStatus.REQUESTED)
     meeting_url: Mapped[str] = mapped_column(String(512), nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     lead: Mapped["Lead"] = relationship(back_populates="interviews")
 
@@ -207,7 +207,7 @@ class CandidateAnalysis(Base):
     strengths: Mapped[str] = mapped_column(Text(), default="[]")
     concerns: Mapped[str] = mapped_column(Text(), default="[]")
     recommendation: Mapped[str] = mapped_column(default="")
-    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(default=lambda: datetime.now(timezone.utc))
 
     lead: Mapped["Lead"] = relationship(back_populates="analysis")
 
@@ -222,7 +222,7 @@ class LeadNote(Base):
     lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"))
     content: Mapped[str] = mapped_column(Text)
     created_by: Mapped[str] = mapped_column(String(100), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     lead: Mapped["Lead"] = relationship(back_populates="crm_notes")
 
@@ -237,8 +237,8 @@ class EmailTemplate(Base):
     body_text: Mapped[str] = mapped_column(Text, nullable=True)
     language: Mapped[str] = mapped_column(String(10), default="en")
     active: Mapped[bool] = mapped_column(Boolean, default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
 
 class TaskStatus(str, enum.Enum):
@@ -273,8 +273,8 @@ class Task(Base):
     assigned_to: Mapped[str] = mapped_column(String(100), nullable=True)
     created_by: Mapped[str] = mapped_column(String(100), nullable=True)
     completed_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     lead: Mapped[Optional["Lead"]] = relationship(back_populates="tasks")
 
@@ -295,7 +295,7 @@ class Reminder(Base):
     status: Mapped[str] = mapped_column(String(20), default="active")
     notified: Mapped[bool] = mapped_column(Boolean, default=False)
     notified_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     lead: Mapped["Lead"] = relationship(back_populates="reminders")
 
@@ -313,7 +313,7 @@ class Notification(Base):
     notification_type: Mapped[str] = mapped_column(String(50))
     read: Mapped[bool] = mapped_column(Boolean, default=False)
     read_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     lead: Mapped[Optional["Lead"]] = relationship(back_populates="notifications")
 
@@ -354,8 +354,8 @@ class Retreat(Base):
     price: Mapped[float] = mapped_column(Float, default=0.0)
     currency: Mapped[str] = mapped_column(String(10), default="EUR")
     status: Mapped[RetreatStatus] = mapped_column(SQLEnum(RetreatStatus), default=RetreatStatus.DRAFT)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     bookings: Mapped[list["Booking"]] = relationship(back_populates="retreat", cascade="all, delete-orphan")
 
@@ -379,8 +379,8 @@ class Booking(Base):
     deposit_paid: Mapped[bool] = mapped_column(Boolean, default=False)
     balance_paid: Mapped[bool] = mapped_column(Boolean, default=False)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     lead: Mapped["Lead"] = relationship(back_populates="bookings")
     retreat: Mapped["Retreat"] = relationship(back_populates="bookings")
@@ -399,7 +399,7 @@ class Payment(Base):
     payment_method: Mapped[PaymentMethod] = mapped_column(SQLEnum(PaymentMethod), nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
     paid_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     booking: Mapped["Booking"] = relationship(back_populates="payments")
 
@@ -416,7 +416,7 @@ class Participant(Base):
     nationality: Mapped[str] = mapped_column(String(100), nullable=True)
     date_of_birth: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     special_requirements: Mapped[str] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     booking: Mapped["Booking"] = relationship(back_populates="participants")
 
@@ -430,7 +430,7 @@ class RoomAssignment(Base):
     room_type: Mapped[str] = mapped_column(String(50), nullable=True)
     room_number: Mapped[str] = mapped_column(String(50), nullable=True)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     booking: Mapped["Booking"] = relationship(back_populates="room_assignments")
 
@@ -450,4 +450,4 @@ class AdminAudit(Base):
     resource_id: Mapped[str] = mapped_column(String(50), nullable=True)
     details: Mapped[str] = mapped_column(Text, nullable=True)
     ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))

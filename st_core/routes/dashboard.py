@@ -2,7 +2,7 @@ import json
 import os
 import logging
 from typing import Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, Request, Form, Query, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse, Response, JSONResponse
 from fastapi.templating import Jinja2Templates
@@ -33,9 +33,9 @@ templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), ".
 templates.env.filters["from_json"] = lambda v: json.loads(v) if v else []
 
 PERIOD_MAP = {
-    "today": (datetime.utcnow().strftime("%Y-%m-%d"), None),
-    "7d": ((datetime.utcnow() - timedelta(days=7)).strftime("%Y-%m-%d"), None),
-    "30d": ((datetime.utcnow() - timedelta(days=30)).strftime("%Y-%m-%d"), None),
+    "today": (datetime.now(timezone.utc).strftime("%Y-%m-%d"), None),
+    "7d": ((datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%d"), None),
+    "30d": ((datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d"), None),
 }
 
 @router.get("", response_class=HTMLResponse)
@@ -91,7 +91,7 @@ def admin_dashboard(
     bi_pipeline = analytics.get_pipeline_value()
     bi_monthly = analytics.get_monthly_leads()
 
-    today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+    today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
     today_counts = dict(
         db.query(Lead.downloaded_editorial, func.count(Lead.id))
         .filter(Lead.created_at >= today_start)
@@ -175,7 +175,7 @@ def admin_dashboard(
             "need_followup": need_followup,
             "need_approval": need_approval,
             "need_booking": need_booking,
-            "now": datetime.utcnow,
+            "now": lambda: datetime.now(timezone.utc),
             "booking_stats": booking_stats,
             "upcoming_retreats": upcoming_retreats,
         },

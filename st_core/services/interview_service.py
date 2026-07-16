@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
@@ -125,7 +125,7 @@ def get_lead_interviews(db: Session, lead_id: int):
 
 
 def get_upcoming_interviews(db: Session, limit: int = 10):
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     return db.query(Interview, Lead.first_name, Lead.last_name, Lead.email).join(
         Lead, Interview.lead_id == Lead.id
     ).filter(

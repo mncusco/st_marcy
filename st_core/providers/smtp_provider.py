@@ -21,10 +21,11 @@ class SmtpProvider(EmailProvider):
             msg.attach(MIMEText(plain_text, "plain", "utf-8"))
             msg.attach(MIMEText(html_body, "html", "utf-8"))
 
+            timeout = settings.SMTP_TIMEOUT
             if settings.SMTP_SSL:
-                server = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT)
+                server = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, timeout=timeout)
             else:
-                server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT)
+                server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=timeout)
                 if settings.SMTP_TLS:
                     server.starttls()
 

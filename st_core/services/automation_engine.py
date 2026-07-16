@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
 
 from models import EmailQueue, Lead, LeadStatus
@@ -30,7 +30,7 @@ class AutomationEngine:
                 subject=TEMPLATE_SUBJECTS["editorial_download"],
                 template_name="editorial_download",
                 payload={"download_token": lead.download_token},
-                scheduled_for=datetime.utcnow() + timedelta(hours=EDITORIAL_DELAY_HOURS),
+                scheduled_for=datetime.now(timezone.utc) + timedelta(hours=EDITORIAL_DELAY_HOURS),
             )
             queued.append(e)
 
@@ -39,7 +39,7 @@ class AutomationEngine:
             email_type="followup_3_days",
             subject=TEMPLATE_SUBJECTS["followup_3_days"],
             template_name="followup_3_days",
-            scheduled_for=datetime.utcnow() + timedelta(days=FOLLOWUP_DELAY_DAYS),
+            scheduled_for=datetime.now(timezone.utc) + timedelta(days=FOLLOWUP_DELAY_DAYS),
         )
         queued.append(e)
 
@@ -69,13 +69,13 @@ class AutomationEngine:
             subject=TEMPLATE_SUBJECTS["editorial_download"],
             template_name="editorial_download",
             payload={"download_token": lead.download_token},
-            scheduled_for=datetime.utcnow() + timedelta(hours=EDITORIAL_DELAY_HOURS),
+            scheduled_for=datetime.now(timezone.utc) + timedelta(hours=EDITORIAL_DELAY_HOURS),
         )
         return [e]
 
     def on_status_changed(self, lead: Lead, old_status: LeadStatus, new_status: LeadStatus) -> list[EmailQueue]:
         queued = []
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
 
         if new_status == LeadStatus.INTERVIEW and old_status in (LeadStatus.NEW, LeadStatus.CONTACTED):
             e = self.engine.queue_email(

@@ -1,7 +1,7 @@
 import os
 import logging
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
@@ -32,7 +32,7 @@ def admin_email_diagnostics(
     return templates.TemplateResponse(
         request,
         "email_diagnostics.html",
-        {"diag": diag, "now": datetime.utcnow},
+        {"diag": diag, "now": lambda: datetime.now(timezone.utc)},
     )
 
 
@@ -97,7 +97,7 @@ def admin_system(
             "environment": env_check,
             "python": python_info,
             "uptime_hint": uptime_hint,
-            "now": datetime.utcnow,
+            "now": lambda: datetime.now(timezone.utc),
         },
     )
 
@@ -151,7 +151,7 @@ def admin_content_check(
     return templates.TemplateResponse(
         request,
         "content_check.html",
-        {"issues": issues, "now": datetime.utcnow},
+        {"issues": issues, "now": lambda: datetime.now(timezone.utc)},
     )
 
 
@@ -207,5 +207,5 @@ def admin_link_check(
     return templates.TemplateResponse(
         request,
         "link_check.html",
-        {"results": results, "total": len(results), "now": datetime.utcnow},
+        {"results": results, "total": len(results), "now": lambda: datetime.now(timezone.utc)},
     )

@@ -1,6 +1,6 @@
 import os
 import warnings
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -30,16 +30,18 @@ class Settings(BaseSettings):
     SMTP_PASSWORD: str = ""
     SMTP_TLS: bool = True
     SMTP_SSL: bool = False
+    SMTP_TIMEOUT: int = 30
     FROM_EMAIL: str = "noreply@shamanictravels.com"
     FROM_NAME: str = "ST Care"
     DEFAULT_LANGUAGE: str = "en"
     SUPPORTED_LANGUAGES: list[str] = ["en", "it", "es", "ru", "sr"]
     EDITORIAL_DIRECTORY: str = "./editorials"
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        extra = "ignore"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
 
 settings = Settings()

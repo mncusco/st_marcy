@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from sqlalchemy.orm import Session
@@ -42,7 +42,7 @@ def assign_editorial_to_lead(db: Session, lead: Lead) -> EditorialEdition:
     lang = normalize_language(lead.language)
     edition = get_or_create_editorial(db, lang)
     lead.editorial_edition_id = edition.id
-    lead.editorial_assigned_at = datetime.utcnow()
+    lead.editorial_assigned_at = datetime.now(timezone.utc)
     db.flush()
     logger.info("Assigned editorial %d (lang=%s) to lead %d", edition.id, lang, lead.id)
     return edition

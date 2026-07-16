@@ -33,9 +33,9 @@ After=network.target
 
 [Service]
 User=stcore
-WorkingDirectory=/opt/st_core
+WorkingDirectory=/opt/st_core/st_core
 EnvironmentFile=/opt/st_core/.env
-ExecStart=/opt/st_core/venv/bin/uvicorn st_core.app:app --host 127.0.0.1 --port 8000 --workers 2
+ExecStart=/opt/st_core/venv/bin/uvicorn app:app --host 127.0.0.1 --port 8000 --workers 2
 Restart=always
 RestartSec=5
 
@@ -48,8 +48,8 @@ WantedBy=multi-user.target
 Using NSSM (Non-Sucking Service Manager):
 
 ```cmd
-nssm install STCORE "C:\path\to\venv\Scripts\uvicorn.exe" "st_core.app:app --host 127.0.0.1 --port 8000"
-nssm set STCORE AppDirectory "C:\path\to\st_core"
+nssm install STCORE "C:\path\to\venv\Scripts\uvicorn.exe" "app:app --host 127.0.0.1 --port 8000"
+nssm set STCORE AppDirectory "C:\path\to\st_core\st_core"
 nssm start STCORE
 ```
 
@@ -78,8 +78,9 @@ server {
 
 The application is designed to be Docker-ready. A `Dockerfile` will be added in a future phase. Key considerations:
 
-- Use `python:3.11-slim` base image
-- Mount `/database` as a volume for persistence
-- Mount `/backups` for backup storage
+- Use `python:3.14-slim` base image
+- Working directory inside container: `/app/st_core`
+- Mount a volume for the SQLite database file (e.g. `./st_core/shamanic.db`)
+- Mount `/app/st_core/backups` for backup storage
 - Pass environment variables via `--env-file`
 - Use `gunicorn -k uvicorn.workers.UvicornWorker` for production
