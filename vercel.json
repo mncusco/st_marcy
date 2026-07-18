@@ -2,6 +2,6 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://stmarcy-production.up.railway.app/$1" }
+    { "source": "/api/(.*)", "destination": "https://stmarcy-production.up.railway.app/api/$1" }
   ]
 }
