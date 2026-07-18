@@ -362,6 +362,11 @@ function getRadioVal(name) {
   const el = document.querySelector(`input[name="${name}"]:checked`);
   return el ? el.value : 'Not selected';
 }
+function splitName(full) {
+  const parts = full.trim().split(/\s+/);
+  return { first_name: parts[0] || '', last_name: parts.slice(1).join(' ') || '' };
+}
+
 function handleSubmit(e){
   e.preventDefault();
 
@@ -372,14 +377,9 @@ function handleSubmit(e){
     gtag('event','generate_lead',{ event_category:'apply', event_label:'shamanic_travels_apply' });
   }
 
-  const payload = {
-    _subject: 'Application — ' + getVal('fullName'),
-    _replyto: getVal('email'),
-    name: getVal('fullName'),
-    email: getVal('email'),
-    phone: getVal('phone'),
+  const name = splitName(getVal('fullName'));
+  const notes = JSON.stringify({
     age: getVal('age'),
-    country: getVal('country'),
     city: getVal('city'),
     profession: getVal('job'),
     languages: getVal('languages'),
@@ -397,21 +397,33 @@ function handleSubmit(e){
     interview_opt1: getVal('opt1Date') + ' at ' + getVal('opt1Time'),
     interview_opt2: getVal('opt2Date') + ' at ' + getVal('opt2Time'),
     interview_opt3: getVal('opt3Date') + ' at ' + getVal('opt3Time'),
+    phone: getVal('phone'),
+    form_type: 'application'
+  });
+
+  const payload = {
+    first_name: name.first_name,
+    last_name: name.last_name,
+    email: getVal('email'),
+    country: getVal('country'),
+    language: 'en',
+    source_page: '/apply',
+    notes: notes
   };
 
   const btn = document.querySelector('button[type=submit]');
   btn.disabled = true;
   btn.textContent = 'Sending...';
 
-  fetch('https://formspree.io/f/xjgqzpvj', {
+  fetch('/api/leads', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   })
   .then(r => r.json())
   .then(data => {
-    if(data.ok || data.next){
-      window.location.href = 'https://www.shamanictravels.com/thankyou.html';
+    if(data.success){
+      window.location.href = '/thankyou.html?token=' + encodeURIComponent(data.download_token);
     } else {
       btn.disabled = false;
       btn.textContent = 'Submit Application';
@@ -423,47 +435,6 @@ function handleSubmit(e){
     btn.textContent = 'Submit Application';
     alert('Connection error. Please try again or email info@shamanictravels.com');
   });
-}
-Email: ${getVal('email')}
-Phone: ${getVal('phone')}
-Age: ${getVal('age')}
-Country: ${getVal('country')}
-City: ${getVal('city')}
-Profession: ${getVal('job')}
-Languages: ${getVal('languages')}
-
---- JOURNEY ---
-Selected: ${getRadioVal('journey')}
-
---- ELIGIBILITY & READINESS ---
-Prior Exp: ${getRadioVal('priorExperience')}
-Exp Detail: ${getVal('priorExperienceDetail')}
-Medications: ${getVal('medications')}
-Mental Health: ${getVal('mentalHealthHistory')}
-Cardiac/Neuro: ${getRadioVal('cardiac')}
-Agreed to Prep Protocol: Yes
-Agreed to Interview: Yes
-
---- INTENTION ---
-Motivation: ${getVal('motivation')}
-Single Paragraph Intention: ${getVal('intention')}
-Referral: ${getVal('referral')}
-
---- INTERVIEW PREFERENCE ---
-Timezone: ${getVal('timezone')}
-Method: ${getRadioVal('contactMethod')}
-Opt 1: ${getVal('opt1Date')} at ${getVal('opt1Time')}
-Opt 2: ${getVal('opt2Date')} at ${getVal('opt2Time')}
-Opt 3: ${getVal('opt3Date')} at ${getVal('opt3Time')}`;
-
-  if(typeof fbq !== "undefined"){
-    fbq('track','Lead',{ content_name:'Apply ShamanicTravels', value:1, currency:'USD' });
-  }
-  if(typeof gtag !== "undefined"){
-    gtag('event','generate_lead',{ event_category:'apply', event_label:'shamanic_travels_apply' });
-  }
-  window.location.href =
-    `mailto:marcello.buglione@gmail.com?subject=Application — ${encodeURIComponent(getVal('fullName'))}&body=${encodeURIComponent(body)}`;
 }
 </script>
 

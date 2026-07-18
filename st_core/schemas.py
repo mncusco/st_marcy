@@ -22,7 +22,7 @@ class LeadBase(BaseModel):
     user_agent: Optional[str] = None
 
 class LeadCreate(LeadBase):
-    pass
+    notes: Optional[str] = None
 
 class LeadUpdate(BaseModel):
     status: Optional[LeadStatus] = None
