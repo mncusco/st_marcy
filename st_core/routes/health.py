@@ -6,6 +6,7 @@ router = APIRouter(tags=["System"])
 
 
 @router.get("/health")
+@router.get("/api/health")
 def health_check():
     db_health = check_database_health()
     return {
