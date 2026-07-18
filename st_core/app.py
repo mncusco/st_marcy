@@ -14,6 +14,50 @@ from config import settings
 logger = logging.getLogger("st_core")
 
 
+def _migrate_schema():
+    from sqlalchemy import text as _text
+    from database import engine as _engine
+    dialect = _engine.dialect.name
+    try:
+        with _engine.connect() as conn:
+            if dialect == "sqlite":
+                result = conn.execute(_text("PRAGMA table_info(leads)")).fetchall()
+                cols = {row[1] for row in result}
+                if "campaign_sent_at" not in cols:
+                    conn.execute(_text("ALTER TABLE leads ADD COLUMN campaign_sent_at TIMESTAMP"))
+                    conn.execute(_text("ALTER TABLE leads ADD COLUMN email_opened BOOLEAN DEFAULT 0"))
+                    conn.execute(_text("ALTER TABLE leads ADD COLUMN email_clicked BOOLEAN DEFAULT 0"))
+                    logger.info("Schema migration: added campaign tracking columns to leads (SQLite)")
+            else:
+                for col, dtype in [("campaign_sent_at", "TIMESTAMP"), ("email_opened", "BOOLEAN DEFAULT FALSE"), ("email_clicked", "BOOLEAN DEFAULT FALSE")]:
+                    try:
+                        conn.execute(_text(f"ALTER TABLE leads ADD COLUMN IF NOT EXISTS {col} {dtype}"))
+                    except Exception:
+                        conn.execute(_text(f"ALTER TABLE leads ADD COLUMN {col} {dtype}"))
+                logger.info("Schema migration: ensured campaign tracking columns on leads")
+            conn.commit()
+    except Exception as e:
+        logger.warning("Schema migration skipped: %s", e)
+
+
+def _validate_pdf_files():
+    issues = []
+    import os
+    min_size = 1024
+    pdf_dir = settings.EDITORIAL_FILES_DIR
+    for lang, fname in settings.EDITORIAL_FILES.items():
+        path = os.path.join(pdf_dir, fname)
+        if not os.path.exists(path):
+            issues.append(f"PDF missing: {fname} for language {lang}")
+        else:
+            size = os.path.getsize(path)
+            if size < min_size:
+                issues.append(f"PDF too small ({size} bytes, expected >= {min_size}): {fname} for language {lang}")
+    for issue in issues:
+        logger.warning("PDF VALIDATION: %s", issue)
+    return issues
+
+
 def _validate_startup():
     issues = []
 
@@ -62,7 +106,9 @@ async def lifespan(app: FastAPI):
     setup_logging()
     logger.info("ST CORE starting")
     _validate_startup()
+    _validate_pdf_files()
     Base.metadata.create_all(bind=engine)
+    _migrate_schema()
     db = SessionLocal()
     try:
         from services.editorial_service import seed_editorials
@@ -73,8 +119,15 @@ async def lifespan(app: FastAPI):
         db.rollback()
     finally:
         db.close()
+    if settings.EMAIL_BACKEND.lower() in ("smtp", "resend", "sendgrid"):
+        from worker.email_worker import start_worker
+        start_worker()
+    else:
+        logger.info("Email backend is '%s' — worker not started", settings.EMAIL_BACKEND)
     logger.info("ST CORE ready")
     yield
+    from worker.email_worker import stop_worker
+    stop_worker()
     logger.info("ST CORE shutting down")
 
 
@@ -93,6 +146,9 @@ register_error_handlers(app)
 @app.middleware("http")
 async def csrf_middleware(request: Request, call_next):
     if request.method in ("POST", "PUT", "PATCH", "DELETE") and request.url.path.startswith("/admin") and not settings.DEBUG:
+        authorization = request.headers.get("authorization") or ""
+        if authorization.startswith("Basic "):
+            return await call_next(request)
         origin = request.headers.get("origin") or ""
         referer = request.headers.get("referer") or ""
         allowed_origins = {

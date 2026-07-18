@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     EDITORIAL_FILES_DIR: str = "./ebooks"
     EMAIL_BACKEND: str = "log"
     EMAIL_MAX_RETRIES: int = 3
+    RESEND_API_KEY: str = ""
+    SENDGRID_API_KEY: str = ""
     SMTP_HOST: str = "localhost"
     SMTP_PORT: int = 587
     SMTP_USERNAME: str = ""
@@ -33,6 +35,7 @@ class Settings(BaseSettings):
     SMTP_TIMEOUT: int = 30
     FROM_EMAIL: str = "noreply@shamanictravels.com"
     FROM_NAME: str = "ST Care"
+    PUBLIC_URL: str = "https://www.shamanictravels.com"
     DEFAULT_LANGUAGE: str = "en"
     SUPPORTED_LANGUAGES: list[str] = ["en", "it", "es", "ru", "sr"]
     EDITORIAL_DIRECTORY: str = "./editorials"

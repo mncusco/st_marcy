@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from models import EmailQueue, Lead, LeadStatus
 from services.email_engine import EmailEngine, TEMPLATE_SUBJECTS
 from services.task_service import TaskService
+from config import settings
 
 logger = logging.getLogger("st_core.automation_engine")
 
@@ -15,6 +16,7 @@ INTERVIEW_DELAY_HOURS = 2
 COMPLETION_DELAY_HOURS = 24
 APPROVED_DELAY_HOURS = 2
 REJECTED_DELAY_HOURS = 1
+REACTIVATION_DELAY_HOURS = 0
 
 class AutomationEngine:
     def __init__(self, db: Session):
@@ -71,6 +73,32 @@ class AutomationEngine:
             payload={"download_token": lead.download_token},
             scheduled_for=datetime.now(timezone.utc) + timedelta(hours=EDITORIAL_DELAY_HOURS),
         )
+        return [e]
+
+    def on_campaign_reactivation(self, lead: Lead) -> list[EmailQueue]:
+        existing = (
+            self.db.query(EmailQueue)
+            .filter(
+                EmailQueue.lead_id == lead.id,
+                EmailQueue.email_type == "editorial_reactivation",
+                EmailQueue.status.in_(["PENDING", "PROCESSING"]),
+            )
+            .count()
+        )
+        if existing:
+            return []
+
+        download_url = f"{settings.PUBLIC_URL}/download/{lead.download_token}" if lead.download_token else None
+        e = self.engine.queue_email(
+            lead=lead,
+            email_type="editorial_reactivation",
+            subject=TEMPLATE_SUBJECTS["editorial_reactivation"],
+            template_name="editorial_reactivation",
+            payload={"download_url": download_url, "download_token": lead.download_token},
+            scheduled_for=datetime.now(timezone.utc) + timedelta(hours=REACTIVATION_DELAY_HOURS),
+        )
+        lead.campaign_sent_at = datetime.now(timezone.utc)
+        self.db.flush()
         return [e]
 
     def on_status_changed(self, lead: Lead, old_status: LeadStatus, new_status: LeadStatus) -> list[EmailQueue]:

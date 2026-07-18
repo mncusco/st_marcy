@@ -22,14 +22,63 @@ BACKEND_MAP = {
     "sendgrid": SendgridProvider,
 }
 
-TEMPLATE_SUBJECTS = {
-    "editorial_download": "Your Free Editorial – ST Care",
-    "followup_3_days": "Still Thinking? – ST Care",
-    "interview_invitation": "Interview Invitation – ST Care",
-    "approved": "Application Approved – ST Care",
-    "rejected": "Application Update – ST Care",
-    "journey_reminder": "Your Journey with ST Care",
-    "completion": "Thank You – ST Care",
+TEMPLATE_SUBJECTS: dict[str, str | dict[str, str]] = {
+    "editorial_download": {
+        "en": "Your Free Editorial – ST Care",
+        "it": "La tua guida gratuita – ST Care",
+        "es": "Tu guía gratuita – ST Care",
+        "ru": "Ваше бесплатное руководство – ST Care",
+        "sr": "Vaš besplatni vodič – ST Care",
+    },
+    "followup_3_days": {
+        "en": "Still Thinking? – ST Care",
+        "it": "Ci stai ancora pensando? – ST Care",
+        "es": "¿Todavía lo estás pensando? – ST Care",
+        "ru": "Всё ещё думаете? – ST Care",
+        "sr": "Još uvek razmišljate? – ST Care",
+    },
+    "interview_invitation": {
+        "en": "Interview Invitation – ST Care",
+        "it": "Invito al colloquio – ST Care",
+        "es": "Invitación a entrevista – ST Care",
+        "ru": "Приглашение на собеседование – ST Care",
+        "sr": "Poziv za intervju – ST Care",
+    },
+    "approved": {
+        "en": "Application Approved – ST Care",
+        "it": "Candidatura approvata – ST Care",
+        "es": "Solicitud aprobada – ST Care",
+        "ru": "Заявка одобрена – ST Care",
+        "sr": "Prijava odobrena – ST Care",
+    },
+    "rejected": {
+        "en": "Application Update – ST Care",
+        "it": "Aggiornamento candidatura – ST Care",
+        "es": "Actualización de solicitud – ST Care",
+        "ru": "Обновление заявки – ST Care",
+        "sr": "Ažuriranje prijave – ST Care",
+    },
+    "journey_reminder": {
+        "en": "Your Journey with ST Care",
+        "it": "Il tuo viaggio con ST Care",
+        "es": "Tu viaje con ST Care",
+        "ru": "Ваше путешествие с ST Care",
+        "sr": "Vaše putovanje sa ST Care",
+    },
+    "completion": {
+        "en": "Thank You – ST Care",
+        "it": "Grazie – ST Care",
+        "es": "Gracias – ST Care",
+        "ru": "Спасибо – ST Care",
+        "sr": "Hvala – ST Care",
+    },
+    "editorial_reactivation": {
+        "en": "Private Collector's Guide — Sacred Places of Peru",
+        "it": "Guida Privata del Collezionista — Luoghi Sacri del Perù",
+        "es": "Guía Privada del Coleccionista — Lugares Sagrados de Perú",
+        "ru": "Частное руководство коллекционера — Священные места Перу",
+        "sr": "Privatni vodič kolekcionara — Sveta mesta Perua",
+    },
 }
 
 class EmailEngine:
@@ -157,11 +206,16 @@ class EmailEngine:
 
         raise FileNotFoundError(f"Template not found in any language: {template_name}")
 
+    def _resolve_subject(self, subject: str | dict[str, str], language: str) -> str:
+        if isinstance(subject, dict):
+            return subject.get(language, subject.get("en", str(subject.get(list(subject.keys())[0]))))
+        return subject
+
     def queue_email(
         self,
         lead: Lead,
         email_type: str,
-        subject: str,
+        subject: str | dict[str, str],
         template_name: str,
         payload: Optional[dict] = None,
         scheduled_for: Optional[datetime] = None,
@@ -171,10 +225,12 @@ class EmailEngine:
         if normalized not in ("en", "it", "es", "ru", "sr"):
             normalized = "en"
 
+        resolved_subject = self._resolve_subject(subject, normalized)
+
         entry = EmailQueue(
             lead_id=lead.id,
             email_type=email_type,
-            subject=subject,
+            subject=resolved_subject,
             language=normalized,
             status=EmailStatus.PENDING,
             template_name=template_name,

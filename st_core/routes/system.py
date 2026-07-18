@@ -15,6 +15,8 @@ from core.version import VERSION, APP_NAME
 from models import Lead, Task, Reminder, EmailQueue, Interview, LeadNote, AdminAudit
 from config import settings
 
+SMTP_SELF_TEST_RESULT = None
+
 logger = logging.getLogger("st_core.system")
 
 router = APIRouter(prefix="/admin", tags=["System"])
@@ -43,6 +45,72 @@ def admin_email_diagnostics_json(
 ):
     engine = EmailEngine(db)
     return engine.diagnose()
+
+
+@router.get("/smtp-check", response_class=JSONResponse)
+def admin_smtp_production_check(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    import smtplib
+    import socket
+    import time
+    from services.email_engine import EmailEngine
+
+    results = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "backend": settings.EMAIL_BACKEND,
+        "host": settings.SMTP_HOST,
+        "port": settings.SMTP_PORT,
+        "tls": settings.SMTP_TLS,
+        "ssl": settings.SMTP_SSL,
+        "username_configured": bool(settings.SMTP_USERNAME),
+        "password_configured": bool(settings.SMTP_PASSWORD),
+        "checks": {},
+        "send_test": None,
+    }
+
+    if settings.EMAIL_BACKEND.lower() != "smtp":
+        results["checks"]["backend_check"] = "skipped (backend is not smtp)"
+        return results
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(settings.SMTP_TIMEOUT)
+    try:
+        start = time.time()
+        if settings.SMTP_SSL:
+            server = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, timeout=settings.SMTP_TIMEOUT)
+        else:
+            server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=settings.SMTP_TIMEOUT)
+            server.ehlo()
+            if settings.SMTP_TLS:
+                server.starttls()
+                server.ehlo()
+        results["checks"]["connection"] = "ok"
+        results["latency_ms"] = round((time.time() - start) * 1000)
+        if settings.SMTP_USERNAME:
+            server.login(settings.SMTP_USERNAME, settings.SMTP_PASSWORD)
+            results["checks"]["authentication"] = "ok"
+        results["checks"]["tls"] = "ok" if settings.SMTP_TLS else "n/a"
+        server.quit()
+
+        engine = EmailEngine(db)
+        test_result = engine.send_test_email(to=settings.FROM_EMAIL)
+        results["send_test"] = test_result
+        results["checks"]["send_test"] = "ok" if test_result.get("success") else "failed"
+    except smtplib.SMTPAuthenticationError as e:
+        results["checks"]["connection"] = "ok"
+        results["checks"]["authentication"] = f"failed: {e}"
+    except (socket.timeout, ConnectionRefusedError, smtplib.SMTPException) as e:
+        results["checks"]["connection"] = f"failed: {e}"
+    except Exception as e:
+        results["checks"]["error"] = str(e)
+    finally:
+        sock.close()
+
+    global SMTP_SELF_TEST_RESULT
+    SMTP_SELF_TEST_RESULT = results
+    return results
 
 
 @router.get("/system", response_class=HTMLResponse)
@@ -121,7 +189,7 @@ def admin_content_check(
                     if fname.endswith(".html"):
                         email_templates_found.add(f"{lang}/{fname}")
     missing_templates = []
-    required = {"editorial_download", "followup_3_days", "interview_invitation", "approved", "rejected", "journey_reminder", "completion"}
+    required = {"editorial_download", "followup_3_days", "interview_invitation", "approved", "rejected", "journey_reminder", "completion", "editorial_reactivation"}
     for lang in valid_languages:
         for tmpl in required:
             path = f"{lang}/{tmpl}.html"

@@ -20,7 +20,7 @@ from services.interview_service import (
     cancel_interview, mark_no_show, get_lead_interviews,
 )
 from schemas import TaskCreate, TaskUpdate, LeadUpdate
-from models import Lead, LeadStatus, AdminAudit
+from models import Lead, LeadStatus, AdminAudit, EmailQueue
 from services.ai_service import AIService
 from services.analytics_service import AnalyticsService
 from services.task_service import TaskService
@@ -232,6 +232,15 @@ def admin_process_email_queue(
     _log_audit(db, admin, "email_process_queue", "email", None, f"Processed {count} emails")
     return RedirectResponse(url="/admin", status_code=303)
 
+@router.post("/email/process/json")
+def admin_process_email_queue_json(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    count = EmailEngine(db).process_pending()
+    _log_audit(db, admin, "email_process_queue", "email", None, f"Processed {count} emails")
+    return {"success": True, "sent": count}
+
 @router.post("/email/test")
 def admin_test_email(
     test_email: str = Form(...),
@@ -272,6 +281,47 @@ def admin_reprocess_automation(
     AutomationEngine(db).on_lead_created(lead)
     AutomationEngine(db).on_status_changed(lead, lead.status, lead.status)
     return RedirectResponse(url=f"/admin/lead/{lead_id}", status_code=303)
+
+@router.post("/lead/{lead_id}/reactivate")
+def admin_reactivate_lead(
+    lead_id: int,
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    from services.automation_engine import AutomationEngine
+    lead = LeadService.get_lead_by_id(db, lead_id)
+    queued = AutomationEngine(db).on_campaign_reactivation(lead)
+    db.commit()
+    _log_audit(db, admin, "campaign_reactivation", "lead", str(lead_id),
+               f"Queued {len(queued)} reactivation emails")
+    return {"success": True, "queued": len(queued)}
+
+@router.post("/campaign/reactivate-all")
+def admin_reactivate_all(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+):
+    from services.automation_engine import AutomationEngine
+    leads = db.query(Lead).order_by(Lead.id).all()
+    total = len(leads)
+    queued = 0
+    skipped = 0
+    for lead in leads:
+        existing = db.query(EmailQueue).filter(
+            EmailQueue.lead_id == lead.id,
+            EmailQueue.email_type == "editorial_reactivation",
+            EmailQueue.status.in_(["PENDING", "PROCESSING"]),
+        ).count()
+        if existing:
+            skipped += 1
+            continue
+        result = AutomationEngine(db).on_campaign_reactivation(lead)
+        if result:
+            queued += 1
+        db.commit()
+    _log_audit(db, admin, "campaign_reactivate_all", "lead", None,
+               f"Queued {queued}, skipped {skipped} of {total} leads")
+    return {"success": True, "total": total, "queued": queued, "skipped": skipped}
 
 @router.post("/lead/{lead_id}/analyze")
 def admin_analyze_lead(
