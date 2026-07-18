@@ -98,7 +98,7 @@ async def csrf_middleware(request: Request, call_next):
         allowed_origins = {
             "http://localhost:8000",
             "http://127.0.0.1:8000",
-            request.base_url.rstrip("/"),
+            str(request.base_url).rstrip("/"),
         }
         ok = False
         if origin and origin in allowed_origins:

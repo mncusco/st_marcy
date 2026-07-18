@@ -844,35 +844,116 @@ def admin_mark_notification_read(
     return RedirectResponse(url="/admin", status_code=303)
 
 
+MAILCHIMP_COLUMN_MAP = {
+    "Email Address": "email",
+    "First Name": "first_name",
+    "Last Name": "last_name",
+    "Source": "source_page",
+    "Campaign Name": "campaign",
+    "Most Recent Subscriber Source": "referrer",
+}
+
+MAILCHIMP_EXTRA_FIELDS = [
+    "Source", "Tags", "Outreach Stage", "Last Activity Date",
+    "Member Rating", "Signup Source", "GDPR Status",
+    "Most Recent Campaign", "Last Campaign Sent At",
+]
+
+def _normalize_row(row: dict, fmt: str) -> dict:
+    if fmt == "mailchimp":
+        out = {}
+        extra = []
+        for k, v in row.items():
+            key = k.strip()
+            val = v.strip() if v else ""
+            if key in MAILCHIMP_COLUMN_MAP:
+                out[MAILCHIMP_COLUMN_MAP[key]] = val
+            elif key not in MAILCHIMP_EXTRA_FIELDS:
+                if key.lower() in ("country", "language"):
+                    out[key.lower()] = val
+            if key in MAILCHIMP_EXTRA_FIELDS and val:
+                extra.append(f"{key}: {val}")
+        if extra:
+            out["notes"] = "; ".join(extra)
+        return out
+    out = {}
+    for k, v in row.items():
+        key = k.strip().lower().replace(" ", "_")
+        val = v.strip() if v else ""
+        out[key] = val
+    return out
+
 @router.post("/import/leads")
 def admin_import_leads(
     db: Session = Depends(get_db),
     admin: str = Depends(verify_admin),
     csv_data: str = Form(...),
+    format: str = Form("generic"),
+    strategy: str = Form("skip"),
 ):
-    import csv, io
+    import csv, io, re
+    from schemas import LeadCreate
+    from services.lead_service import LeadService
+
     reader = csv.DictReader(io.StringIO(csv_data))
     imported = 0
+    skipped = 0
     errors = []
-    for row in reader:
+
+    EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+    for idx, row in enumerate(reader):
+        line = idx + 2
         try:
-            lead_data = {
-                "first_name": row.get("first_name", "").strip(),
-                "last_name": row.get("last_name", "").strip(),
-                "email": row.get("email", "").strip(),
-            }
-            if not lead_data["first_name"] or not lead_data["email"]:
-                errors.append(f"Row {imported + 2}: missing first_name or email")
+            data = _normalize_row(row, format)
+            email = data.get("email", "").strip().lower()
+            first_name = data.get("first_name", "").strip()
+            last_name = data.get("last_name", "").strip()
+
+            if not email or not EMAIL_RE.match(email):
+                errors.append(f"Row {line}: invalid or missing email")
                 continue
-            from schemas import LeadCreate
-            from services.lead_service import LeadService
+            if not first_name:
+                errors.append(f"Row {line}: missing first name")
+                continue
+
+            if db.query(Lead).filter(Lead.email == email).first():
+                if strategy == "skip":
+                    skipped += 1
+                    continue
+                elif strategy == "error":
+                    errors.append(f"Row {line}: duplicate email {email}")
+                    continue
+
+            lead_data = {
+                "first_name": first_name,
+                "last_name": last_name or first_name,
+                "email": email,
+            }
+            for field in ("country", "language", "source_page", "campaign", "referrer",
+                          "utm_source", "utm_medium", "utm_campaign", "notes"):
+                if field in data and data[field]:
+                    lead_data[field] = data[field]
+
             create = LeadCreate(**lead_data)
             LeadService.create_lead(db, create)
             imported += 1
         except Exception as e:
-            errors.append(f"Row {imported + 2}: {e}")
-    _log_audit(db, admin, "csv_import", "lead", None, f"Imported {imported} leads with {len(errors)} errors")
-    return {"imported": imported, "errors": errors}
+            errors.append(f"Row {line}: {e}")
+
+    _log_audit(db, admin, "csv_import", "lead", None,
+               f"Format={format} imported={imported} skipped={skipped} errors={len(errors)}")
+    return {"imported": imported, "skipped": skipped, "errors": errors}
+
+
+@router.post("/import/mailchimp")
+def admin_import_mailchimp(
+    db: Session = Depends(get_db),
+    admin: str = Depends(verify_admin),
+    csv_data: str = Form(...),
+    strategy: str = Form("skip"),
+):
+    return admin_import_leads(db=db, admin=admin, csv_data=csv_data, format="mailchimp", strategy=strategy)
 
 
 @router.get("/diagnostics")
