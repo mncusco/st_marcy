@@ -1,4 +1,4 @@
-﻿{
+{
   "nav": {
     "ethos": "FilosofÃ­a",
     "andean": "Arco Andino",
@@ -279,11 +279,6 @@
     "prep_v6": "SesiÃ³n 1:1 obligatoria con Marcello antes de la salida.",
     "prep_cta": "Postular para la SelecciÃ³n",
     "prep_note": "Entrevista Privada Â· Coaching Obligatorio Â· Protocolo de 3 Meses",
-    "footer_eyebrow": "Tu Regalo",
-    "footer_title": "Recibe <em style=\"color:var(--accent);\">â€œI Luoghi Sacri degli Incaâ€</em> gratis",
-    "footer_desc": "Un compendio escrito por el fundador â€” el resultado de aÃ±os de viajes. Una guÃ­a previa al viaje llena de informaciÃ³n esencial.",
-    "footer_placeholder": "Tu direcciÃ³n de correo electrÃ³nico",
-    "footer_btn": "Recibir",
     "hero_img_alt": "BÃ³veda de la selva amazÃ³nica en San Alejandro, AmazonÃ­a peruana",
     "hero_cta": "Solicita una Entrevista Privada â†’",
     "qualify_eyebrow": "Antes de Continuar",
@@ -347,14 +342,14 @@
     "guide_note": "Nada de spam. Solo contenido relevante sobre el camino y las plantas maestras.",
     "footer_based_value": "Londres Â· Lima Â· MilÃ¡n",
     "footer_copy": "Â© 2026 Â· Viajes Privados Curados"
-  }
-,  "thank_you": {
+  },
+  "thank_you": {
     "title": "Tu solicitud ha sido recibida",
-    "desc": "Revisamos cada solicitud personalmente. Si hay alineaci\u00f3n, te contactaremos dentro de 72 horas.",
+    "desc": "Revisamos cada solicitud personalmente. Si hay alineación, te contactaremos dentro de 72 horas.",
     "letters_title": "Cartas de Referencia",
-    "letters_intro": "Si nuestra conversaci\u00f3n progresa, podemos pedirte dos cartas de referencia. No son documentos formales \u2014 son relatos personales de personas que te conocen, describiendo lo que creen que buscas y por qu\u00e9 este viaje puede ser significativo para ti en este momento.",
-    "letters_note": "Todas las referencias se tratan con total discreci\u00f3n y son le\u00eddas solo por Marcello.",
-    "quote": "Algunos viajes cambian d\u00f3nde est\u00e1s. Otros cambian qui\u00e9n te conviertes.",
-    "back": "\u2190 Volver a Shamanic Travels"
+    "letters_intro": "Si nuestra conversación progresa, podemos pedirte dos cartas de referencia. No son documentos formales — son relatos personales de personas que te conocen, describiendo lo que creen que buscas y por qué este viaje puede ser significativo para ti en este momento.",
+    "letters_note": "Todas las referencias se tratan con total discreción y son leídas solo por Marcello.",
+    "quote": "Algunos viajes cambian dónde estás. Otros cambian quién te conviertes.",
+    "back": "← Volver a Shamanic Travels"
   }
 }

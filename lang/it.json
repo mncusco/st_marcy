@@ -1,4 +1,4 @@
-﻿{
+{
   "nav": {
     "ethos": "Filosofia",
     "andean": "Arco Andino",
@@ -279,11 +279,6 @@
     "prep_v6": "Sessione 1:1 obbligatoria con Marcello prima della partenza.",
     "prep_cta": "Candidati per la Selezione",
     "prep_note": "Colloquio Privato Â· Coaching Obbligatorio Â· Protocollo di 3 Mesi",
-    "footer_eyebrow": "Il Tuo Regalo",
-    "footer_title": "Ricevi <em style=\"color:var(--accent);\">â€œI Luoghi Sacri degli Incaâ€</em> gratuitamente",
-    "footer_desc": "Un compendio scritto dal fondatore â€” il risultato di anni di viaggi. Una guida pre-viaggio ricca di informazioni essenziali.",
-    "footer_placeholder": "Il tuo indirizzo email",
-    "footer_btn": "Ricevi",
     "hero_img_alt": "Volta della foresta amazzonica a San Alejandro, Amazzonia peruviana",
     "hero_cta": "Richiedi un Colloquio Privato â†’",
     "qualify_eyebrow": "Prima di Continuare",
@@ -347,14 +342,14 @@
     "guide_note": "Niente spam. Solo contenuti pertinenti sul percorso e sulle piante maestre.",
     "footer_based_value": "Londra Â· Lima Â· Milano",
     "footer_copy": "Â© 2026 Â· Viaggi Privati Curati"
-  }
-,  "thank_you": {
-    "title": "La tua richiesta \u00e8 stata ricevuta",
-    "desc": "Esaminiamo ogni richiesta personalmente. Se c\u2019\u00e8 allineamento, ti contatteremo entro 72 ore.",
+  },
+  "thank_you": {
+    "title": "La tua richiesta è stata ricevuta",
+    "desc": "Esaminiamo ogni richiesta personalmente. Se c’è allineamento, ti contatteremo entro 72 ore.",
     "letters_title": "Lettere di Referenza",
-    "letters_intro": "Se la nostra conversazione proseguir\u00e0, potremmo chiederti due lettere di referenza. Non sono documenti formali \u2014 sono resoconti personali di persone che ti conoscono, che descrivono ci\u00f2 che credono tu stia cercando e perch\u00e9 questo viaggio potrebbe essere significativo per te in questo momento.",
+    "letters_intro": "Se la nostra conversazione proseguirà, potremmo chiederti due lettere di referenza. Non sono documenti formali — sono resoconti personali di persone che ti conoscono, che descrivono ciò che credono tu stia cercando e perché questo viaggio potrebbe essere significativo per te in questo momento.",
     "letters_note": "Tutte le referenze sono trattate con la massima discrezione e lette solo da Marcello.",
     "quote": "Alcuni viaggi cambiano dove sei. Altri cambiano chi diventi.",
-    "back": "\u2190 Torna a Shamanic Travels"
+    "back": "← Torna a Shamanic Travels"
   }
 }

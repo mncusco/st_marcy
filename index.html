@@ -69,7 +69,7 @@ fbq('init', '236536824187993');
 fbq('track', 'PageView');
 </script>
 <noscript>
-  <img height="1" width="1" style="display:none"
+  <img height="1" width="1" style="display:none" alt=""
     src="https://www.facebook.com/tr?id=236536824187993&ev=PageView&noscript=1">
 </noscript>
 
@@ -92,6 +92,7 @@ fbq('track', 'PageView');
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 body {
   background: var(--background);
@@ -252,7 +253,7 @@ nav:not(.scrolled) .nav-links a.apply {
   justify-content: center;
   overflow: hidden;
 }
-@media (min-width: 768px) { #hero { align-items: center; } }
+@media (min-width: 768px) { #hero { align-items: center; padding-top: 80px; } }
 
 .hero-img-wrap { position: absolute; inset: 0; z-index: 0; }
 .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -276,7 +277,7 @@ nav:not(.scrolled) .nav-links a.apply {
 
 .hero-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(44px, 8vw, 96px);
+  font-size: clamp(36px, 6.5vw, 76px);
   font-weight: 300;
   line-height: 0.95;
   margin-bottom: 40px;

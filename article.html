@@ -24,6 +24,7 @@
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 body {
   background: var(--background);
@@ -401,7 +402,7 @@ async function loadArticle() {
 function showNotFound(container) {
   container.innerHTML = `
     <div class="article-not-found">
-      <h1>Article not found</h1>
+      <h2>Article not found</h2>
       <p>This article may have moved or does not exist.</p>
       <a href="blog.html" class="eyebrow">← Return to Insights</a>
     </div>

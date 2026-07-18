@@ -18,3 +18,7 @@ uploads/
 
 # Environment
 .env
+
+stdout.log
+stderr.log
+logs/
