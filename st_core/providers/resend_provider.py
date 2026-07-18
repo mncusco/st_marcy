@@ -30,6 +30,7 @@ class ResendProvider(EmailProvider):
             headers={
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json",
+                "User-Agent": "st-core/1.0",
             },
             method="POST",
         )
