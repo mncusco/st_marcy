@@ -14,7 +14,7 @@ import pytest
 class TestLeadCapture:
     """Verify visitor form submission → DB insertion → no duplicates → language → UTM."""
 
-    def test_full_lead_creation_with_utm(self, client, sample_lead_data):
+    def test_full_lead_creation_with_utm(self, client, auth_headers, sample_lead_data):
         resp = client.post("/api/leads", json=sample_lead_data)
         assert resp.status_code == 200
         data = resp.json()
@@ -25,7 +25,7 @@ class TestLeadCapture:
         assert len(token) > 20, "download_token too short"
 
         # Verify via GET that everything stored correctly
-        get_resp = client.get(f"/api/leads/{lead_id}")
+        get_resp = client.get(f"/api/leads/{lead_id}", headers=auth_headers)
         assert get_resp.status_code == 200
         lead = get_resp.json()
 
@@ -46,7 +46,7 @@ class TestLeadCapture:
         assert resp.status_code == 400
         assert "già" in resp.json()["detail"].lower()
 
-    def test_language_stored_correctly(self, client):
+    def test_language_stored_correctly(self, client, auth_headers):
         for lang_code in ("it", "es", "ru", "sr"):
             data = {
                 "first_name": f"Test{lang_code}",
@@ -56,10 +56,10 @@ class TestLeadCapture:
             }
             resp = client.post("/api/leads", json=data)
             assert resp.status_code == 200, f"Failed for language {lang_code}"
-            get_resp = client.get(f"/api/leads/{resp.json()['id']}")
+            get_resp = client.get(f"/api/leads/{resp.json()['id']}", headers=auth_headers)
             assert get_resp.json()["language"] == lang_code
 
-    def test_unsupported_language_falls_back(self, client):
+    def test_unsupported_language_falls_back(self, client, auth_headers):
         data = {
             "first_name": "Pierre",
             "last_name": "Dupont",
@@ -68,10 +68,10 @@ class TestLeadCapture:
         }
         resp = client.post("/api/leads", json=data)
         assert resp.status_code == 200
-        get_resp = client.get(f"/api/leads/{resp.json()['id']}")
+        get_resp = client.get(f"/api/leads/{resp.json()['id']}", headers=auth_headers)
         assert get_resp.json()["language"] == "fr"  # system stores language as-provided
 
-    def test_accept_language_header(self, client):
+    def test_accept_language_header(self, client, auth_headers):
         data = {
             "first_name": "Maria",
             "last_name": "Garcia",
@@ -82,7 +82,7 @@ class TestLeadCapture:
             json=data,
             headers={"accept-language": "es-MX,en;q=0.9"},
         )
-        get_resp = client.get(f"/api/leads/{resp.json()['id']}")
+        get_resp = client.get(f"/api/leads/{resp.json()['id']}", headers=auth_headers)
         assert get_resp.json()["language"] == "es"
 
 
@@ -128,11 +128,11 @@ class TestEditorialDelivery:
             cd = resp.headers.get("content-disposition", "")
             assert expected_filename in cd, f"Expected {expected_filename} in {cd}"
 
-    def test_download_updates_lead_flag(self, client, sample_lead_data):
+    def test_download_updates_lead_flag(self, client, auth_headers, sample_lead_data):
         created = client.post("/api/leads", json=sample_lead_data).json()
         token = created["download_token"]
         client.get(f"/download/{token}")
-        lead = client.get(f"/api/leads/{created['id']}").json()
+        lead = client.get(f"/api/leads/{created['id']}", headers=auth_headers).json()
         assert lead["downloaded_editorial"] is True
         assert lead["downloaded_at"] is not None
 
@@ -342,7 +342,7 @@ class TestInterviewPipeline:
         for status in transitions:
             resp = self._update_status(client, auth_headers, lead_id, status)
             assert resp.status_code == 303, f"Failed transition to {status}"
-            lead = client.get(f"/api/leads/{lead_id}").json()
+            lead = client.get(f"/api/leads/{lead_id}", headers=auth_headers).json()
             assert lead["status"] == status, f"Expected {status}, got {lead['status']}"
 
 
@@ -361,12 +361,12 @@ class TestSimulatedUsers:
     ]
 
     @pytest.mark.parametrize("profile", USER_PROFILES, ids=[p["label"] for p in USER_PROFILES])
-    def test_lead_create_and_db(self, client, profile):
+    def test_lead_create_and_db(self, client, auth_headers, profile):
         """Lead is stored with correct language, country."""
         data = {k: profile[k] for k in ("first_name", "last_name", "email", "country", "language")}
         created = client.post("/api/leads", json=data).json()
         lead_id = created["id"]
-        lead = client.get(f"/api/leads/{lead_id}").json()
+        lead = client.get(f"/api/leads/{lead_id}", headers=auth_headers).json()
         assert lead["first_name"] == profile["first_name"]
         assert lead["last_name"] == profile["last_name"]
         assert lead["email"] == profile["email"]

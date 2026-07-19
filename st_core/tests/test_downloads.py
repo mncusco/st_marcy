@@ -11,12 +11,12 @@ class TestDownloadFlow:
         resp = client.get("/download/invalidtoken123")
         assert resp.status_code == 404
 
-    def test_download_updates_lead(self, client, sample_lead_data):
+    def test_download_updates_lead(self, client, auth_headers, sample_lead_data):
         created = client.post("/api/leads", json=sample_lead_data).json()
         lead_id = created["id"]
         token = created["download_token"]
         client.get(f"/download/{token}")
-        resp = client.get(f"/api/leads/{lead_id}")
+        resp = client.get(f"/api/leads/{lead_id}", headers=auth_headers)
         assert resp.json()["downloaded_editorial"] is True
 
     def test_download_track_endpoint(self, client, sample_lead_data):

@@ -101,10 +101,10 @@ class TestCRMNotes:
 class TestPriorityScore:
     """Priority score computed correctly based on status and download."""
 
-    def test_new_lead_score_zero(self, client, sample_lead_data):
+    def test_new_lead_score_zero(self, client, auth_headers, sample_lead_data):
         created = client.post("/api/leads", json=sample_lead_data).json()
         lead_id = created["id"]
-        lead = client.get(f"/api/leads/{lead_id}").json()
+        lead = client.get(f"/api/leads/{lead_id}", headers=auth_headers).json()
         assert lead.get("priority_score") == 0
 
     def test_downloaded_adds_ten(self, client, auth_headers, sample_lead_data):
@@ -112,7 +112,7 @@ class TestPriorityScore:
         lead_id = created["id"]
         token = created["download_token"]
         client.get(f"/download/{token}")
-        lead = client.get(f"/api/leads/{lead_id}").json()
+        lead = client.get(f"/api/leads/{lead_id}", headers=auth_headers).json()
         assert lead.get("priority_score") == 10
 
     def test_interview_status_scores_thirty(self, client, auth_headers, sample_lead_data):
@@ -125,7 +125,7 @@ class TestPriorityScore:
                 headers=auth_headers,
                 follow_redirects=False,
             )
-        lead = client.get(f"/api/leads/{lead_id}").json()
+        lead = client.get(f"/api/leads/{lead_id}", headers=auth_headers).json()
         assert lead.get("priority_score") == 30
 
     def test_approved_status_scores_fifty(self, client, auth_headers, sample_lead_data):
@@ -138,7 +138,7 @@ class TestPriorityScore:
                 headers=auth_headers,
                 follow_redirects=False,
             )
-        lead = client.get(f"/api/leads/{lead_id}").json()
+        lead = client.get(f"/api/leads/{lead_id}", headers=auth_headers).json()
         assert lead.get("priority_score") == 50
 
     def test_download_and_approved_combine(self, client, auth_headers, sample_lead_data):
@@ -153,7 +153,7 @@ class TestPriorityScore:
                 headers=auth_headers,
                 follow_redirects=False,
             )
-        lead = client.get(f"/api/leads/{lead_id}").json()
+        lead = client.get(f"/api/leads/{lead_id}", headers=auth_headers).json()
         assert lead.get("priority_score") == 60  # 10 (download) + 50 (approved)
 
     def test_high_priority_count_on_dashboard(self, client, auth_headers, sample_lead_data):
@@ -203,7 +203,7 @@ class TestBulkActions:
         )
         assert resp.status_code == 303
         for lid in ids:
-            lead = client.get(f"/api/leads/{lid}").json()
+            lead = client.get(f"/api/leads/{lid}", headers=auth_headers).json()
             assert lead["status"] == "CONTACTED"
 
     def test_bulk_export_csv(self, client, auth_headers):
@@ -228,7 +228,7 @@ class TestBulkActions:
         )
         assert resp.status_code == 303
         for lid in ids:
-            resp2 = client.get(f"/api/leads/{lid}")
+            resp2 = client.get(f"/api/leads/{lid}", headers=auth_headers)
             assert resp2.status_code == 404
 
     def test_bulk_empty_ids_rejected(self, client, auth_headers):

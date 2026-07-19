@@ -31,18 +31,27 @@ class TestLeadCreation:
 
 
 class TestLeadRetrieval:
-    def test_get_lead_by_id(self, client, sample_lead_data):
+    def test_get_lead_by_id(self, client, auth_headers, sample_lead_data):
         created = client.post("/api/leads", json=sample_lead_data).json()
-        resp = client.get(f"/api/leads/{created['id']}")
+        resp = client.get(f"/api/leads/{created['id']}", headers=auth_headers)
         assert resp.status_code == 200
         assert resp.json()["email"] == "alice@example.com"
 
-    def test_get_lead_not_found(self, client):
-        resp = client.get("/api/leads/99999")
+    def test_get_lead_not_found(self, client, auth_headers):
+        resp = client.get("/api/leads/99999", headers=auth_headers)
         assert resp.status_code == 404
 
-    def test_list_leads(self, client, sample_lead_data):
+    def test_list_leads(self, client, auth_headers, sample_lead_data):
         client.post("/api/leads", json=sample_lead_data)
-        resp = client.get("/api/leads")
+        resp = client.get("/api/leads", headers=auth_headers)
         assert resp.status_code == 200
         assert len(resp.json()) >= 1
+
+    def test_get_lead_requires_auth(self, client, sample_lead_data):
+        created = client.post("/api/leads", json=sample_lead_data).json()
+        resp = client.get(f"/api/leads/{created['id']}")
+        assert resp.status_code == 401
+
+    def test_list_leads_requires_auth(self, client):
+        resp = client.get("/api/leads")
+        assert resp.status_code == 401
