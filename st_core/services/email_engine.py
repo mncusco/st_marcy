@@ -1,5 +1,6 @@
 import json
 import logging
+import random
 import time
 from datetime import datetime, timezone
 from typing import Optional
@@ -22,7 +23,7 @@ BACKEND_MAP = {
     "sendgrid": SendgridProvider,
 }
 
-TEMPLATE_SUBJECTS: dict[str, str | dict[str, str]] = {
+TEMPLATE_SUBJECTS: dict[str, str | dict[str, str | list[str]]] = {
     "editorial_download": {
         "en": "Your Free Editorial – ST Care",
         "it": "La tua guida gratuita – ST Care",
@@ -31,11 +32,11 @@ TEMPLATE_SUBJECTS: dict[str, str | dict[str, str]] = {
         "sr": "Vaš besplatni vodič – ST Care",
     },
     "followup_3_days": {
-        "en": "Still Thinking? – ST Care",
-        "it": "Ci stai ancora pensando? – ST Care",
-        "es": "¿Todavía lo estás pensando? – ST Care",
-        "ru": "Всё ещё думаете? – ST Care",
-        "sr": "Još uvek razmišljate? – ST Care",
+        "en": "The Forest Called You — Marcello",
+        "it": "La foresta ti ha chiamato — Marcello",
+        "es": "La selva te llamó — Marcello",
+        "ru": "Лес позвал тебя — Марчелло",
+        "sr": "Šuma te je pozvala — Marcello",
     },
     "interview_invitation": {
         "en": "Interview Invitation – ST Care",
@@ -73,11 +74,45 @@ TEMPLATE_SUBJECTS: dict[str, str | dict[str, str]] = {
         "sr": "Hvala – ST Care",
     },
     "editorial_reactivation": {
-        "en": "Private Collector's Guide — Sacred Places of Peru",
-        "it": "Guida Privata del Collezionista — Luoghi Sacri del Perù",
-        "es": "Guía Privada del Coleccionista — Lugares Sagrados de Perú",
-        "ru": "Частное руководство коллекционера — Священные места Перу",
-        "sr": "Privatni vodič kolekcionara — Sveta mesta Perua",
+        "it": [
+            "Il Ritiro nella Foresta Amazzonica — Una storia personale",
+            "Marcello: come la foresta mi ha cambiato",
+            "Il libro che ho scritto per te — Master Plant Dieta",
+            "San Alejandro: il mio incontro con Maestro Chichi",
+            "Scarica gratuitamente 'Il Ritiro nella Foresta Amazzonica'",
+            "La dieta che non dimenticherai — una storia vera",
+            "Cosa significa sedersi con la foresta",
+            "Il regalo che la foresta mi ha fatto",
+            "Maestro Chichi e il potere delle piante madri",
+            "Un invito personale da Marcello",
+        ],
+        "en": [
+            "Free Book: A Personal Story from the Amazon",
+            "Marcello: How the Forest Changed Me",
+            "Download Your Free Copy — Master Plant Dieta",
+            "What Happens When You Sit with the Forest",
+            "A Personal Invitation from Marcello",
+        ],
+        "es": [
+            "Libro Gratuito: El Retiro en la Selva Amazónica",
+            "Marcello: Cómo la Selva Me Cambió",
+            "Descarga Gratis la Historia de San Alejandro",
+            "Una Invitación Personal de Marcello",
+        ],
+        "ru": [
+            "Бесплатная книга: Личная история из Амазонии",
+            "Марчелло: Как лес изменил меня",
+            "Скачайте бесплатно — Master Plant Dieta",
+            "Что происходит, когда вы сидите с лесом",
+            "Личное приглашение от Марчелло",
+        ],
+        "sr": [
+            "Besplatna knjiga: Lična priča iz Amazona",
+            "Markelo: Kako me je šuma promenila",
+            "Preuzmite besplatno — Master Plant Dieta",
+            "Šta se dešava kada sednete sa šumom",
+            "Lični poziv od Markela",
+        ],
     },
 }
 
@@ -206,9 +241,12 @@ class EmailEngine:
 
         raise FileNotFoundError(f"Template not found in any language: {template_name}")
 
-    def _resolve_subject(self, subject: str | dict[str, str], language: str) -> str:
+    def _resolve_subject(self, subject: str | dict[str, str | list[str]], language: str) -> str:
         if isinstance(subject, dict):
-            return subject.get(language, subject.get("en", str(subject.get(list(subject.keys())[0]))))
+            lang_subj = subject.get(language, subject.get("en"))
+            if isinstance(lang_subj, list):
+                return str(random.choice(lang_subj))
+            return str(lang_subj) if lang_subj else str(subject.get(list(subject.keys())[0]))
         return subject
 
     def queue_email(
@@ -269,11 +307,20 @@ class EmailEngine:
 
         try:
             payload = json.loads(entry.payload_json) if entry.payload_json else {}
+            public_url = str(settings.PUBLIC_URL).rstrip("/")
+            base = f"{public_url}/track/click/{entry.id}"
+            download_url = payload.get("download_url", "")
+            if download_url:
+                from urllib.parse import quote
+                payload["click_url"] = f"{base}?url={quote(download_url)}"
+                payload["tracking_pixel_url"] = f"{public_url}/track/open/{entry.id}.png"
             context = {
                 "first_name": lead.first_name,
                 "last_name": lead.last_name,
                 "email": lead.email,
                 "language": entry.language,
+                "queue_id": entry.id,
+                "public_url": public_url,
                 "_contact_email": settings.CONTACT_EMAIL,
                 **payload,
             }

@@ -53,6 +53,7 @@ class AutomationEngine:
         return queued
 
     def on_editorial_download(self, lead: Lead) -> list[EmailQueue]:
+        queued = []
         existing = (
             self.db.query(EmailQueue)
             .filter(
@@ -62,18 +63,40 @@ class AutomationEngine:
             )
             .count()
         )
-        if existing:
-            return []
+        if not existing:
+            e = self.engine.queue_email(
+                lead=lead,
+                email_type="editorial_download",
+                subject=TEMPLATE_SUBJECTS["editorial_download"],
+                template_name="editorial_download",
+                payload={"download_token": lead.download_token},
+                scheduled_for=datetime.now(timezone.utc) + timedelta(hours=EDITORIAL_DELAY_HOURS),
+            )
+            queued.append(e)
 
-        e = self.engine.queue_email(
-            lead=lead,
-            email_type="editorial_download",
-            subject=TEMPLATE_SUBJECTS["editorial_download"],
-            template_name="editorial_download",
-            payload={"download_token": lead.download_token},
-            scheduled_for=datetime.now(timezone.utc) + timedelta(hours=EDITORIAL_DELAY_HOURS),
-        )
-        return [e]
+        if lead.campaign == "editorial_reactivation_2025":
+            fup_existing = (
+                self.db.query(EmailQueue)
+                .filter(
+                    EmailQueue.lead_id == lead.id,
+                    EmailQueue.email_type == "followup_3_days",
+                    EmailQueue.campaign == "editorial_reactivation_2025",
+                    EmailQueue.status.in_(["PENDING", "PROCESSING"]),
+                )
+                .count()
+            )
+            if not fup_existing:
+                fup = self.engine.queue_email(
+                    lead=lead,
+                    email_type="followup_3_days",
+                    subject=TEMPLATE_SUBJECTS["followup_3_days"],
+                    template_name="followup_3_days",
+                    payload={"download_token": lead.download_token},
+                    scheduled_for=datetime.now(timezone.utc) + timedelta(days=FOLLOWUP_DELAY_DAYS),
+                )
+                queued.append(fup)
+
+        return queued
 
     def on_campaign_reactivation(self, lead: Lead) -> list[EmailQueue]:
         existing = (
@@ -89,6 +112,10 @@ class AutomationEngine:
             return []
 
         download_url = f"{settings.PUBLIC_URL}/download/{lead.download_token}" if lead.download_token else None
+        lead.campaign = "editorial_reactivation_2025"
+        lead.source = "mailchimp_reactivation"
+        lead.campaign_sent_at = datetime.now(timezone.utc)
+        self.db.flush()
         e = self.engine.queue_email(
             lead=lead,
             email_type="editorial_reactivation",
@@ -97,8 +124,6 @@ class AutomationEngine:
             payload={"download_url": download_url, "download_token": lead.download_token},
             scheduled_for=datetime.now(timezone.utc) + timedelta(hours=REACTIVATION_DELAY_HOURS),
         )
-        lead.campaign_sent_at = datetime.now(timezone.utc)
-        self.db.flush()
         return [e]
 
     def on_status_changed(self, lead: Lead, old_status: LeadStatus, new_status: LeadStatus) -> list[EmailQueue]:

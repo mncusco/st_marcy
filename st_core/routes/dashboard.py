@@ -919,8 +919,10 @@ def _normalize_row(row: dict, fmt: str) -> dict:
             if key in MAILCHIMP_COLUMN_MAP:
                 out[MAILCHIMP_COLUMN_MAP[key]] = val
             elif key not in MAILCHIMP_EXTRA_FIELDS:
-                if key.lower() in ("country", "language"):
-                    out[key.lower()] = val
+                kl = key.lower()
+                if kl in ("country", "language", "cc"):
+                    mapped_key = "country" if kl == "cc" else kl
+                    out[mapped_key] = val
             if key in MAILCHIMP_EXTRA_FIELDS and val:
                 extra.append(f"{key}: {val}")
         if extra:

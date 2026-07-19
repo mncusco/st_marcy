@@ -60,6 +60,8 @@ class Lead(Base):
     campaign_sent_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     email_opened: Mapped[bool] = mapped_column(Boolean, default=False)
     email_clicked: Mapped[bool] = mapped_column(Boolean, default=False)
+    opened_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    clicked_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     status: Mapped[LeadStatus] = mapped_column(SQLEnum(LeadStatus), default=LeadStatus.NEW)
     notes: Mapped[str] = mapped_column(Text, nullable=True)
     downloaded_editorial: Mapped[bool] = mapped_column(Boolean, default=False)
