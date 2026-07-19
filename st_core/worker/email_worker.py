@@ -21,20 +21,38 @@ class EmailWorker:
         try:
             engine = EmailEngine(db)
             stats_before = engine.get_queue_stats()
-            sent_count = engine.process_pending(batch_size=50)
+
+            from models import EmailQueue, EmailStatus
+            from datetime import datetime, timezone, timedelta
+            today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+            sent_today = db.query(EmailQueue).filter(
+                EmailQueue.email_type == "editorial_reactivation",
+                EmailQueue.status == EmailStatus.SENT,
+                EmailQueue.sent_at >= today_start,
+            ).count()
+            daily_limit = 90
+            remaining = max(0, daily_limit - sent_today)
+            batch = min(remaining, 50) if remaining > 0 else 0
+
+            if remaining <= 0 and stats_before.get("pending", 0) > 0:
+                logger.info("WORKER: daily limit reached (%d/%d), pausing campaign until tomorrow", daily_limit, daily_limit)
+
+            sent_count = engine.process_pending(batch_size=batch) if batch > 0 else 0
             if sent_count > 0:
                 stats_after = engine.get_queue_stats()
                 logger.info(
-                    "WORKER cycle: sent=%d pending_before=%d pending_after=%d failed=%d",
+                    "WORKER cycle: sent=%d pending_before=%d pending_after=%d failed=%d daily=%d/%d",
                     sent_count,
                     stats_before["pending"],
                     stats_after["pending"],
                     stats_after["failed"],
+                    sent_today + sent_count,
+                    daily_limit,
                 )
             else:
                 pending = stats_before["pending"]
                 if pending > 0:
-                    logger.debug("WORKER cycle: 0 sent, %d still pending", pending)
+                    logger.debug("WORKER cycle: 0 sent, %d still pending (daily=%d/%d)", pending, sent_today, daily_limit)
         except Exception as e:
             logger.exception("WORKER cycle error: %s", e)
         finally:
