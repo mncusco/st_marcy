@@ -12,6 +12,7 @@ from config import settings
 from models import EmailQueue, EmailStatus, Lead
 from schemas import EmailQueueResponse
 from providers import ConsoleProvider, SmtpProvider, ResendProvider, SendgridProvider
+from providers.interface import EmailSendError
 
 logger = logging.getLogger("st_core.email_engine")
 
@@ -335,6 +336,8 @@ class EmailEngine:
                 email_type=entry.email_type,
             )
             return success
+        except EmailSendError:
+            raise
         except Exception as e:
             logger.exception("Failed to render/send email %d: %s", entry.id, e)
             return False
@@ -357,7 +360,13 @@ class EmailEngine:
             entry.attempts += 1
             self.db.commit()
 
-            success = self._render_and_send(entry)
+            error_msg = None
+            try:
+                success = self._render_and_send(entry)
+            except EmailSendError as e:
+                success = False
+                error_msg = str(e)
+
             if success:
                 entry.status = EmailStatus.SENT
                 entry.sent_at = datetime.now(timezone.utc)
@@ -365,10 +374,10 @@ class EmailEngine:
             else:
                 if entry.attempts >= max_retries:
                     entry.status = EmailStatus.FAILED
-                    entry.error_message = f"Failed after {entry.attempts} attempts"
+                    entry.error_message = error_msg or f"Failed after {entry.attempts} attempts"
                 else:
                     entry.status = EmailStatus.PENDING
-                    entry.error_message = f"Attempt {entry.attempts}/{max_retries} failed"
+                    entry.error_message = error_msg or f"Attempt {entry.attempts}/{max_retries} failed"
             self.db.commit()
 
         return sent_count

@@ -179,11 +179,12 @@ class TestConsoleProvider:
 
 
 class TestStubProviders:
-    def test_resend_provider_returns_false(self):
+    def test_resend_provider_raises_on_missing_key(self):
         from providers.resend_provider import ResendProvider
+        from providers.interface import EmailSendError
         provider = ResendProvider()
-        result = provider.send("test@example.com", "Test", "<p>Hi</p>", 1, "test")
-        assert result is False
+        with pytest.raises(EmailSendError, match="RESEND_API_KEY not configured"):
+            provider.send("test@example.com", "Test", "<p>Hi</p>", 1, "test")
 
     def test_sendgrid_provider_returns_false(self):
         from providers.sendgrid_provider import SendgridProvider
@@ -193,6 +194,7 @@ class TestStubProviders:
 
     def test_resend_provider_logs_error(self):
         from providers.resend_provider import ResendProvider
+        from providers.interface import EmailSendError
         logger = logging.getLogger("st_core.email")
         original_level = logger.level
         logger.setLevel(logging.ERROR)
@@ -202,7 +204,8 @@ class TestStubProviders:
             handler.setLevel(logging.ERROR)
             logger.addHandler(handler)
             provider = ResendProvider()
-            provider.send("alice@example.com", "Subj", "<p>Body</p>", 5, "test_type")
+            with pytest.raises(EmailSendError):
+                provider.send("alice@example.com", "Subj", "<p>Body</p>", 5, "test_type")
             logger.removeHandler(handler)
             output = stream.getvalue()
             assert "RESEND_API_KEY not configured" in output
@@ -298,6 +301,8 @@ class TestEmailLogging:
     def test_stub_provider_logs_error_on_use(self, caplog):
         caplog.set_level(logging.ERROR)
         from providers.resend_provider import ResendProvider
+        from providers.interface import EmailSendError
         provider = ResendProvider()
-        provider.send("test@example.com", "Test", "<p>Hi</p>", 1, "test")
+        with pytest.raises(EmailSendError):
+            provider.send("test@example.com", "Test", "<p>Hi</p>", 1, "test")
         assert any("RESEND_API_KEY not configured" in rec.message for rec in caplog.records)

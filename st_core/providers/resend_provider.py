@@ -2,7 +2,7 @@ import json
 import logging
 import urllib.request
 import urllib.error
-from providers.interface import EmailProvider
+from providers.interface import EmailProvider, EmailSendError
 from config import settings
 
 logger = logging.getLogger("st_core.email")
@@ -15,7 +15,7 @@ class ResendProvider(EmailProvider):
         api_key = settings.RESEND_API_KEY
         if not api_key:
             logger.error("RESEND_API_KEY not configured")
-            return False
+            raise EmailSendError("RESEND_API_KEY not configured")
 
         payload = json.dumps({
             "from": f"{settings.FROM_NAME} <{settings.FROM_EMAIL}>",
@@ -43,7 +43,7 @@ class ResendProvider(EmailProvider):
         except urllib.error.HTTPError as e:
             error_body = e.read().decode("utf-8", errors="replace")
             logger.error("Resend HTTP %d to=%s lead_id=%d type=%s: %s", e.code, to, lead_id, email_type, error_body)
-            return False
+            raise EmailSendError(f"HTTP {e.code}: {error_body}") from e
         except urllib.error.URLError as e:
             logger.error("Resend network error to=%s lead_id=%d type=%s: %s", to, lead_id, email_type, e.reason)
-            return False
+            raise EmailSendError(f"Network error: {e.reason}") from e
