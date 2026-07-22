@@ -205,9 +205,7 @@ class TestStubProviders:
             provider.send("alice@example.com", "Subj", "<p>Body</p>", 5, "test_type")
             logger.removeHandler(handler)
             output = stream.getvalue()
-            assert "NOT IMPLEMENTED" in output
-            assert "alice@example.com" in output
-            assert "Resend" in output
+            assert "RESEND_API_KEY not configured" in output
         finally:
             logger.setLevel(original_level)
 
@@ -225,9 +223,7 @@ class TestStubProviders:
             provider.send("bob@example.com", "Subj", "<p>Body</p>", 3, "test_type")
             logger.removeHandler(handler)
             output = stream.getvalue()
-            assert "NOT IMPLEMENTED" in output
-            assert "bob@example.com" in output
-            assert "SendGrid" in output
+            assert "SENDGRID_API_KEY not configured" in output
         finally:
             logger.setLevel(original_level)
 
@@ -304,4 +300,4 @@ class TestEmailLogging:
         from providers.resend_provider import ResendProvider
         provider = ResendProvider()
         provider.send("test@example.com", "Test", "<p>Hi</p>", 1, "test")
-        assert any("NOT IMPLEMENTED" in rec.message for rec in caplog.records)
+        assert any("RESEND_API_KEY not configured" in rec.message for rec in caplog.records)

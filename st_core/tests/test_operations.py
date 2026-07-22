@@ -510,12 +510,15 @@ class TestEmailLayoutTemplate:
         assert "{% block content %}" in content
         assert "{% block title %}" in content
 
-    def test_followup_template_extends_layout(self):
+    def test_followup_template_has_content(self):
         import os as _os
         path = _os.path.join(_os.path.dirname(__file__), "..", "templates", "emails", "en", "followup_3_days.html")
+        assert _os.path.exists(path), f"Template not found: {path}"
         with open(path, encoding="utf-8") as f:
             content = f.read()
-        assert "{% extends" in content
+        assert "{{ public_url }}/static/logo.jpg" in content
+        assert "{{ first_name }}" in content
+        assert "landing-editorial" in content
 
 
 class TestEmailQueueStats:
