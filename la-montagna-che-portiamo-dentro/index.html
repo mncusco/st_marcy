@@ -265,11 +265,14 @@ a:focus-visible, button:focus-visible{
 
 .chapter-index{ max-width: 880px; }
 .ci-row{
-  display:grid; grid-template-columns: 56px 1fr; gap: 1.2rem;
+  display:grid; grid-template-columns: 40px 1fr; gap: 1.2rem;
   padding: 1.6rem 0; border-top: 1px solid var(--stone); align-items:start;
 }
+.ci-row.has-img{ grid-template-columns: 40px 84px 1fr; }
 .ci-row:last-of-type{ border-bottom: 1px solid var(--stone); }
 .ci-num{ font-family: var(--display); font-size: 1.15rem; color: var(--ochre); letter-spacing: .04em; padding-top: .1rem; }
+.ci-thumb{ width: 84px; height: 84px; border-radius: var(--radius-m); overflow:hidden; flex-shrink:0; }
+.ci-thumb img{ width:100%; height:100%; object-fit:cover; }
 .ci-body h3{ font-size: 1.25rem; margin-bottom: .4rem; }
 .ci-body p{ color: var(--slate); font-size: 0.94rem; max-width: 58ch; }
 .ci-divider{
@@ -581,44 +584,53 @@ footer .book-name{ color: var(--slate); font-size:0.9rem; max-width: 32ch; }
 
   <div class="chapter-index reveal">
 
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">01</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_01.jpg" alt="Capitolo 01" loading="lazy"></div>
       <div class="ci-body"><h3>Il bambino che non sapeva stare fermo</h3><p>L'infanzia di un bambino troppo sensibile, troppo curioso, troppo diverso per un mondo che non aveva ancora un linguaggio per descriverlo.</p></div>
     </div>
     <div class="ci-row">
       <span class="ci-num">02</span>
       <div class="ci-body"><h3>La casa dove imparò a resistere</h3><p>Una famiglia complessa, un padre distante, una madre ferita — e la scoperta precoce che l'amore, a volte, ha delle condizioni.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">03</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_03.jpg" alt="Capitolo 03" loading="lazy"></div>
       <div class="ci-body"><h3>Il peso invisibile delle aspettative</h3><p>Come un bambino impara a costruirsi una maschera pur di essere accettato, e cosa si perde nel processo.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">04</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_04.jpg" alt="Capitolo 04" loading="lazy"></div>
       <div class="ci-body"><h3>La ribellione del guerriero</h3><p>Il karate come prima palestra dell'identità: la disciplina che diventa corazza, la forza che diventa convinzione.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">05</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_05.jpg" alt="Capitolo 05" loading="lazy"></div>
       <div class="ci-body"><h3>La montagna promessa</h3><p>La scalata comincia: studiare, crescere, dimostrare — la vetta come unico luogo dove finalmente sentirsi abbastanza.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">06</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_06.jpg" alt="Capitolo 06" loading="lazy"></div>
       <div class="ci-body"><h3>Quando la montagna comincia a salire</h3><p>La sensibilità infantile diventa strumento professionale: osservare, capire, leggere le persone prima degli altri.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">07</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_07.jpg" alt="Capitolo 07" loading="lazy"></div>
       <div class="ci-body"><h3>La conquista della vetta</h3><p>Il successo arriva davvero — formazione, PNL, migliaia di persone aiutate a cambiare. Ma in cima si affaccia una prima domanda.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">08</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_08.jpg" alt="Capitolo 08" loading="lazy"></div>
       <div class="ci-body"><h3>Quando la vetta non basta</h3><p>Una carriera internazionale costruita pezzo per pezzo, e la scoperta che nessun risultato esterno risolve una domanda interna.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">09</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_09.jpg" alt="Capitolo 09" loading="lazy"></div>
       <div class="ci-body"><h3>Il giorno in cui la vetta rimase vuota</h3><p>La perdita del padre, la fine di una storia lunga sedici anni: due fratture che aprono la strada a una ricerca diversa.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">10</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_10.jpg" alt="Capitolo 10" loading="lazy"></div>
       <div class="ci-body"><h3>La chiamata delle Ande</h3><p>Dopo una vita passata a scalare l'esterno, arriva la chiamata a un viaggio mai davvero intrapreso prima: quello verso sé stessi.</p></div>
     </div>
 
@@ -628,64 +640,78 @@ footer .book-name{ color: var(--slate); font-size:0.9rem; max-width: 32ch; }
       <p>Le Ande non si visitano: si ascoltano. L'ingresso nella seconda parte del viaggio, tra geografia sacra e cosmologia andina.</p>
     </div>
 
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">11</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_11.jpg" alt="Capitolo 11" loading="lazy"></div>
       <div class="ci-body"><h3>Cusco: L'Ombelico del Mondo</h3><p>Qusqu, il centro cosmologico del Tawantinsuyu — dove ogni viaggio di trasformazione deve prima tornare, al proprio centro.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">12</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_12.jpg" alt="Capitolo 12" loading="lazy"></div>
       <div class="ci-body"><h3>Sacsayhuamán: Il Trono dell'Impero</h3><p>Blocchi di cento tonnellate incastrati senza malta — e la domanda che la pietra pone a chi si ferma davanti a lei: chi sei, senza ciò che hai costruito?</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">13</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_13.jpg" alt="Capitolo 13" loading="lazy"></div>
       <div class="ci-body"><h3>La Valle Sacra: Il Corridoio Celeste degli Inca</h3><p>Tambomachay, Puka Pukara, Qenqo, Moray e le Saline di Maras — le tappe di purificazione prima della soglia più profonda.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">14</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_14.jpg" alt="Capitolo 14" loading="lazy"></div>
       <div class="ci-body"><h3>Pisac: La Città delle Stelle</h3><p>Terrazzamenti curvilinei e mille tombe scavate nella roccia — il luogo dove la conoscenza arriva attraverso la relazione, non la conquista.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">15</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_15.jpg" alt="Capitolo 15" loading="lazy"></div>
       <div class="ci-body"><h3>Ollantaytambo: La Fortezza Vivente degli Inca</h3><p>L'unica vittoria militare inca contro gli spagnoli, e la lezione più profonda delle Ande: la vera forza nasce dall'armonia, non dalla conquista.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">16</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_16.jpg" alt="Capitolo 16" loading="lazy"></div>
       <div class="ci-body"><h3>Machu Picchu: La Città Perduta tra le Nuvole</h3><p>La sintesi di tutto il cammino: un luogo che non chiede di essere conquistato, ma ascoltato.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">17</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_17.jpg" alt="Capitolo 17" loading="lazy"></div>
       <div class="ci-body"><h3>Humantay: Il Lago degli Apu</h3><p>Un lago turchese a 4.200 metri, ai piedi del Salkantay — il primo luogo del viaggio che il sacro non deve costruirlo: lo è già.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">18</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_18.jpg" alt="Capitolo 18" loading="lazy"></div>
       <div class="ci-body"><h3>Palcoyo: La Montagna dei Sette Colori</h3><p>La controparte silenziosa della più celebre Vinicunca — la lezione della contemplazione senza spettacolo.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">19</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_19.jpg" alt="Capitolo 19" loading="lazy"></div>
       <div class="ci-body"><h3>Il Lago Titicaca: Dove Nacque il Sole degli Inca</h3><p>La culla mitologica del Tawantinsuyu, con una sosta ad Amantaní: l'accoglienza silenziosa di una comunità che non deve dimostrare nulla.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">20</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_20.jpg" alt="Capitolo 20" loading="lazy"></div>
       <div class="ci-body"><h3>Arequipa: La Città Bianca</h3><p>Tra i vulcani e la pietra di sillar, la lezione di portare il silenzio della montagna anche dentro le mura di una città.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">21</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_21.jpg" alt="Capitolo 21" loading="lazy"></div>
       <div class="ci-body"><h3>Nazca: Le Linee del Mistero</h3><p>Geoglifi visibili solo dal cielo — un luogo che rifiuta di lasciarsi possedere del tutto dalla comprensione razionale.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">22</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_22.jpg" alt="Capitolo 22" loading="lazy"></div>
       <div class="ci-body"><h3>Ica: Le Dune e il Deserto</h3><p>Una sosta che non chiede interpretazione, prima dell'ultimo tratto del cammino: quello della propria storia personale.</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">23</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_23.jpg" alt="Capitolo 23" loading="lazy"></div>
       <div class="ci-body"><h3>Quando tutto fu perduto</h3><p>Cajamarca, 1532: la caduta di un impero — e la soglia di morte che ogni racconto di trasformazione deve attraversare.</p></div>
     </div>
     <div class="ci-row">
       <span class="ci-num">24</span>
       <div class="ci-body"><h3>La Notte più Lunga</h3><p>Il punto più basso del cammino, dove ogni identità costruita viene tolta e resta solo una domanda: chi sono, senza nulla da dimostrare?</p></div>
     </div>
-    <div class="ci-row">
+    <div class="ci-row has-img">
       <span class="ci-num">25</span>
+      <div class="ci-thumb"><img src="images/chapters/cap_25.jpg" alt="Capitolo 25" loading="lazy"></div>
       <div class="ci-body"><h3>Il Ritorno del Bambino</h3><p>Il cerchio si chiude: quel bambino che non sapeva stare fermo aveva un nome. Marcello.</p></div>
     </div>
 
