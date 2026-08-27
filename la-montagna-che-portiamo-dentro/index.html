@@ -261,6 +261,25 @@ a:focus-visible, button:focus-visible{
 .chapters{ }
 .chapters-head{ display:flex; flex-direction:column; gap: .6rem; margin-bottom: var(--space-5); max-width: 640px; }
 .chapters-head h2{ font-size: clamp(1.9rem, 4vw, 3rem); }
+.chapters-intro{ color: var(--slate); font-size: 1rem; line-height: 1.7; }
+
+.chapter-index{ max-width: 880px; }
+.ci-row{
+  display:grid; grid-template-columns: 56px 1fr; gap: 1.2rem;
+  padding: 1.6rem 0; border-top: 1px solid var(--stone); align-items:start;
+}
+.ci-row:last-of-type{ border-bottom: 1px solid var(--stone); }
+.ci-num{ font-family: var(--display); font-size: 1.15rem; color: var(--ochre); letter-spacing: .04em; padding-top: .1rem; }
+.ci-body h3{ font-size: 1.25rem; margin-bottom: .4rem; }
+.ci-body p{ color: var(--slate); font-size: 0.94rem; max-width: 58ch; }
+.ci-divider{
+  padding: 2.2rem 0 1.8rem; margin: .5rem 0; border-top: 1px solid var(--ochre-dim); border-bottom: 1px solid var(--ochre-dim);
+  text-align:center;
+}
+.ci-divider-label{ font-size: 0.7rem; letter-spacing: 0.22em; text-transform:uppercase; color: var(--ochre); font-weight:600; }
+.ci-divider h3{ font-family: var(--display); font-style: italic; font-size: 1.4rem; margin: .5rem 0 .5rem; }
+.ci-divider p{ color: var(--slate); max-width: 52ch; margin: 0 auto; font-size: 0.95rem; }
+.ci-note{ text-align:center; color: var(--slate); font-size: 0.85rem; font-style: italic; margin-top: var(--space-3); }
 .chapter{
   display:grid; grid-template-columns: 1fr; gap: var(--space-3);
   padding: var(--space-4) 0; border-top: 1px solid var(--stone);
@@ -557,51 +576,120 @@ footer .book-name{ color: var(--slate); font-size:0.9rem; max-width: 32ch; }
   <div class="chapters-head reveal">
     <p class="eyebrow">Indice</p>
     <h2>I capitoli</h2>
+    <p class="chapters-intro">Venticinque capitoli, un'unica ascesa: dal bambino che non sapeva stare fermo fino alla chiamata delle Ande, e dai luoghi sacri degli Inca fino al ritorno a sé stessi.</p>
   </div>
 
-  <div class="chapter reveal">
-    <div class="chapter-num">Capitolo I</div>
-    <div class="chapter-body">
-      <h3>La montagna che portiamo dentro</h3>
-      <p>Il capitolo che dà il titolo al libro: un'introduzione alla metafora centrale, tra geografia e interiorità, tra roccia e memoria.</p>
-    </div>
-    <div class="chapter-img"><img src="images/hero_mountain_sunrise.png" alt="Viandante su una roccia di fronte a una vetta andina all'alba" loading="lazy"></div>
-  </div>
+  <div class="chapter-index reveal">
 
-  <div class="chapter reveal">
-    <div class="chapter-num">Capitolo II</div>
-    <div class="chapter-body">
-      <h3>La città delle stelle — Pisac</h3>
-      <p>Tra le rovine e il mercato di Pisac, un capitolo dedicato alla soglia tra il mondo visibile e quello che i quechua chiamano hanan pacha.</p>
+    <div class="ci-row">
+      <span class="ci-num">01</span>
+      <div class="ci-body"><h3>Il bambino che non sapeva stare fermo</h3><p>L'infanzia di un bambino troppo sensibile, troppo curioso, troppo diverso per un mondo che non aveva ancora un linguaggio per descriverlo.</p></div>
     </div>
-    <div class="chapter-img"><img src="images/hero_sacred_valley.png" alt="Terrazze di Pisac nella Valle Sacra al tramonto" loading="lazy"></div>
-  </div>
+    <div class="ci-row">
+      <span class="ci-num">02</span>
+      <div class="ci-body"><h3>La casa dove imparò a resistere</h3><p>Una famiglia complessa, un padre distante, una madre ferita — e la scoperta precoce che l'amore, a volte, ha delle condizioni.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">03</span>
+      <div class="ci-body"><h3>Il peso invisibile delle aspettative</h3><p>Come un bambino impara a costruirsi una maschera pur di essere accettato, e cosa si perde nel processo.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">04</span>
+      <div class="ci-body"><h3>La ribellione del guerriero</h3><p>Il karate come prima palestra dell'identità: la disciplina che diventa corazza, la forza che diventa convinzione.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">05</span>
+      <div class="ci-body"><h3>La montagna promessa</h3><p>La scalata comincia: studiare, crescere, dimostrare — la vetta come unico luogo dove finalmente sentirsi abbastanza.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">06</span>
+      <div class="ci-body"><h3>Quando la montagna comincia a salire</h3><p>La sensibilità infantile diventa strumento professionale: osservare, capire, leggere le persone prima degli altri.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">07</span>
+      <div class="ci-body"><h3>La conquista della vetta</h3><p>Il successo arriva davvero — formazione, PNL, migliaia di persone aiutate a cambiare. Ma in cima si affaccia una prima domanda.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">08</span>
+      <div class="ci-body"><h3>Quando la vetta non basta</h3><p>Una carriera internazionale costruita pezzo per pezzo, e la scoperta che nessun risultato esterno risolve una domanda interna.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">09</span>
+      <div class="ci-body"><h3>Il giorno in cui la vetta rimase vuota</h3><p>La perdita del padre, la fine di una storia lunga sedici anni: due fratture che aprono la strada a una ricerca diversa.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">10</span>
+      <div class="ci-body"><h3>La chiamata delle Ande</h3><p>Dopo una vita passata a scalare l'esterno, arriva la chiamata a un viaggio mai davvero intrapreso prima: quello verso sé stessi.</p></div>
+    </div>
 
-  <div class="chapter reveal">
-    <div class="chapter-num">Capitolo III</div>
-    <div class="chapter-body">
-      <h3>Il peso dell'altitudine</h3>
-      <p>Cosa insegna il corpo quando l'aria si fa sottile: un capitolo sul limite fisico come porta d'ingresso a un altro tipo di attenzione.</p>
+    <div class="ci-divider">
+      <span class="ci-divider-label">Prefazione</span>
+      <h3>Il Privilegio dell'Ascolto</h3>
+      <p>Le Ande non si visitano: si ascoltano. L'ingresso nella seconda parte del viaggio, tra geografia sacra e cosmologia andina.</p>
     </div>
-    <div class="chapter-img"><img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=900&auto=format&fit=crop" alt="Sentiero d'alta quota tra le nuvole" loading="lazy"></div>
-  </div>
 
-  <div class="chapter reveal">
-    <div class="chapter-num">Capitolo IV</div>
-    <div class="chapter-body">
-      <h3>Apu — gli spiriti della montagna</h3>
-      <p>Un viaggio nella cosmovisione andina, tra montagne sacre, offerte alla Pachamama e un dialogo antico tra uomo e territorio.</p>
+    <div class="ci-row">
+      <span class="ci-num">11</span>
+      <div class="ci-body"><h3>Cusco: L'Ombelico del Mondo</h3><p>Qusqu, il centro cosmologico del Tawantinsuyu — dove ogni viaggio di trasformazione deve prima tornare, al proprio centro.</p></div>
     </div>
-    <div class="chapter-img"><img src="https://images.unsplash.com/photo-1520962880247-cfaf541c8724?q=80&w=900&auto=format&fit=crop" alt="Montagna sacra andina avvolta nelle nuvole" loading="lazy"></div>
-  </div>
+    <div class="ci-row">
+      <span class="ci-num">12</span>
+      <div class="ci-body"><h3>Sacsayhuamán: Il Trono dell'Impero</h3><p>Blocchi di cento tonnellate incastrati senza malta — e la domanda che la pietra pone a chi si ferma davanti a lei: chi sei, senza ciò che hai costruito?</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">13</span>
+      <div class="ci-body"><h3>La Valle Sacra: Il Corridoio Celeste degli Inca</h3><p>Tambomachay, Puka Pukara, Qenqo, Moray e le Saline di Maras — le tappe di purificazione prima della soglia più profonda.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">14</span>
+      <div class="ci-body"><h3>Pisac: La Città delle Stelle</h3><p>Terrazzamenti curvilinei e mille tombe scavate nella roccia — il luogo dove la conoscenza arriva attraverso la relazione, non la conquista.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">15</span>
+      <div class="ci-body"><h3>Ollantaytambo: La Fortezza Vivente degli Inca</h3><p>L'unica vittoria militare inca contro gli spagnoli, e la lezione più profonda delle Ande: la vera forza nasce dall'armonia, non dalla conquista.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">16</span>
+      <div class="ci-body"><h3>Machu Picchu: La Città Perduta tra le Nuvole</h3><p>La sintesi di tutto il cammino: un luogo che non chiede di essere conquistato, ma ascoltato.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">17</span>
+      <div class="ci-body"><h3>Humantay: Il Lago degli Apu</h3><p>Un lago turchese a 4.200 metri, ai piedi del Salkantay — il primo luogo del viaggio che il sacro non deve costruirlo: lo è già.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">18</span>
+      <div class="ci-body"><h3>Palcoyo: La Montagna dei Sette Colori</h3><p>La controparte silenziosa della più celebre Vinicunca — la lezione della contemplazione senza spettacolo.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">19</span>
+      <div class="ci-body"><h3>Il Lago Titicaca: Dove Nacque il Sole degli Inca</h3><p>La culla mitologica del Tawantinsuyu, con una sosta ad Amantaní: l'accoglienza silenziosa di una comunità che non deve dimostrare nulla.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">20</span>
+      <div class="ci-body"><h3>Arequipa: La Città Bianca</h3><p>Tra i vulcani e la pietra di sillar, la lezione di portare il silenzio della montagna anche dentro le mura di una città.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">21</span>
+      <div class="ci-body"><h3>Nazca: Le Linee del Mistero</h3><p>Geoglifi visibili solo dal cielo — un luogo che rifiuta di lasciarsi possedere del tutto dalla comprensione razionale.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">22</span>
+      <div class="ci-body"><h3>Ica: Le Dune e il Deserto</h3><p>Una sosta che non chiede interpretazione, prima dell'ultimo tratto del cammino: quello della propria storia personale.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">23</span>
+      <div class="ci-body"><h3>Quando tutto fu perduto</h3><p>Cajamarca, 1532: la caduta di un impero — e la soglia di morte che ogni racconto di trasformazione deve attraversare.</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">24</span>
+      <div class="ci-body"><h3>La Notte più Lunga</h3><p>Il punto più basso del cammino, dove ogni identità costruita viene tolta e resta solo una domanda: chi sono, senza nulla da dimostrare?</p></div>
+    </div>
+    <div class="ci-row">
+      <span class="ci-num">25</span>
+      <div class="ci-body"><h3>Il Ritorno del Bambino</h3><p>Il cerchio si chiude: quel bambino che non sapeva stare fermo aveva un nome. Marcello.</p></div>
+    </div>
 
-  <div class="chapter reveal">
-    <div class="chapter-num">Capitolo V</div>
-    <div class="chapter-body">
-      <h3>Il ritorno a valle</h3>
-      <p>L'ultimo capitolo, dedicato a ciò che si porta a casa da un viaggio simile — e a come restare fedeli a quella vetta anche nella pianura della vita quotidiana.</p>
-    </div>
-    <div class="chapter-img"><img src="https://images.unsplash.com/photo-1521292270410-a8c4d716d518?q=80&w=900&auto=format&fit=crop" alt="Sentiero di ritorno al tramonto" loading="lazy"></div>
+    <div class="ci-note">In arrivo: Conclusione — Il Richiamo delle Ande, Il Viaggio Continua, Bibliografia e Fonti Storiche.</div>
   </div>
 </section>
 
