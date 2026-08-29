@@ -914,12 +914,12 @@ footer .book-name{ color: var(--slate); font-size:0.9rem; max-width: 32ch; }
   }
 
   var dlForm = document.getElementById('downloadForm');
-  var BOOK_PDF_URL = 'downloads/la-montagna-che-portiamo-dentro.pdf';
   if(dlForm){
     dlForm.addEventListener('submit', function(e){
       e.preventDefault();
       var emailInput = document.getElementById('dl-email');
       var msg = document.getElementById('downloadMsg');
+      var btn = dlForm.querySelector('button[type="submit"]');
       var email = emailInput.value.trim();
       msg.className = 'download-msg';
       msg.textContent = '';
@@ -930,10 +930,33 @@ footer .book-name{ color: var(--slate); font-size:0.9rem; max-width: 32ch; }
       if(typeof fbq !== 'undefined'){ fbq('track', 'Lead', { content_name: 'La Montagna Che Portiamo Dentro' }); }
       if(typeof gtag !== 'undefined'){ gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'la_montagna_che_portiamo_dentro' }); }
 
-      window.open(BOOK_PDF_URL, '_blank');
-      msg.textContent = 'Grazie! Il libro si sta aprendo in una nuova scheda.';
-      msg.className = 'download-msg ok';
-      dlForm.reset();
+      btn.disabled = true;
+      var originalLabel = btn.textContent;
+      btn.textContent = 'Invio...';
+
+      fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      })
+      .then(function(res){
+        if(!res.ok){ throw new Error('request-failed'); }
+        return res.json();
+      })
+      .then(function(data){
+        msg.textContent = 'Grazie! Il libro si sta aprendo in una nuova scheda.';
+        msg.className = 'download-msg ok';
+        dlForm.reset();
+        window.open(data.downloadUrl || 'downloads/la-montagna-che-portiamo-dentro.pdf', '_blank');
+      })
+      .catch(function(){
+        msg.textContent = 'Qualcosa è andato storto. Riprova tra poco.';
+        msg.className = 'download-msg err';
+      })
+      .finally(function(){
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      });
     });
   }
 
