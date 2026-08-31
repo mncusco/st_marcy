@@ -133,9 +133,10 @@ a:focus-visible, button:focus-visible{
 }
 .nav-links a:hover::after{ transform: scaleX(1); }
 .nav-links a.cta-link{
-  color: var(--ivory); background: var(--charcoal); padding: 0.55rem 1.2rem; text-transform: none;
-  letter-spacing: 0.01em; border-radius: var(--radius-s);
+  color: var(--ivory); background: var(--charcoal); padding: 0.6rem 1.3rem; text-transform: uppercase;
+  letter-spacing: 0.1em; font-size: 0.72rem; border-radius: 0; transition: background var(--dur-fast) var(--ease);
 }
+.nav-links a.cta-link:hover{ background: var(--ochre); }
 .nav-links a.cta-link::after{ display:none; }
 @media(min-width:1000px){ .nav-links{ display:flex; } }
 
@@ -180,17 +181,19 @@ a:focus-visible, button:focus-visible{
 }
 .hero-ctas{ display:flex; flex-wrap:wrap; gap: 1rem; margin-top: var(--space-4); }
 .btn{
-  font-family: var(--body); font-size: 0.85rem; letter-spacing: 0.04em;
-  padding: 0.95rem 1.9rem; border-radius: var(--radius-s); border: 1px solid transparent;
-  cursor:pointer; transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  font-family: var(--body); font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.95rem 1.9rem; border-radius: 0; border: 1px solid var(--charcoal);
+  cursor:pointer; transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
   display:inline-block;
 }
-.btn-primary{ background: var(--ochre); color: var(--ivory); }
-.btn-primary:hover{ background: var(--terracotta); transform: translateY(-1px); }
+.btn-primary{ background: var(--charcoal); color: var(--ivory); border-color: var(--charcoal); }
+.btn-primary:hover{ background: var(--ochre); border-color: var(--ochre); }
 .btn-outline{ border-color: color-mix(in oklch, var(--ivory) 55%, transparent); color: var(--ivory); }
-.btn-outline:hover{ border-color: var(--ivory); background: color-mix(in oklch, var(--ivory) 10%, transparent); }
-.btn-dark{ background: var(--charcoal); color: var(--ivory); }
-.btn-dark:hover{ background: var(--slate); }
+.btn-outline:hover{ border-color: var(--ochre); color: var(--ochre); }
+.btn-dark{ background: var(--charcoal); color: var(--ivory); border-color: var(--charcoal); }
+.btn-dark:hover{ background: var(--ochre); border-color: var(--ochre); }
+.hero .btn-primary, .hero .btn-dark{ background: var(--ivory); color: var(--charcoal); border-color: var(--ivory); }
+.hero .btn-primary:hover, .hero .btn-dark:hover{ background: var(--ochre); color: var(--ivory); border-color: var(--ochre); }
 
 .scroll-cue{
   position:absolute; bottom: var(--space-3); left: 50%; transform: translateX(-50%);
