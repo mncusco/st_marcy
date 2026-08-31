@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grazie — La Montagna Che Portiamo Dentro</title>
+<meta name="robots" content="noindex,nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z40KLH5V17"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-Z40KLH5V17');
+gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'la_montagna_che_portiamo_dentro' });
+</script>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '236536824187993');
+fbq('track', 'PageView');
+fbq('track', 'CompleteRegistration', { content_name: 'La Montagna Che Portiamo Dentro' });
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FAF8F5;
+    --dark: #14181c;
+    --azure: oklch(0.60 0.13 240);
+    --azure-light: oklch(0.72 0.09 220);
+    --muted: #8a8b8c;
+    --text: #1a1a1a;
+  }
+
+  :focus-visible { outline: 2px solid var(--azure); outline-offset: 2px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav {
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .nav-logo {
+    font-family: "Playfair Display", serif;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-back {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--text); }
+
+  .hero {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+  }
+
+  .card {
+    max-width: 680px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .ornament {
+    font-size: 28px;
+    color: var(--azure);
+    display: block;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--azure);
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  h1 {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: clamp(36px, 6vw, 60px);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--azure);
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--azure);
+    margin: 28px auto;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .download-box {
+    background: var(--dark);
+    padding: 40px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    margin: 40px 0;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+    text-align: left;
+  }
+
+  .book-cover {
+    flex-shrink: 0;
+    width: 100px;
+    box-shadow: 6px 10px 24px rgba(0,0,0,0.5);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .book-cover img{ width:100%; display:block; }
+
+  .book-info { flex: 1; }
+
+  .book-title {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    color: var(--azure-light);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .book-sub {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--azure);
+    opacity: 0.85;
+    margin-bottom: 20px;
+  }
+
+  .btn-download {
+    display: inline-block;
+    background: var(--azure);
+    color: #fff;
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 13px 28px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn-download:hover { background: var(--azure-light); }
+
+  .what-next {
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .what-next p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .link-item {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .link-item:hover { color: var(--azure); border-color: var(--azure); }
+
+  footer {
+    padding: 24px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 540px) {
+    nav { padding: 16px 20px; }
+    .download-box { flex-direction: column; align-items: flex-start; padding: 28px 20px; }
+    .hero { padding: 48px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/la-montagna-che-portiamo-dentro" class="nav-logo">La Montagna Che Portiamo Dentro</a>
+  <a href="/la-montagna-che-portiamo-dentro" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Torna al sito
+  </a>
+</nav>
+
+<main class="hero">
+  <div class="card">
+
+    <span class="ornament">✦</span>
+    <span class="eyebrow">Shamanic Travels · Edizioni</span>
+
+    <h1>Il libro è tuo.<br><em>Benvenuto nel viaggio.</em></h1>
+
+    <div class="divider"></div>
+
+    <p class="desc">
+      Un viaggio tra le vette delle Ande e i sentieri dell'anima, scritto da Marcello Buglione: 25 capitoli tra memoria personale e luoghi sacri andini.
+    </p>
+
+    <div class="download-box">
+      <div class="book-cover">
+        <img src="/la-montagna-che-portiamo-dentro/images/extra/book_cover.jpg" alt="Copertina del libro">
+      </div>
+
+      <div class="book-info">
+        <div class="book-title">La Montagna Che Portiamo Dentro</div>
+        <div class="book-sub">25 capitoli · Un viaggio tra Ande e anima</div>
+        <a href="/la-montagna-che-portiamo-dentro/downloads/la-montagna-che-portiamo-dentro.pdf" class="btn-download" download>
+          ↓ &nbsp; Scarica il libro
+        </a>
+      </div>
+    </div>
+
+    <div class="what-next">
+      <p>
+        Mentre esplori le pagine, se senti che questo viaggio ti chiama davvero — puoi candidarti per un colloquio privato con Marcello.
+      </p>
+      <div class="links">
+        <a href="/blog.html" class="link-item">Leggi gli articoli</a>
+        <a href="/gallery.html" class="link-item">Galleria fotografica</a>
+        <a href="/apply_clean.html" class="link-item">Richiedi un colloquio</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  Shamanic Travels &nbsp;·&nbsp; Londra · Lima · Milano &nbsp;·&nbsp; © 2026
+</footer>
+
+</body>
+</html>
