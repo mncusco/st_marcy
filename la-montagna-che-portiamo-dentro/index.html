@@ -28,13 +28,13 @@
 /* ============ DESIGN TOKENS ============ */
 :root{
   /* color */
-  --ochre:        oklch(0.65 0.15 60);
-  --ochre-dim:     oklch(0.65 0.15 60 / 0.35);
-  --terracotta:   oklch(0.58 0.14 40);
+  --ochre:        oklch(0.60 0.13 240);
+  --ochre-dim:     oklch(0.60 0.13 240 / 0.35);
+  --terracotta:   oklch(0.50 0.14 255);
   --stone:        oklch(0.88 0.02 70);
   --slate:        oklch(0.32 0.03 250);
   --charcoal:     oklch(0.16 0.01 60);
-  --gold:         oklch(0.78 0.09 85);
+  --gold:         oklch(0.72 0.09 220);
   --teal:         oklch(0.55 0.05 200);
   --ivory:        oklch(0.97 0.01 80);
   --parchment:    oklch(0.95 0.018 75);
@@ -119,6 +119,7 @@ a:focus-visible, button:focus-visible{
 }
 .logo{ display:flex; align-items:center; gap:.6rem; }
 .logo svg{ width: 30px; height: 30px; }
+.logo-img{ width: 34px; height: 34px; object-fit: contain; }
 .logo-word{ font-family: var(--display); font-size: 0.92rem; letter-spacing: 0.02em; display:none; }
 @media(min-width:900px){ .logo-word{ display:inline; } }
 
@@ -431,10 +432,7 @@ footer .book-name{ color: var(--slate); font-size:0.9rem; max-width: 32ch; }
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <a href="#top" class="logo" aria-label="La Montagna Che Portiamo Dentro — home">
-    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 26L14 10L20 19L24 13L36 30" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" style="color:var(--charcoal)"/>
-      <line x1="2" y1="30" x2="38" y2="30" stroke="var(--ochre)" stroke-width="1.4" stroke-linecap="round"/>
-    </svg>
+    <img src="/la-montagna-che-portiamo-dentro/images/extra/shamanic-logo.png" alt="Shamanic Travels" class="logo-img">
     <span class="logo-word">La Montagna Che Portiamo Dentro</span>
   </a>
   <div class="nav-links">
