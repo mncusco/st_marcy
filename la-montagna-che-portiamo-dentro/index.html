@@ -946,10 +946,8 @@ footer .book-name{ color: var(--slate); font-size:0.9rem; max-width: 32ch; }
         return res.json();
       })
       .then(function(data){
-        msg.textContent = 'Grazie! Il libro si sta aprendo in una nuova scheda.';
-        msg.className = 'download-msg ok';
         dlForm.reset();
-        window.open(data.downloadUrl || 'downloads/la-montagna-che-portiamo-dentro.pdf', '_blank');
+        window.location.href = '/la-montagna-che-portiamo-dentro/grazie.html';
       })
       .catch(function(){
         msg.textContent = 'Qualcosa è andato storto. Riprova tra poco.';
