@@ -1,0 +1,9 @@
+{
+  "name": "st_marcy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "shamanictravels.com — include la funzione serverless per il download del libro La Montagna Che Portiamo Dentro",
+  "dependencies": {
+    "pg": "^8.12.0"
+  }
+}
