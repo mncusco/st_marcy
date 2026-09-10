@@ -707,7 +707,7 @@ footer {
 
 .footer-ebook-wrap { display: flex; gap: 40px; align-items: flex-start; }
 .footer-ebook-cover { flex-shrink: 0; width: 130px; box-shadow: 8px 12px 32px rgba(0,0,0,0.35); border-radius: 2px; }
-.footer-ebook-cover svg { display: block; width: 100%; height: auto; border-radius: 2px; }
+.footer-ebook-cover svg, .footer-ebook-cover img { display: block; width: 100%; height: auto; border-radius: 2px; }
 .footer-ebook-text { flex: 1; }
 @media (max-width: 600px) { .footer-ebook-wrap { flex-direction: column; } .footer-ebook-cover { width: 100px; } }
 
@@ -1071,70 +1071,16 @@ Esperienza assolutamente da ripetere. GRAZIE!!!."</blockquote>
     <div class="footer-left">
       <span class="eyebrow text-accent" style="display:block; margin-bottom:24px;" data-i18n="footer.eyebrow">Private Dispatches</span>
       <div class="footer-ebook-wrap">
-        <div class="footer-ebook-cover" aria-hidden="true">
-          <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Copertina ebook I Luoghi Sacri degli Inca">
-            <defs>
-              <linearGradient id="fc-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a0d1a"/><stop offset="60%" stop-color="#1a2340"/><stop offset="100%" stop-color="#2d1f0e"/></linearGradient>
-              <linearGradient id="fc-gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8B6914" stop-opacity="0"/><stop offset="50%" stop-color="#E8C060"/><stop offset="100%" stop-color="#8B6914" stop-opacity="0"/></linearGradient>
-              <linearGradient id="fc-mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3a5c"/><stop offset="100%" stop-color="#1a2340"/></linearGradient>
-            </defs>
-            <rect width="200" height="280" fill="url(#fc-sky)"/>
-            <!-- stars -->
-            <circle cx="30" cy="18" r="0.8" fill="#fff" opacity="0.7"/>
-            <circle cx="75" cy="10" r="1" fill="#fff" opacity="0.8"/>
-            <circle cx="130" cy="22" r="0.7" fill="#fff" opacity="0.6"/>
-            <circle cx="168" cy="12" r="0.9" fill="#fff" opacity="0.75"/>
-            <circle cx="55" cy="35" r="0.6" fill="#fff" opacity="0.5"/>
-            <circle cx="150" cy="40" r="0.7" fill="#E8C060" opacity="0.4"/>
-            <!-- moon -->
-            <circle cx="155" cy="28" r="12" fill="#fff8e7" opacity="0.85"/>
-            <circle cx="150" cy="25" r="10" fill="#1a2340"/>
-            <!-- mountains far -->
-            <path d="M0 130 L25 85 L50 110 L75 70 L100 100 L125 65 L150 95 L175 60 L200 85 L200 155 L0 155Z" fill="url(#fc-mtn)"/>
-            <!-- snow -->
-            <path d="M75 70 L83 88 L67 88Z" fill="#d0ddf0" opacity="0.6"/>
-            <path d="M125 65 L133 83 L117 83Z" fill="#d0ddf0" opacity="0.6"/>
-            <path d="M175 60 L183 78 L167 78Z" fill="#d0ddf0" opacity="0.6"/>
-            <!-- mountains mid -->
-            <path d="M0 160 L30 115 L60 140 L90 105 L120 135 L150 100 L180 130 L200 115 L200 175 L0 175Z" fill="#1e2e1a"/>
-            <!-- ruins -->
-            <rect x="55" y="168" width="90" height="5" rx="1" fill="#3d2e12"/>
-            <rect x="62" y="163" width="76" height="6" rx="1" fill="#2d2008"/>
-            <rect x="70" y="159" width="60" height="5" rx="1" fill="#231a07"/>
-            <rect x="80" y="152" width="40" height="10" rx="1" fill="#2d2008"/>
-            <rect x="88" y="145" width="12" height="9" rx="0.5" fill="#3a2a0a"/>
-            <rect x="100" y="145" width="12" height="9" rx="0.5" fill="#3a2a0a"/>
-            <rect x="91" y="149" width="3" height="4" rx="0.5" fill="#0a0804"/>
-            <rect x="106" y="149" width="3" height="4" rx="0.5" fill="#0a0804"/>
-            <!-- foreground -->
-            <path d="M0 185 Q50 170 100 178 Q150 170 200 182 L200 280 L0 280Z" fill="#0d1408"/>
-            <!-- border -->
-            <rect x="6" y="6" width="188" height="268" fill="none" stroke="#C9973A" stroke-width="0.8" opacity="0.7"/>
-            <rect x="9" y="9" width="182" height="262" fill="none" stroke="#C9973A" stroke-width="0.3" opacity="0.4"/>
-            <!-- brand -->
-            <text x="100" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="2" fill="#C9973A" opacity="0.8">SHAMANIC TRAVELS</text>
-            <rect x="30" y="29" width="140" height="0.5" fill="url(#fc-gold)" opacity="0.5"/>
-            <!-- title -->
-            <text x="100" y="55" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="#E8C060">I LUOGHI</text>
-            <text x="100" y="73" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="#E8C060">SACRI</text>
-            <text x="100" y="87" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#C9973A" opacity="0.8">✦</text>
-            <text x="100" y="100" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#E8C060" letter-spacing="1">DEGLI INCA</text>
-            <rect x="40" y="104" width="120" height="0.5" fill="url(#fc-gold)" opacity="0.4"/>
-            <text x="100" y="114" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.5" fill="#C9973A" opacity="0.7">GUIDA AI LUOGHI MISTICI DELLE ANDE</text>
-            <!-- chapters -->
-            <text x="100" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="4" letter-spacing="1" fill="#b8895a" opacity="0.7">CUSCO · VALLE SACRA · PISAC</text>
-            <text x="100" y="133" text-anchor="middle" font-family="Georgia,serif" font-size="4" letter-spacing="1" fill="#b8895a" opacity="0.7">MORAY · MACHU PICCHU · TITICACA</text>
-            <!-- author -->
-            <text x="100" y="265" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="2" fill="#C9973A" opacity="0.7">MARCELLO BUGLIONE</text>
-          </svg>
+        <div class="footer-ebook-cover">
+          <img src="assets/la-montagna-cover.jpg" alt="Copertina del libro La montagna che ci portiamo dentro di Marcello" width="1280" height="1920">
         </div>
         <div class="footer-ebook-text">
           <h2 style="font-size:clamp(20px,2.5vw,30px); line-height:1.25; margin-bottom:14px;">
             Ricevi gratuitamente il libro<br>
-            <em style="color:var(--gold, #b89a5a);">"I Luoghi Sacri degli Inca"</em><br>
+            <em style="color:var(--gold, #b89a5a);">"La montagna che ci portiamo dentro"</em><br>
             <span style="font-size:0.65em; font-style:normal; letter-spacing:0.05em;">scritto da Marcello</span>
           </h2>
-          <p class="footer-desc" style="margin-bottom:18px;">Questo compendio scritto dal fondatore è frutto dei viaggi e delle informazioni raccolte nel corso degli anni, una valida guida pre-tour ricca di informazioni utili.</p>
+          <p class="footer-desc" style="margin-bottom:18px;">Questo libro nasce dal cammino che Marcello ha scelto di attraversare: una montagna che ognuno di noi porta dentro di sé, fatta di imperfezioni, paure e trasformazioni. Non un viaggio verso un luogo, ma verso sé stessi.</p>
           <form class="footer-form" onsubmit="handleEbookSubmit(event);">
             <input type="email" id="ebookEmail" placeholder="Il tuo indirizzo email" aria-label="Email address" maxlength="255" required>
             <button type="submit" class="eyebrow">Ricevi il libro</button>
@@ -1203,9 +1149,9 @@ function handleEbookSubmit(e) {
   e.preventDefault();
   const email = document.getElementById('ebookEmail').value;
   if (!email) return;
-  if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Ebook I Luoghi Sacri' });
-  if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'luoghi_sacri_inca' });
-  window.open('/ebooks/I_Luoghi_Sacri_Degli_Inca.pdf', '_blank');
+  if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Ebook La montagna che ci portiamo dentro' });
+  if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'la_montagna_che_portiamo_dentro' });
+  window.open('/ebooks/La_Montagna_Che_Portiamo_Dentro.pdf', '_blank');
   window.location.href = '/thankyou.html?email=' + encodeURIComponent(email);
 }
 
