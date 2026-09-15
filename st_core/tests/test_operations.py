@@ -113,7 +113,8 @@ class TestPriorityScore:
         token = created["download_token"]
         client.get(f"/download/{token}")
         lead = client.get(f"/api/leads/{lead_id}", headers=auth_headers).json()
-        assert lead.get("priority_score") == 10
+        # Download avanza il funnel a DOWNLOADED (peso 35) + bonus download (10) = 45
+        assert lead.get("priority_score") == 45
 
     def test_interview_status_scores_thirty(self, client, auth_headers, sample_lead_data):
         created = client.post("/api/leads", json=sample_lead_data).json()

@@ -1,5 +1,6 @@
 import logging
 from fastapi import Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, HTMLResponse
 
 logger = logging.getLogger("st_core.errors")
@@ -19,7 +20,7 @@ def register_error_handlers(app):
             )
         return JSONResponse(status_code=404, content={"detail": "Not found"})
 
-    @app.exception_handler(422)
+    @app.exception_handler(RequestValidationError)
     async def validation_error(request: Request, exc):
         logger.warning("Validation error on %s: %s", request.url.path, exc.errors())
         return JSONResponse(status_code=422, content={"detail": exc.errors()})

@@ -310,7 +310,6 @@ def admin_reactivate_all(
         existing = db.query(EmailQueue).filter(
             EmailQueue.lead_id == lead.id,
             EmailQueue.email_type == "editorial_reactivation",
-            EmailQueue.status.in_(["PENDING", "PROCESSING"]),
         ).count()
         if existing:
             skipped += 1

@@ -8,13 +8,12 @@
 
 <meta name="description" content="Request a private interview for an invitation-only journey in Peru. Curated experiences for a maximum of six participants.">
 <meta name="author" content="ShamanicTravels">
-<meta name="robots" content="noindex,follow">
 
 <meta property="og:title" content="Apply for a Private Peru Journey | ShamanicTravels">
 <meta property="og:description" content="Request a private interview for an invitation-only journey in Peru. Curated experiences for a maximum of six participants.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.shamanictravels.com/apply_clean">
-<meta property="og:image" content="https://shamanictravels.com/og.jpg">
+<meta property="og:image" content="https://www.shamanictravels.com/hero.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -425,7 +424,7 @@ function handleSubmit(e){
   .then(r => r.json())
   .then(data => {
     if(data.success){
-      window.location.href = '/thankyou.html?token=' + encodeURIComponent(data.download_token);
+      window.location.href = '/thankyou?token=' + encodeURIComponent(data.download_token);
     } else {
       btn.disabled = false;
       btn.textContent = 'Submit Application';

@@ -11,15 +11,15 @@
 <meta content="Private, invitation-only journeys in Peru across the Andes and Amazon. Curated 21-day experiences for up to six participants, by interview only." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://www.shamanictravels.com/en" property="og:url"/>
-<meta content="https://shamanictravels.com/og.jpg" property="og:image"/>
+<meta content="https://www.shamanictravels.com/hero.jpg" property="og:image"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "TravelAgency",
   "name": "ShamanicTravels",
   "description": "Private, invitation-only curated journeys in Peru for a maximum of six participants.",
-  "url": "https://shamanictravels.com",
-  "logo": "https://shamanictravels.com/logo.jpg",
+  "url": "https://www.shamanictravels.com",
+  "logo": "https://www.shamanictravels.com/logo.jpg",
   "sameAs": [
     "https://www.facebook.com/shamanictravels",
     "https://www.instagram.com/shamanictravels"
@@ -786,12 +786,12 @@ footer {
 </a>
 <ul class="nav-links">
 <li><a class="eyebrow" href="#experience">Ethos</a></li>
-<li><a class="eyebrow" href="andean_arc_clean.html">Andean Arc</a></li>
-<li><a class="eyebrow" href="amazon_clean.html">Amazon</a></li>
+<li><a class="eyebrow" href="/andean_arc_clean">Andean Arc</a></li>
+<li><a class="eyebrow" href="/amazon_clean">Amazon</a></li>
 <li><a class="eyebrow" href="#guide">The Guide</a></li>
 <li><a class="eyebrow" href="#insights">Insights</a></li>
-<li><a class="eyebrow" href="gallery.html">Gallery</a></li>
-<li><a class="eyebrow apply" href="apply_clean.html">Apply</a></li>
+<li><a class="eyebrow" href="/gallery">Gallery</a></li>
+<li><a class="eyebrow apply" href="/apply_clean">Apply</a></li>
 <li class="language-links"><a class="eyebrow active" href="/en">EN</a><a class="eyebrow" href="/it">IT</a><a class="eyebrow" href="/es">ES</a><a class="eyebrow" href="/ru">RU</a><a class="eyebrow" href="/sr">SR</a></li></ul>
 <button aria-expanded="false" aria-label="Open menu" class="nav-mobile-toggle" id="menuBtn">
 <span></span><span></span>
@@ -815,7 +815,7 @@ footer {
 </h1>
 <p class="hero-subtitle animate-reveal animate-reveal-delay-2">Invitation-only immersive experiences for a maximum of six participants</p>
 <div class="animate-reveal animate-reveal-delay-3">
-<a class="hero-cta" href="apply_clean.html">Request Private Interview</a>
+<a class="hero-cta" href="/apply_clean">Request Private Interview</a>
 </div>
 </div>
 <div class="hero-scroll">
@@ -869,7 +869,7 @@ footer {
 <p class="eyebrow journeys-meta">Each journey · 21 days · Maximum six participants · Selection required</p>
 </div>
 <div class="journeys-grid">
-<a class="journey-card" href="andean_arc_clean.html">
+<a class="journey-card" href="/andean_arc_clean">
 <div class="journey-img-wrap">
 <img alt="Machu Picchu at dawn" class="journey-img" height="800" loading="lazy" src="hero.jpg" width="1200"/>
 </div>
@@ -882,7 +882,7 @@ footer {
 </div>
 <span class="journey-link eyebrow">Enter Journey I →</span>
 </a>
-<a class="journey-card" href="amazon_clean.html">
+<a class="journey-card" href="/amazon_clean">
 <div class="journey-img-wrap">
 <img alt="Peruvian Amazon canopy" class="journey-img" height="800" loading="lazy" src="jungle.jpg" width="1200"/>
 </div>
@@ -941,7 +941,7 @@ footer {
 <p class="step-desc">If selected, you receive detailed guidance on physical, practical, and contemplative preparation for your journey.</p>
 </div>
 </div>
-<a class="apply-cta" href="apply_clean.html">Request Private Interview</a>
+<a class="apply-cta" href="/apply_clean">Request Private Interview</a>
 <p class="apply-note">Journeys depart quarterly. Next departure: Q3 2026.</p>
 </div>
 </section>
@@ -977,10 +977,10 @@ footer {
 <span class="eyebrow text-accent" style="display:block; margin-bottom:16px;">Insights</span>
 <h2 class="insights-title">Field notes from <span style="font-style:italic">Peru</span>.</h2>
 <img alt="Detail shot of Andean textiles and dried botanicals" class="insights-img" height="427" loading="lazy" src="insights.jpg" width="640"/>
-<a class="insights-read-all" href="blog.html">Read all insights →</a>
+<a class="insights-read-all" href="/blog">Read all insights →</a>
 </div>
 <div class="insights-list">
-<a class="insight-item" href="article.html?id=un-po-di-sciamanesimo">
+<a class="insight-item" href="/article?id=un-po-di-sciamanesimo">
 <span class="eyebrow insight-num">01</span>
 <div>
 <h3 class="insight-title">A Little Shamanism</h3>
@@ -1034,7 +1034,7 @@ footer {
 <div class="footer-social">
 <a href="https://www.facebook.com/shamanictravels">Facebook</a>
 <a href="https://www.instagram.com/shamanictravels">Instagram</a>
-<a href="blog.html">Insights</a>
+<a href="/blog">Insights</a>
 </div>
 </div>
 <div class="footer-brand">
@@ -1089,12 +1089,12 @@ function handleEbookSubmit(e) {
   if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Ebook La montagna che ci portiamo dentro' });
   if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'la_montagna_che_portiamo_dentro' });
   window.open('/ebooks/La_Montagna_Che_Portiamo_Dentro.pdf', '_blank');
-  window.location.href = '/thankyou.html?email=' + encodeURIComponent(email);
+  window.location.href = '/thankyou?email=' + encodeURIComponent(email);
 }
 
 /* ── APPLY TRACKING ── */
 document.addEventListener('click', function(e) {
-  const el = e.target.closest('a[href="apply_clean.html"], .apply-cta, .hero-cta');
+  const el = e.target.closest('a[href="/apply_clean"], .apply-cta, .hero-cta');
   if (el) {
     if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Apply ShamanicTravels', value: 1, currency: 'USD' });
     if (typeof gtag !== 'undefined') gtag('event', 'submit_application', { event_category: 'apply', event_label: 'ShamanicTravels', value: 1 });

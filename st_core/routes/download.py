@@ -4,15 +4,16 @@ from fastapi.responses import FileResponse, HTMLResponse
 from sqlalchemy.orm import Session
 from dependencies import get_db
 from services.lead_service import LeadService
+from core.tracking import client_ip
 from config import settings
 
 router = APIRouter(tags=["Download"])
 
 @router.get("/download/{token}")
 def download_editorial(token: str, request: Request, db: Session = Depends(get_db)):
-    client_ip = request.client.host if request.client else None
+    ip = client_ip(request)
     user_agent = request.headers.get("user-agent")
-    lead = LeadService.mark_downloaded_by_token(db, token, ip_address=client_ip, user_agent=user_agent)
+    lead = LeadService.mark_downloaded_by_token(db, token, ip_address=ip, user_agent=user_agent)
     lang = lead.language or "en"
     filename = settings.EDITORIAL_FILES.get(lang, settings.EDITORIAL_FILES["en"])
     filepath = os.path.join(settings.EDITORIAL_FILES_DIR, filename)
@@ -25,5 +26,9 @@ def download_editorial(token: str, request: Request, db: Session = Depends(get_d
         path=filepath,
         filename=filename,
         media_type="application/pdf",
-        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Cache-Control": "no-store, no-cache, must-revalidate",
+            "Pragma": "no-cache",
+        },
     )

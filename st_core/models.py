@@ -2,12 +2,18 @@ import uuid
 import enum
 from typing import Optional
 from datetime import datetime, timezone
-from sqlalchemy import String, Text, Boolean, DateTime, Integer, Float, ForeignKey, Index, Enum as SQLEnum
+from sqlalchemy import String, Text, Boolean, DateTime, Integer, Float, ForeignKey, Index, text, Enum as SQLEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import Base
 
 class LeadStatus(str, enum.Enum):
     NEW = "NEW"
+    EMAIL_SENT = "EMAIL_SENT"
+    OPENED = "OPENED"
+    CLICKED = "CLICKED"
+    DOWNLOADED = "DOWNLOADED"
+    QUALIFIED = "QUALIFIED"
+    CUSTOMER = "CUSTOMER"
     CONTACTED = "CONTACTED"
     INTERVIEW = "INTERVIEW"
     APPROVED = "APPROVED"
@@ -15,6 +21,16 @@ class LeadStatus(str, enum.Enum):
     COMPLETED = "COMPLETED"
     REJECTED = "REJECTED"
     ARCHIVED = "ARCHIVED"
+
+FUNNEL_STAGE_ORDER = [
+    LeadStatus.NEW,
+    LeadStatus.EMAIL_SENT,
+    LeadStatus.OPENED,
+    LeadStatus.CLICKED,
+    LeadStatus.DOWNLOADED,
+    LeadStatus.QUALIFIED,
+    LeadStatus.CUSTOMER,
+]
 
 class DocType(str, enum.Enum):
     RECOMMENDATION_LETTER = "RECOMMENDATION_LETTER"
@@ -28,6 +44,7 @@ class EmailStatus(str, enum.Enum):
     SENT = "SENT"
     FAILED = "FAILED"
     CANCELLED = "CANCELLED"
+    RETRY = "RETRY"
 
 class InterviewStatus(str, enum.Enum):
     REQUESTED = "REQUESTED"
@@ -56,6 +73,7 @@ class Lead(Base):
     country: Mapped[str] = mapped_column(String(100), nullable=True)
     language: Mapped[str] = mapped_column(String(10), nullable=True)
     source_page: Mapped[str] = mapped_column(String(255), nullable=True)
+    source: Mapped[str] = mapped_column(String(50), nullable=True)
     campaign: Mapped[str] = mapped_column(String(255), nullable=True)
     campaign_sent_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     email_opened: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -78,6 +96,9 @@ class Lead(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
     user_agent: Mapped[str] = mapped_column(Text, nullable=True)
+    device_type: Mapped[str] = mapped_column(String(20), nullable=True)
+    browser: Mapped[str] = mapped_column(String(50), nullable=True)
+    os_name: Mapped[str] = mapped_column(String(50), nullable=True)
 
     editorial_edition_id: Mapped[int] = mapped_column(Integer, ForeignKey("editorial_editions.id"), nullable=True)
     editorial_assigned_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
@@ -137,6 +158,14 @@ class EmailQueue(Base):
         Index("ix_email_queue_created_at", "created_at"),
         Index("ix_email_queue_scheduled_for", "scheduled_for"),
         Index("ix_email_queue_email_type", "email_type"),
+        Index(
+            "uq_email_queue_active_lead_type",
+            "lead_id",
+            "email_type",
+            unique=True,
+            sqlite_where=text("status IN ('PENDING', 'PROCESSING', 'RETRY')"),
+            postgresql_where=text("status IN ('PENDING', 'PROCESSING', 'RETRY')"),
+        ),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
@@ -151,9 +180,46 @@ class EmailQueue(Base):
     sent_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     attempts: Mapped[int] = mapped_column(Integer, default=0)
     error_message: Mapped[str] = mapped_column(Text, nullable=True)
+    provider_message_id: Mapped[str] = mapped_column(String(128), nullable=True)
+    last_provider_response: Mapped[str] = mapped_column(Text, nullable=True)
+    last_attempt_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     lead: Mapped["Lead"] = relationship(back_populates="emails")
+
+class OpenEvent(Base):
+    __tablename__ = "open_events"
+    __table_args__ = (
+        Index("ix_open_events_lead_id", "lead_id"),
+        Index("ix_open_events_queue_id", "queue_id"),
+        Index("ix_open_events_created_at", "created_at"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), nullable=True)
+    queue_id: Mapped[int] = mapped_column(Integer, ForeignKey("email_queue.id"), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
+    user_agent: Mapped[str] = mapped_column(Text, nullable=True)
+    referrer: Mapped[str] = mapped_column(String(512), nullable=True)
+
+class ClickEvent(Base):
+    __tablename__ = "click_events"
+    __table_args__ = (
+        Index("ix_click_events_lead_id", "lead_id"),
+        Index("ix_click_events_queue_id", "queue_id"),
+        Index("ix_click_events_created_at", "created_at"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, ForeignKey("leads.id"), nullable=True)
+    queue_id: Mapped[int] = mapped_column(Integer, ForeignKey("email_queue.id"), nullable=True)
+    url: Mapped[str] = mapped_column(String(1024), nullable=True)
+    is_download: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    ip_address: Mapped[str] = mapped_column(String(45), nullable=True)
+    user_agent: Mapped[str] = mapped_column(Text, nullable=True)
+    referrer: Mapped[str] = mapped_column(String(512), nullable=True)
 
 class EditorialEdition(Base):
     __tablename__ = "editorial_editions"

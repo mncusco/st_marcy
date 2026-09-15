@@ -1,6 +1,23 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/amazon", "destination": "/amazon_clean", "permanent": true },
+    { "source": "/amazon.html", "destination": "/amazon_clean", "permanent": true },
+    { "source": "/apply", "destination": "/apply_clean", "permanent": true },
+    { "source": "/apply.html", "destination": "/apply_clean", "permanent": true },
+    { "source": "/insights", "destination": "/blog", "permanent": true },
+    { "source": "/insights.html", "destination": "/blog", "permanent": true },
+    { "source": "/insights_clean", "destination": "/blog", "permanent": true },
+    { "source": "/insights_clean.html", "destination": "/blog", "permanent": true },
+    { "source": "/andean_arc", "destination": "/andean_arc_clean", "permanent": true },
+    { "source": "/andean_arc.html", "destination": "/andean_arc_clean", "permanent": true },
+    { "source": "/thank-you", "destination": "/thankyou", "permanent": true },
+    { "source": "/thank-you.html", "destination": "/thankyou", "permanent": true },
+    { "source": "/lang/andean_arc_clean", "destination": "/andean_arc_clean", "permanent": true },
+    { "source": "/lang/andean_arc_clean.html", "destination": "/andean_arc_clean", "permanent": true },
+    { "source": "/ofrenda-alla-pachamama", "destination": "/amazon_clean", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },

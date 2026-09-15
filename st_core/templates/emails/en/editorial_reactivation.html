@@ -10,12 +10,16 @@
 <p style="font-size:14px;line-height:1.8;">I wrote this book to offer a glimpse into that experience. It is not a manual or a promise of transformation. It is simply a story — my story — of what it means to undertake a Master Plant Dieta in the heart of the Amazon, guided by someone who carries the medicine with genuine humility.</p>
 <p style="font-size:14px;line-height:1.8;">If you have ever felt called to the forest, I believe these pages will speak to you.</p>
 <p style="font-size:14px;line-height:1.8;">The book is yours, freely.</p>
+{% if click_url %}
 <div style="text-align:center;margin:32px 0;">
  <a href="{{ click_url }}" style="display:inline-block;padding:14px 32px;background:#2d5a27;color:#fff;text-decoration:none;font-size:15px;letter-spacing:1px;border-radius:2px;">Download your free book</a>
 </div>
 <p style="font-size:14px;line-height:1.8;">With warmth,<br>Marcello</p>
-<p style="font-size:12px;color:#8c8c8c;margin-top:16px;"><a href="https://www.shamanictravels.com/landing-editorial" style="color:#b89a5a;">Discover the retreat ?</a></p></p>
 <p style="font-size:12px;color:#8c8c8c;margin-top:16px;"><a href="https://www.shamanictravels.com/landing-editorial" style="color:#b89a5a;">Discover the retreat →</a></p>
 <p style="font-size:12px;color:#8c8c8c;margin-top:24px;">If the button does not work, copy this link into your browser:<br><a href="{{ click_url }}" style="color:#b89a5a;">{{ download_url }}</a></p>
 <img src="{{ tracking_pixel_url }}" width="1" height="1" alt="" style="display:none;" />
+{% else %}
+<p style="font-size:14px;line-height:1.8;">With warmth,<br>Marcello</p>
+<p style="font-size:12px;color:#8c8c8c;margin-top:16px;"><a href="https://www.shamanictravels.com/landing-editorial" style="color:#b89a5a;">Discover the retreat →</a></p>
+{% endif %}
 </div></body></html>

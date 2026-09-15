@@ -113,14 +113,77 @@
   "footer": {
     "eyebrow": "Private Dispatches",
     "title1": "Receive",
-    "title2": "I Luoghi Sacri degli Inca",
+    "title2": "Il Viaggio dell'Eroe in Perù",
     "desc": "Seven chapters on the most sacred sites of the Andean world: Cusco, the Sacred Valley, Pisac, Moray, Machu Picchu, Titicaca and Tiwanaku. A guide written by someone who lives them.",
     "placeholder": "Email address",
     "btn": "Request",
     "based_label": "Based In",
     "based_value": "London · Lima · Milano",
     "copy": "© 2026 · Private Curated Journeys",
-    "title_full": "Receive a free copy of <em style=\"color:var(--accent);\">La Planta de los Dioses</em>"
+    "title_full": "Receive a free copy of <em style=\"color:var(--accent);\">Il Viaggio dell'Eroe in Perù</em>"
+  },
+  "book": {
+    "nav_link": "The Book",
+    "hero": {
+      "badge": "New Year's Journey · 2027",
+      "title": "The Hero's Journey in Peru",
+      "subtitle": "A personal odyssey through sacred Andean sites and inner transformation.",
+      "dates": "December 23 · 21 Days · New Year 2027",
+      "cta": "Download the Book Free",
+      "cta_journey": "The journey that will change everything"
+    },
+    "about": {
+      "eyebrow": "About the Book",
+      "title": "A Journey Beyond the Mountain",
+      "p1": "This is not a travel guide. It is a map for rebirth.",
+      "p2": "Combining personal narrative with descriptions of sacred Andean sites, this book traces the archetypal hero's journey — from childhood struggles to 22 months of unjust imprisonment, and ultimately to resurrection through Peru's ancient wisdom.",
+      "p3": "Written for those who have faced burnout, divorce, trauma, or the hollow victory of reaching a promised mountain only to find no sweet fruit at the summit."
+    },
+    "journey": {
+      "eyebrow": "The Journey",
+      "title": "The New Year's journey that will change everything in 2027.",
+      "dates": "From December 23 · 21 Days",
+      "desc": "A curated private expedition departing on December 23 for 21 days, crossing the threshold into 2027 deep inside Peru. Six participants, one path, the Andes at their most sacred."
+    },
+    "why": {
+      "eyebrow": "Why This Book",
+      "title": "For Those Who Seek More",
+      "reason1_title": "For the Burned Out",
+      "reason1_desc": "If you've reached the top and found emptiness, this book is for you.",
+      "reason2_title": "For the Seekers",
+      "reason2_desc": "Those who understand that the real journey is internal, not external.",
+      "reason3_title": "For the Wounded",
+      "reason3_desc": "Those who have survived injustice and seek meaning beyond survival.",
+      "reason4_title": "For the Curious",
+      "reason4_desc": "Those drawn to Andean wisdom, sacred geography, and transformation."
+    },
+    "author": {
+      "eyebrow": "The Author",
+      "name": "Marcello Buglione",
+      "title": "Founder, Shamanic Travels",
+      "bio1": "With a foundation in strategic communication, NLP, and hypnosis, Marcello spent decades exploring the intersection of personal transformation and sacred geography.",
+      "bio2": "In 2024, he survived 22 months of unjust imprisonment. Through Peru's ancient wisdom and the Andean landscape, he found his way back to himself.",
+      "bio3": "This book is his testimony: that the hero's journey is not the absence of obstacles, but the capacity to transform them into wisdom.",
+      "quote": "\"The most important mountain to climb is always the one that leads you to discover who you truly are.\""
+    },
+    "form": {
+      "eyebrow": "The Book",
+      "title": "Receive the Book Free",
+      "description": "Enter your email and download 'The Hero's Journey in Peru' immediately.",
+      "name_placeholder": "Your first name",
+      "email_placeholder": "Your email address",
+      "submit": "Download Free",
+      "success": "Check your email for the download link.",
+      "error": "Something went wrong. Please try again."
+    },
+    "cta_section": {
+      "title": "Ready for Your Journey?",
+      "desc": "The book is your first step. For those ready to go deeper, Shamanic Travels offers curated private expeditions in Peru.",
+      "link": "Explore Shamanic Travels →"
+    },
+    "footer": {
+      "desc": "A personal narrative of the archetypal hero's journey — from the sacred Andes to a story of rebirth. Written by Marcello Buglione."
+    }
   },
   "blog": {
     "eyebrow": "Field Notes",

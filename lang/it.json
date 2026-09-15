@@ -113,14 +113,77 @@
   "footer": {
     "eyebrow": "Dispacci Privati",
     "title1": "Ricevi",
-    "title2": "I Luoghi Sacri degli Inca",
+    "title2": "Il Viaggio dell'Eroe in Perù",
     "desc": "Sette capitoli sui siti più sacri del mondo andino: Cusco, Valle Sacra, Pisac, Moray, Machu Picchu, Titicaca e Tiwanaku. Una guida scritta da chi li vive.",
     "placeholder": "Indirizzo email",
     "btn": "Richiedi",
     "based_label": "Basato a",
     "based_value": "Londra · Lima · Milano",
     "copy": "Â© 2026 Â· Viaggi Privati Curati",
-    "title_full": "Ricevi gratuitamente <em style=\"color:var(--accent);\">La Planta de los Dioses</em>"
+    "title_full": "Ricevi gratuitamente <em style=\"color:var(--accent);\">Il Viaggio dell'Eroe in Perù</em>"
+  },
+  "book": {
+    "nav_link": "Il Libro",
+    "hero": {
+      "badge": "Il Viaggio di Capodanno · 2027",
+      "title": "Il Viaggio dell'Eroe in Perù",
+      "subtitle": "Un'odissea personale attraverso i siti sacri delle Ande e la trasformazione interiore.",
+      "dates": "23 Dicembre · 21 Giorni · Capodanno 2027",
+      "cta": "Scarica il Libro Gratuitamente",
+      "cta_journey": "Il viaggio che cambierà tutto"
+    },
+    "about": {
+      "eyebrow": "Sul Libro",
+      "title": "Un Viaggio Oltre la Montagna",
+      "p1": "Questo non è una guida turistica. È una mappa per la rinascita.",
+      "p2": "Combinando una narrativa personale con descrizioni dei siti sacri delle Ande, questo libro traccia il viaggio archetipico dell'eroe — dalle lotte dell'infanzia ai 22 mesi di ingiusta prigionia, fino alla resurrezione attraverso la saggezza antica del Perù.",
+      "p3": "Scritto per coloro che hanno affrontato il burnout, il divorzio, il trauma, o la vuota vittoria di raggiungere una montagna promessa solo per scoprire che non c'è frutto dolce in cima."
+    },
+    "journey": {
+      "eyebrow": "Il Viaggio",
+      "title": "Il viaggio di Capodanno che cambierà tutto nel 2027.",
+      "dates": "Dal 23 Dicembre · 21 Giorni",
+      "desc": "Una spedizione privata e curata che parte il 23 dicembre per 21 giorni, varcando la soglia del 2027 nel cuore del Perù. Sei partecipanti, un percorso, le Ande nel loro momento più sacro."
+    },
+    "why": {
+      "eyebrow": "Perché Questo Libro",
+      "title": "Per Chi Cerca Oltre",
+      "reason1_title": "Per gli Esausti",
+      "reason1_desc": "Se hai raggiunto la vetta e trovato il vuoto, questo libro è per te.",
+      "reason2_title": "Per i Cercatori",
+      "reason2_desc": "Coloro che comprendono che il vero viaggio è interno, non esterno.",
+      "reason3_title": "Per i Feriti",
+      "reason3_desc": "Coloro che hanno sopravvissuto all'ingiustizia e cercano significato oltre la sopravvivenza.",
+      "reason4_title": "Per i Curiosi",
+      "reason4_desc": "Coloro attratti dalla saggezza andina, dalla geografia sacra e dalla trasformazione."
+    },
+    "author": {
+      "eyebrow": "L'Autore",
+      "name": "Marcello Buglione",
+      "title": "Fondatore, Shamanic Travels",
+      "bio1": "Con una base in comunicazione strategica, PNL e ipnosi, Marcello ha trascorso decenni esplorando l'intersezione tra trasformazione personale e geografia sacra.",
+      "bio2": "Nel 2024, ha sopravvissuto a 22 mesi di ingiusta prigionia. Attraverso la saggezza antica del Perù e il paesaggio andino, ha trovato la strada per tornare a se stesso.",
+      "bio3": "Questo libro è la sua testimonianza: che il viaggio dell'eroe non è l'assenza di ostacoli, ma la capacità di trasformarli in saggezza.",
+      "quote": "\"La montagna più importante da scalare è sempre quella che ti porta a scoprire chi sei veramente.\""
+    },
+    "form": {
+      "eyebrow": "Il Libro",
+      "title": "Ricevi il Libro Gratuitamente",
+      "description": "Inserisci la tua email e scarica subito 'Il Viaggio dell'Eroe in Perù'.",
+      "name_placeholder": "Il tuo nome",
+      "email_placeholder": "Il tuo indirizzo email",
+      "submit": "Scarica Gratuitamente",
+      "success": "Controlla la tua email per il link di download.",
+      "error": "Qualcosa è andato storto. Riprova."
+    },
+    "cta_section": {
+      "title": "Pronto per il Tuo Viaggio?",
+      "desc": "Il libro è il tuo primo passo. Per chi è pronto ad andare più in profondità, Shamanic Travels offre spedizioni private curate in Perù.",
+      "link": "Scopri Shamanic Travels →"
+    },
+    "footer": {
+      "desc": "Una narrazione personale del viaggio archetipico dell'eroe — dalle Ande sacre a una storia di rinascita. Scritto da Marcello Buglione."
+    }
   },
   "blog": {
     "eyebrow": "Note dal Campo",

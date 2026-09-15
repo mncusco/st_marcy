@@ -113,14 +113,77 @@
   "footer": {
     "eyebrow": "Privatni IzveÅ¡taji",
     "title1": "Primi",
-    "title2": "I Luoghi Sacri degli Inca",
+    "title2": "Il Viaggio dell'Eroe in Perù",
     "desc": "Sedam poglavlja o najsvetijim mestima andskog sveta: Cusco, Sveta Dolina, Pisac, Moray, Machu Picchu, Titicaca i Tiwanaku. VodiÄ koji je napisao neko ko ih Å¾ivi.",
     "placeholder": "Email adresa",
     "btn": "ZatraÅ¾i",
     "based_label": "SediÅ¡te",
     "based_value": "London · Lima · Milano",
     "copy": "Â© 2026 Â· Privatna Kurirana Putovanja",
-    "title_full": "Dobijte besplatno <em style=\"color:var(--accent);\">La Planta de los Dioses</em>"
+    "title_full": "Dobijte besplatno <em style=\"color:var(--accent);\">Il Viaggio dell'Eroe in Perù</em>"
+  },
+  "book": {
+    "nav_link": "Knjiga",
+    "hero": {
+      "badge": "Novogodišnje putovanje · 2027",
+      "title": "Pustolovlje junaka u Peruu",
+      "subtitle": "Lična odiseja kroz svete andske lokalitete i unutrašnju transformaciju.",
+      "dates": "23. decembar · 21 dan · Nova godina 2027",
+      "cta": "Besplatno preuzmite knjigu",
+      "cta_journey": "Putovanje koje će promeniti sve"
+    },
+    "about": {
+      "eyebrow": "O Knjizi",
+      "title": "Putovanje Iza Planine",
+      "p1": "Ovo nije turistički vodič. To je mapa za preporod.",
+      "p2": "Kombinujući ličnu pripovest sa opisima svetih andskih lokaliteta, ova knjiga prati arhetipsko putovanje junaka — od borbi iz detinjstva do 22 meseca nepravednog zatvora, i na kraju vaskrsenja kroz drevnu mudrost Perua.",
+      "p3": "Napisana za one koji su se suočili sa sagorevanjem, razvodom, traumom ili praznom pobedom dostižući obećanu planinu samo da bi otkrili da na vrhu nema slatkog ploda."
+    },
+    "journey": {
+      "eyebrow": "Putovanje",
+      "title": "Novogodišnje putovanje koje će promeniti sve 2027. godine.",
+      "dates": "Od 23. decembra · 21 dan",
+      "desc": "Kurirana privatna ekspedicija koja polazi 23. decembra na 21 dan, prelazeći prag 2027. u srcu Perua. Šest učesnika, jedna staza, Andi u svom najsvetijem trenutku."
+    },
+    "why": {
+      "eyebrow": "Zašto Ova Knjiga",
+      "title": "Za One Koji Traže Više",
+      "reason1_title": "Za Izgorele",
+      "reason1_desc": "Ako si stigao do vrha i pronašao prazninu, ova knjiga je za tebe.",
+      "reason2_title": "Za Tragače",
+      "reason2_desc": "One koji razumeju da je pravo putovanje unutrašnje, a ne spoljašnje.",
+      "reason3_title": "Za Ranjene",
+      "reason3_desc": "One koji su preživeli nepravdu i traže smisao iza opstanka.",
+      "reason4_title": "Za Radoznale",
+      "reason4_desc": "One koje privlači andska mudrost, sveta geografija i transformacija."
+    },
+    "author": {
+      "eyebrow": "Autor",
+      "name": "Marcello Buglione",
+      "title": "Osnivač, Shamanic Travels",
+      "bio1": "Sa osnovom u strateškoj komunikaciji, NLP-u i hipnozi, Marcello je decenije proveo istražujući presek lične transformacije i svete geografije.",
+      "bio2": "2024. preživeo je 22 meseca nepravednog zatvora. Kroz drevnu mudrost Perua i andski pejzaž, pronašao je put nazad ka sebi.",
+      "bio3": "Ova knjiga je njegovo svedočanstvo: da putovanje junaka nije odsustvo prepreka, već sposobnost da ih pretvori u mudrost.",
+      "quote": "\"Najvažnija planina za penjanje je uvek ona koja te vodi da otkriješ ko si zaista.\""
+    },
+    "form": {
+      "eyebrow": "Knjiga",
+      "title": "Besplatno primite knjigu",
+      "description": "Unesite vašu imejl adresu i odmah preuzmite 'Pustolovlje junaka u Peruu'.",
+      "name_placeholder": "Vaše ime",
+      "email_placeholder": "Vaša imejl adresa",
+      "submit": "Besplatno Preuzmite",
+      "success": "Proverite vašu imejl poštu za link za preuzimanje.",
+      "error": "Nešto je pošlo po zlu. Pokušajte ponovo."
+    },
+    "cta_section": {
+      "title": "Spremni za Vaše Putovanje?",
+      "desc": "Knjiga je vaš prvi korak. Za one koji su spremni da idu dublje, Shamanic Travels nudi kurirane privatne ekspedicije u Peruu.",
+      "link": "Otkrijte Shamanic Travels →"
+    },
+    "footer": {
+      "desc": "Lična pripovest arhetipskog putovanja junaka — od svetih Anda do priče o preporodu. Napisao Marcello Buglione."
+    }
   },
   "blog": {
     "eyebrow": "BeleÅ¡ke sa Terena",

@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     EDITORIAL_FILES_DIR: str = "./ebooks"
     EMAIL_BACKEND: str = "log"
     EMAIL_MAX_RETRIES: int = 3
+    EMAIL_RETRY_BACKOFF_BASE_SECONDS: int = 30
+    EMAIL_RETRY_BACKOFF_MAX_SECONDS: int = 86400
+    EMAIL_PROCESSING_STALE_SECONDS: int = 900
     RESEND_API_KEY: str = ""
     SENDGRID_API_KEY: str = ""
     SMTP_HOST: str = "localhost"

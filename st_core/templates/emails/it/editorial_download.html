@@ -7,6 +7,15 @@
 <h1 style="font-size:20px;font-weight:400;letter-spacing:1px;color:#2d5a27;text-align:center;">Benvenuto in Shamanic Travels</h1>
 <p style="font-size:14px;line-height:1.6;margin-top:24px;">Caro {{ first_name }},</p>
 <p style="font-size:14px;line-height:1.6;">Grazie per il tuo interesse per Shamanic Travels. Abbiamo preparato un editoriale gratuito per aiutarti a iniziare il tuo viaggio.</p>
+{% if click_url %}
+<p style="font-size:14px;line-height:1.6;">Il tuo link di download è pronto.</p>
+<div style="text-align:center;margin:32px 0;">
+ <a href="{{ click_url }}" style="display:inline-block;padding:14px 32px;background:#2d5a27;color:#fff;text-decoration:none;font-size:15px;letter-spacing:1px;border-radius:2px;">Scarica il libro gratuitamente</a>
+</div>
+<p style="font-size:12px;color:#8c8c8c;">Se il pulsante non funziona, copia questo link nel browser:<br><a href="{{ click_url }}" style="color:#b89a5a;">{{ download_url }}</a></p>
+{% else %}
 <p style="font-size:14px;line-height:1.6;">Il tuo link di download è pronto. Se hai domande, rispondi pure a questa email.</p>
+{% endif %}
+<img src="{{ tracking_pixel_url }}" width="1" height="1" alt="" style="display:none;" />
 <p style="font-size:14px;line-height:1.6;margin-top:24px;">Con affetto,<br>Il team di ST Care</p>
 </div></body></html>

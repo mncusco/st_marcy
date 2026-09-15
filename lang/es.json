@@ -113,14 +113,77 @@
   "footer": {
     "eyebrow": "Despachos Privados",
     "title1": "Recibe",
-    "title2": "Los Lugares Sagrados de los Incas",
+    "title2": "Il Viaggio dell'Eroe in Perù",
     "desc": "Siete capítulos sobre los sitios más sagrados del mundo andino: Cusco, el Valle Sagrado, Pisac, Moray, Machu Picchu, Titicaca y Tiwanaku. Una guía escrita por alguien que los vive.",
     "placeholder": "Dirección de correo electrónico",
     "btn": "Solicitar",
     "based_label": "Basado en",
     "based_value": "Londres · Lima · Milán",
     "copy": "Â© 2026 Â· Viajes Privados Curados",
-    "title_full": "Recibe gratuitamente <em style=\"color:var(--accent);\">La Planta de los Dioses</em>"
+    "title_full": "Recibe gratuitamente <em style=\"color:var(--accent);\">Il Viaggio dell'Eroe in Perù</em>"
+  },
+  "book": {
+    "nav_link": "El Libro",
+    "hero": {
+      "badge": "El Viaje de Año Nuevo · 2027",
+      "title": "El Viaje del Héroe en Perú",
+      "subtitle": "Una odisea personal a través de los sitios sagrados de los Andes y la transformación interior.",
+      "dates": "23 de diciembre · 21 días · Año Nuevo 2027",
+      "cta": "Descarga el Libro Gratis",
+      "cta_journey": "El viaje que lo cambiará todo"
+    },
+    "about": {
+      "eyebrow": "Sobre el Libro",
+      "title": "Un Viaje Más Allá de la Montaña",
+      "p1": "No es una guía turística. Es un mapa para renacer.",
+      "p2": "Combinando una narrativa personal con descripciones de los sitios sagrados de los Andes, este libro traza el viaje arquetípico del héroe — desde las luchas de la infancia hasta los 22 meses de prisión injusta, y finalmente la resurrección a través de la sabiduría ancestral del Perú.",
+      "p3": "Escrito para quienes han enfrentado el agotamiento, el divorcio, el trauma, o la victoria vacía de alcanzar una montaña prometida solo para descubrir que no hay fruto dulce en la cima."
+    },
+    "journey": {
+      "eyebrow": "El Viaje",
+      "title": "El viaje de Año Nuevo que lo cambiará todo en 2027.",
+      "dates": "Desde el 23 de diciembre · 21 días",
+      "desc": "Una expedición privada y curada que parte el 23 de diciembre durante 21 días, cruzando el umbral del 2027 en el corazón del Perú. Seis participantes, un camino, los Andes en su momento más sagrado."
+    },
+    "why": {
+      "eyebrow": "Por Qué Este Libro",
+      "title": "Para Quienes Buscan Algo Más",
+      "reason1_title": "Para los Agotados",
+      "reason1_desc": "Si has llegado a la cima y has encontrado el vacío, este libro es para ti.",
+      "reason2_title": "Para los Buscadores",
+      "reason2_desc": "Quienes entienden que el verdadero viaje es interior, no exterior.",
+      "reason3_title": "Para los Heridos",
+      "reason3_desc": "Quienes han sobrevivido a la injusticia y buscan un significado más allá de la supervivencia.",
+      "reason4_title": "Para los Curiosos",
+      "reason4_desc": "Quienes se sienten atraídos por la sabiduría andina, la geografía sagrada y la transformación."
+    },
+    "author": {
+      "eyebrow": "El Autor",
+      "name": "Marcello Buglione",
+      "title": "Fundador, Shamanic Travels",
+      "bio1": "Con una base en comunicación estratégica, PNL e hipnosis, Marcello pasó décadas explorando la intersección entre la transformación personal y la geografía sagrada.",
+      "bio2": "En 2024, sobrevivió a 22 meses de prisión injusta. A través de la sabiduría ancestral del Perú y el paisaje andino, encontró el camino de regreso a sí mismo.",
+      "bio3": "Este libro es su testimonio: que el viaje del héroe no es la ausencia de obstáculos, sino la capacidad de transformarlos en sabiduría.",
+      "quote": "\"La montaña más importante de escalar es siempre la que te lleva a descubrir quién eres realmente.\""
+    },
+    "form": {
+      "eyebrow": "El Libro",
+      "title": "Recibe el Libro Gratis",
+      "description": "Introduce tu correo y descarga inmediatamente 'El Viaje del Héroe en Perú'.",
+      "name_placeholder": "Tu nombre",
+      "email_placeholder": "Tu correo electrónico",
+      "submit": "Descargar Gratis",
+      "success": "Revisa tu correo para el enlace de descarga.",
+      "error": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "cta_section": {
+      "title": "¿Listo para Tu Viaje?",
+      "desc": "El libro es tu primer paso. Para quienes estén listos para ir más profundo, Shamanic Travels ofrece expediciones privadas curadas en Perú.",
+      "link": "Descubre Shamanic Travels →"
+    },
+    "footer": {
+      "desc": "Una narración personal del viaje arquetípico del héroe — de los Andes sagrados a una historia de renacimiento. Escrita por Marcello Buglione."
+    }
   },
   "blog": {
     "eyebrow": "Notas de Campo",

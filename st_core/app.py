@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from database import engine, Base, SessionLocal
-from routes import leads, dashboard, health, download, system, tracking
+from routes import leads, collect, dashboard, health, download, system, tracking
 from core.error_handlers import register_error_handlers
 from core.logger import setup_logging
 from config import settings
@@ -28,13 +28,80 @@ def _migrate_schema():
                     conn.execute(_text("ALTER TABLE leads ADD COLUMN email_opened BOOLEAN DEFAULT 0"))
                     conn.execute(_text("ALTER TABLE leads ADD COLUMN email_clicked BOOLEAN DEFAULT 0"))
                     logger.info("Schema migration: added campaign tracking columns to leads (SQLite)")
+                for col, dtype in [("source", "VARCHAR(50)"), ("device_type", "VARCHAR(20)"),
+                                   ("browser", "VARCHAR(50)"), ("os_name", "VARCHAR(50)")]:
+                    if col not in cols:
+                        conn.execute(_text(f"ALTER TABLE leads ADD COLUMN {col} {dtype}"))
+                        logger.info("Schema migration: added %s to leads (SQLite)", col)
+
+                eq_result = conn.execute(_text("PRAGMA table_info(email_queue)")).fetchall()
+                eq_cols = {row[1] for row in eq_result}
+                for col, dtype in [("provider_message_id", "VARCHAR(128)"),
+                                   ("last_provider_response", "TEXT"),
+                                   ("last_attempt_at", "TIMESTAMP")]:
+                    if col not in eq_cols:
+                        conn.execute(_text(f"ALTER TABLE email_queue ADD COLUMN {col} {dtype}"))
+                        logger.info("Schema migration: added %s to email_queue (SQLite)", col)
+
+                conn.execute(_text("DROP INDEX IF EXISTS uq_email_queue_active_lead_type"))
+                conn.execute(_text(
+                    "CREATE UNIQUE INDEX uq_email_queue_active_lead_type "
+                    "ON email_queue (lead_id, email_type) "
+                    "WHERE status IN ('PENDING', 'PROCESSING', 'RETRY')"
+                ))
+                logger.info("Schema migration: rebuilt email_queue unique index (SQLite)")
             else:
-                for col, dtype in [("campaign_sent_at", "TIMESTAMP"), ("email_opened", "BOOLEAN DEFAULT FALSE"), ("email_clicked", "BOOLEAN DEFAULT FALSE")]:
+                for col, dtype in [("campaign_sent_at", "TIMESTAMP"), ("email_opened", "BOOLEAN DEFAULT FALSE"), ("email_clicked", "BOOLEAN DEFAULT FALSE"), ("source", "VARCHAR(50)"), ("device_type", "VARCHAR(20)"), ("browser", "VARCHAR(50)"), ("os_name", "VARCHAR(50)")]:
                     try:
                         conn.execute(_text(f"ALTER TABLE leads ADD COLUMN IF NOT EXISTS {col} {dtype}"))
                     except Exception:
                         conn.execute(_text(f"ALTER TABLE leads ADD COLUMN {col} {dtype}"))
-                logger.info("Schema migration: ensured campaign tracking columns on leads")
+                for col, dtype in [("provider_message_id", "VARCHAR(128)"),
+                                   ("last_provider_response", "TEXT"),
+                                   ("last_attempt_at", "TIMESTAMP")]:
+                    try:
+                        conn.execute(_text(f"ALTER TABLE email_queue ADD COLUMN IF NOT EXISTS {col} {dtype}"))
+                    except Exception:
+                        conn.execute(_text(f"ALTER TABLE email_queue ADD COLUMN {col} {dtype}"))
+
+                has_retry = conn.execute(_text(
+                    "SELECT 1 FROM pg_enum WHERE enumtypid = 'emailstatus'::regtype AND enumlabel = 'RETRY'"
+                )).fetchone()
+                if not has_retry:
+                    try:
+                        conn.execute(_text("ALTER TYPE emailstatus ADD VALUE IF NOT EXISTS 'RETRY'"))
+                        logger.info("Schema migration: added EmailStatus.RETRY to emailstatus enum")
+                    except Exception:
+                        conn.execute(_text("ALTER TYPE emailstatus ADD VALUE 'RETRY'"))
+                        logger.info("Schema migration: added EmailStatus.RETRY to emailstatus enum (fallback)")
+
+                from models import LeadStatus as _LeadStatus
+                existing_lead = {
+                    row[0] for row in conn.execute(_text(
+                        "SELECT enumlabel FROM pg_enum WHERE enumtypid = 'leadstatus'::regtype"
+                    )).fetchall()
+                }
+                expected_lead = {s.value for s in _LeadStatus}
+                missing_lead = sorted(expected_lead - existing_lead)
+                for label in missing_lead:
+                    try:
+                        conn.execute(_text(f"ALTER TYPE leadstatus ADD VALUE IF NOT EXISTS '{label}'"))
+                        logger.info("Schema migration: added LeadStatus.%s to leadstatus enum", label)
+                    except Exception:
+                        conn.execute(_text(f"ALTER TYPE leadstatus ADD VALUE '{label}'"))
+                        logger.info("Schema migration: added LeadStatus.%s to leadstatus enum (fallback)", label)
+
+                # Postgres: i nuovi valori di enum devono essere COMMITTATI prima di
+                # poter essere usati nelle query della stessa connessione.
+                conn.commit()
+
+                conn.execute(_text("DROP INDEX IF EXISTS uq_email_queue_active_lead_type"))
+                conn.execute(_text(
+                    "CREATE UNIQUE INDEX uq_email_queue_active_lead_type "
+                    "ON email_queue (lead_id, email_type) "
+                    "WHERE status IN ('PENDING', 'PROCESSING', 'RETRY')"
+                ))
+                logger.info("Schema migration: rebuilt email_queue unique index")
             conn.commit()
     except Exception as e:
         logger.warning("Schema migration skipped: %s", e)
@@ -175,6 +242,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(health.router)
 app.include_router(leads.router)
+app.include_router(collect.router)
 app.include_router(dashboard.router)
 app.include_router(download.router)
 app.include_router(system.router)

@@ -7,7 +7,16 @@
 <h1 style="font-size:20px;font-weight:400;letter-spacing:1px;color:#2d5a27;text-align:center;">Dobrodošli u Shamanic Travels</h1>
 <p style="font-size:14px;line-height:1.6;margin-top:24px;">Dragi/a {{ first_name }},</p>
 <p style="font-size:14px;line-height:1.6;">Hvala vam na interesovanju za Shamanic Travels. Pripremili smo besplatno izdanje koje će vam pomoći da započnete svoje putovanje.</p>
+{% if click_url %}
+<p style="font-size:14px;line-height:1.6;">Vaš link za preuzimanje je spreman.</p>
+<div style="text-align:center;margin:32px 0;">
+ <a href="{{ click_url }}" style="display:inline-block;padding:14px 32px;background:#2d5a27;color:#fff;text-decoration:none;font-size:15px;letter-spacing:1px;border-radius:2px;">Preuzmite knjigu besplatno</a>
+</div>
+<p style="font-size:12px;color:#8c8c8c;">Ako dugme ne radi, kopirajte link u pregledač:<br><a href="{{ click_url }}" style="color:#b89a5a;">{{ download_url }}</a></p>
+{% else %}
 <p style="font-size:14px;line-height:1.6;">Vaš link za preuzimanje je spreman. Ako imate pitanja, odgovorite na ovaj email.</p>
+{% endif %}
+<img src="{{ tracking_pixel_url }}" width="1" height="1" alt="" style="display:none;" />
 <p style="font-size:13px;line-height:1.6;margin-top:20px;padding:14px 18px;background:#fdf8ee;border-left:3px solid #b89a5a;color:#6b5e4e;font-style:italic;">Imajte na umu: knjiga je trenutno dostupna samo na italijanskom jeziku. Prevod na srpski je u toku — zahvaljujemo se na strpljenju.</p>
 <p style="font-size:14px;line-height:1.6;margin-top:24px;">Sa toplinom,<br>Tim ST Care</p>
 </div></body></html>

@@ -3,6 +3,7 @@ Run on Railway: railway run python /app/start_campaign.py
 Or copy this file to the app directory first.
 """
 import os, sys, logging
+
 sys.path.insert(0, os.path.dirname(__file__))
 os.environ.setdefault("EMAIL_BACKEND", "smtp")
 
@@ -14,31 +15,39 @@ from models import Lead, EmailQueue
 from services.automation_engine import AutomationEngine
 from config import settings
 
-logger.info("PUBLIC_URL=%s", settings.PUBLIC_URL)
 
-db = SessionLocal()
-try:
+def run_campaign(db) -> dict:
     leads = db.query(Lead).order_by(Lead.id).all()
     total = len(leads)
-    logger.info("Found %d leads total", total)
-    
     queued = 0
     skipped = 0
     for lead in leads:
         existing = db.query(EmailQueue).filter(
             EmailQueue.lead_id == lead.id,
             EmailQueue.email_type == "editorial_reactivation",
-            EmailQueue.status.in_(["PENDING", "PROCESSING"]),
         ).count()
         if existing:
             skipped += 1
             continue
-        engine = AutomationEngine(db)
-        result = engine.on_campaign_reactivation(lead)
+        result = AutomationEngine(db).on_campaign_reactivation(lead)
         if result:
             queued += 1
         db.commit()
-    
-    logger.info("Done: %d queued, %d skipped (already queued) of %d total", queued, skipped, total)
-finally:
-    db.close()
+    return {"queued": queued, "skipped": skipped, "total": total}
+
+
+def main():
+    logger.info("PUBLIC_URL=%s", settings.PUBLIC_URL)
+    db = SessionLocal()
+    try:
+        result = run_campaign(db)
+        logger.info(
+            "Done: %d queued, %d skipped (already queued) of %d total",
+            result["queued"], result["skipped"], result["total"],
+        )
+    finally:
+        db.close()
+
+
+if __name__ == "__main__":
+    main()

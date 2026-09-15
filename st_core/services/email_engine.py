@@ -2,17 +2,18 @@ import json
 import logging
 import random
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 from sqlalchemy.orm import Session
 from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
 
 from config import settings
-from models import EmailQueue, EmailStatus, Lead
+from models import EmailQueue, EmailStatus, Lead, LeadStatus
 from schemas import EmailQueueResponse
 from providers import ConsoleProvider, SmtpProvider, ResendProvider, SendgridProvider
-from providers.interface import EmailSendError
+from providers.interface import EmailSendError, SendOutcome
 
 logger = logging.getLogger("st_core.email_engine")
 
@@ -23,6 +24,12 @@ BACKEND_MAP = {
     "resend": ResendProvider,
     "sendgrid": SendgridProvider,
 }
+
+# Email che promettono un download: richiedono sempre un download_url valido.
+DOWNLOAD_EMAIL_TYPES = ("editorial_download", "editorial_reactivation")
+
+# Stati "attivi" (in pipeline): una sola entry per lead+email_type a questi stati.
+ACTIVE_QUEUE_STATUSES = (EmailStatus.PENDING, EmailStatus.PROCESSING, EmailStatus.RETRY)
 
 TEMPLATE_SUBJECTS: dict[str, str | dict[str, str | list[str]]] = {
     "editorial_download": {
@@ -117,6 +124,7 @@ TEMPLATE_SUBJECTS: dict[str, str | dict[str, str | list[str]]] = {
     },
 }
 
+
 class EmailEngine:
     def __init__(self, db: Session):
         self.db = db
@@ -125,6 +133,14 @@ class EmailEngine:
         key = settings.EMAIL_BACKEND.lower()
         cls = BACKEND_MAP.get(key, ConsoleProvider)
         return cls()
+
+    @staticmethod
+    def _call_backend(backend, **kwargs) -> SendOutcome:
+        send_verbose = getattr(backend, "send_verbose", None)
+        if callable(send_verbose):
+            return send_verbose(**kwargs)
+        ok = backend.send(**kwargs)
+        return SendOutcome(ok=ok, provider_id=None)
 
     def send_test_email(self, to: str) -> dict:
         try:
@@ -139,14 +155,20 @@ class EmailEngine:
 <p style="font-size:14px;line-height:1.6;margin-top:24px;">— ST CORE</p>
 </div></body></html>"""
             backend = self._get_backend()
-            success = backend.send(
+            outcome = self._call_backend(
+                backend,
                 to=to,
                 subject=f"Test Email from ST CORE ({settings.EMAIL_BACKEND})",
                 html_body=html_body,
                 lead_id=0,
                 email_type="test",
             )
-            return {"success": success, "backend": settings.EMAIL_BACKEND, "to": to}
+            return {
+                "success": outcome.ok,
+                "backend": settings.EMAIL_BACKEND,
+                "to": to,
+                "provider_message_id": outcome.provider_id,
+            }
         except Exception as e:
             logger.exception("Test email failed: %s", e)
             return {"success": False, "error": str(e)}
@@ -177,11 +199,11 @@ class EmailEngine:
             sock.settimeout(settings.SMTP_TIMEOUT)
             try:
                 start = time.time()
-                to = settings.SMTP_TIMEOUT
+                timeout = settings.SMTP_TIMEOUT
                 if settings.SMTP_SSL:
-                    server = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, timeout=to)
+                    server = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, timeout=timeout)
                 else:
-                    server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=to)
+                    server = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=timeout)
                     server.ehlo()
                     if settings.SMTP_TLS:
                         server.starttls()
@@ -250,6 +272,34 @@ class EmailEngine:
             return str(lang_subj) if lang_subj else str(subject.get(list(subject.keys())[0]))
         return subject
 
+    def _find_active(self, lead_id: int, email_type: str) -> EmailQueue | None:
+        return (
+            self.db.query(EmailQueue)
+            .filter(
+                EmailQueue.lead_id == lead_id,
+                EmailQueue.email_type == email_type,
+                EmailQueue.status.in_(ACTIVE_QUEUE_STATUSES),
+            )
+            .order_by(EmailQueue.created_at.asc())
+            .first()
+        )
+
+    @staticmethod
+    def resolve_download_url(lead: Lead, payload: dict | None) -> str | None:
+        """URL di download effettivo per una email che promette il libro.
+
+        Usa payload['download_url']; se assente ma il lead ha un token valido,
+        lo ricostruisce dal token (copre le righe storiche con payload parziale).
+        """
+        payload = payload or {}
+        url = payload.get("download_url")
+        if url:
+            return str(url)
+        token = payload.get("download_token") or getattr(lead, "download_token", None)
+        if token:
+            return f"{str(settings.PUBLIC_URL).rstrip('/')}/download/{token}"
+        return None
+
     def queue_email(
         self,
         lead: Lead,
@@ -258,13 +308,29 @@ class EmailEngine:
         template_name: str,
         payload: Optional[dict] = None,
         scheduled_for: Optional[datetime] = None,
-    ) -> EmailQueue:
+        dedupe: bool = True,
+    ) -> EmailQueue | None:
+        """Accoda un'email con protezione anti-duplicati.
+
+        Se esiste già una entry attiva (PENDING/PROCESSING) per lo stesso
+        lead+email_type, restituisce quella esistente. Il vincolo unico
+        parziale sul DB è il backstop contro le race condition tra worker.
+        """
         lang = lead.language or "en"
         normalized = lang.lower().split("-")[0]
         if normalized not in ("en", "it", "es", "ru", "sr"):
             normalized = "en"
 
         resolved_subject = self._resolve_subject(subject, normalized)
+
+        if dedupe:
+            existing = self._find_active(lead.id, email_type)
+            if existing:
+                logger.info(
+                    "Queue skipped (duplicate): existing %s for lead %d (id=%d)",
+                    email_type, lead.id, existing.id,
+                )
+                return existing
 
         entry = EmailQueue(
             lead_id=lead.id,
@@ -277,7 +343,18 @@ class EmailEngine:
             scheduled_for=scheduled_for or datetime.now(timezone.utc),
         )
         self.db.add(entry)
-        self.db.commit()
+        try:
+            self.db.commit()
+        except IntegrityError:
+            self.db.rollback()
+            existing = self._find_active(lead.id, email_type)
+            if existing:
+                logger.info(
+                    "Queue deduped via unique index for %s lead %d (id=%d)",
+                    email_type, lead.id, existing.id,
+                )
+                return existing
+            raise
         self.db.refresh(entry)
         logger.info("Queued %s email for lead %d (id=%d)", email_type, lead.id, entry.id)
         return entry
@@ -300,87 +377,200 @@ class EmailEngine:
         self.db.commit()
         return True
 
-    def _render_and_send(self, entry: EmailQueue) -> bool:
+    def _render_and_send(self, entry: EmailQueue) -> SendOutcome:
         lead = self.db.query(Lead).filter(Lead.id == entry.lead_id).first()
         if not lead:
             logger.error("Lead %d not found for email %d", entry.lead_id, entry.id)
-            return False
+            raise EmailSendError(f"Lead {entry.lead_id} not found")
 
-        try:
-            payload = json.loads(entry.payload_json) if entry.payload_json else {}
-            public_url = str(settings.PUBLIC_URL).rstrip("/")
-            base = f"{public_url}/track/click/{entry.id}"
-            download_url = payload.get("download_url", "")
-            if download_url:
-                from urllib.parse import quote
-                payload["click_url"] = f"{base}?url={quote(download_url)}"
-                payload["tracking_pixel_url"] = f"{public_url}/track/open/{entry.id}.png"
-            context = {
-                "first_name": lead.first_name,
-                "last_name": lead.last_name,
-                "email": lead.email,
-                "language": entry.language,
-                "queue_id": entry.id,
-                "public_url": public_url,
-                "_contact_email": settings.CONTACT_EMAIL,
-                **payload,
-            }
-            html_body = self.render_template(entry.template_name, entry.language, context)
+        payload = json.loads(entry.payload_json) if entry.payload_json else {}
+        public_url = str(settings.PUBLIC_URL).rstrip("/")
+        base = f"{public_url}/track/click/{entry.id}"
+        download_url = self.resolve_download_url(lead, payload)
+        if download_url:
+            from urllib.parse import quote
+            payload["download_url"] = download_url
+            payload["click_url"] = f"{base}?url={quote(download_url)}"
+            payload["tracking_pixel_url"] = f"{public_url}/track/open/{entry.id}.png"
+        context = {
+            "first_name": lead.first_name,
+            "last_name": lead.last_name,
+            "email": lead.email,
+            "language": entry.language,
+            "queue_id": entry.id,
+            "public_url": public_url,
+            "_contact_email": settings.CONTACT_EMAIL,
+            **payload,
+        }
+        html_body = self.render_template(entry.template_name, entry.language, context)
 
-            backend = self._get_backend()
-            success = backend.send(
-                to=lead.email,
-                subject=entry.subject,
-                html_body=html_body,
-                lead_id=lead.id,
-                email_type=entry.email_type,
-            )
-            return success
-        except EmailSendError:
-            raise
-        except Exception as e:
-            logger.exception("Failed to render/send email %d: %s", entry.id, e)
-            return False
+        backend = self._get_backend()
+        return self._call_backend(
+            backend,
+            to=lead.email,
+            subject=entry.subject,
+            html_body=html_body,
+            lead_id=lead.id,
+            email_type=entry.email_type,
+        )
 
-    def process_pending(self, batch_size: int = 20) -> int:
-        max_retries = settings.EMAIL_MAX_RETRIES
-        entries = (
+    def _claim_pending(self, limit: int, only_types: list[str] | None = None,
+                       exclude_types: list[str] | None = None) -> list[EmailQueue]:
+        """Reclama atomicamente le entry PENDING/RETRY pronte, con lock anti-race.
+
+        La transizione PENDING|RETRY→PROCESSING avviene con una singola UPDATE
+        condizionale: in caso di worker concorrenti solo uno vince. Registra
+        last_attempt_at per recuperare eventuali PROCESSING rimaste orfane.
+        """
+        now = datetime.now(timezone.utc)
+        query = self.db.query(EmailQueue.id).filter(
+            EmailQueue.status.in_([EmailStatus.PENDING, EmailStatus.RETRY]),
+            EmailQueue.scheduled_for <= now,
+            EmailQueue.attempts < settings.EMAIL_MAX_RETRIES,
+        )
+        if only_types:
+            query = query.filter(EmailQueue.email_type.in_(only_types))
+        if exclude_types:
+            query = query.filter(~EmailQueue.email_type.in_(exclude_types))
+        query = query.order_by(EmailQueue.created_at.asc()).limit(limit)
+
+        is_pg = self.db.get_bind().dialect.name == "postgresql"
+        if is_pg:
+            query = query.with_for_update(skip_locked=True)
+
+        ids = [r[0] for r in query.all()]
+        if not ids:
+            return []
+
+        claimed = (
             self.db.query(EmailQueue)
-            .filter(EmailQueue.status == EmailStatus.PENDING)
-            .filter(EmailQueue.scheduled_for <= datetime.now(timezone.utc))
-            .filter(EmailQueue.attempts < max_retries)
+            .filter(
+                EmailQueue.id.in_(ids),
+                EmailQueue.status.in_([EmailStatus.PENDING, EmailStatus.RETRY]),
+            )
+            .update(
+                {
+                    EmailQueue.status: EmailStatus.PROCESSING,
+                    EmailQueue.attempts: EmailQueue.attempts + 1,
+                    EmailQueue.last_attempt_at: now,
+                },
+                synchronize_session=False,
+            )
+        )
+        self.db.commit()
+        if claimed == 0:
+            return []
+
+        return (
+            self.db.query(EmailQueue)
+            .filter(EmailQueue.id.in_(ids))
             .order_by(EmailQueue.created_at.asc())
-            .limit(batch_size)
             .all()
         )
 
-        sent_count = 0
-        for entry in entries:
-            entry.status = EmailStatus.PROCESSING
-            entry.attempts += 1
+    def _recover_stale_processing(self) -> int:
+        """Recupero PROCESSING rimaste orfane dopo un crash del worker.
+
+        Se una entry è PROCESSING da oltre EMAIL_PROCESSING_STALE_SECONDS senza
+        commit, l'esito dell'invio è sconosciuto: la marca FAILED (mai ri-invio
+        automatico → nessuna duplicazione involontaria; un admin decide il retry).
+        """
+        grace = settings.EMAIL_PROCESSING_STALE_SECONDS
+        cutoff = datetime.now(timezone.utc) - timedelta(seconds=grace)
+        stale = (
+            self.db.query(EmailQueue)
+            .filter(
+                EmailQueue.status == EmailStatus.PROCESSING,
+                EmailQueue.last_attempt_at < cutoff,
+            )
+            .all()
+        )
+        for entry in stale:
+            entry.status = EmailStatus.FAILED
+            entry.error_message = (
+                entry.error_message
+                or "Worker interrupted before commit — send status unknown, review before resending"
+            )
+            logger.error(
+                "EMAIL RECOVERED stale PROCESSING queue=%d lead=%d type=%s attempts=%d",
+                entry.id, entry.lead_id, entry.email_type, entry.attempts,
+            )
+        if stale:
             self.db.commit()
+        return len(stale)
 
+    def _mark_email_sent(self, entry: EmailQueue) -> None:
+        """Avanzamento CRM: NEW → EMAIL_SENT alla prima email inviata con successo."""
+        try:
+            from services.lead_service import advance_funnel_status
+            lead = self.db.query(Lead).filter(Lead.id == entry.lead_id).first()
+            if lead:
+                advance_funnel_status(self.db, lead, LeadStatus.EMAIL_SENT)
+        except Exception as e:
+            logger.exception("Failed to advance funnel status on email sent for lead %d: %s", entry.lead_id, e)
+
+    def process_pending(self, batch_size: int = 20, only_types: list[str] | None = None,
+                        exclude_types: list[str] | None = None) -> int:
+        """Processa la coda. SENT viene impostato SOLO se il provider conferma
+        l'invio (HTTP 2xx per Resend). Errori temporanei → RETRY con backoff
+        esponenziale; esauriti i tentativi → FAILED finale con l'errore reale."""
+        self._recover_stale_processing()
+        max_retries = settings.EMAIL_MAX_RETRIES
+        entries = self._claim_pending(batch_size, only_types=only_types, exclude_types=exclude_types)
+        sent_count = 0
+
+        for entry in entries:
             error_msg = None
+            outcome = None
             try:
-                success = self._render_and_send(entry)
+                outcome = self._render_and_send(entry)
             except EmailSendError as e:
-                success = False
+                outcome = None
                 error_msg = str(e)
+            except Exception as e:
+                logger.exception("Unhandled error sending email %d: %s", entry.id, e)
+                outcome = None
+                error_msg = f"{type(e).__name__}: {e}"
 
-            if success:
+            if outcome is not None and outcome.ok:
                 entry.status = EmailStatus.SENT
                 entry.sent_at = datetime.now(timezone.utc)
+                entry.provider_message_id = outcome.provider_id
+                entry.last_provider_response = outcome.provider_id or "ok"
+                entry.error_message = None
                 sent_count += 1
+                logger.info(
+                    "EMAIL SENT queue=%d lead=%d type=%s provider_id=%s",
+                    entry.id, entry.lead_id, entry.email_type, outcome.provider_id,
+                )
+                self._mark_email_sent(entry)
             else:
+                entry.last_provider_response = error_msg or "provider did not accept"
                 if entry.attempts >= max_retries:
                     entry.status = EmailStatus.FAILED
                     entry.error_message = error_msg or f"Failed after {entry.attempts} attempts"
+                    logger.error(
+                        "EMAIL FAILED queue=%d lead=%d type=%s attempts=%d error=%s",
+                        entry.id, entry.lead_id, entry.email_type, entry.attempts, entry.error_message,
+                    )
                 else:
-                    entry.status = EmailStatus.PENDING
+                    backoff = self._backoff_seconds(entry.attempts)
+                    entry.status = EmailStatus.RETRY
+                    entry.scheduled_for = datetime.now(timezone.utc) + timedelta(seconds=backoff)
                     entry.error_message = error_msg or f"Attempt {entry.attempts}/{max_retries} failed"
+                    logger.warning(
+                        "EMAIL RETRY queue=%d lead=%d type=%s attempts=%d backoff=%ds error=%s",
+                        entry.id, entry.lead_id, entry.email_type, entry.attempts, backoff, entry.error_message,
+                    )
             self.db.commit()
 
         return sent_count
+
+    @staticmethod
+    def _backoff_seconds(attempts: int) -> int:
+        base = settings.EMAIL_RETRY_BACKOFF_BASE_SECONDS
+        cap = settings.EMAIL_RETRY_BACKOFF_MAX_SECONDS
+        return min(base * (2 ** max(0, attempts - 1)), cap)
 
     def get_queue_stats(self):
         total = self.db.query(func.count(EmailQueue.id)).scalar() or 0
@@ -393,6 +583,12 @@ class EmailEngine:
         processing = (
             self.db.query(func.count(EmailQueue.id))
             .filter(EmailQueue.status == EmailStatus.PROCESSING)
+            .scalar()
+            or 0
+        )
+        retry = (
+            self.db.query(func.count(EmailQueue.id))
+            .filter(EmailQueue.status == EmailStatus.RETRY)
             .scalar()
             or 0
         )
@@ -425,6 +621,7 @@ class EmailEngine:
             "total": total,
             "pending": pending,
             "processing": processing,
+            "retry": retry,
             "failed": failed,
             "sent": sent,
             "cancelled": cancelled,

@@ -20,9 +20,38 @@ class LeadBase(BaseModel):
     downloaded_editorial: bool = False
     ip_address: Optional[str] = None
     user_agent: Optional[str] = None
+    device_type: Optional[str] = None
+    browser: Optional[str] = None
+    os_name: Optional[str] = None
 
 class LeadCreate(LeadBase):
     notes: Optional[str] = None
+
+
+ALLOWED_COLLECT_SOURCES = ["the-last-call", "la-montagna-che-portiamo-dentro"]
+
+
+class CollectLeadCreate(BaseModel):
+    """Nominativo raccolto da canali esterni dedicati (solo raccolta, senza
+    attivazione delle sequenze email automatiche di ST Core).
+
+    I campi minimi sono `email`, `source`. I lead creati vengono taggati con
+    `Lead.source` e NON innescano l'automazione email: restano separati dalle
+    liste/sequenze esistenti finché non li attivi esplicitamente in seguito.
+    """
+    email: EmailStr
+    first_name: Optional[str] = Field(None, max_length=100)
+    last_name: Optional[str] = Field(None, max_length=100)
+    source: str = Field(...)
+    campaign: Optional[str] = Field(None, max_length=255)
+    source_page: Optional[str] = Field(None, max_length=255)
+    referrer: Optional[str] = Field(None, max_length=512)
+    utm_source: Optional[str] = Field(None, max_length=255)
+    utm_medium: Optional[str] = Field(None, max_length=255)
+    utm_campaign: Optional[str] = Field(None, max_length=255)
+    language: Optional[str] = None
+    country: Optional[str] = None
+
 
 class LeadUpdate(BaseModel):
     status: Optional[LeadStatus] = None
@@ -37,9 +66,14 @@ class LeadResponse(LeadBase):
     status: LeadStatus
     notes: Optional[str]
     priority_score: int = 0
+    source: Optional[str] = None
     download_token: Optional[str] = None
     download_expires_at: Optional[datetime] = None
     downloaded_at: Optional[datetime] = None
+    email_opened: bool = False
+    email_clicked: bool = False
+    opened_at: Optional[datetime] = None
+    clicked_at: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
 
@@ -74,6 +108,8 @@ class EmailQueueResponse(BaseModel):
     sent_at: Optional[datetime] = None
     attempts: int
     error_message: Optional[str] = None
+    provider_message_id: Optional[str] = None
+    last_provider_response: Optional[str] = None
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)

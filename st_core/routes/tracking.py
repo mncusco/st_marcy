@@ -7,7 +7,9 @@ from fastapi.responses import RedirectResponse, Response
 from sqlalchemy.orm import Session
 
 from dependencies import get_db
-from models import EmailQueue, EmailStatus, Lead
+from core.tracking import client_ip
+from models import ClickEvent, EmailQueue, EmailStatus, Lead, LeadStatus, OpenEvent
+from services.lead_service import advance_funnel_status
 
 logger = logging.getLogger("st_core.tracking")
 
@@ -22,13 +24,23 @@ TRANSPARENT_PIXEL = (
 
 
 @router.get("/track/open/{queue_id}.png")
-def track_open(queue_id: int, db: Session = Depends(get_db)):
+def track_open(queue_id: int, request: Request, db: Session = Depends(get_db)):
     entry = db.query(EmailQueue).filter(EmailQueue.id == queue_id).first()
     if entry:
         lead = db.query(Lead).filter(Lead.id == entry.lead_id).first()
         if lead:
-            lead.email_opened = True
-            lead.opened_at = datetime.now(timezone.utc)
+            if not lead.email_opened:
+                lead.email_opened = True
+            if lead.opened_at is None:
+                lead.opened_at = datetime.now(timezone.utc)
+            db.add(OpenEvent(
+                lead_id=lead.id,
+                queue_id=queue_id,
+                ip_address=client_ip(request),
+                user_agent=request.headers.get("user-agent"),
+                referrer=request.headers.get("referer"),
+            ))
+            advance_funnel_status(db, lead, LeadStatus.OPENED)
             db.commit()
             logger.info("TRACK open: queue=%d lead=%d", queue_id, lead.id)
     return Response(content=TRANSPARENT_PIXEL, media_type="image/gif")
@@ -38,20 +50,36 @@ def track_open(queue_id: int, db: Session = Depends(get_db)):
 def track_click(queue_id: int, request: Request, db: Session = Depends(get_db)):
     entry = db.query(EmailQueue).filter(EmailQueue.id == queue_id).first()
     redirect_url = None
-    if entry:
-        lead = db.query(Lead).filter(Lead.id == entry.lead_id).first()
-        if lead:
-            lead.email_clicked = True
-            lead.clicked_at = datetime.now(timezone.utc)
-            db.commit()
-            logger.info("TRACK click: queue=%d lead=%d", queue_id, lead.id)
     target = request.query_params.get("url", "")
     if target:
         redirect_url = unquote(target)
-    if not redirect_url and entry:
+    if entry:
         import json
         payload = json.loads(entry.payload_json) if entry.payload_json else {}
-        redirect_url = payload.get("download_url", "")
+        if not redirect_url:
+            redirect_url = payload.get("download_url", "")
+        lead = db.query(Lead).filter(Lead.id == entry.lead_id).first()
+        if lead:
+            if not lead.email_clicked:
+                lead.email_clicked = True
+            if lead.clicked_at is None:
+                lead.clicked_at = datetime.now(timezone.utc)
+            final_url = redirect_url or ""
+            db.add(ClickEvent(
+                lead_id=lead.id,
+                queue_id=queue_id,
+                url=final_url[:1024],
+                is_download="/download/" in final_url,
+                ip_address=client_ip(request),
+                user_agent=request.headers.get("user-agent"),
+                referrer=request.headers.get("referer"),
+            ))
+            advance_funnel_status(db, lead, LeadStatus.CLICKED)
+            db.commit()
+            logger.info(
+                "TRACK click: queue=%d lead=%d is_download=%s",
+                queue_id, lead.id, "/download/" in final_url,
+            )
     if not redirect_url:
         redirect_url = str(request.base_url)
     return RedirectResponse(url=redirect_url, status_code=302)

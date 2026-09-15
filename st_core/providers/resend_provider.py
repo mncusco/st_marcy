@@ -2,7 +2,9 @@ import json
 import logging
 import urllib.request
 import urllib.error
-from providers.interface import EmailProvider, EmailSendError
+from typing import Optional
+
+from providers.interface import EmailProvider, EmailSendError, SendOutcome
 from config import settings
 
 logger = logging.getLogger("st_core.email")
@@ -12,6 +14,11 @@ class ResendProvider(EmailProvider):
     API_URL = "https://api.resend.com/emails"
 
     def send(self, to: str, subject: str, html_body: str, lead_id: int, email_type: str) -> bool:
+        return bool(self.send_verbose(to, subject, html_body, lead_id, email_type))
+
+    def send_verbose(
+        self, to: str, subject: str, html_body: str, lead_id: int, email_type: str
+    ) -> SendOutcome:
         api_key = settings.RESEND_API_KEY
         if not api_key:
             logger.error("RESEND_API_KEY not configured")
@@ -37,9 +44,18 @@ class ResendProvider(EmailProvider):
 
         try:
             resp = urllib.request.urlopen(req, timeout=30)
-            body = resp.read()
-            logger.info("Resend OK to=%s subject=%s lead_id=%d type=%s status=%d", to, subject, lead_id, email_type, resp.status)
-            return True
+            body = resp.read().decode("utf-8", errors="replace")
+            message_id: Optional[str] = None
+            try:
+                data = json.loads(body) if body else {}
+                message_id = data.get("id")
+            except ValueError:
+                logger.debug("Resend non-JSON body: %s", body[:200])
+            logger.info(
+                "Resend OK to=%s subject=%s lead_id=%d type=%s status=%d id=%s",
+                to, subject, lead_id, email_type, resp.status, message_id,
+            )
+            return SendOutcome(ok=True, provider_id=message_id)
         except urllib.error.HTTPError as e:
             error_body = e.read().decode("utf-8", errors="replace")
             logger.error("Resend HTTP %d to=%s lead_id=%d type=%s: %s", e.code, to, lead_id, email_type, error_body)

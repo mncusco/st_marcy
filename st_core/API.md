@@ -73,6 +73,52 @@ Track editorial download.
 
 ---
 
+## Collect (sola raccolta da canali esterni)
+
+### `POST /api/collect`
+
+Crea un lead di **sola raccolta** da un canale esterno dedicato (es. "The Last Call",
+"La Montagna Che Portiamo Dentro"). A differenza di `POST /api/leads`, **non attiva
+nessuna sequenza email automatica** (niente `editorial_download`, `followup_3_days`,
+editorial assegnato o reminder). I lead restano in stato `NEW` e separati dalle altre
+liste/sequenze, identificabili tramite il campo `source`.
+
+**Autenticazione:** nessuna (pubblico, come `POST /api/leads`).
+
+**Body** (JSON):
+| Field       | Type   | Required | Description                                              |
+|-------------|--------|----------|----------------------------------------------------------|
+| email       | string | yes      | Valid email                                              |
+| source      | string | yes      | `the-last-call` o `la-montagna-che-portiamo-dentro`      |
+| first_name  | string | no       | (default "Lead" se assente)                              |
+| last_name   | string | no       |                                                          |
+| campaign    | string | no       |                                                          |
+| source_page | string | no       |                                                          |
+| referrer    | string | no       |                                                          |
+| utm_source  | string | no       |                                                          |
+| utm_medium  | string | no       |                                                          |
+| utm_campaign| string | no       |                                                          |
+| language    | string | no       | en, it, es, ru, sr                                       |
+| country     | string | no       |                                                          |
+
+La data di iscrizione viene salvata automaticamente in `created_at`.
+
+**Response:**
+```json
+{ "success": true, "id": 1, "source": "the-last-call" }
+```
+
+**Errori:** `422` se `source` non è consentito o manca `email`; `409` se l'email è già registrata
+(anche rispetto a un lead creato via `POST /api/leads`).
+
+**Filtrare i lead per fonte** (esempio API):
+```sql
+WHERE source = 'the-last-call'
+```
+Le liste esistenti (create via `/api/leads` o import) hanno `source` NULL.
+
+---
+
 ## Download
 
 ### `GET /download/{token}`
