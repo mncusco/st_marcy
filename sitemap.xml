@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.shamanictravels.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://www.shamanictravels.com/en</loc><priority>0.9</priority></url>
+  <url><loc>https://www.shamanictravels.com/it</loc><priority>0.9</priority></url>
+  <url><loc>https://www.shamanictravels.com/es</loc><priority>0.9</priority></url>
+  <url><loc>https://www.shamanictravels.com/ru</loc><priority>0.9</priority></url>
+  <url><loc>https://www.shamanictravels.com/sr</loc><priority>0.9</priority></url>
   <url><loc>https://www.shamanictravels.com/andean_arc_clean</loc><priority>0.9</priority></url>
   <url><loc>https://www.shamanictravels.com/amazon_clean</loc><priority>0.9</priority></url>
   <url><loc>https://www.shamanictravels.com/apply_clean</loc><priority>0.8</priority></url>
