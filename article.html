@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Article — ShamanicTravels</title>
 <meta name="description" content="">
+<link rel="canonical" id="artCanonical" href="">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ShamanicTravels">
+<meta property="og:title" id="artOgTitle" content="">
+<meta property="og:description" id="artOgDesc" content="">
+<meta property="og:url" id="artOgUrl" content="">
+<meta property="og:image" id="artOgImage" content="">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -220,6 +227,76 @@ nav {
 }
 .article-cta:hover { background: var(--accent); }
 
+/* ── PILLAR LINK ── */
+a.article-hero-category { text-decoration: none; }
+
+.article-pillar {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 64px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.article-pillar-label {
+  color: var(--muted);
+  display: block;
+  margin-bottom: 20px;
+}
+.article-pillar-link {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 24px;
+  color: var(--foreground);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 3px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.article-pillar-link:hover { color: var(--accent); border-color: currentColor; }
+
+/* ── RELATED ── */
+.article-related {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 40px 32px;
+}
+.article-related-label {
+  color: var(--muted);
+  display: block;
+  margin-bottom: 32px;
+}
+.article-related-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+@media (min-width: 768px) { .article-related-list { grid-template-columns: 1fr 1fr; } }
+.article-related-item {
+  background: var(--background);
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--foreground);
+  transition: background 0.3s;
+}
+.article-related-item:hover { background: #ede9e2; }
+.article-related-item h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.2;
+}
+.article-related-item span.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 /* ── NOT FOUND ── */
 .article-not-found {
   max-width: 720px;
@@ -311,6 +388,26 @@ function initials(name) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 }
 
+const PILLAR_LABELS = {
+  'ayahuasca-safety': 'Ayahuasca & Safety',
+  'preparation-integration': 'Preparation & Integration',
+  'ethics-shamanism': 'Ethics & Shamanism',
+  'peru': 'Peru',
+  'amazon': 'Amazon',
+  'andes': 'Andes',
+  'private-journeys': 'Private Journeys',
+  'lifestyle-ethos': 'Lifestyle & Ethos'
+};
+
+function mdParagraph(text) {
+  const esc = String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+  return esc.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+}
+
 async function loadArticle() {
   const slug = new URLSearchParams(window.location.search).get('id');
   const container = document.getElementById('articleContent');
@@ -341,7 +438,17 @@ async function loadArticle() {
     // Selezione campo localizzato con fallback all'italiano
     const t = (field) => article[`${field}_${lang}`] || article[field] || '';
     const bodyField = article[`body_${lang}`] || article.body || [];
-    const bodyParagraphs = bodyField.map(p => `<p>${p}</p>`).join('');
+    const bodyParagraphs = bodyField.map(p => `<p>${mdParagraph(p)}</p>`).join('');
+
+    // Canonical + Open Graph (valori statici non possibili: pagina cliente)
+    const SITE = 'https://www.shamanictravels.com';
+    const artCanonical = document.getElementById('artCanonical');
+    if (artCanonical) artCanonical.setAttribute('href', `${SITE}/article?id=${slug}`);
+    const ogFields = { artOgTitle: `${article.title} — ShamanicTravels`, artOgDesc: article.excerpt || '', artOgUrl: `${SITE}/article?id=${slug}`, artOgImage: `${SITE}/${article.image || 'insights.jpg'}` };
+    Object.keys(ogFields).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('content', ogFields[id]);
+    });
 
     // Banner lingua se articolo non disponibile nella lingua corrente
     const hasTranslation = lang === 'it' || !!article[`body_${lang}`];
@@ -353,6 +460,14 @@ async function loadArticle() {
     const backLabel = { it:'← Tutti gli articoli', en:'← All Insights', es:'← Todos los artículos', ru:'← Все статьи', sr:'← Svi članci' }[lang] || '← All Insights';
     const ctaLabel = { it:'Prenota un colloquio privato', en:'Request Private Interview', es:'Solicitar entrevista privada', ru:'Запросить интервью', sr:'Zatraži privatni razgovor' }[lang] || 'Request Private Interview';
     const roleLabel = { it:'Guida e Fondatore · ShamanicTravels', en:'Guide & Founder · ShamanicTravels', es:'Guía y Fundador · ShamanicTravels', ru:'Гид и основатель · ShamanicTravels', sr:'Vodič i osnivač · ShamanicTravels' }[lang] || 'Guide & Founder · ShamanicTravels';
+    const backCollectionLabel = { it:'Ritorna alla collezione', en:'Back to collection', es:'Volver a la colección', ru:'Вернуться к коллекции', sr:'Nazad na kolekciju' }[lang] || 'Back to collection';
+    const relatedLabel = { it:'Approfondimenti correlati', en:'Further reading', es:'Lecturas relacionadas', ru:'Дополнительное чтение', sr:'Dalje čitanje' }[lang] || 'Further reading';
+
+    const displayCategory = (lang === 'it') ? (article.category || article.category_en || '') : (article.category_en || article.category || '');
+    const pillarLabel = PILLAR_LABELS[article.category_key] || article.category_en || article.category || '';
+    const related = (articles || [])
+      .filter(a => (article.related || []).includes(a.slug))
+      .filter(a => a.slug !== article.slug);
 
     container.innerHTML = `
       <div class="article-hero">
@@ -363,7 +478,7 @@ async function loadArticle() {
         <div class="article-hero-overlay"></div>
         <div class="article-hero-content">
           <div class="article-hero-meta">
-            <span class="eyebrow article-hero-category">${article.category}</span>
+            ${article.category_key ? `<a href="/insights/${article.category_key}" class="eyebrow article-hero-category">${displayCategory}</a>` : `<span class="eyebrow article-hero-category">${displayCategory}</span>`}
             <span class="eyebrow article-hero-date">${formatDate(article.date)}</span>
           </div>
           <h1 class="article-hero-title">${t('title')}</h1>
@@ -385,6 +500,24 @@ async function loadArticle() {
         <div class="article-body">${bodyParagraphs}</div>
       </div>
 
+      ${article.category_key ? `
+      <div class="article-pillar">
+        <span class="eyebrow article-pillar-label">${backCollectionLabel}</span>
+        <a href="/insights/${article.category_key}" class="article-pillar-link">${pillarLabel} →</a>
+      </div>` : ''}
+
+      ${related.length ? `
+      <div class="article-related">
+        <span class="eyebrow article-related-label">${relatedLabel}</span>
+        <div class="article-related-list">
+          ${related.map(r => `
+          <a href="/article?id=${r.slug}" class="article-related-item">
+            <span class="eyebrow">${r.category_en || r.category || ''}</span>
+            <h3>${r[`title_${lang}`] || r.title || ''}</h3>
+          </a>`).join('')}
+        </div>
+      </div>` : ''}
+
       <div class="article-bottom">
         <a href="/blog" class="eyebrow article-back">${backLabel}</a>
         <a href="/apply_clean" class="article-cta eyebrow">${ctaLabel}</a>
@@ -394,6 +527,31 @@ async function loadArticle() {
         <p class="eyebrow footer-copy">© 2026 ShamanicTravels · Private Curated Journeys</p>
       </footer>
     `;
+
+    if (article.trusted === true) {
+      const ld = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        'headline': article.title || '',
+        'description': article.excerpt || '',
+        'image': `${SITE}/${article.image || 'insights.jpg'}`,
+        'datePublished': article.date || '',
+        'dateModified': article.updated || article.date || '',
+        'inLanguage': lang === 'it' ? 'it' : 'en',
+        'author': { '@type': 'Person', 'name': article.author || 'Marcello Buglione' },
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'ShamanicTravels',
+          'url': SITE,
+          'logo': { '@type': 'ImageObject', 'url': `${SITE}/logo.png` }
+        },
+        'mainEntityOfPage': `${SITE}/article?id=${slug}`
+      };
+      const tag = document.createElement('script');
+      tag.type = 'application/ld+json';
+      tag.textContent = JSON.stringify(ld);
+      document.head.appendChild(tag);
+    }
   } catch (e) {
     showNotFound(container);
   }

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peru Travel & Shamanism Insights | ShamanicTravels</title>
-<meta name="description" content="Field notes on Peru, Andean and Amazonian traditions, ethical immersion and the philosophy of private experiential travel.">
+<title>Ethics & Shamanism | ShamanicTravels</title>
+<meta name="description" content="Language, respect, consent, and the relationship between visitor and tradition. A sober look at cultural authenticity, the burden of the word “shaman”, and the difference between an authentic encounter and a constructed product.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,61 +102,59 @@ nav {
 .nav-mobile-toggle span:last-child  { width: 16px; }
 
 /* ── HERO ── */
-.blog-hero {
-  padding: 160px 40px 80px;
+.pillar-hero {
+  padding: 160px 40px 72px;
   max-width: 1280px;
   margin: 0 auto;
   border-bottom: 1px solid var(--border);
 }
-.blog-hero-eyebrow {
+.pillar-hero-eyebrow {
   color: var(--accent);
   display: block;
   margin-bottom: 24px;
 }
-.blog-hero-title {
+.pillar-hero-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(48px, 7vw, 88px);
+  font-size: clamp(48px, 6vw, 76px);
   font-weight: 300;
-  line-height: 0.95;
+  line-height: 0.98;
   margin-bottom: 32px;
 }
-.blog-hero-desc {
+.pillar-hero-desc {
   color: var(--muted);
   font-size: 17px;
   line-height: 1.8;
-  max-width: 540px;
+  max-width: 620px;
 }
 
-/* ── FILTERS ── */
-.blogs-filters {
+/* ── RELATED ── */
+.pillar-related {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 32px 40px 0;
+  padding: 32px 40px;
+  border-bottom: 1px solid var(--border);
   display: flex;
+  align-items: baseline;
+  gap: 24px;
   flex-wrap: wrap;
-  gap: 10px;
 }
-.filter-btn {
-  background: none;
-  border: 1px solid var(--border);
-  padding: 8px 20px;
-  font-family: 'Inter', sans-serif;
+.pillar-related-label { color: var(--muted); }
+.pillar-related-links { display: flex; gap: 28px; flex-wrap: wrap; }
+.pillar-related-links a {
+  color: var(--foreground);
+  text-decoration: none;
   font-size: 10px;
-  font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.3s;
+  transition: color 0.3s;
 }
-.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-.filter-btn.active { background: var(--foreground); border-color: var(--foreground); color: var(--background); }
+.pillar-related-links a:hover { color: var(--accent); }
 
 /* ── GRID ── */
 .blog-grid {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 40px 160px;
+  padding: 72px 40px 40px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 1px;
@@ -235,6 +233,39 @@ nav {
   text-align: center;
   color: var(--muted);
 }
+.blog-empty a {
+  color: var(--accent);
+  text-decoration: none;
+  margin-left: 12px;
+}
+
+/* ── CTA ── */
+.pillar-cta {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 40px 96px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+}
+.pillar-cta-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.45;
+  max-width: 640px;
+}
+.pillar-cta-link {
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 4px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.pillar-cta-link:hover { color: var(--foreground); border-color: var(--foreground); }
 
 /* ── FOOTER ── */
 footer {
@@ -263,21 +294,44 @@ footer {
   .nav-links { display: none; }
   .nav-mobile-toggle { display: flex; }
   .nav-inner { padding: 20px 24px; }
-  .blog-hero { padding: 140px 24px 64px; }
-  .blog-grid { padding: 40px 24px 100px; }
+  .pillar-hero { padding: 140px 24px 56px; }
+  .pillar-related { padding: 24px 24px; gap: 16px; }
+  .blog-grid { padding: 48px 24px 24px; }
   .blog-card { padding: 28px 24px; }
+  .pillar-cta { padding: 32px 24px 72px; }
 }
 </style>
-<link rel="canonical" href="https://www.shamanictravels.com/blog">
+<link rel="canonical" href="https://www.shamanictravels.com/insights/ethics-shamanism">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<meta property="og:url" content="https://www.shamanictravels.com/blog">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ShamanicTravels">
+<meta property="og:url" content="https://www.shamanictravels.com/insights/ethics-shamanism">
+<meta property="og:title" content="Ethics & Shamanism | ShamanicTravels">
+<meta property="og:description" content="Language, respect, consent, and the relationship between visitor and tradition. A sober look at cultural authenticity, the burden of the word “shaman”, and the difference between an authentic encounter and a constructed product.">
+<meta property="og:image" content="https://www.shamanictravels.com/insights.jpg">
+<meta property="og:locale" content="en_US">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Ethics & Shamanism",
+  "url": "https://www.shamanictravels.com/insights/ethics-shamanism",
+  "description": "Language, respect, consent, and the relationship between visitor and tradition. A sober look at cultural authenticity, the burden of the word “shaman”, and the difference between an authentic encounter and a constructed product.",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "ShamanicTravels",
+    "url": "https://www.shamanictravels.com"
+  }
+}
+</script>
 </head>
 <body>
 
 <nav id="mainNav">
   <div class="nav-inner">
     <a href="/" class="nav-brand" aria-label="ShamanicTravels — Home">
-      <img src="logo.jpg" alt="ShamanicTravels" class="nav-logo">
+      <img src="/logo.jpg" alt="ShamanicTravels" class="nav-logo">
       <span class="nav-brand-name">ShamanicTravels</span>
     </a>
     <ul class="nav-links">
@@ -294,20 +348,28 @@ footer {
   </div>
 </nav>
 
-<div class="blog-hero">
-  <span class="eyebrow blog-hero-eyebrow">Field Notes</span>
-  <h1 class="blog-hero-title">Insights</h1>
-  <p class="blog-hero-desc">Reflections on shamanic traditions, the philosophy of private travel, and the living geography of Peru — written by Marcello Buglione.</p>
+<div class="pillar-hero">
+  <span class="eyebrow pillar-hero-eyebrow">Insights</span>
+  <h1 class="pillar-hero-title">Ethics & Shamanism</h1>
+  <p class="pillar-hero-desc">Language, respect, consent, and the relationship between visitor and tradition. A sober look at cultural authenticity, the burden of the word “shaman”, and the difference between an authentic encounter and a constructed product.</p>
 </div>
 
-<div class="blogs-filters" id="filtersWrap"></div>
+<div class="pillar-related">
+  <span class="eyebrow pillar-related-label">Related collections</span>
+  <div class="pillar-related-links"><a href="/insights/ayahuasca-safety" class="eyebrow">Ayahuasca & Safety</a><a href="/insights/peru" class="eyebrow">Peru</a></div>
+</div>
 
-<div class="blog-grid" id="blogGrid">
+<div class="blog-grid" id="pillarGrid">
   <div class="blog-empty eyebrow">Loading articles…</div>
 </div>
 
+<div class="pillar-cta">
+  <p class="pillar-cta-text">These are the questions we ask ourselves before every journey.</p>
+  <a href="/landing-editorial" class="pillar-cta-link eyebrow">Editorial introduction →</a>
+</div>
+
 <footer>
-  <a href="/" class="eyebrow footer-back">← Return to ShamanicTravels</a>
+  <a href="/blog" class="eyebrow footer-back">← All Insights</a>
   <p class="eyebrow footer-copy">© 2026 ShamanicTravels · Private Curated Journeys</p>
 </footer>
 
@@ -331,92 +393,46 @@ function formatDate(str) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-const CATEGORY_LABELS = {
-  'ayahuasca-safety': 'Ayahuasca & Safety',
-  'preparation-integration': 'Preparation & Integration',
-  'ethics-shamanism': 'Ethics & Shamanism',
-  'peru': 'Peru',
-  'amazon': 'Amazon',
-  'andes': 'Andes',
-  'private-journeys': 'Private Journeys',
-  'lifestyle-ethos': 'Lifestyle & Ethos'
-};
-
-let currentFilter = 'all';
-
-function renderGrid(grid, list, tr, lang) {
-  const sorted = [...list].sort((a, b) => new Date(b.date) - new Date(a.date));
-  if (!sorted.length) {
-    grid.innerHTML = `<div class="blog-empty eyebrow">${tr('blog.empty', 'No articles published yet.')}</div>`;
-    return;
-  }
-
-  grid.innerHTML = sorted.map((a, i) => {
-    const title    = a[`title_${lang}`]    || a.title    || '';
-    const excerpt  = a[`excerpt_${lang}`]  || a.excerpt  || '';
-    const category = a.category_en || a.category || '';
-    return `
-      <a href="/article?id=${a.slug}" class="blog-card">
-        <img
-          src="${a.image || 'insights.jpg'}"
-          alt="${title}"
-          class="blog-card-img"
-          loading="${i === 0 ? 'eager' : 'lazy'}">
-        <div class="blog-card-meta">
-          ${a.category_key ? `<a href="/insights/${a.category_key}" class="eyebrow blog-card-category">${category}</a>` : `<span class="eyebrow blog-card-category">${category}</span>`}
-          <span class="eyebrow blog-card-date">${formatDate(a.date)}</span>
-        </div>
-        <h2 class="blog-card-title">${title}</h2>
-        <p class="blog-card-subtitle">${excerpt}</p>
-        <span class="blog-card-link eyebrow">${tr('blog.read', 'Read →')}</span>
-      </a>
-    `;
-  }).join('');
-}
-
-async function loadArticles() {
-  const grid = document.getElementById('blogGrid');
-  const filters = document.getElementById('filtersWrap');
-  const lang = (typeof i18n !== 'undefined' && i18n.getCurrent) ? i18n.getCurrent() : (localStorage.getItem('st_lang') || 'en');
-  const tr = (key, fallback) => (typeof i18n !== 'undefined' && i18n.get(key) !== null) ? i18n.get(key) : fallback;
-
+async function loadPillar() {
+  const grid = document.getElementById('pillarGrid');
   try {
     const res = await fetch('/articles.json');
     if (!res.ok) throw new Error('not found');
-    const articles = await res.json();
+    const all = await res.json();
+    const list = all
+      .filter(a => a.category_key === 'ethics-shamanism')
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    if (!articles.length) {
-      grid.innerHTML = `<div class="blog-empty eyebrow">${tr('blog.empty', 'No articles published yet.')}</div>`;
+    if (!list.length) {
+      grid.innerHTML = `<div class="blog-empty eyebrow">This collection will grow with the editorial archive.<a href="/blog" class="eyebrow">All Insights →</a></div>`;
       return;
     }
 
-    const categories = ['all', ...new Set(articles.map(a => a.category_key).filter(Boolean))];
-    filters.innerHTML = categories.map(c =>
-      `<button class="filter-btn eyebrow${c === currentFilter ? ' active' : ''}" data-filter="${c}">${CATEGORY_LABELS[c] || c}</button>`
-    ).join('');
-
-    filters.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        filters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentFilter = btn.dataset.filter;
-        renderGrid(grid, currentFilter === 'all' ? articles : articles.filter(a => a.category_key === currentFilter), tr, lang);
-      });
-    });
-
-    renderGrid(grid, articles, tr, lang);
+    grid.innerHTML = list.map((a, i) => `
+      <a href="/article?id=${a.slug}" class="blog-card">
+        <img
+          src="/${a.image || 'insights.jpg'}"
+          alt="${a.title || ''}"
+          class="blog-card-img"
+          loading="${i === 0 ? 'eager' : 'lazy'}">
+        <div class="blog-card-meta">
+          <span class="eyebrow blog-card-category">${a.category_en || a.category || ''}</span>
+          <span class="eyebrow blog-card-date">${formatDate(a.date)}</span>
+        </div>
+        <h2 class="blog-card-title">${a.title || ''}</h2>
+        <p class="blog-card-subtitle">${a.excerpt || ''}</p>
+        <span class="blog-card-link eyebrow">Read →</span>
+      </a>
+    `).join('');
   } catch (e) {
-    grid.innerHTML = `<div class="blog-empty eyebrow">${tr('blog.empty', 'Articles coming soon.')}</div>`;
+    grid.innerHTML = `<div class="blog-empty eyebrow">This collection will grow with the editorial archive.<a href="/blog" class="eyebrow">All Insights →</a></div>`;
   }
 }
+loadPillar();
 </script>
 <script src="/i18n.js"></script>
 <script>
-if(typeof i18n!=='undefined'&&i18n&&typeof i18n.init==='function'){
-  i18n.init().then(loadArticles);
-}else{
-  loadArticles();
-}
+if(typeof i18n!=='undefined'&&i18n&&typeof i18n.init==='function'){ i18n.init(); }
 </script>
 </body>
 </html>
