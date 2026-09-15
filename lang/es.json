@@ -118,7 +118,7 @@
     "placeholder": "Dirección de correo electrónico",
     "btn": "Solicitar",
     "based_label": "Basado en",
-    "based_value": "Londres Â· Lima Â· Milán",
+    "based_value": "Londres · Lima · Milán",
     "copy": "Â© 2026 Â· Viajes Privados Curados",
     "title_full": "Recibe gratuitamente <em style=\"color:var(--accent);\">La Planta de los Dioses</em>"
   },
@@ -340,7 +340,7 @@
     "guide_email_placeholder": "Tu dirección de correo electrónico",
     "guide_btn": "Recibe la Guía Gratuita",
     "guide_note": "Nada de spam. Solo contenido relevante sobre el camino y las plantas maestras.",
-    "footer_based_value": "Londres Â· Lima Â· Milán",
+    "footer_based_value": "Londres · Lima · Milán",
     "footer_copy": "Â© 2026 Â· Viajes Privados Curados"
   },
   "thank_you": {

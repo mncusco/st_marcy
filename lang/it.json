@@ -118,7 +118,7 @@
     "placeholder": "Indirizzo email",
     "btn": "Richiedi",
     "based_label": "Basato a",
-    "based_value": "Londra Â· Lima Â· Milano",
+    "based_value": "Londra · Lima · Milano",
     "copy": "Â© 2026 Â· Viaggi Privati Curati",
     "title_full": "Ricevi gratuitamente <em style=\"color:var(--accent);\">La Planta de los Dioses</em>"
   },
@@ -340,7 +340,7 @@
     "guide_email_placeholder": "Il tuo indirizzo email",
     "guide_btn": "Ricevi la Guida Gratuita",
     "guide_note": "Niente spam. Solo contenuti pertinenti sul percorso e sulle piante maestre.",
-    "footer_based_value": "Londra Â· Lima Â· Milano",
+    "footer_based_value": "Londra · Lima · Milano",
     "footer_copy": "Â© 2026 Â· Viaggi Privati Curati"
   },
   "thank_you": {
