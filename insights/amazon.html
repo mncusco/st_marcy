@@ -401,7 +401,13 @@ async function loadPillar() {
     const all = await res.json();
     const list = all
       .filter(a => a.category_key === 'amazon')
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
+      .sort((a, b) => {
+        const dateDiff = new Date(b.date) - new Date(a.date);
+        if (dateDiff !== 0) return dateDiff;
+        const updDiff = new Date(b.updated || b.date) - new Date(a.updated || a.date);
+        if (updDiff !== 0) return updDiff;
+        return String(a.slug).localeCompare(String(b.slug));
+      });
 
     if (!list.length) {
       grid.innerHTML = `<div class="blog-empty eyebrow">This collection will grow with the editorial archive.<a href="/blog" class="eyebrow">All Insights →</a></div>`;

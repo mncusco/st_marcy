@@ -297,7 +297,7 @@ footer {
 <div class="blog-hero">
   <span class="eyebrow blog-hero-eyebrow">Field Notes</span>
   <h1 class="blog-hero-title">Insights</h1>
-  <p class="blog-hero-desc">Reflections on shamanic traditions, the philosophy of private travel, and the living geography of Peru — written by Marcello Buglione.</p>
+  <p class="blog-hero-desc">*Riflessioni sulle tradizioni sciamaniche, la filosofia del viaggio privato e la geografia vivente del Perù — scritte da Marcello Buglione.</p>
 </div>
 
 <div class="blogs-filters" id="filtersWrap"></div>
@@ -345,7 +345,13 @@ const CATEGORY_LABELS = {
 let currentFilter = 'all';
 
 function renderGrid(grid, list, tr, lang) {
-  const sorted = [...list].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sorted = [...list].sort((a, b) => {
+    const dateDiff  = new Date(b.date) - new Date(a.date);
+    if (dateDiff !== 0) return dateDiff;
+    const updDiff   = new Date(b.updated || b.date) - new Date(a.updated || a.date);
+    if (updDiff !== 0) return updDiff;
+    return String(a.slug).localeCompare(String(b.slug));
+  });
   if (!sorted.length) {
     grid.innerHTML = `<div class="blog-empty eyebrow">${tr('blog.empty', 'No articles published yet.')}</div>`;
     return;
@@ -358,7 +364,7 @@ function renderGrid(grid, list, tr, lang) {
     return `
       <a href="/article?id=${a.slug}" class="blog-card">
         <img
-          src="${a.image || 'insights.jpg'}"
+          src="/${a.image || 'insights.jpg'}"
           alt="${title}"
           class="blog-card-img"
           loading="${i === 0 ? 'eager' : 'lazy'}">

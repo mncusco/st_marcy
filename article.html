@@ -428,10 +428,6 @@ async function loadArticle() {
       return;
     }
 
-    // Update page title & meta
-    document.title = `${article.title} — ShamanicTravels`;
-    document.querySelector('meta[name="description"]').setAttribute('content', article.excerpt);
-
     // Lingua corrente
     const lang = localStorage.getItem('st_lang') || navigator.language.slice(0,2) || 'it';
 
@@ -440,11 +436,15 @@ async function loadArticle() {
     const bodyField = article[`body_${lang}`] || article.body || [];
     const bodyParagraphs = bodyField.map(p => `<p>${mdParagraph(p)}</p>`).join('');
 
+    // Update page title & meta (localized)
+    document.title = `${t('title')} — ShamanicTravels`;
+    document.querySelector('meta[name="description"]').setAttribute('content', t('excerpt'));
+
     // Canonical + Open Graph (valori statici non possibili: pagina cliente)
     const SITE = 'https://www.shamanictravels.com';
     const artCanonical = document.getElementById('artCanonical');
     if (artCanonical) artCanonical.setAttribute('href', `${SITE}/article?id=${slug}`);
-    const ogFields = { artOgTitle: `${article.title} — ShamanicTravels`, artOgDesc: article.excerpt || '', artOgUrl: `${SITE}/article?id=${slug}`, artOgImage: `${SITE}/${article.image || 'insights.jpg'}` };
+    const ogFields = { artOgTitle: `${t('title')} — ShamanicTravels`, artOgDesc: t('excerpt') || '', artOgUrl: `${SITE}/article?id=${slug}`, artOgImage: `${SITE}/${article.image || 'insights.jpg'}` };
     Object.keys(ogFields).forEach(id => {
       const el = document.getElementById(id);
       if (el) el.setAttribute('content', ogFields[id]);
