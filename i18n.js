@@ -120,8 +120,76 @@ function bindSelector() {
     applyStrings();
     setHtmlLang(currentLang);
     bindSelector();
+    initCookieConsent();
   }
 
   return { init, get, switchLang, getCurrent: () => currentLang };
 
 })();
+
+/* ── COOKIE CONSENT ── */
+function initCookieConsent() {
+  if (window.__stCookieConsentInitialized) return;
+  window.__stCookieConsentInitialized = true;
+
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = '/cookie-consent.css?v=1';
+  document.head.appendChild(css);
+
+  const saved = localStorage.getItem('st_cookie_consent');
+  if (saved) return;
+
+  const lang = (document.documentElement.lang || 'en').slice(0, 2);
+  const copy = {
+    en: { title: 'Your privacy', text: 'We use essential cookies for the site to function. Optional analytics and advertising cookies are used only with your consent. See our Privacy Policy for details.', accept: 'Accept all', reject: 'Essential only', settings: 'Preferences', privacy: 'Privacy Policy' },
+    it: { title: 'La tua privacy', text: 'Utilizziamo cookie essenziali per il funzionamento del sito. I cookie opzionali di analisi e pubblicità vengono utilizzati solo con il tuo consenso. Consulta la Privacy Policy per i dettagli.', accept: 'Accetta tutti', reject: 'Solo essenziali', settings: 'Preferenze', privacy: 'Privacy Policy' },
+    es: { title: 'Tu privacidad', text: 'Utilizamos cookies esenciales para el funcionamiento del sitio. Las cookies opcionales de análisis y publicidad se utilizan solo con tu consentimiento. Consulta la Política de Privacidad para más información.', accept: 'Aceptar todas', reject: 'Solo esenciales', settings: 'Preferencias', privacy: 'Política de Privacidad' },
+    sr: { title: 'Vaša privatnost', text: 'Koristimo neophodne kolačiće za rad sajta. Opcioni analitički i reklamni kolačići koriste se samo uz vašu saglasnost. Više informacija nalazi se u Politici privatnosti.', accept: 'Prihvati sve', reject: 'Samo neophodni', settings: 'Podešavanja', privacy: 'Politika privatnosti' },
+    ru: { title: 'Ваша конфиденциальность', text: 'Мы используем необходимые файлы cookie для работы сайта. Необязательные аналитические и рекламные cookie используются только с вашего согласия. Подробнее — в Политике конфиденциальности.', accept: 'Принять все', reject: 'Только необходимые', settings: 'Настройки', privacy: 'Политика конфиденциальности' }
+  }[lang] || null;
+  if (!copy) return;
+
+  const root = document.createElement('div');
+  root.className = 'st-cc-root';
+  root.innerHTML = `
+    <div class="st-cc-overlay" data-cc-overlay></div>
+    <section class="st-cc-banner" role="dialog" aria-label="${copy.title}">
+      <div class="st-cc-content">
+        <h2 class="st-cc-title">${copy.title}</h2>
+        <p class="st-cc-text">${copy.text} <a href="/privacy.html">${copy.privacy}</a></p>
+      </div>
+      <div class="st-cc-actions">
+        <button class="st-cc-btn st-cc-btn-secondary" type="button" data-cc-reject>${copy.reject}</button>
+        <button class="st-cc-btn st-cc-btn-secondary" type="button" data-cc-settings>${copy.settings}</button>
+        <button class="st-cc-btn st-cc-btn-primary" type="button" data-cc-accept>${copy.accept}</button>
+      </div>
+    </section>
+    <section class="st-cc-settings" role="dialog" aria-modal="true" aria-label="${copy.settings}" data-cc-panel>
+      <div class="st-cc-settings-header"><h2 class="st-cc-settings-title">${copy.settings}</h2><button class="st-cc-close" type="button" data-cc-close aria-label="Close">×</button></div>
+      <div class="st-cc-settings-body">
+        <div class="st-cc-option"><div><h3 class="st-cc-option-title">Essential</h3><p class="st-cc-option-description">Required for basic site functionality.</p></div><div class="st-cc-toggle"><input type="checkbox" checked disabled><span class="st-cc-toggle-track"></span></div></div>
+        <div class="st-cc-option"><div><h3 class="st-cc-option-title">Analytics</h3><p class="st-cc-option-description">Helps us understand how visitors use the site.</p></div><label class="st-cc-toggle"><input type="checkbox" data-cc-analytics><span class="st-cc-toggle-track"></span></label></div>
+        <div class="st-cc-option"><div><h3 class="st-cc-option-title">Advertising</h3><p class="st-cc-option-description">Used for measuring and improving advertising.</p></div><label class="st-cc-toggle"><input type="checkbox" data-cc-advertising><span class="st-cc-toggle-track"></span></label></div>
+      </div>
+      <div class="st-cc-settings-footer"><button class="st-cc-btn st-cc-btn-secondary" type="button" data-cc-close>${copy.reject}</button><button class="st-cc-btn st-cc-btn-primary" type="button" data-cc-save>${copy.accept}</button></div>
+    </section>`;
+  document.body.appendChild(root);
+
+  const banner = root.querySelector('.st-cc-banner');
+  const panel = root.querySelector('[data-cc-panel]');
+  const overlay = root.querySelector('[data-cc-overlay]');
+
+  function closePanel() { panel.classList.remove('is-open'); overlay.classList.remove('is-open'); }
+  function save(analytics, advertising) {
+    localStorage.setItem('st_cookie_consent', JSON.stringify({ analytics: !!analytics, advertising: !!advertising, at: new Date().toISOString() }));
+    banner.remove(); closePanel(); overlay.remove();
+  }
+
+  root.querySelector('[data-cc-accept]').addEventListener('click', () => save(true, true));
+  root.querySelector('[data-cc-reject]').addEventListener('click', () => save(false, false));
+  root.querySelector('[data-cc-settings]').addEventListener('click', () => { panel.classList.add('is-open'); overlay.classList.add('is-open'); });
+  root.querySelectorAll('[data-cc-close]').forEach(btn => btn.addEventListener('click', closePanel));
+  root.querySelector('[data-cc-save]').addEventListener('click', () => save(root.querySelector('[data-cc-analytics]').checked, root.querySelector('[data-cc-advertising]').checked));
+  overlay.addEventListener('click', closePanel);
+}
