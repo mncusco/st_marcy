@@ -297,6 +297,51 @@ a.article-hero-category { text-decoration: none; }
   color: var(--accent);
 }
 
+/* ── INTERNAL LINKS ── */
+.article-links {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 28px 32px;
+  margin-top: 64px;
+}
+.article-links-label {
+  color: var(--muted);
+  display: block;
+  margin-bottom: 20px;
+}
+.article-links-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.article-links-item {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.article-links-type {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--background);
+  background: var(--stone-deep);
+  padding: 4px 8px;
+  flex-shrink: 0;
+}
+.article-links-item a {
+  color: var(--foreground);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 19px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.article-links-item a:hover { color: var(--accent); border-color: currentColor; }
+
 /* ── NOT FOUND ── */
 .article-not-found {
   max-width: 720px;
@@ -408,6 +453,72 @@ function mdParagraph(text) {
   return esc.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
 }
 
+const INTERNAL_BOOK_OK = '/la-montagna-che-portiamo-dentro';
+
+// Rendering sicuro dei link interni: allowlist di destinazioni interne,
+// nessun HTML arbitrario, mai link esterni, libro = unico lead magnet.
+function renderInternalLinks(article, lang, articles) {
+  if (!Array.isArray(article.internal_links) || !article.internal_links.length) return '';
+
+  const typeLabel = {
+    it: { book: 'Il libro', article: 'Articolo', pillar: 'Approfondimento' },
+    en: { book: 'The Book', article: 'Article', pillar: 'Insight' },
+    ru: { book: 'Книга', article: 'Статья', pillar: 'Практика' },
+    es: { book: 'El libro', article: 'Artículo', pillar: 'Práctica' },
+    sr: { book: 'Knjiga', article: 'Članak', pillar: 'Praksa' }
+  }[lang] || {};
+
+  const links = article.internal_links
+    .map((l) => {
+      if (!l || typeof l !== 'object') return null;
+      const text = String(l[`text_${lang}`] || l.text || '');
+      const dest = String(l.destination || '');
+      const type = String(l.type || '').toLowerCase();
+
+      let ok = false;
+      if (type === 'book') {
+        ok = dest === INTERNAL_BOOK_OK;
+      } else if (type === 'article') {
+        const m = dest.match(/^\/article\?id=([\w-]+)$/);
+        ok = !!m && Array.isArray(articles) && articles.some(a => a.slug === m[1] || a.id === m[1]);
+      } else if (type === 'pillar') {
+        ok = /^\/insights\/[\w-]+\.html$/.test(dest);
+      }
+      if (!ok || !text) return null;
+
+      return `
+        <li class="article-links-item">
+          <span class="eyebrow article-links-type">${esc(typeLabel[type] || type)}</span>
+          <a href="${dest}">${esc(text)}</a>
+        </li>`;
+    })
+    .filter(Boolean);
+
+  if (!links.length) return '';
+
+  const label = {
+    it: 'Approfondisci',
+    en: 'Continue reading',
+    ru: 'Читать далее',
+    es: 'Seguir leyendo',
+    sr: 'Nastavi čitanje'
+  }[lang] || 'Continue reading';
+
+  return `
+    <div class="article-links">
+      <span class="eyebrow article-links-label">${esc(label)}</span>
+      <div class="article-links-list">${links.join('')}</div>
+    </div>`;
+}
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 async function loadArticle() {
   const slug = new URLSearchParams(window.location.search).get('id');
   const container = document.getElementById('articleContent');
@@ -498,6 +609,7 @@ async function loadArticle() {
         </div>
         ${langBanner}
         <div class="article-body">${bodyParagraphs}</div>
+        ${renderInternalLinks(article, lang, articles)}
       </div>
 
       ${article.category_key ? `

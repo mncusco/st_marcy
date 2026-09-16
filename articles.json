@@ -155,7 +155,7 @@
     "author": "Marcello Buglione",
     "date": "2026-05-28",
     "category": "Scienza e Salute",
-    "image": "insights.jpg",
+    "image": "inner-journey.jpg",
     "excerpt": "Dalla storia alla neurobiologia: come la ricerca scientifica sta esplorando il potenziale terapeutico degli psichedelici nel trattamento di ansia, depressione e traumi.",
     "body": [
       "Il termine psichedelico deriva dal greco: psyché (mente) e delos (manifestare, rendere visibile). Letteralmente significa manifestazione della mente. In ambito scientifico e medico, gli psichedelici sono sostanze che modificano temporaneamente percezione, emozioni, coscienza e processi cognitivi, inducendo stati mentali caratterizzati da maggiore connessione cerebrale, introspezione e sensibilità emotiva.",
@@ -220,6 +220,14 @@
       "psichedelici-medicina-ricerca",
       "integration-after-the-experience",
       "sulle-orme-dello-sciamanesimo"
+    ],
+    "internal_links": [
+      {
+        "type": "article",
+        "text": "Il ritiro amazzonico a San Alejandro",
+        "text_en": "The Amazon retreat at San Alejandro",
+        "destination": "/article?id=san-alejandro-trasformazione-spirituale"
+      }
     ]
   },
   {
@@ -230,7 +238,7 @@
     "author": "Marcello Buglione",
     "date": "2026-09-15",
     "category": "Etica & Cultura",
-    "image": "jungle.jpg",
+    "image": "maestro-chichi.jpg",
     "excerpt": "Avvicinarsi alle tradizioni amazzoniche è una questione di linguaggio, contesto e consenso prima ancora che di destinazione. Una riflessione su cosa significa autenticità culturale, con fonti e dati reali.",
     "body": [
       "Avvicinarsi alle tradizioni amazzoniche non è come visitare un monumento: si entra in una eredità culturale viva, che ha lingua, storia e custodi propri. La prima domanda seria non è 'cosa proverò?', ma 'come mi presento?'. Questo articolo attraversa cinque temi — linguaggio, contesto, rappresentazione, consenso, commercializzazione — per capire cosa significa avvicinarsi con autenticità e responsabilità.",
@@ -310,6 +318,13 @@
       "psichedelici-medicina-ricerca",
       "ayahuasca-safety-guide",
       "un-po-di-sciamanesimo"
+    ],
+    "internal_links": [
+      {
+        "type": "book",
+        "text": "La montagna che ci portiamo dentro",
+        "destination": "/la-montagna-che-portiamo-dentro"
+      }
     ]
   },
   {
@@ -352,6 +367,14 @@
     "related": [
       "ofrenda-alla-pachamama-esperienza-ande",
       "cerimonie-sacre-san-pedro"
+    ],
+    "internal_links": [
+      {
+        "type": "article",
+        "text": "Integrazione dopo l'esperienza",
+        "text_en": "Integration after the experience",
+        "destination": "/article?id=integration-after-the-experience"
+      }
     ]
   }
 ]

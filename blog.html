@@ -152,62 +152,130 @@ nav {
 .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
 .filter-btn.active { background: var(--foreground); border-color: var(--foreground); color: var(--background); }
 
+/* ── BOOK ── */
+.blog-book {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 40px 0;
+}
+.blog-book-inner {
+  border: 1px solid var(--border);
+  padding: 40px;
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.blog-book-eyebrow {
+  color: var(--muted);
+  display: block;
+  margin-bottom: 12px;
+}
+.blog-book-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.15;
+}
+.blog-book-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 3px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.blog-book-link:hover { color: var(--foreground); border-color: currentColor; }
+
 /* ── GRID ── */
 .blog-grid {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 40px 160px;
+  padding: 64px 40px 160px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1px;
-  background: var(--border);
+  gap: 24px;
 }
-@media (min-width: 768px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1100px) { .blog-grid { grid-template-columns: 1fr 1fr 1fr; } }
+@media (min-width: 768px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .blog-grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* ── CARD ── */
 .blog-card {
   background: var(--background);
-  padding: 40px;
+  border: 1px solid var(--border);
+  padding: 32px;
   display: flex;
   flex-direction: column;
   text-decoration: none;
   color: var(--foreground);
-  transition: background 0.3s;
+  transition: border-color 0.3s, background 0.3s;
   cursor: pointer;
+  min-width: 0;
 }
-.blog-card:hover { background: #ede9e2; }
+.blog-card:hover { border-color: var(--accent); background: #ede9e2; }
 
-.blog-card-img {
+/* Immagine: box uniforme 3/2 con placeholder brandizzato (mai bianco vuoto) */
+.blog-card-media {
+  position: relative;
   width: 100%;
   aspect-ratio: 3/2;
+  overflow: hidden;
+  margin-bottom: 28px;
+  background:
+    linear-gradient(135deg, #3a322a 0%, #2a241d 60%, #1e1b16 100%);
+}
+.blog-card-media::before {
+  content: 'S';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 72px;
+  color: rgba(245,242,236,0.18);
+  pointer-events: none;
+}
+.blog-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
-  margin-bottom: 32px;
 }
 
 .blog-card-meta {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 .blog-card-category { color: var(--accent); }
-.blog-card-date { color: var(--muted); }
+.blog-card-date { color: var(--muted); flex-shrink: 0; }
 
 .blog-card-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(24px, 2.5vw, 34px);
+  font-size: clamp(22px, 2vw, 30px);
   font-weight: 300;
   font-style: italic;
   line-height: 1.15;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 .blog-card-subtitle {
   font-size: 13px;
   color: var(--muted);
   line-height: 1.65;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 .blog-card-link {
   margin-top: auto;
@@ -217,6 +285,7 @@ nav {
   color: var(--accent);
   position: relative;
   align-self: flex-start;
+  padding-top: 4px;
 }
 .blog-card-link::after {
   content: '';
@@ -227,6 +296,52 @@ nav {
   transition: width 0.35s;
 }
 .blog-card:hover .blog-card-link::after { width: 100%; }
+
+/* ── FEATURED (gerarchia editoriale: mantiene order deterministico, è sempre la 1ª) ── */
+.blog-card-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .blog-card-featured { grid-template-columns: 1.1fr 1fr; } }
+.blog-card-featured .blog-card-media {
+  aspect-ratio: 4/3;
+  margin-bottom: 0;
+  min-height: 100%;
+}
+@media (min-width: 768px) {
+  .blog-card-featured .blog-card-media { aspect-ratio: auto; }
+}
+.blog-card-featured .blog-card-body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.blog-card-featured .blog-card-title {
+  font-size: clamp(28px, 3vw, 44px);
+}
+.blog-card-featured .blog-card-subtitle {
+  font-size: 15px;
+  max-width: 52ch;
+}
+.blog-card-featured .blog-card-badge {
+  align-self: flex-start;
+  margin-bottom: 16px;
+}
+.blog-card-badge {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--background);
+  background: var(--accent);
+  padding: 5px 10px;
+  margin-bottom: 14px;
+  align-self: flex-start;
+}
 
 /* ── EMPTY ── */
 .blog-empty {
@@ -264,8 +379,13 @@ footer {
   .nav-mobile-toggle { display: flex; }
   .nav-inner { padding: 20px 24px; }
   .blog-hero { padding: 140px 24px 64px; }
-  .blog-grid { padding: 40px 24px 100px; }
-  .blog-card { padding: 28px 24px; }
+  .blog-book { padding: 40px 24px 0; }
+  .blog-book-inner { padding: 28px 24px; }
+  .blog-grid { padding: 40px 24px 100px; gap: 16px; }
+  .blog-card { padding: 24px; }
+  .blog-card-featured { grid-template-columns: 1fr; }
+  .blog-card-featured .blog-card-media { aspect-ratio: 4/3; margin: 0; }
+  .blog-card-featured .blog-card-body { padding: 24px; }
 }
 </style>
 <link rel="canonical" href="https://www.shamanictravels.com/blog">
@@ -298,6 +418,16 @@ footer {
   <span class="eyebrow blog-hero-eyebrow">Field Notes</span>
   <h1 class="blog-hero-title">Insights</h1>
   <p class="blog-hero-desc">*Riflessioni sulle tradizioni sciamaniche, la filosofia del viaggio privato e la geografia vivente del Perù — scritte da Marcello Buglione.</p>
+</div>
+
+<div class="blog-book">
+  <div class="blog-book-inner">
+    <div>
+      <span class="eyebrow blog-book-eyebrow">The Founder's Book · Il libro del fondatore</span>
+      <h2 class="blog-book-title">La montagna che ci portiamo dentro</h2>
+    </div>
+    <a href="/la-montagna-che-portiamo-dentro" class="blog-book-link eyebrow">Read / Leggi →</a>
+  </div>
 </div>
 
 <div class="blogs-filters" id="filtersWrap"></div>
@@ -357,27 +487,45 @@ function renderGrid(grid, list, tr, lang) {
     return;
   }
 
-  grid.innerHTML = sorted.map((a, i) => {
+  const card = (a, i, isFirst, featuredCls = '') => {
     const title    = a[`title_${lang}`]    || a.title    || '';
     const excerpt  = a[`excerpt_${lang}`]  || a.excerpt  || '';
     const category = a.category_en || a.category || '';
+    const featuredBadge = a.featured ? '<span class="eyebrow blog-card-badge">Featured · In Evidenza</span>' : '';
     return `
-      <a href="/article?id=${a.slug}" class="blog-card">
-        <img
-          src="/${a.image || 'insights.jpg'}"
-          alt="${title}"
-          class="blog-card-img"
-          loading="${i === 0 ? 'eager' : 'lazy'}">
-        <div class="blog-card-meta">
-          ${a.category_key ? `<a href="/insights/${a.category_key}" class="eyebrow blog-card-category">${category}</a>` : `<span class="eyebrow blog-card-category">${category}</span>`}
-          <span class="eyebrow blog-card-date">${formatDate(a.date)}</span>
+      <a href="/article?id=${a.slug}" class="blog-card ${featuredCls}">
+        <div class="blog-card-media">
+          <img
+            src="/${a.image || 'insights.jpg'}"
+            alt="${title}"
+            class="blog-card-img"
+            loading="${isFirst ? 'eager' : 'lazy'}"
+            onerror="this.remove()">
         </div>
-        <h2 class="blog-card-title">${title}</h2>
-        <p class="blog-card-subtitle">${excerpt}</p>
-        <span class="blog-card-link eyebrow">${tr('blog.read', 'Read →')}</span>
+        <div class="blog-card-body">
+          ${featuredBadge}
+          <div class="blog-card-meta">
+            <span class="eyebrow blog-card-category">${category}</span>
+            <span class="eyebrow blog-card-date">${formatDate(a.date)}</span>
+          </div>
+          <h2 class="blog-card-title">${title}</h2>
+          <p class="blog-card-subtitle">${excerpt}</p>
+          <span class="blog-card-link eyebrow">${tr('blog.read', 'Read →')}</span>
+        </div>
       </a>
     `;
-  }).join('');
+  };
+
+  const featured = sorted.filter(a => a.featured === true);
+  const rest = sorted.filter(a => a.featured !== true);
+
+  const html = [
+    featured.length ? card(featured[0], 0, true, 'blog-card-featured') : '',
+    ...featured.slice(1).map((a, i) => card(a, i + 1, false)),
+    ...rest.map((a, i) => card(a, i, !featured.length && i === 0))
+  ].join('');
+
+  grid.innerHTML = html;
 }
 
 async function loadArticles() {
@@ -385,6 +533,13 @@ async function loadArticles() {
   const filters = document.getElementById('filtersWrap');
   const lang = (typeof i18n !== 'undefined' && i18n.getCurrent) ? i18n.getCurrent() : (localStorage.getItem('st_lang') || 'en');
   const tr = (key, fallback) => (typeof i18n !== 'undefined' && i18n.get(key) !== null) ? i18n.get(key) : fallback;
+
+  const bookEyebrow = document.querySelector('.blog-book-eyebrow');
+  if (bookEyebrow) bookEyebrow.textContent = tr('book.nav_link', 'The Book');
+  const bookLink = document.querySelector('.blog-book-link');
+  if (bookLink) bookLink.textContent = tr('blog.read', 'Read →');
+  const bookTitle = document.querySelector('.blog-book-title');
+  if (bookTitle) bookTitle.textContent = 'La montagna che ci portiamo dentro';
 
   try {
     const res = await fetch('/articles.json');
