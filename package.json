@@ -4,6 +4,7 @@
   "private": true,
   "description": "shamanictravels.com — include la funzione serverless per il download del libro La Montagna Che Portiamo Dentro",
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "pg": "^8.12.0"
   }
 }
