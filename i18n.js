@@ -79,6 +79,7 @@ function bindSelector() {
     if (nav) {
       const li = document.createElement('li');
       li.innerHTML = `
+        <label for="lang-switcher" class="sr-only">Language</label>
         <select id="lang-switcher" style="background:transparent;border:1px solid currentColor;color:inherit;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 8px;cursor:pointer;">
           <option value="en">EN</option>
           <option value="it">IT</option>
