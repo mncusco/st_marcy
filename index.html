@@ -824,7 +824,9 @@ footer {
 <section id="hero">
   <div class="hero-img-wrap">
     <video
-      autoplay muted loop playsinline
+      id="heroVideo"
+      muted loop playsinline
+      preload="metadata" fetchpriority="low"
       poster="hero.jpg"
       class="animate-slow-zoom"
       style="width:100%;height:100%;object-fit:cover;display:block;">
@@ -943,7 +945,9 @@ footer {
 
   <!-- video background -->
   <video
-    autoplay muted loop playsinline
+    id="guideVideo"
+    muted loop playsinline
+    preload="none"
     poster="Marcello.jpg"
     style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;z-index:0;">
     <source src="cinematic_3.mp4" type="video/mp4">
@@ -1155,10 +1159,15 @@ function handleEbookSubmit(e) {
   e.preventDefault();
   const email = document.getElementById('ebookEmail').value;
   if (!email) return;
-  if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Ebook La montagna che ci portiamo dentro' });
-  if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'la_montagna_che_portiamo_dentro' });
-  window.open('/ebooks/La_Montagna_Che_Portiamo_Dentro.pdf', '_blank');
-  window.location.href = '/thankyou?email=' + encodeURIComponent(email);
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Invio…';
+  requestAnimationFrame(() => setTimeout(() => {
+    if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Ebook La montagna che ci portiamo dentro' });
+    if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'ebook', event_label: 'la_montagna_che_portiamo_dentro' });
+    window.open('/ebooks/La_Montagna_Che_Portiamo_Dentro.pdf', '_blank');
+    window.location.href = '/thankyou?email=' + encodeURIComponent(email);
+  }, 50));
 }
 
 /* ── APPLY TRACKING ── */
@@ -1172,6 +1181,33 @@ document.addEventListener('click', function(e) {
 
 /* ── I18N ── */
 i18n.init();
+
+/* ── VIDEO: INP-SAFE START ── */
+const heroVideo = document.getElementById('heroVideo');
+const guideVideo = document.getElementById('guideVideo');
+const startVideo = (v) => { const p = v.play(); if (p) p.catch(() => {}); };
+if (heroVideo) {
+  const t = window.requestIdleCallback || ((cb) => setTimeout(cb, 3000));
+  t(() => startVideo(heroVideo));
+}
+if (guideVideo) {
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        const v = document.getElementById('guideVideo');
+        if (!v) return;
+        if (en.isIntersecting) startVideo(v); else v.pause();
+      });
+    }, { rootMargin: '200px' });
+    io.observe(guideVideo);
+  } else {
+    startVideo(guideVideo);
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { if (heroVideo) heroVideo.pause(); if (guideVideo) guideVideo.pause(); }
+  else { if (heroVideo) startVideo(heroVideo); }
+});
 </script>
 
 
