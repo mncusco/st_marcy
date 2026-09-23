@@ -10,7 +10,7 @@
     "brand": "ShamanicTravels"
   },
   "hero": {
-    "eyebrow": "Pozivnica Â· Kustostvo Â· Peru",
+    "eyebrow": "Pozivnica  Kustostvo  Peru",
     "title1": "Privatna Kurirana",
     "title2": "Putovanja u Peruu",
     "subtitle": "Imerzivna iskustva samo po pozivu za najviÅ¡e Å¡est uÄesnika",
@@ -33,17 +33,17 @@
     "eyebrow": "Dva Putovanja",
     "title1": "Dva razliÄita puta.",
     "title2": "Jedan privatni sistem.",
-    "meta": "Svako putovanje Â· 21 dan Â· Maksimalno Å¡est uÄesnika Â· Selekcija obavezna",
-    "j1_eyebrow": "Putovanje Jedno Â· 21 Dan",
+    "meta": "Svako putovanje  21 dan  Maksimalno Å¡est uÄesnika  Selekcija obavezna",
+    "j1_eyebrow": "Putovanje Jedno  21 Dan",
     "j1_title": "Andski Luk",
     "j1_desc": "Kulturna i geografska ekspedicija od pacifiÄke obale kroz visoke Ande â€” Paracas, Nazca, Arequipa, Titicaca, Palcoyo, Machu Picchu i Cusco â€” sa ritualnom integracijom ugraÄ‘enom duÅ¾ rute.",
-    "j1_tag1": "Obala Â· Pustinja Â· Andi",
+    "j1_tag1": "Obala  Pustinja  Andi",
     "j1_tag2": "Kulturna i Ritualna Integracija",
     "j1_link": "UÄ‘i u Putovanje I â†’",
-    "j2_eyebrow": "Putovanje Dva Â· 21 Dan",
+    "j2_eyebrow": "Putovanje Dva  21 Dan",
     "j2_title": "Imerzija u Amazoniji",
     "j2_desc": "Strukturirana terenska imerzija duboko u peruanskoj amazonskoj Å¡umi. ReÄni transfer iz Pucallpe u udaljenu teritoriju basena, sa naizmeniÄnim ciklusima voÄ‘ene tradicionalne prakse i integracije.",
-    "j2_tag1": "Pucallpa Â· Duboki Basen",
+    "j2_tag1": "Pucallpa  Duboki Basen",
     "j2_tag2": "TromeseÄna priprema obavezna",
     "j2_link": "UÄ‘i u Putovanje II â†’"
   },
@@ -74,13 +74,13 @@
     "title": "Å ta nose dalje",
     "q1": "U tiÅ¡ini planina, pronaÅ¡ao sam sebe.",
     "q1_name": "Sarah M.",
-    "q1_role": "Andski Luk Â· 2025",
+    "q1_role": "Andski Luk  2025",
     "q2": "Nije ono Å¡to sam oÄekivao. Daleko dublje. Prag za koji nisam znao da moram preÄ‡i.",
     "q2_name": "James K.",
-    "q2_role": "Duboka Amazonija Â· 2025",
+    "q2_role": "Duboka Amazonija  2025",
     "q3": "Marcello ne poduÄava. On svedoÄi. I nekako, to svedoÄenje menja sve.",
     "q3_name": "Elena R.",
-    "q3_role": "Andski Luk Â· 2024"
+    "q3_role": "Andski Luk  2024"
   },
   "insights": {
     "eyebrow": "Uvidi",
@@ -115,7 +115,7 @@
     "btn": "ZatraÅ¾i",
     "based_label": "SediÅ¡te",
     "based_value": "London · Lima · Milano",
-    "copy": "Â© 2026 Â· Privatna Kurirana Putovanja",
+    "copy": "Â© 2026  Privatna Kurirana Putovanja",
     "title_full": "Dobijte besplatno <em style=\"color:var(--accent);\">Il Viaggio dell'Eroe in Perù</em>"
   },
   "book": {
@@ -203,7 +203,7 @@
     "back": "â† Povratak na ShamanicTravels"
   },
   "andean": {
-    "hero_eyebrow": "Putovanje Jedno Â· 21 Dan",
+    "hero_eyebrow": "Putovanje Jedno  21 Dan",
     "hero_title": "Andski <em>Luk</em>",
     "hero_desc": "Privatna kulturna ekspedicija od Svete Doline kroz visoke Ande, Amazoniju i obalu Pacifika â€” dvadeset i jedan dan, Å¡est uÄesnika, jedan kuriran put.",
     "premise_lead": "Pet poglavlja. Dvadeset i jedan dan. Å est uÄesnika. Jedan kuriran put.",
@@ -278,14 +278,14 @@
     "footer_book_cta": "Čitaj →"
   },
   "amazon": {
-    "meta_title": "Amazonski Reterit u San Alejandru â€” Dieta sa Majstorskim Biljkama sa Maestro Chichijem Â· ShamanicTravels",
+    "meta_title": "Amazonski Reterit u San Alejandru â€” Dieta sa Majstorskim Biljkama sa Maestro Chichijem  ShamanicTravels",
     "meta_desc": "22-dnevni amazonski retret u San Alejandru, peruanska Amazonija, voÄ‘en od strane Maestro Carlosa \"Chichi\" Escudera. Tradicionalna Dieta sa Majstorskim Biljkama sa Ayahuascom, Bobinsanom, Chiric Sanangom i drugim. 1-25. novembar 2026.",
     "og_title": "Amazonski Retret u San Alejandru â€” Dieta sa Majstorskim Biljkama sa Maestro Chichijem",
     "og_desc": "Od Pucallpe do San Alejandra, duboko u peruanskoj Amazoniji. Strukturirana Dieta sa Majstorskim Biljkama voÄ‘ena od strane tradicionalnog iscelitelja Maestro Carlosa \"Chichi\" Escudera. 1-25. novembar 2026.",
     "nav_plants": "Majstorske Biljke",
     "nav_maestro": "VodiÄ",
     "hero_back": "â† ShamanicTravels",
-    "hero_eyebrow": "San Alejandro, Peruanska Amazonija Â· 1-25. nov 2026",
+    "hero_eyebrow": "San Alejandro, Peruanska Amazonija  1-25. nov 2026",
     "hero_title": "DoÄ‘e trenutak u Å¾ivotu kada <span class=\"italic\">razumevanje viÅ¡e nije dovoljno</span>. MoraÅ¡ da preÄ‘eÅ¡.",
     "hero_desc": "22-dnevni amazonski retret u San Alejandru, voÄ‘en od strane Maestro Carlosa â€œChichiâ€ Escudera. To nije odmor. To nije lek. To je ozbiljna posveÄ‡enost, sa podjednako ozbiljnom pripremom, za one koji oseÄ‡aju da neÅ¡to u njihovom Å¾ivotu mora da se promeni iz korena.",
     "premise_eyebrow": "Premisa",
@@ -311,7 +311,7 @@
     "why_closing": "â€œOvo je mesto u koje verujem.â€",
     "arc_eyebrow": "Put",
     "arc_title": "Pet pokreta.",
-    "c1_title": "Dolazak Â· Pucallpa",
+    "c1_title": "Dolazak  Pucallpa",
     "c1_desc": "1. novembar 2026. Dekompresija u odabranom hotelu u Pucallpi. Brifing, lekarski pregledi, pregled opreme.",
     "c2_title": "ReÄni Transfer",
     "c2_desc": "Privatni reÄni transfer iz Pucallpe do San Alejandra, u peruanskoj Amazoniji. Sam put je deo imerzije.",
@@ -395,7 +395,7 @@
     "prep_l6": "Privatni coaching",
     "prep_v6": "Obavezna 1:1 sesija sa Marcellom pre polaska.",
     "prep_cta": "Prijavi se za Selekciju",
-    "prep_note": "Privatni Razgovor Â· Obavezni Coaching Â· TromeseÄni Protokol",
+    "prep_note": "Privatni Razgovor  Obavezni Coaching  TromeseÄni Protokol",
     "hero_img_alt": "Amazon forest canopy in San Alejandro, Peruvian Amazon",
     "hero_cta": "Request a Private Interview →",
     "qualify_eyebrow": "Before You Continue",

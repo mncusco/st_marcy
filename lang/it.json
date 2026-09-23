@@ -10,7 +10,7 @@
     "brand": "ShamanicTravels"
   },
   "hero": {
-    "eyebrow": "Su Invito Â· Selezione Â· Perù",
+    "eyebrow": "Su Invito  Selezione  Perù",
     "title1": "Viaggi Privati",
     "title2": "Curati in Perù",
     "subtitle": "Esperienze immersive su invito per un massimo di sei partecipanti",
@@ -33,17 +33,17 @@
     "eyebrow": "Due Viaggi",
     "title1": "Due percorsi distinti.",
     "title2": "Un sistema privato.",
-    "meta": "Ogni viaggio Â· 21 giorni Â· Massimo sei partecipanti Â· Selezione richiesta",
-    "j1_eyebrow": "Viaggio Uno Â· 21 Giorni",
+    "meta": "Ogni viaggio  21 giorni  Massimo sei partecipanti  Selezione richiesta",
+    "j1_eyebrow": "Viaggio Uno  21 Giorni",
     "j1_title": "L'Arco Andino",
     "j1_desc": "Una spedizione culturale e geografica dalla costa del Pacifico attraverso le alte Ande â€” Paracas, Nazca, Arequipa, Titicaca, Palcoyo, Machu Picchu e Cusco â€” con integrazione rituale incorporata lungo il percorso.",
-    "j1_tag1": "Costa Â· Deserto Â· Ande",
+    "j1_tag1": "Costa  Deserto  Ande",
     "j1_tag2": "Integrazione Culturale e Rituale",
     "j1_link": "Entra nel Viaggio I â†’",
-    "j2_eyebrow": "Viaggio Due Â· 21 Giorni",
+    "j2_eyebrow": "Viaggio Due  21 Giorni",
     "j2_title": "Immersione nell'Amazzonia",
     "j2_desc": "Un'immersione strutturata sul campo nel profondo della foresta amazzonica peruviana. Trasferimento fluviale da Pucallpa in territorio remoto, alternando cicli di pratica tradizionale guidata e integrazione.",
-    "j2_tag1": "Pucallpa Â· Bacino Profondo",
+    "j2_tag1": "Pucallpa  Bacino Profondo",
     "j2_tag2": "Preparazione di 3 Mesi Richiesta",
     "j2_link": "Entra nel Viaggio II â†’"
   },
@@ -74,13 +74,13 @@
     "title": "Ciò che portano con sé",
     "q1": "Nel silenzio delle montagne, ho trovato me stesso.",
     "q1_name": "Sarah M.",
-    "q1_role": "Arco Andino Â· 2025",
+    "q1_role": "Arco Andino  2025",
     "q2": "Non quello che mi aspettavo. Molto più profondo. Una soglia che non sapevo di dover attraversare.",
     "q2_name": "James K.",
-    "q2_role": "Amazzonia Profonda Â· 2025",
+    "q2_role": "Amazzonia Profonda  2025",
     "q3": "Marcello non insegna. Testimonia. E in qualche modo, quella testimonianza cambia tutto.",
     "q3_name": "Elena R.",
-    "q3_role": "Arco Andino Â· 2024"
+    "q3_role": "Arco Andino  2024"
   },
   "insights": {
     "eyebrow": "Insights",
@@ -115,7 +115,7 @@
     "btn": "Richiedi",
     "based_label": "Basato a",
     "based_value": "Londra · Lima · Milano",
-    "copy": "Â© 2026 Â· Viaggi Privati Curati",
+    "copy": "Â© 2026  Viaggi Privati Curati",
     "title_full": "Ricevi gratuitamente <em style=\"color:var(--accent);\">Il Viaggio dell'Eroe in Perù</em>"
   },
   "book": {
@@ -203,7 +203,7 @@
     "back": "â† Torna a ShamanicTravels"
   },
   "andean": {
-    "hero_eyebrow": "Viaggio Uno Â· 21 Giorni",
+    "hero_eyebrow": "Viaggio Uno  21 Giorni",
     "hero_title": "L'Arco <em>Andino</em>",
     "hero_desc": "Una spedizione culturale privata dalla Valle Sacra attraverso le alte Ande, l'Amazzonia e la costa del Pacifico â€” ventuno giorni, sei partecipanti, un percorso curato.",
     "premise_lead": "Cinque capitoli. Ventuno giorni. Sei partecipanti. Un percorso curato.",
@@ -278,14 +278,14 @@
     "footer_book_cta": "Leggi →"
   },
   "amazon": {
-    "meta_title": "Ritiro Amazzonico a San Alejandro â€” Dieta con Piante Maestre con Maestro Chichi Â· ShamanicTravels",
+    "meta_title": "Ritiro Amazzonico a San Alejandro â€” Dieta con Piante Maestre con Maestro Chichi  ShamanicTravels",
     "meta_desc": "Un ritiro amazzonico di 22 giorni a San Alejandro, nell'Amazzonia peruviana, guidato da Maestro Carlos \"Chichi\" Escudero. Una Dieta tradizionale con Piante Maestre con Ayahuasca, Bobinsana, Chiric Sanango e altro. 1-25 novembre 2026.",
     "og_title": "Ritiro Amazzonico a San Alejandro â€” Dieta con Piante Maestre con Maestro Chichi",
     "og_desc": "Da Pucallpa a San Alejandro, nel cuore dell'Amazzonia peruviana. Una Dieta strutturata guidata dal guaritore tradizionale Maestro Carlos \"Chichi\" Escudero. 1-25 novembre 2026.",
     "nav_plants": "Piante Maestre",
     "nav_maestro": "La Guida",
     "hero_back": "â† ShamanicTravels",
-    "hero_eyebrow": "San Alejandro, Amazzonia Peruviana Â· 1-25 Novembre 2026",
+    "hero_eyebrow": "San Alejandro, Amazzonia Peruviana  1-25 Novembre 2026",
     "hero_title": "C'è un punto della vita in cui <span class=\"italic\">non basta più capire</span>. Bisogna attraversare.",
     "hero_desc": "Un ritiro amazzonico di 22 giorni a San Alejandro, guidato da Maestro Carlos â€œChichiâ€ Escudero. Non è una vacanza. Non è una cura. È un impegno serio, con una preparazione altrettanto seria, per chi sente che qualcosa nella propria vita ha bisogno di cambiare in profondità.",
     "premise_eyebrow": "La Premessa",
@@ -311,7 +311,7 @@
     "why_closing": "â€œQuesto è un posto di cui mi fido.â€",
     "arc_eyebrow": "Il Percorso",
     "arc_title": "Cinque movimenti.",
-    "c1_title": "Arrivo Â· Pucallpa",
+    "c1_title": "Arrivo  Pucallpa",
     "c1_desc": "1 novembre 2026. Decompressione in un hotel selezionato a Pucallpa. Briefing, controlli medici, revisione attrezzatura.",
     "c2_title": "Trasferimento Fluviale",
     "c2_desc": "Trasferimento privato in barca da Pucallpa a San Alejandro, nell'Amazzonia peruviana. Il viaggio stesso è parte dell'immersione.",
@@ -395,7 +395,7 @@
     "prep_l6": "Coaching privato",
     "prep_v6": "Sessione 1:1 obbligatoria con Marcello prima della partenza.",
     "prep_cta": "Candidati per la Selezione",
-    "prep_note": "Colloquio Privato Â· Coaching Obbligatorio Â· Protocollo di 3 Mesi",
+    "prep_note": "Colloquio Privato  Coaching Obbligatorio  Protocollo di 3 Mesi",
     "hero_img_alt": "Volta della foresta amazzonica a San Alejandro, Amazzonia peruviana",
     "hero_cta": "Richiedi un Colloquio Privato â†’",
     "qualify_eyebrow": "Prima di Continuare",
@@ -442,13 +442,13 @@
     "testi_title": "Voci da chi ha attraversato la soglia.",
     "testi_q1": "\"Non quello che mi aspettavo. Molto più profondo. Una soglia che non sapevo di dover attraversare.\"",
     "testi_q1_name": "James K.",
-    "testi_q1_role": "Amazzonia Profonda Â· 2025",
+    "testi_q1_role": "Amazzonia Profonda  2025",
     "testi_q2": "\"Marcello non insegna. Testimonia. E in qualche modo, quella testimonianza cambia tutto.\"",
     "testi_q2_name": "Elena R.",
-    "testi_q2_role": "Arco Andino Â· 2024",
+    "testi_q2_role": "Arco Andino  2024",
     "testi_q3": "\"Nel silenzio delle montagne, ho trovato me stesso.\"",
     "testi_q3_name": "Sarah M.",
-    "testi_q3_role": "Arco Andino Â· 2025",
+    "testi_q3_role": "Arco Andino  2025",
     "testi_cta": "Richiedi un Colloquio Privato â†’",
     "guide_eyebrow": "Prima di Decidere",
     "guide_title": "Il libro del fondatore: <span class=\"italic\">La montagna che ci portiamo dentro</span>.",
@@ -458,7 +458,7 @@
     "guide_btn": "Ricevi il libro",
     "guide_note": "Niente spam. Solo contenuti pertinenti sul percorso e sul libro.",
     "footer_based_value": "Londra · Lima · Milano",
-    "footer_copy": "Â© 2026 Â· Viaggi Privati Curati"
+    "footer_copy": "Â© 2026  Viaggi Privati Curati"
   },
   "thank_you": {
     "title": "La tua richiesta è stata ricevuta",
