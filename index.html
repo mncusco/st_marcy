@@ -784,6 +784,46 @@ footer {
   #apply, #testimonials, #insights, footer { padding-left: 24px; padding-right: 24px; }
   .journey-card { padding: 24px 24px 36px; }
 }
+
+/* ── WCAG 2 AA CONTRAST OVERRIDES ── */
+:root { --muted: #6b6258; }
+
+nav.scrolled .nav-links a.apply {
+  color: #6f5726;
+}
+
+.journeys-meta,
+.journey-tag,
+.apply-note,
+.insight-desc {
+  color: rgba(212,204,192,0.78);
+}
+
+.testi-role,
+.footer-desc,
+.footer-copy,
+.footer-social a,
+a[href$="blog"][data-i18n="nav.insights"] {
+  color: #6b6258;
+}
+
+footer .footer-left > .eyebrow,
+.footer-ebook-text em {
+  color: #765f2f !important;
+}
+
+.apply svg,
+.journeys-meta svg,
+.journey-tag svg,
+.apply-note svg,
+.testi-role svg,
+.insight-desc svg,
+footer svg {
+  color: inherit;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
 </style>
 <link rel="canonical" href="https://www.shamanictravels.com/">
 <meta name="robots" content="index,follow,max-image-preview:large">
