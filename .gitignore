@@ -11,3 +11,6 @@ __pycache__/
 # Backend local config / data
 st_core/.env
 st_core/database/
+
+# Ignore all files ending in .env
+*.env
