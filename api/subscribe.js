@@ -21,7 +21,7 @@
 //    );
 //
 // 3. Metti il PDF reale del libro in:
-//    /la-montagna-che-portiamo-dentro/downloads/la-montagna-che-portiamo-dentro.pdf
+//    /ebooks/La_Montagna_Che_Portiamo_Dentro.pdf
 //
 // 4. Assicurati che "pg" sia nelle dependencies del package.json alla radice del repo.
 
@@ -41,7 +41,7 @@ function getPool() {
   return pool;
 }
 
-const BOOK_DOWNLOAD_URL = '/la-montagna-che-portiamo-dentro/downloads/la-montagna-che-portiamo-dentro.pdf';
+const BOOK_DOWNLOAD_URL = '/ebooks/La_Montagna_Che_Portiamo_Dentro.pdf';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 module.exports = async function handler(req, res) {
